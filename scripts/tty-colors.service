@@ -1,0 +1,9 @@
+[Unit]
+Description=TTY Colors
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/system/tty-colors
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cp -f ~/themes/blood-dragon/.Xresources ~/.Xresources
+cp -f ~/themes/blood-dragon/i3/config ~/.config/i3/config
+cp -f ~/themes/blood-dragon/polybar/config ~/.config/polybar/config
+cp -f ~/themes/blood-dragon/.gtkrc-2.0 ~/.gtkrc-2.0
+cp -f ~/themes/blood-dragon/settings.ini ~/.config/gtk-3.0/settings.ini
+pkill compton
+xrdb ~/.Xresources
+i3-msg restart

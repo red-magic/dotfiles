@@ -1,0 +1,26 @@
+# Encoding to webm
+ffmpeg -i input.mkv			\
+-ss 00:01:00 -to 00:02:00		\
+-c:v libvpx-vp9				\
+-quality best				\
+-speed 0				\
+-crf 32					\
+-vf scale=1280:-1,fps=24000/1001	\
+-b:v 0					\
+-c:a libopus -ac 2			\
+-map_metadata -1 -map_chapters -1	\
+-sn -max_muxing_queue_size 1000		\
+-filter:a "volume=6dB"			\
+output.webm
+
+# Encoding x265 10bit
+ffmpeg -i input.mkv											\
+-map 0:v -map 0:a -map 0:s										\
+-c:v libx265 -profile main10										\
+-preset veryslow											\
+-crf 21													\
+-pix_fmt yuv420p10											\
+-filter:v crop=1920:1080-264,fps=24000/1001								\
+-c:a ac3 -c:s copy											\
+-x265-params level-idc=4.1:strong-intra-smoothing=0:sao=0:deblock=-3,-3:min-keyint=23:keyint=240:subme=7:rc-lookahead=60 \
+output.mkv

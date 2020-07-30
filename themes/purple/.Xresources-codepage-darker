@@ -1,0 +1,82 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgb: rgb
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.autohint: true
+Xft.lcdfilter: lcddefault
+
+URxvt*font: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
+URxvt*boldFont: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
+URxvt*letterSpace: 0
+URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt.saveLines: 8192
+
+rofi.font: IBM IBM VGA 8x16 12
+
+! Purple Theme
+
+URxvt*foreground:   #e9e5f0
+URxvt*background:   #25163f
+URxvt*cursorColor:  #e9e5f0
+
+! Colors 0-15.
+
+! black
+*color0:  #25163f
+*color8:  #25163f
+
+! red
+*color1:  #7C55C1
+*color9:  #7C55C1
+
+! green
+*color2:  #896EB8
+*color10: #896EB8
+
+! yellow
+*color3:  #825CC4
+*color11: #825CC4
+
+! blue
+*color4:  #8D6AC9
+*color12: #8D6AC9
+
+! magenta
+*color5:  #B5A0DC
+*color13: #B5A0DC
+
+! cyan
+*color6:  #DBD0EE
+*color14: #DBD0EE
+
+! white
+*color7:  #e9e5f0
+*color15: #e9e5f0
+
+*color66:  #25163f
+
+! ROFI
+rofi.width: 24
+rofi.padding: 48
+rofi.hide-scrollbar: true
+rofi.bw: 0
+rofi.line-margin: 0
+rofi.line-padding: 1
+rofi.lines: 8
+rofi.columns: 2
+
+! Use extended color schem
+rofi.color-enabled:                  true
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000,  #e9e5f0 , argb:00000000,  #7C55C1,   #e9e5f0,
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:90000000,  #2f343f , argb:90000000,  #2f343f ,  #2f343f
+! Color scheme for active row
+rofi.color-active:                   argb:99FFFFFF,  #586e75 , argb:99FFFFFF,  #FFFFFF ,  #000000
+! Color scheme window
+rofi.color-window:                   argb:CC25163f,  #25163f ,  #25163f
+! Separator style (none, dash, solid)
+rofi.separator-style:                none

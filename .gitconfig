@@ -1,0 +1,7 @@
+[user]
+	email = egorgushcha@protonmail.com
+	name = Egor Gushcha
+	signingkey = FDB51F5E127D297F 
+[commit]
+	gpgsign = true
+

@@ -1,0 +1,27 @@
+pkgname=ttf-oldschool
+pkgver=2.0
+pkgrel=1
+pkgdesc='The ultimate Oldschool PC Font Pack'
+arch=('any')
+url='https://int10h.org/oldschool-pc-fonts'
+license=('CC BY-SA 4.0')
+source=(''$url'/download/oldschool_pc_font_pack_v'$pkgver'_ttf.zip')
+sha256sums=('6c39482e07490aa0207d7bc21d070b0668157564f50b8bd9c445fc26290cb901')
+
+package() {
+	cd $srcdir
+
+	install -dm755 $pkgdir/usr/share/fonts/$pkgname/Ac
+	install -Dm644 ttf\ -\ Ac\ \(aspect-corrected\)/* $pkgdir/usr/share/fonts/$pkgname/Ac
+
+	install -dm755 $pkgdir/usr/share/fonts/$pkgname/Mx
+	install -Dm644 ttf\ -\ Mx\ \(mixed\ outline+bitmap\)/* $pkgdir/usr/share/fonts/$pkgname/Mx
+
+	install -dm755 $pkgdir/usr/share/fonts/$pkgname/Px
+	install -Dm644 ttf\ -\ Px\ \(pixel\ outline\)/* $pkgdir/usr/share/fonts/$pkgname/Px
+
+	install -dm755 $pkgdir/usr/share/doc/$pkgname
+	install -Dm644 docs/* $pkgdir/usr/share/doc/$pkgname
+
+	install -Dm644 LICENSE.TXT $pkgdir/usr/share/licenses/$pkgname/LICENSE
+}
