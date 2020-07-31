@@ -4,4 +4,5 @@
 	signingkey = FDB51F5E127D297F 
 [commit]
 	gpgsign = true
-
+[pull]
+	ff = only
