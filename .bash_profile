@@ -44,6 +44,7 @@ export LC_IDENTIFICATION="en_US.UTF-8"
 export PS1='\[\033[01;34m\][\u@\h \w]\$ \[\033[00m\]'
 export ALSA_CARD=Generic_1
 export GPG_TTY=$(tty)
+export LESSHISTFILE="-"
 
 alias tr-auth="transmission-remote -n transmission:transmission"
 alias linuxmake='make O=/usr/src/build CFLAGS="-O3 -march=znver1 -mtune=znver1 -mcpu=znver1 -pipe" -j9'
