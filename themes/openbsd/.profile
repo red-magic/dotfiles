@@ -2,10 +2,15 @@
 #
 # sh/ksh initialization
 
-#PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/home/mori/.local/bin
-#export PATH HOME TERM
+PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/games:/home/mori/.local/bin
+export PATH HOME TERM
 
-export ENV=$HOME/.profile
+if [[ $(tty | grep C) == "" ]]; then
+	export ENV=$HOME/.profile
+else
+	fortune | cowsay
+fi
+
 export PS1="\$ "
 export PAGER="less -M"
 export GIT_EDITOR=vim
