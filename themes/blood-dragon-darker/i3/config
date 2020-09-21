@@ -179,7 +179,7 @@ exec_always feh --bg-scale /home/mori/pictures/wallpaper.png
 #exec_always --no-startup-id ~/.config/polybar/polybar.sh
 exec_always --no-startup-id picom		\
 			--backend glx		\
-			-c -C -o 0.2 -f -D 2 -i 1.0
+			-c -C -o 0.2 -f -D 2 -i 1.0 -m 1.0
 
 bar {
 	colors {
