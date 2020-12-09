@@ -18,7 +18,6 @@ export PAGER="less -M"
 export GIT_EDITOR=vim
 export VIMINIT="set number | colorscheme ron | set viminfo="" | syntax on | set ruler"
 alias l="ls -lha --color=always"
-alias np="netstat -p tcp -f inet"
 alias sc="ssh -v -C -p 755 mori@kraimira"
 alias sp="ssh -f -C -N -D 8080 -p 755 mori@kraimira"
 alias stc="ssh -v -C -p 755 mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion -o 'ProxyCommand=nc -v -X 5 -x 127.0.0.1:9050 %h %p'"
