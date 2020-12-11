@@ -11,7 +11,7 @@ else
 	fortune | cowsay
 fi
 
-export PS1="\$ "
+export PS1="\h\$ "
 export PAGER="less -M"
 export GIT_EDITOR=vim
 export LC_CTYPE="en_US.UTF-8"
