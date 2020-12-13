@@ -10,8 +10,10 @@ export VIMINIT="set number | colorscheme ron | set viminfo="" | syntax on | set 
 
 alias l="ls -lha"
 alias np="netstat -p tcp -f inet"
-alias sp="ssh -f -C -N -D 8080 mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion -o 'ProxyCommand=nc -X 5 -x 127.0.0.1:9050 %h %p'"
-alias sc="ssh -C mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion -o 'ProxyCommand=nc -X 5 -x 127.0.0.1:9050 %h %p'"
+alias sc="ssh -v -C -p 755 mori@kraimira"
+alias sp="ssh -f -C -N -D 8080 -p 755 mori@kraimira"
+alias stc="ssh -C mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion -o 'ProxyCommand=nc -X 5 -x 127.0.0.1:9050 %h %p'"
+alias stp="ssh -f -C -N -D 8080 mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion -o 'ProxyCommand=nc -X 5 -x 127.0.0.1:9050 %h %p'"
 #alias tpl="doas sockstat -4 | grep _tor | wc -l"
 #alias tor-stat="clear && vnstat && echo && tpl"
 
