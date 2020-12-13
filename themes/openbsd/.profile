@@ -14,11 +14,12 @@ fi
 export PS1="\h\$ "
 export PAGER="less -M"
 export GIT_EDITOR=vim
-#export LC_CTYPE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export GPG_TTY=$(tty)
 export VIMINIT="set number | colorscheme ron | set viminfo="" | syntax on | set ruler"
+#export LC_CTYPE="en_US.UTF-8"
+
 alias l="ls -lha"
 alias np="netstat -p tcp -f inet"
 alias sc="ssh -v -C -p 755 mori@kraimira"
