@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<zone target="%%REJECT%%">
-  <short>Block</short>
-  <description>Unsolicited incoming network packets are rejected. Incoming packets that are related to outgoing network connections are accepted. Outgoing network connections are allowed.</description>
+<zone target="DROP">
+  <short>Drop</short>
+  <description>Unsolicited incoming network packets are dropped. Incoming packets that are related to outgoing network connections are accepted. Outgoing network connections are allowed.</description>
   <port port="755" protocol="tcp"/>
   <rule family="ipv4">
     <source address="173.245.48.0/20"/>
