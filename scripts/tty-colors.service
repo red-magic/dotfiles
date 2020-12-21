@@ -1,9 +1,10 @@
 [Unit]
 Description=TTY Colors
+After=graphical.target
 
 [Service]
 Type=oneshot
-ExecStart=/etc/systemd/system/tty-colors
+ExecStart=/usr/bin/tty-colors-dark
 
 [Install]
 WantedBy=multi-user.target
