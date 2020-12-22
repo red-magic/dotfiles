@@ -1,0 +1,91 @@
+#!/bin/bash
+
+_package-check() {
+	packages=('gpg' 'curl' 'ssh' 'git')
+	toinstall=""
+
+	for i in  ${packages[@]}; do
+		if ! [[ -x "$(command -v $i )" ]]; then
+			toinstall+="${i} "
+		fi
+	done
+	
+	if [[ $toinstall != "" ]]; then
+		echo install $toinstall;
+		exit $1;
+	fi
+}
+
+Workstation-config() {
+	_package-check
+	_init-config
+	gpg --keyserver keyserver.ubuntu.com --search-keys 127D297F
+	gpg --edit-key 127D297F trust
+	curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.txz.gpg
+	gpg -do archive.txz archive.txz.gpg
+	unxz archive.txz
+	tar xvf archive.tar
+	gpg --import archive/ssh-gpg/e*
+	cp -vf archive/ssh-gpg/id* $HOME/.ssh/
+	rm -rfv archive*
+	rm -vf $HOME/.ssh/*.ppk
+	cp -vf $HOME/.ssh/*.pub $HOME/.ssh/authorized_keys
+	touch $HOME/.ssh/known_hosts
+	chmod -v 600 $HOME/.ssh/known_hosts
+	_git-config
+	#_sshd-config
+	#_sudo-config
+}
+
+Server-config() {
+	_package-check
+	_init-config
+	curl -LO https://github.com/red-magic.keys
+	sed -i "s/$/ $USER/" red-magic.keys
+	mv -vf red-magic.keys $HOME/.ssh/authorized_keys
+	chmod -v 400 $HOME/.ssh/authorized_keys
+	_git-config
+	#_sshd-config
+	#_sudo-config
+}
+
+_init-config() {
+	rm -rfv $HOME/.*
+	rm -rfv $HOME/repos
+	mkdir -m 700 $HOME/.ssh
+	mkdir $HOME/repos
+}
+
+_sudo-config() {
+	echo $USER	ALL=\(ALL\)	NOPASSWD:ALL | sudo tee -a /etc/sudoers
+	echo Defaults env_keep += \"VIMINIT\" | sudo tee -a /etc/sudoers
+	sudo sed -i 's/^%wheel/# %wheel/' /etc/sudoers
+}
+
+_sshd-config() {
+	sudo sed -i 's/HostKey \/etc\/ssh\/ssh_host_rsa.key/#HostKey \/etc\/ssh\/ssh_host_rsa_key/' /etc/ssh/sshd_config
+	sudo sed -i 's/HostKey \/etc\/ssh\/ssh_host_ecdsa_key/#HostKey \/etc\/ssh\/ssh_host_ecdsa_key/' /etc/ssh/sshd_config
+	sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+	sudo sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
+	sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+	sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+}
+_git-config() {
+	if [[ -f $HOME/.ssh/id_ed25519 ]]; then
+		git clone git@github.com:red-magic/dotfiles $HOME/repos/dotfiles
+		touch $HOME/OK
+	else
+		git clone https://github.com/red-magic/dotfiles $HOME/repos/dotfiles
+	fi
+	cp -vf $HOME/repos/dotfiles/.gitconfig $HOME/.gitconfig
+	cp -vf $HOME/repos/dotfiles/.bashrc $HOME/.bash_profile
+}
+
+case $1 in
+	"ws")
+		Workstation-config
+		;;
+	"s")
+		Server-config
+		;;
+esac
