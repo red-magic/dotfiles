@@ -1,15 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
 _package-check() {
-	packages=('gpg' 'curl' 'ssh' 'git')
 	toinstall=""
+	packages=('curl' 'ssh' 'git')
+
+	if [[ $wscase == "yes" ]]; then
+		packages+=('gpg')
+	fi
 
 	for i in  ${packages[@]}; do
 		if ! [[ -x "$(command -v $i )" ]]; then
 			toinstall+="${i} "
 		fi
 	done
-	
+
 	if [[ $toinstall != "" ]]; then
 		echo install $toinstall;
 		exit $1;
@@ -17,8 +21,11 @@ _package-check() {
 }
 
 Workstation-config() {
+	wscase=yes
+
 	_package-check
 	_init-config
+
 	gpg --keyserver keyserver.ubuntu.com --search-keys 127D297F
 	gpg --edit-key 127D297F trust
 	curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.txz.gpg
@@ -32,7 +39,9 @@ Workstation-config() {
 	cp -vf $HOME/.ssh/*.pub $HOME/.ssh/authorized_keys
 	touch $HOME/.ssh/known_hosts
 	chmod -v 600 $HOME/.ssh/known_hosts
+
 	_git-config
+
 	#_sshd-config
 	#_sudo-config
 }
@@ -40,11 +49,14 @@ Workstation-config() {
 Server-config() {
 	_package-check
 	_init-config
+
 	curl -LO https://github.com/red-magic.keys
 	sed -i "s/$/ $USER/" red-magic.keys
 	mv -vf red-magic.keys $HOME/.ssh/authorized_keys
 	chmod -v 400 $HOME/.ssh/authorized_keys
+
 	_git-config
+
 	#_sshd-config
 	#_sudo-config
 }
@@ -73,10 +85,10 @@ _sshd-config() {
 _git-config() {
 	if [[ -f $HOME/.ssh/id_ed25519 ]]; then
 		git clone git@github.com:red-magic/dotfiles $HOME/repos/dotfiles
-		touch $HOME/OK
 	else
 		git clone https://github.com/red-magic/dotfiles $HOME/repos/dotfiles
 	fi
+
 	cp -vf $HOME/repos/dotfiles/.gitconfig $HOME/.gitconfig
 	cp -vf $HOME/repos/dotfiles/.bashrc $HOME/.bash_profile
 }
