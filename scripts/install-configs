@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 _package-check() {
 	packages=('gpg' 'curl' 'ssh' 'git')
