@@ -82,6 +82,7 @@ _sshd-config() {
 	sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 	sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 }
+
 _git-config() {
 	if [[ -f $HOME/.ssh/id_ed25519 ]]; then
 		git clone git@github.com:red-magic/dotfiles $HOME/repos/dotfiles
