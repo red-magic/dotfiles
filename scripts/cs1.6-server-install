@@ -1,0 +1,77 @@
+#!/bin/bash
+# Install lib32-gcc-libs and lib32-sdl2
+# Better run this under a new user 'steam'
+
+rm -rfv ~/{steam,.steam,Steam}
+mkdir -v ~/steam
+cd ~/steam
+
+curl -LO https://altushost-swe.dl.sourceforge.net/project/metamod/Metamod%20Binaries/1.20/metamod-1.20-linux.tar.gz
+curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
+curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-cstrike-linux.tar.gz
+curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz
+curl -LO https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
+# CSDM crashes with podbots
+# curl -LO https://www.bailopan.net/csdm/files/csdm-2.1.2.zip
+
+for i in *.tar.gz; do tar xvf $i; done
+unzip *.zip
+
+mv -vf podbot addons
+mkdir -pv addons/metamod/dlls
+mv -fv metamod*.so addons/metamod/dlls
+cat << EOF > updateCS16.sh
+#!/bin/bash
+STEAMEXE=steamcmd ./steamcmd.sh +login anonymous +force_install_dir ~/steam/cs16 +app_update 90 validate +quit
+EOF
+chmod +x updateCS16.sh
+for i in {1..3}; do ./updateCS16.sh; done
+
+mv -v addons cs16/cstrike
+ln -sfv ~/steam/linux32 ~/.steam/sdk32
+
+cat << EOF > cs16/cstrike/addons/metamod/plugins.ini
+linux addons/amxmodx/dlls/amxmodx_mm_i386.so
+linux addons/podbot/podbot_mm.so
+EOF
+
+sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
+touch cs16/cstrike/{listip.cfg,banned.cfg}
+
+echo "Enter your Steam ID in this format"
+echo "STEAM_0:0:00000000"
+read STEAMID
+echo "\"$STEAMID\" \"\" \"abcdefghijklmnopqrstu\" \"ce\"" >> cs16/cstrike/addons/amxmodx/configs/users.ini
+
+echo "Enter ip address for your server"
+read IPADDRESS
+
+echo "Enter server password (empty for none)"
+read SVPASSWORD
+
+cat << EOF > cs16/server.sh
+#!/bin/bash 
+
+case \$1 in
+		"start")
+			./hlds_run -game cstrike +sv_password "$SVPASSWORD" -console +ip $IPADDRESS +maxplayers 32 +map de_dust2 -secure -sv_lan 0 -autoupdate -port 27015
+			;;
+
+		"start-bg")
+			./hlds_run -game cstrike +sv_password "$SVPASSWORD" -console +ip $IPADDRESS +maxplayers 32 +map de_dust2 -secure -sv_lan 0 -autoupdate -port 27015 2&>1 &
+			;;
+
+		"restart")
+			killall hlds_linux	
+			;;
+
+		"stop")
+			killall hlds_linux hlds_run
+			;;
+esac
+EOF
+
+chmod +x cs16/server.sh
+rm -vf *.zip *.tar.gz
+
+echo "===> Done"
