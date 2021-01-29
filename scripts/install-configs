@@ -2,9 +2,9 @@
 
 _package-check() {
 	toinstall=""
-	packages=('curl' 'ssh' 'git')
+	packages=('bash' 'curl' 'ssh' 'git' 'xz' 'tar')
 
-	if [[ $wscase == "yes" ]]; then
+	if [[ $isworkstation == "yes" ]]; then
 		packages+=('gpg')
 	fi
 
@@ -20,8 +20,8 @@ _package-check() {
 	fi
 }
 
-Workstation-config() {
-	wscase=yes
+workstation-config() {
+	isworkstation=yes
 
 	_package-check
 	_init-config
@@ -46,7 +46,7 @@ Workstation-config() {
 	#_sudo-config
 }
 
-Server-config() {
+server-config() {
 	_package-check
 	_init-config
 
@@ -95,10 +95,10 @@ _git-config() {
 }
 
 case $1 in
-	"ws")
-		Workstation-config
+	"workstation")
+		workstation-config
 		;;
-	"s")
-		Server-config
+	"server")
+		server-config
 		;;
 esac
