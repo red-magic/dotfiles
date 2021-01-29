@@ -42,6 +42,8 @@ workstation-config() {
 
 	_git-config
 
+	ln -sfv $HOME/.bash_profile $HOME/.bashrc
+
 	#_sshd-config
 	#_sudo-config
 }
