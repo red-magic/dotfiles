@@ -2,6 +2,24 @@
 # Install lib32-gcc-libs and lib32-sdl2
 # Better run this under a new user 'steam'
 
+_package-check() {
+	toinstall=""
+	packages=('bash' 'tar' 'gzip' 'unzip' 'curl')
+
+	for i in  ${packages[@]}; do
+		if ! [[ -x "$(command -v $i )" ]]; then
+			toinstall+="${i} "
+		fi
+	done
+
+	if [[ $toinstall != "" ]]; then
+		echo Install $toinstall;
+		exit $1;
+	fi
+}
+
+_package-check
+
 rm -rfv ~/{steam,.steam,Steam}
 mkdir -v ~/steam
 cd ~/steam

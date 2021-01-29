@@ -15,7 +15,7 @@ _package-check() {
 	done
 
 	if [[ $toinstall != "" ]]; then
-		echo install $toinstall;
+		echo Install $toinstall;
 		exit $1;
 	fi
 }
