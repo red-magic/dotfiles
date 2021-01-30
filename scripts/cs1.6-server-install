@@ -36,8 +36,7 @@ for i in *.tar.gz; do tar xvf $i; done
 unzip *.zip
 
 mv -vf podbot addons
-mkdir -pv addons/metamod/dlls
-mv -fv metamod*.so addons/metamod/dlls
+mkdir -pv addons/metamod/dlls mv -fv metamod*.so addons/metamod/dlls
 cat << EOF > updateCS16.sh
 #!/bin/bash
 STEAMEXE=steamcmd ./steamcmd.sh +login anonymous +force_install_dir ~/steam/cs16 +app_update 90 validate +quit
@@ -61,7 +60,7 @@ echo "STEAM_0:0:00000000"
 read STEAMID
 echo "\"$STEAMID\" \"\" \"abcdefghijklmnopqrstu\" \"ce\"" >> cs16/cstrike/addons/amxmodx/configs/users.ini
 
-echo "Enter ip address for your server"
+echo "Enter IP address of your server"
 read IPADDRESS
 
 echo "Enter server password (empty for none)"
