@@ -11,12 +11,12 @@ if [[ $(tty | grep tty) != "" ]]; then
 	fortune | cowsay
 fi
 
-export GPG_TTY=$(tty)
+export GPG_TTY="$(tty)"
 export LESSHISTFILE="-"
 export PS1="\h\$ "
 export PAGER="less -M"
-export GIT_EDITOR=vim
-export TERM=linux
+export GIT_EDITOR="vim"
+export TERM="xterm-256color"
 export VIMINIT="set number | colorscheme ron | set viminfo="" | syntax on | set ruler"
 alias l="ls -lha --color=always"
 alias sc="ssh -v -C -p 755 mori@kraimira"

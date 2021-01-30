@@ -44,6 +44,8 @@ workstation-config() {
 
 	ln -sfv $HOME/.bash_profile $HOME/.bashrc
 
+	sed -i '/export TERM=\"xterm-256color\"/s/^/#/' ~/.bash_profile
+
 	#_sshd-config
 	#_sudo-config
 }
@@ -58,6 +60,8 @@ server-config() {
 	chmod -v 400 $HOME/.ssh/authorized_keys
 
 	_git-config
+
+	sed -i '/export GPG_TTY=\"\$(tty)\"/s/^/#/' .bash_profile
 
 	#_sshd-config
 	#_sudo-config
