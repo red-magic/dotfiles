@@ -24,4 +24,10 @@ alias stc="ssh -v -C -p 755 mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwd
 #alias stc2="ssh -v -C -o 'ProxyCommand=nc --proxy 127.0.0.1:9050 --proxy-type socks5 %h %p' -p 755 mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion" 
 alias stp="ssh -f -C -N -D 8080 -p 755 mori@fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion -o 'ProxyCommand=nc -v -X 5 -x 127.0.0.1:9050 %h %p'"
 alias genmirlist="sudo reflector --latest 10 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist"
-alias clean-pacman-cache="echo y | yay -Scc && echo y | sudo pacman -Scc; echo"
+clean-pacman-cache() {
+	if [[ -x "$(command -v yay)" ]]; then 
+		echo y | yay -Scc
+	fi
+	echo y | sudo pacman -Scc
+	echo
+}
