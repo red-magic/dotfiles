@@ -89,5 +89,3 @@ EOF
 
 chmod -v 755 cs16/server.sh
 rm -vf *.zip *.tar.gz
-
-echo "===> Done"
