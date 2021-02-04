@@ -1,0 +1,13 @@
+[Unit]
+Description=Counter-Strike 1.6 Dedicated Server
+
+[Service]
+Type=simple
+ExecStart=/home/steam/.steam/cs16/server.sh start
+ExecRestart=/home/steam/.steam/cs16/server.sh restart
+ExecStop=/home/steam/.steam/cs16/server.sh stop
+User=steam
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
