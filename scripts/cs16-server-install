@@ -2,27 +2,27 @@
 # Install lib32-gcc-libs and lib32-sdl2
 # Better run this under a new user 'steam'
 
-_package-check() {
-	toinstall=""
-	packages=('bash' 'tar' 'gzip' 'unzip' 'curl')
+TOINSTALL=""
+PACKAGES=(bash tar gzip unzip curl)
 
-	for i in  ${packages[@]}; do
-		if ! [[ -x "$(command -v $i )" ]]; then
-			toinstall+="${i} "
-		fi
-	done
-
-	if [[ $toinstall != "" ]]; then
-		echo Install $toinstall;
-		exit $1;
+for PKG in  ${PACKAGES[@]}; do
+	if ! [[ -x "$(command -v $PKG)" ]]; then
+		TOINSTALL+="${PKG} "
 	fi
-}
+done
 
-_package-check
+if [[ $TOINSTALL != "" ]]; then
+	echo Install $TOINSTALL;
+	exit $1;
+fi
 
-rm -rfv ~/{steam,.steam,Steam}
-mkdir -v ~/steam
-cd ~/steam
+if [[ -d ~/.steam ]]; then
+	rm -rfv ~/.steam
+fi
+
+mkdir ~/.steam
+ln -sfv ~/.steam ~/.steam/steam
+cd ~/.steam
 
 curl -LO https://altushost-swe.dl.sourceforge.net/project/metamod/Metamod%20Binaries/1.20/metamod-1.20-linux.tar.gz
 curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
@@ -32,20 +32,23 @@ curl -LO https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/pod
 # CSDM crashes with podbots
 # curl -LO https://www.bailopan.net/csdm/files/csdm-2.1.2.zip
 
-for i in *.tar.gz; do tar xvf $i; done
-unzip *.zip
+for ARCH in *.tar.gz; do tar xvf $ARCH; done
+for ARCH in *.zip; do unzip $ARCH; done
 
 mv -vf podbot addons
-mkdir -pv addons/metamod/dlls mv -fv metamod*.so addons/metamod/dlls
-cat << EOF > updateCS16.sh
-#!/bin/bash
-STEAMEXE=steamcmd ./steamcmd.sh +login anonymous +force_install_dir ~/steam/cs16 +app_update 90 validate +quit
-EOF
-chmod +x updateCS16.sh
-for i in {1..3}; do ./updateCS16.sh; done
+mkdir -pv addons/metamod/dlls
+mv -vf metamod*.so addons/metamod/dlls
 
-mv -v addons cs16/cstrike
-ln -sfv ~/steam/linux32 ~/.steam/sdk32
+cat << EOF > update-cs16.sh
+#!/bin/bash
+./steamcmd.sh +login anonymous +force_install_dir cs16 +app_update 90 validate +quit
+EOF
+
+chmod 755 update-cs16.sh
+for i in {1..3}; do ./update-cs16.sh; done
+
+mv -vf addons cs16/cstrike
+ln -sfv ~/.steam/linux32 ~/.steam/sdk32
 
 cat << EOF > cs16/cstrike/addons/metamod/plugins.ini
 linux addons/amxmodx/dlls/amxmodx_mm_i386.so
@@ -53,18 +56,14 @@ linux addons/podbot/podbot_mm.so
 EOF
 
 sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
+sed -i '/pb add 100/s/^/#/g' cs16/cstrike/addons/podbot/podbot.cfg
 touch cs16/cstrike/{listip.cfg,banned.cfg}
 
-echo "Enter your Steam ID in this format"
-echo "STEAM_0:0:00000000"
-read STEAMID
+read -e -p "Enter your Steam ID in this format [STEAM_0:0:00000000]: " STEAMID
+read -e -p "Enter IP address of your server: " IPADDRESS
+read -e -p "Enter server password (empty for none): " SVPASSWORD
+
 echo "\"$STEAMID\" \"\" \"abcdefghijklmnopqrstu\" \"ce\"" >> cs16/cstrike/addons/amxmodx/configs/users.ini
-
-echo "Enter IP address of your server"
-read IPADDRESS
-
-echo "Enter server password (empty for none)"
-read SVPASSWORD
 
 cat << EOF > cs16/server.sh
 #!/bin/bash 
@@ -88,7 +87,7 @@ case \$1 in
 esac
 EOF
 
-chmod +x cs16/server.sh
+chmod -v 755 cs16/server.sh
 rm -vf *.zip *.tar.gz
 
 echo "===> Done"

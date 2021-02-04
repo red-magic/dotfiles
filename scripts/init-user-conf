@@ -1,0 +1,93 @@
+#!/bin/bash
+
+_package-check() {
+	TOINSTALL=""
+	PACKAGES=(bash curl ssh git xz tar)
+
+	if [[ $ISWORKSTATION == "yes" ]]; then
+		PACKAGES+=(gpg)
+	fi
+
+	for PKG in ${PACKAGES[@]}; do
+		if ! [[ -x "$(command -v $PKG)" ]]; then
+			TOINSTALL+="${PKG} "
+		fi
+	done
+
+	if [[ $TOINSTALL != "" ]]; then
+		echo Install $TOINSTALL;
+		exit $1;
+	fi
+}
+
+_init-config() {
+	rm -rfv * .*
+	mkdir -vm 700 .ssh
+	mkdir -v repos
+}
+
+_git-config() {
+	if [[ -f .ssh/id_ed25519 ]]; then
+		git clone git@github.com:red-magic/dotfiles repos/dotfiles
+	else
+		git clone https://github.com/red-magic/dotfiles repos/dotfiles
+	fi
+
+	cp -vf repos/dotfiles/.gitconfig .gitconfig
+	cp -vf repos/dotfiles/.bashrc .bash_profile
+}
+
+workstation-config() {
+	ISWORKSTATION=yes
+
+	cd ~/
+
+	_package-check
+	_init-config
+
+	gpg --keyserver keyserver.ubuntu.com --search-keys 127D297F
+	gpg --edit-key 127D297F trust
+	curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.txz.gpg
+	gpg -do archive.txz archive.txz.gpg
+	unxz archive.txz
+	tar xvf archive.tar
+	gpg --import archive/ssh-gpg/e*
+	cp -vf archive/ssh-gpg/id* .ssh/
+	rm -rfv archive*
+	rm -vf .ssh/*.ppk
+	cp -vf .ssh/*.pub .ssh/authorized_keys
+	touch .ssh/known_hosts
+	chmod -v 600 .ssh/known_hosts
+
+	_git-config
+
+	ln -sfv .bash_profile .bashrc
+	sed -i '/export TERM=\"xterm-256color\"/s/^/#/' ~/.bash_profile
+	source .bash_profile
+}
+
+server-config() {
+	cd ~/
+
+	_package-check
+	_init-config
+
+	curl -LO https://github.com/red-magic.keys
+	sed -i "s/$/ $USER/" red-magic.keys
+	mv -vf red-magic.keys .ssh/authorized_keys
+	chmod -v 400 .ssh/authorized_keys
+
+	_git-config
+
+	sed -i '/export GPG_TTY=\"\$(tty)\"/s/^/#/' .bash_profile
+	source .bash_profile
+}
+
+case $1 in
+	"workstation")
+		workstation-config
+		;;
+	"server")
+		server-config
+		;;
+esac
