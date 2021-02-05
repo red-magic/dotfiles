@@ -22,10 +22,9 @@ if [[ $TOINSTALL != "" ]]; then
 fi
 
 SERVUSER=steam
-SERVDIR=/home/$SERVUSER/.steam/cs16
 
 if [[ $(grep $SERVUSER /etc/passwd) == "" ]]; then
-	useradd -m -s /bin/bash steam
+	useradd -m -s /bin/bash $SERVUSER
 	passwd -dl $SERVUSER
 fi
 
@@ -62,7 +61,7 @@ steam-setup-stage-two() {
 EOF
 	
 	sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
-touch cs16/cstrike/{listip.cfg,banned.cfg}
+	touch cs16/cstrike/{listip.cfg,banned.cfg}
 	rm -vf *.zip *.tar.gz
 }
 
@@ -74,7 +73,7 @@ if [[ \$EUID != 0  ]]; then
 	exit \$1
 fi
 
-SERVUSER=steam
+SERVUSER=$SERVUSER
 STEAMDIR=/home/\$SERVUSER/.steam
 SERVDIR=/\$STEAMDIR/cs16
 SERVPARAMS="-game cstrike -pingboost 3 -maxplayers 16 -secure -autoupdate"
@@ -119,12 +118,11 @@ EOF
 chmod -v 755 /usr/bin/cs16server
 
 export -f steam-setup-stage-one
-export -f steam-setup-stage-two
-
 su $SERVUSER -c steam-setup-stage-one
 unset -f steam-setup-stage-one
 
 for i in {1..3}; do /usr/bin/cs16server update; done
 
+export -f steam-setup-stage-two
 su $SERVUSER -c steam-setup-stage-two
 unset -f steam-setup-stage-two
