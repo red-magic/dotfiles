@@ -1,0 +1,130 @@
+#!/bin/bash
+# Don't forget to install 32 bit GCC libs.
+# Better run this under a restricted user 'steam'.
+
+if [[ $EUID != 0  ]]; then
+	echo "Run under root or use sudo."
+	exit $1
+fi
+
+TOINSTALL=""
+PACKAGES=(bash tar gzip unzip curl screen)
+
+for PKG in  ${PACKAGES[@]}; do
+	if ! [[ -x "$(command -v $PKG)" ]]; then
+		TOINSTALL+="${PKG} "
+	fi
+done
+
+if [[ $TOINSTALL != "" ]]; then
+	echo Install $TOINSTALL;
+	exit $1;
+fi
+
+SERVUSER=steam
+SERVDIR=/home/$SERVUSER/.steam/cs16
+
+if [[ $(grep $SERVUSER /etc/passwd) == "" ]]; then
+	useradd -m -s /bin/bash steam
+	passwd -dl $SERVUSER
+fi
+
+steam-setup-stage-one() {
+	if [[ ! -d  ~/.steam ]]; then
+		mkdir ~/.steam
+	fi
+	
+	ln -sfv ~/.steam ~/.steam/steam
+	cd ~/.steam
+	
+	curl -LO https://altushost-swe.dl.sourceforge.net/project/metamod/Metamod%20Binaries/1.20/metamod-1.20-linux.tar.gz
+	curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
+	curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-cstrike-linux.tar.gz
+	curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz
+	curl -LO https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
+	
+	for ARCH in *.tar.gz; do tar xvf $ARCH; done
+	for ARCH in *.zip; do unzip $ARCH; done
+	
+	mv -vf podbot addons
+	mkdir -pv addons/metamod/dlls
+	mv -vf metamod*.so addons/metamod/dlls
+}
+
+steam-setup-stage-two() {
+	cd ~/.steam
+	mv -vf addons cs16/cstrike
+	ln -sfv ~/.steam/linux32 ~/.steam/sdk32
+	
+	cat << EOF > cs16/cstrike/addons/metamod/plugins.ini
+	linux addons/amxmodx/dlls/amxmodx_mm_i386.so
+	linux addons/podbot/podbot_mm.so
+EOF
+	
+	sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
+touch cs16/cstrike/{listip.cfg,banned.cfg}
+	rm -vf *.zip *.tar.gz
+}
+
+cat << EOF > /usr/bin/cs16server
+#!/bin/bash 
+
+if [[ \$EUID != 0  ]]; then
+	echo "Run under root or use sudo."
+	exit \$1
+fi
+
+SERVUSER=steam
+STEAMDIR=/home/\$SERVUSER/.steam
+SERVDIR=/\$STEAMDIR/cs16
+SERVPARAMS="-game cstrike -pingboost 3 -maxplayers 16 -secure -autoupdate"
+
+case \$1 in
+		"start")
+			su \$SERVUSER -c "cd \$SERVDIR && ./hlds_run \$SERVPARAMS"
+			;;
+
+		"restart")
+			su \$SERVUSER -c "kill \$(ps aux | grep hlds_linux | grep cstrike | awk '{print \$2}')"
+			;;
+
+		"stop")
+			su \$SERVUSER -c "kill \$(ps aux | grep hlds_run | grep cstrike | awk '{print \$2}')"
+			su \$SERVUSER -c "kill \$(ps aux | grep hlds_linux | grep cstrike | awk '{print \$2}')"
+			;;
+
+		"start-background")
+			su \$SERVUSER -c "cd \$SERVDIR && ./hlds_run \$SERVPARAMS &> /dev/null &"
+			;;
+
+		"start-screen")
+			su \$SERVUSER -c "cd \$SERVDIR && screen -m -d -S cs16 ./hlds_run \$SERVPARAMS"
+			;;
+
+		"restart-screen")
+			su \$SERVUSER -c "cd \$SERVDIR && kill \$(ps aux | grep hlds | grep SCREEN | awk '{print \$2}')"
+			su \$SERVUSER -c "cd \SERVDIR && screen -m -d -S cs16 ./hlds_run \$SERVPARAMS"
+			;;
+
+		"stop-screen")
+			su \$SERVUSER -c "kill \$(ps aux | grep hlds | grep SCREEN | awk '{print \$2}')"
+			;;
+
+		"update")
+		su \$SERVUSER -c "cd \$STEAMDIR && ./steamcmd.sh +login anonymous +force_install_dir \$SERVDIR +app_update 90 validate +quit"
+			;;
+esac
+EOF
+
+chmod -v 755 /usr/bin/cs16server
+
+export -f steam-setup-stage-one
+export -f steam-setup-stage-two
+
+su $SERVUSER -c steam-setup-stage-one
+unset -f steam-setup-stage-one
+
+for i in {1..3}; do /usr/bin/cs16server update; done
+
+su $SERVUSER -c steam-setup-stage-two
+unset -f steam-setup-stage-two
