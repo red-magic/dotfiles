@@ -77,7 +77,7 @@ server-config() {
 
 	_git-config
 	
-	sed -i 29q .bash_profile
+	sed -i 26q .bash_profile
 }
 
 case $1 in

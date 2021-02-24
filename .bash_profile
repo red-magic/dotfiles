@@ -1,11 +1,8 @@
 stty werase undef
 bind '\C-w:backward-kill-word'
+bind '\C-n:history-search-forward'
+bind '\C-p:history-search-backward'
 unset HISTFILE
-
-if [[ $- == *i* ]]; then
-	bind '"\e[A": history-search-backward'
-	bind '"\e[B": history-search-forward'
-fi
 
 if [[ ! -z "$(tty | grep tty)" || ! -z "$(tty | grep pts)" ]]; then
 	fortune | cowsay
