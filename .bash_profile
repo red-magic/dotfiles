@@ -56,13 +56,13 @@ umount-remote-host() {
 
 TORHOST=fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion
 SSHPORT=755
-LOCALPORT=8080
+LOCALPROXYPORT=8080
 
 alias sc="ssh -v -C -p $SSHPORT $USER@$REMOTEHOST"
-alias sp="ssh -f -C -N -D $LOCALPORT -p $SSHPORT $USER@$REMOTEHOST"
+alias sp="ssh -f -C -N -D $LOCALPROXYPORT -p $SSHPORT $USER@$REMOTEHOST"
 alias stc="ssh -v -C -p $SSHPORT $USER@$TORHOST -o 'ProxyCommand=nc -v -X 5 -x 127.0.0.1:9050 %h %p'"
 alias stc2="ssh -v -C -o 'ProxyCommand=nc --proxy 127.0.0.1:9050 --proxy-type socks5 %h %p' -p $SSHPORT $USER@$TORHOST" 
-alias stp="ssh -f -C -N -D $LOCALPORT -p $SSHPORT $USER@$TORHOST -o 'ProxyCommand=nc -v -X 5 -x 127.0.0.1:9050 %h %p'"
+alias stp="ssh -f -C -N -D $LOCALPROXYPORT -p $SSHPORT $USER@$TORHOST -o 'ProxyCommand=nc -v -X 5 -x 127.0.0.1:9050 %h %p'"
 
 
 if [[ $(pgrep redshift) == "" && $(tty) == /dev/tty* && -x "$(command -v redshift)" ]]; then
