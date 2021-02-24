@@ -1,6 +1,5 @@
 #!/bin/bash
 # Don't forget to install 32 bit GCC libs.
-# Better run this under a restricted user 'steam'.
 
 if [[ $EUID != 0  ]]; then
 	echo "Run under root or use sudo."
