@@ -38,7 +38,7 @@ mount-remote-host() {
 	fi
 
 	if [[ -z "$(ls -A $MNTDIR)" ]]; then
-		sshfs -p 755 -C $USER@$REMOTEHOST:$REMOTEDIR $MNTDIR
+		sshfs -p $SSHPORT -C $USER@$REMOTEHOST:$REMOTEDIR $MNTDIR
 	else
 		echo "$MNTDIR directory is not empty, refusing to mount"
 	fi
