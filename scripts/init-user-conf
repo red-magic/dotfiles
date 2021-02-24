@@ -47,9 +47,9 @@ workstation-config() {
 
 	gpg --keyserver keyserver.ubuntu.com --search-keys 127D297F
 	gpg --edit-key 127D297F trust
-	curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.txz.gpg
-	gpg -do archive.txz archive.txz.gpg
-	unxz archive.txz
+	curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.tar.xz.gpg
+	gpg -do archive.tar.xz archive.tar.xz.gpg
+	unxz archive.tar.xz
 	tar xvf archive.tar
 	gpg --import archive/ssh-gpg/e*
 	cp -vf archive/ssh-gpg/id* .ssh/
@@ -63,7 +63,6 @@ workstation-config() {
 
 	ln -sfv .bash_profile .bashrc
 	sed -i '/export TERM=\"xterm-256color\"/s/^/#/' ~/.bash_profile
-	source .bash_profile
 }
 
 server-config() {
@@ -80,7 +79,6 @@ server-config() {
 	_git-config
 
 	sed -i '/export GPG_TTY=\"\$(tty)\"/s/^/#/' .bash_profile
-	source .bash_profile
 }
 
 case $1 in
