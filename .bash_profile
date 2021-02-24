@@ -65,7 +65,7 @@ alias stc2="ssh -v -C -o 'ProxyCommand=nc --proxy 127.0.0.1:9050 --proxy-type so
 alias stp="ssh -f -C -N -D $LOCALPROXYPORT -p $SSHPORT $USER@$TORHOST -o 'ProxyCommand=nc -v -X 5 -x 127.0.0.1:9050 %h %p'"
 
 
-if [[ $(pgrep redshift) == "" && $(tty) == /dev/tty* && -x "$(command -v redshift)" ]]; then
+if [[ -z "$(pgrep redshift)" && ! -z "$(tty | grep tty)" && -x "$(command -v redshift)" ]]; then
 	redshift -l 55.0:73.4 -t 2000:2500 -m drm &> /dev/null &
 fi
 
