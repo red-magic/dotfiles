@@ -1,6 +1,6 @@
 #!/bin/bash
-start()
-{
+
+start() {
 	for i in {1..6}; do
 		echo -en "\e]P0eeeeee" > /dev/tty${i} # Background
 		echo -en "\e]P1b0003a" > /dev/tty${i} # Red
