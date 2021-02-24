@@ -47,7 +47,7 @@ workstation-config() {
 
 	gpg --keyserver keyserver.ubuntu.com --search-keys 127D297F
 	gpg --edit-key 127D297F trust
-	curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.tar.xz.gpg
+	curl -L https://github.com/red-magic/dotfiles/raw/master/.archive.tar.xz.gpg -o archive.tar.xz.gpg
 	gpg -do archive.tar.xz archive.tar.xz.gpg
 	unxz archive.tar.xz
 	tar xvf archive.tar
@@ -76,7 +76,8 @@ server-config() {
 	chmod -v 400 .ssh/authorized_keys
 
 	_git-config
-
+	
+	sed -i 29q .bash_profile
 }
 
 case $1 in
