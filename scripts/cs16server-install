@@ -76,7 +76,7 @@ fi
 
 SERVUSER=$SERVUSER
 STEAMDIR=/home/\$SERVUSER/.steam
-SERVDIR=/\$STEAMDIR/cs16
+SERVDIR=\$STEAMDIR/cs16
 SERVPARAMS="-game cstrike -pingboost 3 -maxplayers 16 -secure -autoupdate"
 
 case \$1 in
