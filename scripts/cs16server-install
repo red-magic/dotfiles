@@ -2,14 +2,14 @@
 # Don't forget to install 32 bit GCC libs.
 
 if [[ $EUID != 0  ]]; then
-	echo "Run under root or use sudo."
+	echo "Run under root or use sudo"
 	exit $1
 fi
 
 TOINSTALL=""
 PACKAGES=(bash tar gzip unzip curl screen)
 
-for PKG in  ${PACKAGES[@]}; do
+for PKG in ${PACKAGES[@]}; do
 	if ! [[ -x "$(command -v $PKG)" ]]; then
 		TOINSTALL+="${PKG} "
 	fi
