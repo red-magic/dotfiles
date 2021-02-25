@@ -111,6 +111,9 @@ case \$1 in
 		"update")
 		su \$SERVUSER -c "cd \$STEAMDIR && ./steamcmd.sh +login anonymous +force_install_dir \$SERVDIR +app_update 90 validate +quit"
 			;;
+		"screen")
+		su \$SERVUSER -c "screen -r"
+			;;
 esac
 EOF
 
