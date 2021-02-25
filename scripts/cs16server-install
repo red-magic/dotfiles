@@ -20,7 +20,7 @@ if [[ $TOINSTALL != "" ]]; then
 	exit $1;
 fi
 
-SERVUSER=steam
+export SERVUSER=steam
 
 if [[ $(grep $SERVUSER /etc/passwd) == "" ]]; then
 	useradd -m -s /bin/bash $SERVUSER
@@ -28,6 +28,8 @@ if [[ $(grep $SERVUSER /etc/passwd) == "" ]]; then
 fi
 
 steam-setup-stage-one() {
+	chmod -v 755 /home/$SERVUSER
+
 	if [[ ! -d  ~/.steam ]]; then
 		mkdir ~/.steam
 	fi
@@ -59,8 +61,8 @@ steam-setup-stage-two() {
 	linux addons/podbot/podbot_mm.so
 EOF
 	
-	sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
 	touch cs16/cstrike/{listip.cfg,banned.cfg}
+	sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
 	rm -vf *.zip *.tar.gz
 }
 
@@ -110,6 +112,7 @@ case \$1 in
 
 		"update")
 		su \$SERVUSER -c "cd \$STEAMDIR && ./steamcmd.sh +login anonymous +force_install_dir \$SERVDIR +app_update 90 validate +quit"
+		su \$SERVUSER -c "sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' ~/.steam/cs16/cstrike/liblist.gam"
 			;;
 
 		"screen")
