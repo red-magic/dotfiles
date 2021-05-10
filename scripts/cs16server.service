@@ -5,7 +5,7 @@ Description=Counter-Strike 1.6 Dedicated Server
 Type=simple
 ExecStart=/usr/bin/cs16server start
 ExecRestart=/usr/bin/cs16server restart
-ExecStop=/usr/bin/server stop
+ExecStop=/usr/bin/cs16server stop
 User=steam
 RemainAfterExit=yes
 
