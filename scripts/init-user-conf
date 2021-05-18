@@ -1,29 +1,33 @@
-#!/bin/bash
+#!/bin/sh
 
 _package-check() {
-	TOINSTALL=""
-	PACKAGES=(bash curl ssh git xz tar)
+	PACKAGES[0]=bash
+	PACKAGES[1]=curl
+	PACKAGES[2]=ssh
+	PACKAGES[3]=git
+	PACKAGES[4]=xz
+	PACKAGES[5]=tar
 
 	if [[ $ISWORKSTATION == "yes" ]]; then
-		PACKAGES+=(gpg)
+		PACKAGES[6]=gpg
 	fi
 
 	for PKG in ${PACKAGES[@]}; do
 		if ! [[ -x "$(command -v $PKG)" ]]; then
-			TOINSTALL+="${PKG} "
+			TOINSTALL="$TOINSTALL $PKG"
 		fi
 	done
 
 	if [[ $TOINSTALL != "" ]]; then
-		echo Install $TOINSTALL;
+		echo Install packages $TOINSTALL;
 		exit $1;
 	fi
 }
 
 _init-config() {
-	rm -rfv * .*
-	mkdir -vm 700 .ssh
-	mkdir -v repos
+	#rm -rf * .*
+	mkdir -m 700 .ssh
+	mkdir repos
 }
 
 _git-config() {
@@ -33,8 +37,14 @@ _git-config() {
 		git clone https://github.com/red-magic/dotfiles repos/dotfiles
 	fi
 
-	cp -vf repos/dotfiles/.gitconfig .
-	cp -vf repos/dotfiles/.bash_profile .
+	cp -f repos/dotfiles/.gitconfig .
+
+	if [[ $(uname | grep BSD) != "" ]]; then
+		cp -f repos/dotfiles/.other/.profile .
+	else
+		cp -f repos/dotfiles/.bash_profile .
+		ln -sf .bash_profile .bashrc
+	fi
 }
 
 workstation-config() {
@@ -52,16 +62,14 @@ workstation-config() {
 	unxz archive.tar.xz
 	tar xvf archive.tar
 	gpg --import archive/ssh-gpg/e*
-	cp -vf archive/ssh-gpg/id* .ssh/
-	rm -rfv archive*
-	rm -vf .ssh/*.ppk
-	cp -vf .ssh/*.pub .ssh/authorized_keys
+	cp -f archive/ssh-gpg/id* .ssh/
+	rm -rf archive*
+	rm -f .ssh/*.ppk
+	cp -f .ssh/*.pub .ssh/authorized_keys
 	touch .ssh/known_hosts
-	chmod -v 600 .ssh/known_hosts
+	chmod 600 .ssh/known_hosts
 
 	_git-config
-
-	ln -sfv .bash_profile .bashrc
 }
 
 server-config() {
@@ -72,12 +80,14 @@ server-config() {
 
 	curl -LO https://github.com/red-magic.keys
 	sed -i "s/$/ $USER/" red-magic.keys
-	mv -vf red-magic.keys .ssh/authorized_keys
-	chmod -v 400 .ssh/authorized_keys
+	mv -f red-magic.keys .ssh/authorized_keys
+	chmod 400 .ssh/authorized_keys
 
 	_git-config
 	
-	sed -i 27q .bash_profile
+	if [[ -f .bash_profile ]]; then
+		sed -i 27q .bash_profile
+	fi
 }
 
 case $1 in
