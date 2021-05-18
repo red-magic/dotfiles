@@ -19,7 +19,7 @@ _package-check() {
 	done
 
 	if [[ $TOINSTALL != "" ]]; then
-		echo Install packages $TOINSTALL;
+		echo Install $TOINSTALL;
 		exit $1;
 	fi
 }
