@@ -86,7 +86,7 @@ server-config() {
 	_git-config
 	
 	if [[ -f .bash_profile ]]; then
-		sed -i 27q .bash_profile
+		sed -i 26q .bash_profile
 	fi
 }
 

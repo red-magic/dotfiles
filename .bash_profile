@@ -15,7 +15,6 @@ export PAGER="less -M"
 export GIT_EDITOR="vim"
 export VIMINIT="set number | colorscheme ron | set viminfo="" | syntax on | set ruler"
 alias l="ls -lha --color=always"
-alias sudo="sudo -E"
 
 alias genmirlist="sudo reflector --latest 10 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist"
 clean-pacman-cache() {
