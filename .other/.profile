@@ -17,7 +17,7 @@ export LESSHISTFILE="-"
 export VIMINIT="set number | colorscheme ron | set viminfo="" | syntax on | set ruler"
 
 REMOTEHOST=kraimira
-TORHOST=fddskzhvzfnvsepp3l63ndt35humenufxz33ui2xbuvbpwdvaglg5qad.onion
+TORHOST=rdmg7ifwrjhj2k7lfqrtxpkzzr5sicsttwbfvppnlj4zjhlsorwufcid.onion
 SSHPORT=755
 LOCALPROXYPORT=8080
 
