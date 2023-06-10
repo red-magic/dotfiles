@@ -1,0 +1,58 @@
+body, html
+  {
+    font-size: 10pt!important;
+    background: #260e04!important;
+    background-color: #1b0000!important;
+    color: #9e9e9e!important;
+  }
+
+a, .quotelink, .subject, .burichan_new .backlink a, .yotsuba_b_new .backlink a, .button, .postertrip
+{
+  color: #f44336!important;      
+}
+
+.reply.post
+{
+  color: #9e9e9e!important;
+  background: #260e04!important;
+  border:none!important;
+}
+
+#postForm > tbody > tr > td, input[type="text"], input[type="text"]:focus, textarea, textarea:focus, #ft 
+li, footer li, #disclaimer-dialog .hd, .yui-simple-dialog .ft, .post.reply.highlight, .reply:target, 
+.postblock, div.pagelist, .dd-menu ul
+  {
+   color: #9e9e9e!important;
+    background: #321911!important;
+  }
+
+div.post.reply, .reply, .boxcontent, .box-outer, div.reply, div#quote-preview, #entries tr, #masthead, 
+#content article.post, #content article.post .post-meta, #sidebar, .button.load-more
+  {
+    background: #260e04!important;
+    border: none!important;
+    border-color: rgb(20,20,20)!important;
+}
+
+hr, ::after
+{
+    border-color: #260e04!important;
+}
+
+.name
+{
+color: #9e9e9e!important;
+}
+
+#qrForm,.reply.extPanel, .postblock.drag, input, textarea
+{
+  color: #9e9e9e!important;
+  background: #260e04!important;
+  border-color: #1b0000!important;
+}
+
+s, s a:not(:hover)
+{
+color: #321911!important;
+background: #321911!important;
+}

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+mkdir ~/repos
+cd ~/repos || exit
+
+echo "===> Cloning"
+
+array=( "https://github.com/williambailey/pacproxy"
+	"https://github.com/lukechilds/gifgen"
+	"https://github.com/seletskiy/go-makepkg"
+	"https://github.com/tangphillip/imgur-uploader"
+	"https://github.com/farsil/ibmfonts"
+	"https://github.com/ibm/plex"
+	"https://github.com/robbyrussell/oh-my-zsh"
+	"https://github.com/nana-4/materia-theme/"
+	"https://github.com/papirusdevelopmentteam/papirus-icon-theme"
+	"https://github.com/tremc/tremc"
+	"https://github.com/noctuid/tdrop"
+	"https://github.com/stefan-langenmaier/brother-overlay/"
+	"https://github.com/google/material-design-icons" )
+
+for element in "${array[@]}"
+do
+    echo "==> Cloning $element"
+    git clone "$element"
+done
+
+echo "===> Done"

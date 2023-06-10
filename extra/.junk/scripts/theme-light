@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cp -f ~/themes/light/.Xresources ~/.Xresources
+cp -f ~/themes/light/i3/config ~/.config/i3/config
+cp -f ~/themes/light/polybar/config ~/.config/polybar/config
+cp -f ~/themes/light/.gtkrc-2.0 ~/.gtkrc-2.0
+cp -f ~/themes/light/settings.ini ~/.config/gtk-3.0/settings.ini
+pkill compton
+xrdb ~/.Xresources
+i3-msg restart

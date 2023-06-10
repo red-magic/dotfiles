@@ -1,0 +1,85 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgb: rgb
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintfull
+Xft.autohint: true
+Xft.lcdfilter: lcddefault
+
+!URxvt*font: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
+!URxvt*boldFont: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
+
+URxvt*font: xft: PxPlus IBM VGA8:style=Regular:size=11
+URxvt*boldFont: xft: PxPlus IBM VGA8:style=Regular:size=11
+
+URxvt*letterSpace: 0
+URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt.saveLines: 8192
+
+rofi.font: PxPlus IBM VGA8 12
+
+! Blood Dragon Theme 600
+
+URxvt*foreground:   #212121
+URxvt*background:   #efebe9
+URxvt*cursorColor:  #212121
+
+! Colors 0-15.
+
+! black
+*.color0:  #212121
+*.color8:  #212121
+
+! red
+*.color1:  #212121
+*.color9:  #212121
+
+! green
+*.color2:  #212121
+*.color10: #212121
+
+! yellow
+*.color3:  #212212
+*.color11: #212121
+
+! blue
+*.color4:  #212121
+*.color12: #212121
+
+! magenta
+*.color5:  #212121
+*.color13: #212121
+
+! cyan
+*.color6:  #212121
+*.color14: #212121
+
+! white
+*.color7:  #212121
+*.color15: #212121
+
+
+! ROFI
+rofi.width: 24
+rofi.padding: 48
+rofi.hide-scrollbar: true
+rofi.bw: 0
+rofi.line-margin: 0
+rofi.line-padding: 1
+rofi.lines: 8
+rofi.columns: 2
+
+! Use extended color schem
+rofi.color-enabled:                  true
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000,  #212121, argb:00000000,  argb:FF212121,  #efebe9
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:90000000,  #2f343f, argb:90000000,  #2f343f,  #2f343f
+! Color scheme for active row
+rofi.color-active:                   argb:99b0bec5,  #586e75, argb:99FFFFFF,  #FFFFFF,  #000000
+! Color scheme window
+rofi.color-window:                   argb:FFefebe9,  #080808, #080808
+! Separator style (none, dash, solid)
+rofi.separator-style:                none

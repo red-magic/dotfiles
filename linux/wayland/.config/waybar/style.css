@@ -1,0 +1,40 @@
+* {
+	border-radius: 0;
+	border: none;
+	font-family: IBM Plex Mono;
+	font-size: 12px;
+	min-height: 0;
+	padding: 0;
+	color: #ECEFF1;
+}
+
+/* #pulseaudio,
+#network,
+#memory,
+#disk,
+#cpu,
+#language,
+#clock {
+	padding: 0 10px;
+	background: #424242;
+} */
+
+#workspaces, #waybar {
+	background: #263238;
+}
+
+#workspaces  button.focused {
+	background: #424242;
+}
+
+#workspaces  button, button.focused {
+	padding: 0 3px;
+}
+
+#workspaces  button:hover {
+	background: #616161;
+}
+
+/* #clock {
+	padding-right: 15px;
+} */

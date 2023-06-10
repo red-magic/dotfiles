@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cp -f ~/themes/terminus/.Xresources ~/.Xresources
+cp -f ~/themes/terminus/i3/config ~/.config/i3/config
+cp -f ~/themes/terminus/polybar/config ~/.config/polybar/config
+cp -f ~/themes/terminus/.gtkrc-2.0 ~/.gtkrc-2.0
+cp -f ~/themes/terminus/settings.ini ~/.config/gtk-3.0/settings.ini
+xrdb ~/.Xresources
+i3-msg restart

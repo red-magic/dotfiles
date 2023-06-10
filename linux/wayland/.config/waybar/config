@@ -1,0 +1,35 @@
+{
+	"layer": "top",
+	"position": "bottom",
+	"modules-left": ["sway/workspaces"],
+	"modules-center": [""],
+	"modules-right": ["network", "cpu", "memory", "disk", "sway/language", "pulseaudio", "clock"],
+	"pulseaudio": {
+		"format": "  <span rise='-1500'></span> {volume}%  ",
+		"format-muted": "  <span rise='-1500'></span> {volume}%  ",
+	},
+	"network": {
+		"interval": 1,
+		"infterface": "enp37s0",
+		"format-ethernet": "<span rise='-1500'></span> {bandwidthDownBits} <span rise='-1500'></span> {bandwidthUpBits}  ",
+	},
+	"memory": {
+		"interval": 1,
+		"format": "<span rise='-1500'></span> {used:0.1f}G/{total:0.1f}G  ",
+	},
+	"disk": {
+		"interval": 30,
+		"format": "<span rise='-1500'></span> {free}  ",
+	},
+	"cpu": {
+		"interval": 1,
+		"format": "<span rise='-1500'></span> {usage}%  ",
+	},
+	"clock": {
+		"interval": 1,
+		"format": "<span rise='-1500'></span> {:%a %d.%m.%Y  <span rise='-1500'></span> %H:%M:%S}  ",
+	},
+	"sway/language": {
+		"format": "<span rise='7000'>{shortDescription}</span>",
+	}
+}

@@ -1,0 +1,36 @@
+# package.use# required by sys-kernel/genkernel-3.5.3.3::gentoo
+
+# For boot
+sys-boot/grub device-mapper
+sys-kernel/genkernel cryptsetup -firmware
+sys-fs/lvm2 device-mapper-only
+
+# For xz modules compression
+sys-apps/kmod lzma
+
+# For mps-yt and webms
+media-video/ffmpeg openssl opus vpx x265
+media-video/mpv cli
+
+# For firefox
+www-client/firefox clang custom-optimization custom-cflags lto
+
+# For polybar
+x11-misc/polybar alsa i3wm network mpd
+
+# For displaying fonts and images
+x11-terms/rxvt-unicode xft
+
+# For compton
+x11-misc/compton opengl
+
+# For mpd and ncmppcpp
+media-sound/ncmpcpp visualizer
+media-sound/mpd flac lame
+
+# For feh and urxvt images
+media-libs/imlib2 png jpeg
+www-client/w3m X imlib
+
+# GUI for mkvtoolnix
+media-video/mkvtoolnix qt5

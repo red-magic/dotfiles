@@ -1,0 +1,8 @@
+[user]
+	email = egorgushcha@proton.me
+	name = Egor Gushcha
+	signingkey = ~/.ssh/id_ed25519.pub
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh

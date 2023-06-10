@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tor-relay-scanner -g 20 --timeout 1 --torrc -o /etc/tor/bridges && systemctl restart tor

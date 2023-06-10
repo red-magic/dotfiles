@@ -1,0 +1,9 @@
+export ENV=$HOME/.profile
+export CFLAGS="-march=x86-64 -O2 -pipe - -fstack-protector-strong -D_FORTIFY_SOURCE=2"
+export CXXFLAGS="${CFLAGS}"
+export FCFLAGS="${CFLAGS}"
+export FFLAGS="${CFLAGS}"
+export MAKEFLAGS="-j5"
+alias l="ls -lha"
+alias generate-initrd="find . -print0 | cpio --null -ov --format=newc | xz -9e -C crc32 > /root/initrd.xz"
+alias load-qemu="qemu-system-x86_64 -kernel /root/tools/linux-*/arch/x86_64/boot/bzImage -initrd /root/initrd.xz -nographic -append 'noapic console=ttyS0'"

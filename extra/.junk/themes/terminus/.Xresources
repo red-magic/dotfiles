@@ -1,0 +1,84 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgb: rgb
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.autohint: true
+Xft.lcdfilter: lcddefault
+
+URxvt*font: xft: Terminus
+URxvt*boldFont: xft: Terminus:style=Bold
+
+URxvt*letterSpace: 0
+URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt.saveLines: 8192
+
+rofi.font: Terminus Bold 12
+
+! IBM Plex Theme #300 Dark
+
+! special
+*.foreground:   #bdbdbd
+*.background:   #1b0000
+*.cursorColor:  #bdbdbd
+
+! black
+*color0:  #1b0000
+*color8:  #1b0000
+
+! red
+*color1:  #af4448
+*color9:  #af4448
+
+! green
+*color2:  #ba2d65
+*color10: #ba2d65
+
+! yellow
+*color3:  #c75b39
+*color11: #c75b39
+
+! blue
+*color4:  #af4448
+*color12: #af4448
+
+! magenta
+*color5:  #ba2d65
+*color13: #ba2d65
+
+! cyan
+*color6:  #af4448
+*color14: #af4448
+
+! white 
+*color7:  #bdbdbd
+*color15: #bdbdbd
+
+! Black color that will not be affected by bold highlighting.
+*color66:  #212121
+
+
+! ROFI
+rofi.width: 24
+rofi.padding: 48
+rofi.hide-scrollbar: true
+rofi.bw: 8
+rofi.line-margin: 0
+rofi.line-padding: 1
+rofi.lines: 8
+rofi.columns: 2
+
+! Use extended color schem
+rofi.color-enabled:                  true
+
+!				     "window"	     "border"  "separator"
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000 , #bdbdbd , argb:00000000 , argb:FFaf4448 , #1b0000
+
+! Color scheme window
+rofi.color-window:                   argb:FF1b0000 , #bdbdbd , #1b0000
+
+! Separator style (none, dash, solid)
+rofi.separator-style:                none

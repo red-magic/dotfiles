@@ -1,0 +1,106 @@
+#!/bin/sh
+
+_packages_check() {
+	set -- curl ssh git xz tar
+
+	if [ "$is_workstation" = yes ]; then
+		set -- "$@" gpg
+	fi
+
+	for pkg in "$@"; do
+		if [ ! -x "$(command -v "$pkg")" ]; then
+			to_install="$to_install $pkg"
+		fi
+	done
+
+	if [ -n "$to_install" ]; then
+		echo Install:"$to_install";
+		exit 1
+	fi
+}
+
+_init_config() {
+	mkdir -m 700 .ssh
+	mkdir repos
+}
+
+_git_config() {
+	if [ -f .ssh/id_ed25519 ]; then
+		git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
+	else
+		git clone https://github.com/red-magic/dotfiles repos/dotfiles
+	fi
+
+	if uname -a | grep -q Linux; then
+		cp -f repos/dotfiles/linux/configs/.bash_profile .
+		ln -sf .bash_profile .bashrc
+	else
+	if uname | grep -q BSD; then
+		cp -f repos/dotfiles/bsd/configs/.profile .
+	if uname | grep -q OpenBSD; then
+		cp -f repos/dotfiles/bsd/configs/.mailrc .
+	fi
+	fi
+	fi
+
+	mkdir -p .config/ranger
+	cp -f repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
+}
+
+workstation_config() {
+	is_workstation=yes
+
+	_packages_check
+
+	cd ~/ || exit
+
+	_init_config
+
+	gpg --keyserver keyserver.ubuntu.com --search-keys 159C66B3104E3E30
+	gpg --edit-key 159C66B3104E3E30 trust
+	curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
+	gpg -do archive.tar.xz archive.tar.xz.gpg
+
+	while true
+	do
+		echo Continue? [y/n]
+		read -r yn
+		case $yn in
+			[Yy]* ) echo Continuing && break;;
+			[Nn]* ) echo Exiting && exit 1;;
+		esac
+	done
+
+	unxz archive.tar.xz
+	tar xf archive.tar
+	gpg --import archive/ssh-gpg/*proton.me
+	cp -f archive/ssh-gpg/id* .ssh/
+	rm -rf archive*
+	rm -f .ssh/*.ppk
+	cp -f .ssh/*.pub .ssh/authorized_keys
+	touch .ssh/known_hosts
+	chmod 600 .ssh/known_hosts
+
+	_git_config
+
+	cp -f repos/dotfiles/extra/configs/.gitconfig .
+}
+
+server_config() {
+	_packages_check
+
+	cd ~/ || exit
+
+	_init_config
+
+	curl -LO https://github.com/red-magic.keys
+	mv -f red-magic.keys .ssh/authorized_keys
+	chmod 400 .ssh/authorized_keys
+
+	_git_config
+}
+
+case $1 in
+	"-w") workstation_config;;
+	"-s") server_config;;
+esac

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+find . -not -type d -exec file "{}" ";" | grep CRLF
+find . -not -type d -exec file "{}" ";" | grep  LF

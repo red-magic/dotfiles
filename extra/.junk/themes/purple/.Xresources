@@ -1,0 +1,86 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgb: rgb
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.autohint: true
+Xft.lcdfilter: lcddefault
+
+URxvt*font: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
+URxvt*boldFont: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
+URxvt*letterSpace: 0
+URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt.saveLines: 8192
+
+rofi.font: IBM IBM VGA 8x16 12
+
+! Purple Theme
+
+URxvt*foreground:   #fbf7ff
+URxvt*background:   #35205b
+URxvt*cursorColor:  #fbf7ff
+
+! Colors 0-15.
+
+*.color0: #35205b
+*color0:  #35205b
+*.color1: #8c61db
+*color1:  #8c61db
+*.color2: #9b7cd0
+*color2:  #9b7cd0
+*.color3: #9468de
+*color3:  #9468de
+*.color4: #9f76e3
+*color4:  #9f76e3
+*.color5: #c7b0f2
+*color5:  #c7b0f2
+*.color6: #ede2ff
+*color6:  #ede2ff
+*.color7: #fbf7ff
+*color7:  #fbf7ff
+*.color8: #b5b2bc
+*color8:  #b5b2bc
+*.color9: #8c61db
+*color9:  #8c61db
+*.color10: #9b7cd0
+*color10:  #9b7cd0
+*.color11: #9468de
+*color11:  #9468de
+*.color12: #9f76e3
+*color12:  #9f76e3
+*.color13: #c7b0f2
+*color13:  #c7b0f2
+*.color14: #ede2ff
+*color14:  #ede2ff
+*.color15: #fbf7ff
+*color15:  #fbf7ff
+
+! Black color that will not be affected by bold highlighting.
+*.color66: #35205b
+*color66:  #35205b
+
+
+! ROFI
+rofi.width: 24
+rofi.padding: 48
+rofi.hide-scrollbar: true
+rofi.bw: 0
+rofi.line-margin: 0
+rofi.line-padding: 1
+rofi.lines: 8
+rofi.columns: 2
+
+! Use extended color schem
+rofi.color-enabled:                  true
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000,  #fbf7ff , argb:00000000,  #8c61db,   #fbf7ff,
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:90000000,  #2f343f , argb:90000000,  #2f343f ,  #2f343f
+! Color scheme for active row
+rofi.color-active:                   argb:99FFFFFF,  #586e75 , argb:99FFFFFF,  #FFFFFF ,  #000000
+! Color scheme window
+rofi.color-window:                   argb:DD35205b,  #35205b ,  #35205b
+! Separator style (none, dash, solid)
+rofi.separator-style:                none

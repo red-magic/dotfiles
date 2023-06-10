@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cp -f ~/themes/ibm-plex/.Xresources ~/.Xresources
+cp -f ~/themes/ibm-plex/i3/config ~/.config/i3/config
+cp -f ~/themes/ibm-plex/polybar/config ~/.config/polybar/config
+cp -f ~/themes/ibm-plex/.gtkrc-2.0 ~/.gtkrc-2.0
+cp -f ~/themes/ibm-plex/settings.ini ~/.config/gtk-3.0/settings.ini
+xrdb ~/.Xresources
+i3-msg restart

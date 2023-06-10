@@ -1,0 +1,88 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgb: rgb
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.autohint: true
+Xft.lcdfilter: lcddefault
+
+URxvt*font: xft:DejaVu Sans Mono:size=9
+URxvt*letterSpace: -1
+URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt.saveLines: 8192
+
+rofi.font: DejaVu Sans Mono 10
+
+! Retro Wave Theme
+
+URxvt*foreground:   #B0BDE7
+!URxvt*background:   #281e3c - Original
+URxvt*background:   #1b101f
+URxvt*cursorColor:  #B0BDE7
+
+! special
+*.foreground:   #ffffff
+*.background:   #000000
+*.cursorColor:  #ffffff
+
+! black
+!*.color0:       #1B101F
+*.color0:       #281e3c
+*.color8:       #746d74
+
+! red
+*.color1:       #A43838
+*.color9:       #A43838
+
+! green
+*.color2:       #94488e
+*.color10:      #94488e
+
+! yellow
+*.color3:       #94488e
+*.color11:      #94488e
+
+! blue
+*.color4:       #4872DF
+*.color12:      #4872DF
+
+! magenta
+*.color5:       #94488e
+*.color13:      #94488e
+
+! cyan
+*.color6:       #47a5be
+*.color14:      #47a5be
+
+! white
+*.color7:       #b0bde7
+*.color15:      #b0bde7
+
+! Black color that will not be affected by bold highlighting.
+*.color66: #180C18
+*color66:  #180C18
+
+! ROFI
+rofi.width: 24
+rofi.padding: 48
+rofi.hide-scrollbar: true
+rofi.bw: 0
+rofi.line-margin: 0
+rofi.line-padding: 1
+rofi.lines: 8
+rofi.columns: 2
+
+! Use extended color schem
+rofi.color-enabled:                  true
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000,  #B0BDE7 , argb:00000000,  argb:00000000,  #a6459f ,
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:90000000,  #2f343f , argb:90000000,  #2f343f ,  #2f343f
+! Color scheme for active row
+rofi.color-active:                   argb:99FFFFFF,  #586e75 , argb:99FFFFFF,  #FFFFFF ,  #000000
+! Color scheme window
+rofi.color-window:                   argb:CC1b101f,  #1b101f ,  #1b101f
+! Separator style (none, dash, solid)
+rofi.separator-style:                none

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+zram-init() {
+  MEM=$(( 1024 * 1024 * 1024 * 8 ))
+  modprobe zram
+  echo "$MEM" > /sys/block/zram0/disksize
+  mkswap /dev/zram0 -L zram0
+  swapon -p 100 /dev/zram0
+}
+
+if [[ $(ls /dev/zram0) == "" ]]; then
+	zram-init &> /dev/null
+fi
