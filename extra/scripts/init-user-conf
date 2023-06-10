@@ -73,7 +73,7 @@ workstation_config() {
 
 	unxz archive.tar.xz
 	tar xf archive.tar
-	gpg --import archive/ssh-gpg/*proton.me
+	gpg --import archive/ssh-gpg/*.me
 	cp -f archive/ssh-gpg/id* .ssh/
 	rm -rf archive*
 	rm -f .ssh/*.ppk
