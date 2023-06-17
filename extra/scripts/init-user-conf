@@ -8,13 +8,13 @@ _packages_check() {
 	fi
 
 	for pkg in "$@"; do
-		if [ ! -x "$(command -v "$pkg")" ]; then
+		if [ -z "$(command -v "$pkg")" ]; then
 			to_install="$to_install $pkg"
 		fi
 	done
 
 	if [ -n "$to_install" ]; then
-		echo Install:"$to_install";
+		echo "Install:$to_install";
 		exit 1
 	fi
 }
