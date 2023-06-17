@@ -10,7 +10,7 @@ while getopts ":d:c:" opt; do
 		c) cd_args="-cdrom ${OPTARG}";;
 		d) drive_args="-drive file=${OPTARG},format=raw";;
 		:) echo "Option -$OPTARG requires an argument" && exit 1;;
-		\?) usage && exit 1;;
+		?) usage && exit 1;;
 	esac
 done
 
