@@ -1,15 +1,16 @@
 #!/bin/sh
 
 usage() {
-	printf '\nUsage: qemu-launch-vm -d <system-image-file> -c <cd-iso-file>\n\n'
+	printf 'Usage: qemu-launch-vm [-d <system-image-file>] [-c <cd-iso-file>]\n'
 }
 
-while getopts "d:c:" arg; do
+while getopts ":d:c:" arg; do
 	qemu_args="qemu-system-x86_64 -cpu host -smp 8 -m 8G -enable-kvm"
 	case $arg in
 		c) cd_args="-cdrom ${OPTARG}";;
 		d) drive_args="-drive file=${OPTARG},format=raw";;
-		*) usage && exit 1;;
+		:) echo "Option -$OPTARG requires an argument" && exit 1;;
+		\?) usage && exit 1;;
 	esac
 done
 
