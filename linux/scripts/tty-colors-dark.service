@@ -6,4 +6,4 @@ Type=oneshot
 ExecStart=/usr/bin/tty-colors-dark
 
 [Install]
-WantedBy=agetty.target
+WantedBy=getty.target
