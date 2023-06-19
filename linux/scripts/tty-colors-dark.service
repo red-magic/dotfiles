@@ -1,10 +1,9 @@
 [Unit]
-Description=TTY Colors
-After=multi-user.target
+Description=TTY dark colors
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/tty-colors-dark
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=agetty.target
