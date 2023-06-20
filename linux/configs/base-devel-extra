@@ -1,9 +1,12 @@
 bc
+clang
 cpio
 git
 inetutils
 kmod
 libelf
+lld
+llvm
 perl
 tar
 xmlto
