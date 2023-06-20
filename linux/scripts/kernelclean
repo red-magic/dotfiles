@@ -1,0 +1,3 @@
+#!/bin/bash
+
+make clean && make distclean && make mrproper && zcat /proc/config.gz > .config
