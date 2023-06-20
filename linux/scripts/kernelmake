@@ -1,3 +1,0 @@
-#!/bin/bash
-
-make LLVM=1 KCFLAGS='-O2 -pipe -march=znver1 -mtune=znver1' KCPPFLAGS='-O2 -pipe -march=znver1 -mtune=znver1' -j9 all
