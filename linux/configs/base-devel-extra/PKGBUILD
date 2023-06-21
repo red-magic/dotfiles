@@ -1,0 +1,23 @@
+pkgname=base-devel-extra
+pkgver=1
+pkgrel=1
+pkgdesc='Extra base-devel packages'
+arch=('any')
+depends=(
+	bc
+	cpio
+	git
+	inetutils
+	kmod
+	libelf
+	perl
+	tar
+	xmlto
+	xz
+)
+
+optdepends=(
+	clang
+	lld
+	llvm
+)
