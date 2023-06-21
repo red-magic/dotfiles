@@ -1,8 +1,0 @@
-#!/bin/bash
-
-case $1 in
-	"allclean") make clean && make distclean && make mrproper && zcat /proc/config.gz > .config;;
-	"allmakeclang") make LLVM=1 KCFLAGS='-O2 -pipe -march=znver1 -mtune=znver1' KCPPFLAGS='-O2 -pipe -march=znver1 -mtune=znver1' -j9 all;;
-	"allmakegcc") make KCFLAGS='-O2 -pipe -march=znver1 -mtune=znver1' KCPPFLAGS='-O2 -pipe -march=znver1 -mtune=znver1' -j9 all;;
-	"modulesinstall") sudo make INSTALL_MOD_STRIP=1 modules_install;;
-esac

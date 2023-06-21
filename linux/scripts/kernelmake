@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Installing modules requires INSTALL_MOD_STRIP=1
+# LLVM=1 requires clang lld llvm
+
+flags='-O2 -pipe -march=znver1 -mtune=znver1'
+
+make KCFLAGS="$flags" KCPPFLAGS="$flags" -j9 "$@"
