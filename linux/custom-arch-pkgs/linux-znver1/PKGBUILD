@@ -1,5 +1,5 @@
 pkgname=linux-znver1
-pkgver=6.3.8
+pkgver=6.3.9
 majorver=6
 pkgrel=1
 pkgdesc='Linux kernel for znver1 architecture'
@@ -19,15 +19,15 @@ depends=(
 	base-devel
 	bc
 	cpio
-	git
+	#git # No need
 	inetutils
 	kmod
 	libelf
 	pahole
 	perl
-	#rsync # For headers install
+	#rsync # For headers
 	tar
-	xmlto
+	#xmlto # For docs
 	xz
 )
 
