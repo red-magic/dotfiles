@@ -1,0 +1,70 @@
+pkgname=linux-znver1
+pkgver=6.3.8
+majorver=6
+pkgrel=1
+pkgdesc='Linux kernel for znver1 architecture'
+arch=(x86_64)
+license=(GPL2)
+install=linux-znver1.install
+
+source=(https://cdn.kernel.org/pub/linux/kernel/v$majorver.x/linux-$pkgver.tar.xz
+	config
+	linux-znver1.preset)
+
+b2sums=(SKIP
+	SKIP
+	SKIP)
+
+depends=(
+	base-devel
+	bc
+	cpio
+	git
+	inetutils
+	kmod
+	libelf
+	#pahole # For headers
+	perl
+	#rsync # For headers
+	tar
+	xmlto
+	xz
+)
+
+#optdepends=(
+#	amd-ucode
+#	linux-firmware
+#	clang
+#	lld
+#	llvm
+#)
+
+_kernelmake() {
+	flags='-O2 -pipe -march=znver1 -mtune=znver1'
+	make LOCALVERSION=-znver1 KCFLAGS="$flags" KCPPFLAGS="$flags" -j9 "$@"
+}
+
+prepare() {
+	cd linux-$pkgver
+	_kernelmake clean && _kernelmake distclean && _kernelmake mrproper
+	cp ../config .config
+	_kernelmake prepare
+}
+
+build() {
+	cd linux-$pkgver
+	_kernelmake all
+}
+
+package() {
+	cd $srcdir/linux-$pkgver
+	_kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install 
+	rm $pkgdir/usr/lib/modules/$pkgver-znver1/{build,source}
+	install -Dm 644 arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-linux-znver1
+	# For headers
+	#mkdir $pkgdir/usr/lib/modules/$pkgver-znver1/build
+	#_kernelmake INSTALL_HDR_PATH=$pkgdir/usr/lib/modules/$pkgver-znver1/build headers_install 
+	#mkdir $pkgdir/usr/src
+	#ln -s $pkgdir/usr/lib/modules/$pkgver-znver1/build $pkgdir/usr/src/$pkgname
+	install -Dm 644 $srcdir/linux-znver1.preset $pkgdir/etc/mkinitcpio.d/linux-znver1.preset
+}

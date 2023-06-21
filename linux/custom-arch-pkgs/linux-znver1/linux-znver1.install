@@ -1,0 +1,7 @@
+post_install() {
+	mkinitcpio -p linux-znver1
+}
+
+post_upgrade() {
+	mkinitcpio -p linux-znver1
+}

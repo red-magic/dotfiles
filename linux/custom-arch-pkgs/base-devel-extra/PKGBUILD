@@ -2,7 +2,7 @@ pkgname=base-devel-extra
 pkgver=1
 pkgrel=1
 pkgdesc='Extra base-devel packages'
-arch=('any')
+arch=(any)
 depends=(
 	bc
 	cpio
@@ -10,15 +10,16 @@ depends=(
 	inetutils
 	kmod
 	libelf
-	pahole
+	#pahole # For headers
 	perl
+	#rsync # For headers
 	tar
 	xmlto
 	xz
 )
 
-optdepends=(
-	clang
-	lld
-	llvm
-)
+#optdepends=(
+#	clang
+#	lld
+#	llvm
+#)
