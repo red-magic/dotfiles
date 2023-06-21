@@ -10,9 +10,9 @@ depends=(
 	inetutils
 	kmod
 	libelf
-	#pahole # For headers
+	pahole
 	perl
-	#rsync # For headers
+	#rsync # For headers install
 	tar
 	xmlto
 	xz
