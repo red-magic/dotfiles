@@ -1,11 +1,11 @@
-pkgname=linux-znver1
+pkgname=linux-znver1-clang
 pkgver=6.3.9
 pkgrel=1
 pkgdesc='Linux kernel for znver1 architecture'
 arch=(x86_64)
 license=(GPL2)
 install=linux.install
-conflics=(linux-znver1-clang)
+conflics=(linux-znver1)
 
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch1-1/config
@@ -29,6 +29,9 @@ depends=(
 	tar
 	#xmlto # For docs
 	xz
+	clang
+	lld
+	llvm
 )
 
 optdepends=(
@@ -42,7 +45,7 @@ _linuxsrc=linux-$pkgver
 
 _kernelmake() {
 	local flags="-O2 -pipe -march=$_arch -mtune=$_arch"
-	make LOCALVERSION=-"$_arch" KCFLAGS="$flags" KCPPFLAGS="$flags" "$@"
+	make LLVM=1 LOCALVERSION=-"$_arch" KCFLAGS="$flags" KCPPFLAGS="$flags" "$@"
 }
 
 prepare() {
