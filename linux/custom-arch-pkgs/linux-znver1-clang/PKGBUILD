@@ -5,7 +5,7 @@ pkgdesc='Linux kernel for znver1 architecture'
 arch=(x86_64)
 license=(GPL2)
 install=linux.install
-conflics=(linux-znver1)
+conflicts=(linux-znver1)
 
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch1-1/config
