@@ -6,37 +6,15 @@ arch=(x86_64)
 license=(GPL2)
 install=linux.install
 conflicts=(linux-znver1-clang)
-
+depends=(bc cpio inetutils pahole)
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch1-1/config
 	linux.preset)
-
 b2sums=(SKIP
 	SKIP
 	SKIP)
 
-depends=(
-	base-devel
-	bc
-	cpio
-	#git # No need
-	inetutils
-	kmod
-	libelf
-	pahole
-	perl
-	tar
-	#xmlto # For docs
-	xz
-)
-
-optdepends=(
-	amd-ucode
-	linux-firmware
-)
-
 _arch=znver1
-
 _linuxsrc=linux-$pkgver
 
 _kernelmake() {
@@ -48,7 +26,6 @@ prepare() {
 	cd $_linuxsrc
 	_kernelmake clean && _kernelmake distclean && _kernelmake mrproper
 	cp -f $srcdir/config $srcdir/$_linuxsrc/.config
-	#_kernelmake localmodconfig # Quick test
 	_kernelmake prepare
 }
 
