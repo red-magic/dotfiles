@@ -1,0 +1,22 @@
+#!/bin/bash
+
+start() {
+	for i in {1..6}; do
+		echo -en "\e]P0eeeeee" > /dev/tty"${i}" # Background
+		echo -en "\e]P1424242" > /dev/tty"${i}" # Red
+		echo -en "\e]P2424242" > /dev/tty"${i}" # Green
+		echo -en "\e]P3424242" > /dev/tty"${i}" # Yellow
+		echo -en "\e]P4424242" > /dev/tty"${i}" # Blue
+		echo -en "\e]P5424242" > /dev/tty"${i}" # Magenta
+		echo -en "\e]P6424242" > /dev/tty"${i}" # Cyan
+		echo -en "\e]P7424242" > /dev/tty"${i}" # White
+		echo -en "\e]P8eeeeee" > /dev/tty"${i}" # Black
+		echo -en "\e]P9424242" > /dev/tty"${i}" # Red
+		echo -en "\e]PA424242" > /dev/tty"${i}" # Green
+		echo -en "\e]PB424242" > /dev/tty"${i}" # Yellow
+		echo -en "\e]PC424242" > /dev/tty"${i}" # Blue
+		echo -en "\e]PD424242" > /dev/tty"${i}" # Magenta
+		echo -en "\e]PE424242" > /dev/tty"${i}" # Cyan
+		echo -en "\e]PFeeeeee" > /dev/tty"${i}" # White
+	done
+}; start 
