@@ -4,11 +4,11 @@ pkgrel=1
 pkgdesc='Linux kernel for znver1 architecture'
 arch=(x86_64)
 license=(GPL2)
-install=$pkgname.install
+install=linux.install
 
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch1-1/config
-	$pkgname.preset)
+	linux.preset)
 
 b2sums=(SKIP
 	SKIP
@@ -30,13 +30,10 @@ depends=(
 	xz
 )
 
-#optdepends=(
-#	amd-ucode
-#	linux-firmware
-#	clang
-#	lld
-#	llvm
-#)
+optdepends=(
+	amd-ucode
+	linux-firmware
+)
 
 _arch=znver1
 
@@ -48,7 +45,7 @@ _kernelmake() {
 prepare() {
 	cd linux-$pkgver
 	_kernelmake clean && _kernelmake distclean && _kernelmake mrproper
-	cp -f ../config .config
+	cp -f $srcdir/config .config
 	#_kernelmake localmodconfig # Quick test
 	_kernelmake prepare
 }
@@ -62,11 +59,18 @@ package() {
 	cd $srcdir/linux-$pkgver
 	_kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install 
 	rm -f $pkgdir/usr/lib/modules/$pkgver-$_arch/{build,source}
-	install -Dm 644 arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-$pkgname
+	install -Dm 644 arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-linux-$_arch
+
 	# For headers
 	#mkdir $pkgdir/usr/lib/modules/$pkgver-$_arch/build
 	#_kernelmake INSTALL_HDR_PATH=$pkgdir/usr/lib/modules/$pkgver-$_arch/build headers_install 
 	#mkdir $pkgdir/usr/src
-	#ln -s $pkgdir/usr/lib/modules/$pkgver-$_arch/build $pkgdir/usr/src/$pkgname
-	install -Dm 644 $srcdir/$pkgname.preset $pkgdir/etc/mkinitcpio.d/$pkgname.preset
+	#ln -s $pkgdir/usr/lib/modules/$pkgver-$_arch/build $pkgdir/usr/src/linux-$_arch
+
+	cp -f "${startdir}/${install}" "${startdir}/${install}.pkg"
+	true && install=${install}.pkg
+	sed -i "s/kernelarch=/kernelarch=$_arch/g" "${startdir}/${install}"
+
+	install -Dm 644 $srcdir/linux.preset $pkgdir/etc/mkinitcpio.d/linux-$_arch.preset
+	sed -i "s/linux/linux-$_arch/g" $pkgdir/etc/mkinitcpio.d/linux-$_arch.preset
 }
