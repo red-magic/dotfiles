@@ -1,9 +1,9 @@
 [Unit]
-Description=TTY dark colors
+Description=Change tty colors
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/tty-colors-dark
+ExecStart=/usr/bin/tty-colors
 
 [Install]
 WantedBy=getty.target

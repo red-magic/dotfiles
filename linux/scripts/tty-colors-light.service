@@ -1,9 +1,0 @@
-[Unit]
-Description=TTY light colors
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/tty-colors-light
-
-[Install]
-WantedBy=getty.target
