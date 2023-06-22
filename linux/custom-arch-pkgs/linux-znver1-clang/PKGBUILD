@@ -25,7 +25,6 @@ depends=(
 	libelf
 	pahole
 	perl
-	#rsync # For headers
 	tar
 	#xmlto # For docs
 	xz
@@ -66,12 +65,6 @@ package() {
 	_kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install 
 	rm -f $pkgdir/usr/lib/modules/$pkgver-$_arch/{build,source}
 	install -Dm 644 $srcdir/$_linuxsrc/arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-linux-$_arch
-
-	# For headers
-	#mkdir $pkgdir/usr/lib/modules/$pkgver-$_arch/build
-	#_kernelmake INSTALL_HDR_PATH=$pkgdir/usr/lib/modules/$pkgver-$_arch/build headers_install 
-	#mkdir $pkgdir/usr/src
-	#ln -s $pkgdir/usr/lib/modules/$pkgver-$_arch/build $pkgdir/usr/src/linux-$_arch
 
 	cp -f $startdir/$install $startdir/$install.pkg
 	true && install=$install.pkg
