@@ -17,6 +17,6 @@ start() {
 		echo -en "\e]PC424242" > /dev/tty"${i}" # Blue
 		echo -en "\e]PD424242" > /dev/tty"${i}" # Magenta
 		echo -en "\e]PE424242" > /dev/tty"${i}" # Cyan
-		echo -en "\e]PFeeeeee" > /dev/tty"${i}" # White
+		echo -en "\e]PF424242" > /dev/tty"${i}" # White
 	done
 }; start 
