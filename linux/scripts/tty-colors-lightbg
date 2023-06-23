@@ -1,0 +1,10 @@
+#!/bin/bash
+
+start() {
+	for i in {1..6}; do
+		echo -en "\e]P0FFFFFF" > /dev/tty"${i}" # Background
+		echo -en "\e]P7000000" > /dev/tty"${i}" # Background
+		echo -en "\e]P8FFFFFF" > /dev/tty"${i}" # Black
+		echo -en "\e]PF000000" > /dev/tty"${i}" # Black
+	done
+}; start 

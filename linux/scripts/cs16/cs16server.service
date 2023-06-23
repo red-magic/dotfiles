@@ -1,5 +1,5 @@
 [Unit]
-Description=Counter-Strike 1.6 Dedicated Server
+Description=Counter-Strike 1.6 dedicated server
 
 [Service]
 Type=simple
