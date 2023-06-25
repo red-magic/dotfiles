@@ -1,0 +1,49 @@
+pkgname=linux-zen-znver1
+pkgver=6.3.9
+zenver=1
+pkgrel=1
+pkgdesc='Linux zen kernel for znver1 architecture'
+arch=(x86_64)
+license=(GPL2)
+install=linux.install
+depends=(bc cpio inetutils pahole)
+source=(https://github.com/zen-kernel/zen-kernel/archive/refs/tags/v$pkgver-zen$zenver.tar.gz
+	https://gitlab.archlinux.org/archlinux/packaging/packages/linux-zen/-/raw/$pkgver.zen$zenver-$pkgrel/config
+	linux.preset)
+b2sums=(SKIP
+	SKIP
+	SKIP)
+
+_arch=znver1
+_linuxsrc=zen-kernel-$pkgver-zen$zenver
+
+_kernelmake() {
+	local flags="-O2 -pipe -march=$_arch -mtune=$_arch"
+	make LOCALVERSION=-$pkgrel-$_arch KCFLAGS="$flags" KCPPFLAGS="$flags" "$@"
+}
+
+prepare() {
+	cd $_linuxsrc
+	_kernelmake clean && _kernelmake distclean && _kernelmake mrproper
+	cp -f $srcdir/config $srcdir/$_linuxsrc/.config
+	_kernelmake prepare
+}
+
+build() {
+	cd $_linuxsrc
+	_kernelmake all
+}
+
+package() {
+	cd $srcdir/$_linuxsrc
+	_kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install 
+	rm -f $pkgdir/usr/lib/modules/$pkgver-zen$zenver-$pkgrel-$_arch/{build,source}
+	install -Dm 644 $srcdir/$_linuxsrc/arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-$pkgname
+
+	cp -f $startdir/$install $startdir/$install.pkg
+	true && install=$install.pkg
+	sed -i "s/kernelname=/kernelname=$pkgname/g" $startdir/$install
+
+	install -Dm 644 $srcdir/linux.preset $pkgdir/etc/mkinitcpio.d/$pkgname.preset
+	sed -i "s/linux/$pkgname/g" $pkgdir/etc/mkinitcpio.d/$pkgname.preset
+}
