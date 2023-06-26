@@ -56,7 +56,7 @@ workstation_config() {
 
 	_init_config
 
-	gpg --keyserver keyserver.ubuntu.com --search-keys 159C66B3104E3E30
+	gpg --receive-keys 159C66B3104E3E30
 	gpg --edit-key 159C66B3104E3E30 trust
 	curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
 	gpg -do archive.tar.xz archive.tar.xz.gpg
