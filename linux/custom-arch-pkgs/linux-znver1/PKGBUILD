@@ -1,14 +1,14 @@
 pkgname=linux-znver1
-pkgver=6.3.9
+pkgver=6.4
+archver=1
 pkgrel=1
 pkgdesc='Linux kernel for znver1 architecture'
 arch=(x86_64)
 license=(GPL2)
 install=linux.install
-conflicts=(linux-znver1-clang)
-depends=(bc cpio inetutils pahole)
+depends=(base-devel bc cpio inetutils pahole mkinitcpio grub)
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
-	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch1-1/config
+	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch$archver-$pkgrel/config
 	linux.preset)
 b2sums=(SKIP
 	SKIP
@@ -19,7 +19,7 @@ _linuxsrc=linux-$pkgver
 
 _kernelmake() {
 	local flags="-O2 -pipe -march=$_arch -mtune=$_arch"
-	make LOCALVERSION=-$_arch KCFLAGS="$flags" KCPPFLAGS="$flags" "$@"
+	make LOCALVERSION=-arch$archver-$pkgrel-$_arch KCFLAGS="$flags" KCPPFLAGS="$flags" "$@"
 }
 
 prepare() {
@@ -32,18 +32,19 @@ prepare() {
 build() {
 	cd $_linuxsrc
 	_kernelmake all
+	_kernelmake -s kernelrelease > version
 }
 
 package() {
 	cd $srcdir/$_linuxsrc
 	_kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install 
-	rm -f $pkgdir/usr/lib/modules/$pkgver-$_arch/{build,source}
-	install -Dm 644 $srcdir/$_linuxsrc/arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-linux-$_arch
+	rm -f $pkgdir/usr/lib/modules/"$(<version)"/{build,source}
+	install -Dm 644 $srcdir/$_linuxsrc/arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-$pkgname
 
 	cp -f $startdir/$install $startdir/$install.pkg
 	true && install=$install.pkg
-	sed -i "s/kernelarch=/kernelarch=$_arch/g" $startdir/$install
+	sed -i "s/kernelname=/kernelname=$pkgname/g" $startdir/$install
 
-	install -Dm 644 $srcdir/linux.preset $pkgdir/etc/mkinitcpio.d/linux-$_arch.preset
-	sed -i "s/linux/linux-$_arch/g" $pkgdir/etc/mkinitcpio.d/linux-$_arch.preset
+	install -Dm 644 $srcdir/linux.preset $pkgdir/etc/mkinitcpio.d/$pkgname.preset
+	sed -i "s/linux/$pkgname/g" $pkgdir/etc/mkinitcpio.d/$pkgname.preset
 }

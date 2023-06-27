@@ -1,16 +1,16 @@
-kernelarch=
+kernelname=
 
 post_install() {
-	mkinitcpio -p linux-$kernelarch
+	mkinitcpio -p $kernelname
 	grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 post_upgrade() {
-	mkinitcpio -p linux-$kernelarch
+	mkinitcpio -p $kernelname
 }
 
 post_remove() {
-	rm -f /boot/initramfs-linux-$kernelarch.img
-	rm -f /boot/initramfs-linux-$kernelarch-fallback.img
+	rm -f /boot/initramfs-$kernelname.img
+	rm -f /boot/initramfs-$kernelname-fallback.img
 	grub-mkconfig -o /boot/grub/grub.cfg
 }

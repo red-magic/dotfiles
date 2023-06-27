@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -vf *.tar.* config *.pkg *.zst
+rm -rfv pkg src
