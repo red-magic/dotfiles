@@ -37,7 +37,7 @@ build() {
 
 package() {
 	cd $srcdir/$_linuxsrc
-	_kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install 
+	ZSTD_CLEVEL=19 _kernelmake INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=$pkgdir/usr modules_install
 	rm -f $pkgdir/usr/lib/modules/"$(<version)"/{build,source}
 	install -Dm 644 $srcdir/$_linuxsrc/arch/x86_64/boot/bzImage $pkgdir/boot/vmlinuz-$pkgname
 
