@@ -1,4 +1,3 @@
 #!/bin/bash
 
-rm -vf *.tar.* config *.pkg *.zst
-rm -rfv pkg src
+rm -rfv pkg src *.tar.* config *.pkg
