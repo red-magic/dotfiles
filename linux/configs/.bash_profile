@@ -16,7 +16,7 @@ export GPG_TTY LESSHISTFILE PS1 PAGER GIT_EDITOR VIMINIT
 alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
-alias genmirlist='sudo reflector --latest 10 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
+alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
 
 clean-pacman-cache() {
 	if [[ -x "$(command -v yay)" ]]; then
