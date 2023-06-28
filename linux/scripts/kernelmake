@@ -3,7 +3,7 @@
 # Installing modules requires INSTALL_MOD_STRIP=1
 # LLVM=1 requires clang lld llvm
 
-_arch=-znver1
-flags="-O2 -pipe -march=$_arch -mtune=$_arch"
+arch=znver1
+flags="-O2 -pipe -march=$arch -mtune=$arch"
 
 make KCFLAGS="$flags" KCPPFLAGS="$flags" -j9 "$@"
