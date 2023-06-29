@@ -1,7 +1,7 @@
 #!/bin/sh
 
 _packages_check() {
-	set -- curl ssh git xz tar
+	set -- curl ssh git xz tar dirmngr gpg-agent
 
 	if [ "$is_workstation" = yes ]; then
 		set -- "$@" gpg
