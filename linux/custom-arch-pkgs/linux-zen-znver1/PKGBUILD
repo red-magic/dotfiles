@@ -24,7 +24,7 @@ _kernelmake() {
 
 prepare() {
 	cd $_linuxsrc
-	_kernelmake clean && _kernelmake distclean && _kernelmake mrproper
+	_kernelmake mrproper
 	cp -f $srcdir/config $srcdir/$_linuxsrc/.config
 	_kernelmake prepare
 }
