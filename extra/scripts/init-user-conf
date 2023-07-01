@@ -84,6 +84,7 @@ workstation_config() {
 	_git_config
 
 	cp -f repos/dotfiles/extra/configs/.gitconfig .
+	cp -f repos/dotfiles/extra/configs/.ssh/config .ssh
 }
 
 server_config() {
