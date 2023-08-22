@@ -6,7 +6,7 @@ LC_ALL=en_US.UTF-8
 LC_TIME=en_GB.UTF-8
 LANG=en_US.UTF-8
 LESSHISTFILE=-
-VIMINIT='set number | colorscheme ron | set viminfo='' | syntax on | set ruler'
+VIMINIT='set number | colorscheme ron | syntax on | set viminfo='' | set ruler | match errorMsg /\s\+$/'
 
 export GPG_TTY PS1 PAGER GIT_EDITOR LC_ALL LC_TIME LANG LESSHISTFILE VIMINIT
 
