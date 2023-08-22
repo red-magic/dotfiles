@@ -9,7 +9,15 @@ LESSHISTFILE=-
 PS1='\h\$ '
 PAGER='less -M'
 GIT_EDITOR=vim
-VIMINIT='set number | colorscheme ron | syntax on | set viminfo='' | set ruler | match errorMsg /\s\+$/'
+VIMINIT='set number
+	 colorscheme desert
+	 syntax on
+	 set viminfo=''
+	 set ruler
+	 match errorMsg /\s\+$/
+	 set cursorline
+	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
+	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
 export GPG_TTY LESSHISTFILE PS1 PAGER GIT_EDITOR VIMINIT
 

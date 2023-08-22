@@ -5,4 +5,5 @@
 	      require-final-newline t)
 
 (global-display-line-numbers-mode)
+(global-hl-line-mode)
 (menu-bar-mode -1)
