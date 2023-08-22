@@ -6,13 +6,13 @@ LC_ALL=en_US.UTF-8
 LC_TIME=en_GB.UTF-8
 LANG=en_US.UTF-8
 LESSHISTFILE=-
-VIMINIT='set number
-	 colorscheme desert
+VIMINIT='colorscheme desert
 	 syntax on
-	 set viminfo=''
+	 set number
 	 set ruler
-	 match errorMsg /\s\+$/
 	 set cursorline
+	 set viminfo=''
+	 match errorMsg /\s\+$/
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
