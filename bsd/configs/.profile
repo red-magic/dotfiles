@@ -16,7 +16,7 @@ LESSHISTFILE=-
 #	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export GPG_TTY PS1 PAGER GIT_EDITOR LC_ALL LC_TIME LANG LESSHISTFILE VIMINIT
+export GPG_TTY PS1 PAGER GIT_EDITOR LC_ALL LC_TIME LANG LESSHISTFILE
 
 alias doas='doas '
 alias l='ls -plha'

@@ -19,7 +19,7 @@ GIT_EDITOR=emacs
 #	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export GPG_TTY LESSHISTFILE PS1 PAGER GIT_EDITOR VIMINIT
+export GPG_TTY LESSHISTFILE PS1 PAGER GIT_EDITOR
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
