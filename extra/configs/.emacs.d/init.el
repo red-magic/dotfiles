@@ -9,3 +9,4 @@
 (global-display-line-numbers-mode)
 (global-hl-line-mode)
 (menu-bar-mode -1)
+(set-face-background 'hl-line "#ffffff")
