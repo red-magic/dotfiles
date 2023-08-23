@@ -1,7 +1,7 @@
 GPG_TTY=$(tty)
 PS1='\h\$ '
 PAGER='less -M'
-GIT_EDITOR=emacs
+VISUAL=emacs
 LC_ALL=en_US.UTF-8
 LC_TIME=en_GB.UTF-8
 LANG=en_US.UTF-8
@@ -16,7 +16,7 @@ LESSHISTFILE=-
 #	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export GPG_TTY PS1 PAGER GIT_EDITOR LC_ALL LC_TIME LANG LESSHISTFILE
+export GPG_TTY PS1 PAGER VISUAL LC_ALL LC_TIME LANG LESSHISTFILE
 
 alias doas='doas '
 alias l='ls -plha'

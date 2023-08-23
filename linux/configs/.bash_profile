@@ -8,7 +8,7 @@ GPG_TTY=$(tty)
 LESSHISTFILE=-
 PS1='\h\$ '
 PAGER='less -M'
-GIT_EDITOR=emacs
+VISUAL=emacs
 #VIMINIT='colorscheme desert
 #	 syntax on
 #	 set number
@@ -19,7 +19,7 @@ GIT_EDITOR=emacs
 #	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export GPG_TTY LESSHISTFILE PS1 PAGER GIT_EDITOR
+export GPG_TTY LESSHISTFILE PS1 PAGER VISUAL
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
