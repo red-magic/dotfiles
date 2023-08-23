@@ -1,12 +1,15 @@
-(setq-default auto-save-list-file-prefix nil
-	      make-backup-files nil
-	      auto-save-default nil
-	      use-short-answers t
-	      show-trailing-whitespace t
-	      column-number-mode t
-	      require-final-newline t)
+(custom-set-variables
+ '(auto-save-default nil)
+ '(auto-save-list-file-prefix nil)
+ '(column-number-mode t)
+ '(global-display-line-numbers-mode t)
+ '(global-hl-line-mode t)
+ '(make-backup-files nil)
+ '(menu-bar-mode nil)
+ '(require-final-newline t)
+ '(show-trailing-whitespace t)
+ '(size-indication-mode t)
+ '(use-short-answers t))
 
-(global-display-line-numbers-mode)
-(global-hl-line-mode)
-(menu-bar-mode -1)
-(set-face-background 'hl-line "#ffffff")
+(custom-set-faces
+ '(hl-line ((t (:background "#efebe9" :foreground "#000000")))))
