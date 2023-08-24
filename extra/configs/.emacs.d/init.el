@@ -10,6 +10,7 @@
  size-indication-mode t
  use-short-answers t)
 
+(global-font-lock-mode -1)
 ;;(desktop-save-mode 1)
 ;;(fringe-mode 0)
 (global-display-line-numbers-mode 1)
