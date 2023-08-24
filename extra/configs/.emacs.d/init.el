@@ -26,3 +26,4 @@
 (set-face-attribute 'show-paren-match nil :foreground "#000000" :background "#efebe9")
 (set-face-attribute 'isearch nil :foreground "#efebe9" :background "#000000")
 (set-face-attribute 'lazy-highlight nil :foreground "#000000" :background "#efebe9")
+(set-face-attribute 'italic nil :foreground "#000000" :background "#efebe9")
