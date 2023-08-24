@@ -1,15 +1,23 @@
-(custom-set-variables
- '(auto-save-default nil)
- '(auto-save-list-file-prefix nil)
- '(column-number-mode t)
- '(global-display-line-numbers-mode t)
- '(global-hl-line-mode t)
- '(make-backup-files nil)
- '(menu-bar-mode nil)
- '(require-final-newline t)
- '(show-trailing-whitespace t)
- '(size-indication-mode t)
- '(use-short-answers t))
+(setq-default
+ auto-save-default nil
+ auto-save-list-file-prefix nil
+ column-number-mode t
+;;default-frame-alist '((width . 125) (height . 35))
+;;inhibit-startup-screen t
+ make-backup-files nil
+ require-final-newline t
+ show-trailing-whitespace t
+ size-indication-mode t
+ use-short-answers t)
 
-(custom-set-faces
- '(hl-line ((t (:background "#efebe9" :foreground "#000000")))))
+;;(desktop-save-mode 1)
+;;(fringe-mode 0)
+(global-display-line-numbers-mode 1)
+(global-hl-line-mode 1)
+;;(load-theme 'modus-operandi)
+(menu-bar-mode -1)
+;;(scroll-bar-mode -1)
+;;(set-face-background 'hl-line "#efebe9")
+;;(set-face-font 'default "IBM Plex Mono")
+;;(set-face-foreground 'hl-line "#000000")
+;;(tool-bar-mode -1)
