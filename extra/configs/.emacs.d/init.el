@@ -21,3 +21,7 @@
 ;;(set-face-font 'default "IBM Plex Mono 10")
 (set-face-foreground 'hl-line "#000000")
 ;;(tool-bar-mode -1)
+(set-face-attribute 'button nil :foreground "#efebe9" :background "#000000")
+(set-face-attribute 'region nil :foreground "#000000" :background "#efebe9")
+(set-face-attribute 'isearch nil :foreground "#efebe9" :background "#000000")
+(set-face-attribute 'lazy-highlight nil :foreground "#000000" :background "#efebe9")
