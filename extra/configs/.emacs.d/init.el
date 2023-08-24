@@ -18,6 +18,6 @@
 (menu-bar-mode -1)
 ;;(scroll-bar-mode -1)
 ;;(set-face-background 'hl-line "#efebe9")
-;;(set-face-font 'default "IBM Plex Mono")
+;;(set-face-font 'default "IBM Plex Mono 10")
 ;;(set-face-foreground 'hl-line "#000000")
 ;;(tool-bar-mode -1)
