@@ -25,6 +25,8 @@ alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
+alias update-grub-install-efi='sudo grub-install --efi-directory=/boot/efi --boot-directory=/boot --target=x86_64-efi --bootloader-id=Arch'
+alias update-grub-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
 clean-pacman-cache() {
 	if [[ -x "$(command -v yay)" ]]; then
