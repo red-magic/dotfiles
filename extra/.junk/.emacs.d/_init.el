@@ -2,7 +2,7 @@
  auto-save-default nil
  auto-save-list-file-prefix nil
  column-number-mode t
-;;default-frame-alist '((width . 120) (height . 35))
+;;default-frame-alist '((width . 125) (height . 35))
 ;;inhibit-startup-screen t
  make-backup-files nil
  require-final-newline t
@@ -19,12 +19,11 @@
 (menu-bar-mode -1)
 ;;(tool-bar-mode -1)
 ;;(scroll-bar-mode -1)
-(set-face-foreground 'hl-line "black")
-(set-face-background 'hl-line "white")
-(set-face-attribute 'default nil :foreground "white" :background "black")
-(set-face-attribute 'cursor nil :foreground "black" :background "white")
-(set-face-attribute 'region nil :foreground "black" :background "orange")
-(set-face-attribute 'isearch nil :foreground "orange" :background "black")
-(set-face-attribute 'show-paren-match nil :foreground "black" :background "orange")
-(set-face-attribute 'button nil :foreground "orange" :background "black")
-(set-face-attribute 'lazy-highlight nil :foreground "black" :background "orange")
+(set-face-foreground 'hl-line "#000000")
+(set-face-background 'hl-line "#efebe9")
+(set-face-attribute 'button nil :foreground "#000000" :background "#efebe9")
+(set-face-attribute 'region nil :foreground "#000000" :background "#efebe9")
+(set-face-attribute 'show-paren-match nil :foreground "#000000" :background "#efebe9")
+(set-face-attribute 'isearch nil :foreground "#efebe9" :background "#000000")
+(set-face-attribute 'lazy-highlight nil :foreground "#000000" :background "#efebe9")
+(set-face-attribute 'italic nil :foreground "#000000" :background "#efebe9")

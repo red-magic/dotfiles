@@ -1,29 +1,53 @@
-(setq-default
- auto-save-default nil
- auto-save-list-file-prefix nil
- column-number-mode t
-;;default-frame-alist '((width . 125) (height . 35))
-;;inhibit-startup-screen t
- make-backup-files nil
- require-final-newline t
- show-trailing-whitespace t
- size-indication-mode t
- use-short-answers t)
+(custom-set-variables
+ '(auto-save-default nil)
+ '(auto-save-list-file-prefix nil)
+ '(column-number-mode t)
+ '(fringe-mode 0)
+ '(global-display-line-numbers-mode t)
+ '(global-font-lock-mode nil)
+ '(global-hl-line-mode 1)
+ '(make-backup-files nil)
+ '(menu-bar-mode nil)
+ '(require-final-newline t)
+ '(scroll-bar-mode nil)
+ '(show-trailing-whitespace t)
+ '(size-indication-mode t)
+ '(use-short-answers t)
+ ;;'(default-frame-alist '((width . 120) (height . 35)))
+ ;;'(desktop-save-mode 1)
+ ;;'(inhibit-startup-screen t)
+ ;;'(tool-bar-mode nil)
+ )
 
-;;(desktop-save-mode 1)
-;;(global-font-lock-mode -1)
-;;(fringe-mode 0)
-(global-display-line-numbers-mode 1)
-(global-hl-line-mode 1)
-;;(load-theme 'modus-operandi)
-(menu-bar-mode -1)
-;;(tool-bar-mode -1)
-;;(scroll-bar-mode -1)
-(set-face-foreground 'hl-line "#000000")
-(set-face-background 'hl-line "#efebe9")
-(set-face-attribute 'button nil :foreground "#000000" :background "#efebe9")
-(set-face-attribute 'region nil :foreground "#000000" :background "#efebe9")
-(set-face-attribute 'show-paren-match nil :foreground "#000000" :background "#efebe9")
-(set-face-attribute 'isearch nil :foreground "#efebe9" :background "#000000")
-(set-face-attribute 'lazy-highlight nil :foreground "#000000" :background "#efebe9")
-(set-face-attribute 'italic nil :foreground "#000000" :background "#efebe9")
+(setq
+ fg-color "#000000"
+ bg-color "#ffffff"
+ ;;mg-color "#d7ccc8"
+ )
+
+(custom-set-faces
+ `(region ((t (:foreground ,fg-color :background ,bg-color))))
+ `(lazy-highlight ((t (:foreground ,fg-color :background ,bg-color))))
+ `(italic ((t (:foreground ,bg-color :background ,fg-color))))
+ `(isearch ((t (:foreground ,bg-color :background ,fg-color))))
+ `(button ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(warning ((t (:foreground ,fg-color :background ,mg-color))))
+ ;;`(trailing-whitespace ((t (:background ,fg-color))))
+ ;;`(show-paren-mismatch ((t (:foreground ,bg-color :background ,fg-color))))
+ ;;`(show-paren-match ((t (:foreground ,bg-color :background ,fg-color))))
+ ;;`(mode-line-inactive ((t (:foreground ,fg-color :background ,mg-color :box nil))))
+ ;;`(mode-line ((t (:foreground ,fg-color :background ,mg-color :box nil))))
+ ;;`(minibuffer-prompt ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(line-number-current-line ((t :foreground ,fg-color :background ,mg-color)))
+ ;;`(line-number ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(hl-line ((t (:foreground ,fg-color :background ,mg-color))))
+ ;;`(help-key-binding ((t (:foreground ,fg-color :background ,bg-color :family "IBM Plex Mono" :weight bold :box nil))))
+ ;;`(font-lock-variable-name-face ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(font-lock-keyword-face ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(font-lock-function-name-face ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(default ((t (:family "IBM Plex Mono" :weight regular :height 100 :foreground ,fg-color :background ,bg-color))))
+ ;;`(cursor ((t (:foreground ,bg-color :background ,fg-color))))
+ ;;`(completions-common-part ((t (:foreground ,fg-color :background ,mg-color))))
+ ;;`(completions-annotations ((t (:foreground ,fg-color :background ,bg-color))))
+ ;;`(button ((t (:foreground ,bg-color :background ,fg-color))))
+ )
