@@ -28,10 +28,9 @@ alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --
 
 clean-pacman-cache() {
 	if [[ -x "$(command -v yay)" ]]; then
-		echo y | yay -Scc
+	    yes | yay -Scc
 	fi
-	echo y | sudo pacman -Scc
-	echo
+	yes | sudo pacman -Scc
 }
 
 remove-orphans() {
