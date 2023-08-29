@@ -1,8 +1,3 @@
-// Revised 05/15/22
-// https://gist.github.com/igv/36508af3ffc84410fe39761d6969be10
-//
-// SSimDownscaler by Shiandow
-//
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
 // License as published by the Free Software Foundation; either
