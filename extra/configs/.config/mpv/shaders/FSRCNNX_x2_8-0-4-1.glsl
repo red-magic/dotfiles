@@ -1,8 +1,3 @@
-// Revised 03/05/21
-// https://github.com/deus0ww/mpv-conf/tree/master/shaders/igv
-//
-// FSRCNNX by igv
-//
 // Copyright (C) 2017-2021 igv
 //
 // This program is free software; you can redistribute it and/or
