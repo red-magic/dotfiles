@@ -1,5 +1,5 @@
 pkgname=linux-znver3
-pkgver=6.4.1
+pkgver=6.5.2
 archver=1
 pkgrel=1
 pkgdesc='Linux kernel for znver3 architecture'
