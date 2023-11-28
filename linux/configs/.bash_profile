@@ -4,22 +4,23 @@ bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 unset HISTFILE
 
-GPG_TTY=$(tty)
+#GPG_TTY=$(tty)
+#VISUAL=emacs
 LESSHISTFILE=-
 PS1='\h\$ '
 PAGER='less -M'
-VISUAL=emacs
-#VIMINIT='colorscheme desert
-#	 syntax on
-#	 set number
-#	 set ruler
-#	 set cursorline
-#	 set viminfo=''
-#	 match errorMsg /\s\+$/
-#	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
-#	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
+VIMINIT='colorscheme desert
+	 syntax on
+	 set number
+	 set ruler
+	 set cursorline
+	 set viminfo=''
+	 match errorMsg /\s\+$/
+	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
+	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export GPG_TTY LESSHISTFILE PS1 PAGER VISUAL
+export LESSHISTFILE PS1 PAGER
+#export GPG_TTY VISUAL
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'

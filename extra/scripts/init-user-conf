@@ -44,8 +44,8 @@ _git_config() {
 	fi
 
 	mkdir -p .config/ranger
-	mkdir .emacs.d
-	cp -f repos/dotfiles/extra/configs/.emacs.d/init.el .emacs.d/init.el
+	#mkdir .emacs.d
+	#cp -f repos/dotfiles/extra/configs/.emacs.d/init.el .emacs.d/init.el
 	cp -f repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
 }
 
