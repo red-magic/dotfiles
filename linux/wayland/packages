@@ -1,4 +1,4 @@
-# Try launching sway with WLR_NO_HARDWARE_CURSORS=1 and 64Mb IDG mem
+# WLR_NO_HARDWARE_CURSORS=1
 foot
 gammastep
 grim
