@@ -19,7 +19,7 @@ VIMINIT='colorscheme desert
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export LESSHISTFILE PS1 PAGER
+export LESSHISTFILE PS1 PAGER VIMINIT
 #export GPG_TTY VISUAL
 
 alias sudo='sudo -E '
