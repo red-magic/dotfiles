@@ -243,9 +243,11 @@ bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@
 bindsym Print exec grim -l 9 ~/pictures/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png
 bindsym Alt+Print exec grim -l 9 -g "$(slurp)" ~/pictures/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png
 
+set $gnome-schema org.gnome.desktop.interface
+
 exec_always {
 	#gsettings set $gnome-schema gtk-theme 'Your theme'
 	#gsettings set $gnome-schema icon-theme 'Your icon theme'
-	gsettings set $gnome-schema cursor-theme 'Windows10Light'
-	gsettings set $gnome-schema font-name 'IBM Plex 10'
+	gsettings set $gnome-schema cursor-theme 'Windows-10-Light'
+	gsettings set $gnome-schema font-name 'IBM Plex Sans 10'
 }
