@@ -6,6 +6,7 @@ unset HISTFILE
 
 #GPG_TTY=$(tty)
 #VISUAL=emacs
+#WLR_NO_HARDWARE_CURSORS=1
 LESSHISTFILE=-
 PS1='\h\$ '
 PAGER='less -M'
@@ -20,7 +21,7 @@ VIMINIT='colorscheme desert
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
 export LESSHISTFILE PS1 PAGER VIMINIT
-#export GPG_TTY VISUAL
+#export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
