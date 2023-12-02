@@ -43,8 +43,9 @@ remove-orphans() {
 	fi
 }
 
-#if [[ ! -z "$(tty | grep tty)" || ! -z "$(tty | grep pts)" ]]; then
-#	fortune | cowsay
+#if tty | grep -q tty || tty | grep -q pts
+#then
+#	fortune | cowthink
 #fi
 
 #gammastep-tty() {
