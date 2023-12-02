@@ -11,7 +11,7 @@ VIMINIT='colorscheme desert
 	 set number
 	 set ruler
 	 set cursorline
-	 set viminfo=''
+	 set viminfo=
 	 match errorMsg /\s\+$/
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
@@ -23,10 +23,11 @@ alias doas='doas '
 alias l='ls -plha'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 
-#if [[ $(tty | grep C) == "" ]]; then
-#	export ENV=$HOME/.profile
+#if ! tty | grep -q C
+#then
+#	export ENV="$HOME/.profile"
 #else
-#	fortune | cowsay
+#	fortune | cowthink
 #fi
 
 #ssh_port=
