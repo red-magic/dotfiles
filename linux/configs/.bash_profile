@@ -15,7 +15,7 @@ VIMINIT='colorscheme desert
 	 set number
 	 set ruler
 	 set cursorline
-	 set viminfo=''
+	 set viminfo=
 	 match errorMsg /\s\+$/
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
