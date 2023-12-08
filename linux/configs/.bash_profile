@@ -1,7 +1,7 @@
-#stty werase undef
-#bind '\C-w:backward-kill-word'
-#bind '\C-n:history-search-forward'
-#bind '\C-p:history-search-backward'
+stty werase undef
+bind '\C-w:backward-kill-word'
+bind '\C-n:history-search-forward'
+bind '\C-p:history-search-backward'
 
 #GPG_TTY=$(tty)
 #VISUAL=emacs
