@@ -1,15 +1,15 @@
-stty werase undef
-bind '\C-w:backward-kill-word'
-bind '\C-n:history-search-forward'
-bind '\C-p:history-search-backward'
-unset HISTFILE
+#stty werase undef
+#bind '\C-w:backward-kill-word'
+#bind '\C-n:history-search-forward'
+#bind '\C-p:history-search-backward'
 
 #GPG_TTY=$(tty)
 #VISUAL=emacs
 #WLR_NO_HARDWARE_CURSORS=1
-LESSHISTFILE=-
 PS1='\h\$ '
 PAGER='less -M'
+HISTFILE=
+LESSHISTFILE=-
 VIMINIT='colorscheme desert
 	 syntax on
 	 set number
@@ -20,7 +20,7 @@ VIMINIT='colorscheme desert
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export LESSHISTFILE PS1 PAGER VIMINIT
+export PS1 PAGER HISTFILE LESSHISTFILE VIMINIT
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS
 
 alias sudo='sudo -E '
