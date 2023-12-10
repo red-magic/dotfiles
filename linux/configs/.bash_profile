@@ -10,6 +10,7 @@ PS1='\h\$ '
 PAGER='less -M'
 HISTFILE=
 LESSHISTFILE=-
+EDITOR=vim
 VIMINIT='colorscheme desert
 	 syntax on
 	 set number
@@ -20,7 +21,7 @@ VIMINIT='colorscheme desert
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 PAGER HISTFILE LESSHISTFILE VIMINIT
+export PS1 PAGER HISTFILE LESSHISTFILE EDITOR VIMINIT
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS
 
 alias sudo='sudo -E '
