@@ -3,7 +3,7 @@
 PS1='\h\$ '
 PAGER='less -M'
 LC_ALL=en_US.UTF-8
-LC_TIME=en_GB.UTF-8
+LC_TIME=C.UTF-8
 LANG=en_US.UTF-8
 LESSHISTFILE=-
 EDITOR=vim
