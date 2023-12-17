@@ -2,9 +2,9 @@
 #VISUAL=emacs
 PS1='\h\$ '
 PAGER='less -M'
-LC_ALL=en_US.UTF-8
-LC_TIME=C.UTF-8
+#LC_ALL=en_US.UTF-8
 LANG=en_US.UTF-8
+LC_TIME=C.UTF-8
 LESSHISTFILE=-
 EDITOR=vim
 VIMINIT='colorscheme desert
@@ -23,6 +23,8 @@ export PS1 PAGER LC_ALL LC_TIME LANG LESSHISTFILE EDITOR VIMINIT
 alias doas='doas '
 alias l='ls -plha'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
+
+set -o emacs
 
 #if ! tty | grep -q C
 #then
