@@ -17,7 +17,7 @@ VIMINIT='colorscheme desert
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 PAGER LC_ALL LC_TIME LANG LESSHISTFILE EDITOR VIMINIT
+export PS1 PAGER LC_ALL LANG LC_TIME LESSHISTFILE EDITOR VIMINIT
 #export GPG_TTY VISUAL
 
 alias doas='doas '
