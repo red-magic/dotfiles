@@ -19,6 +19,7 @@ VIMINIT='colorscheme desert
 	 set viminfo=
 	 match errorMsg /\s\+$/
 	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
+	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
 export PS1 PAGER HISTFILE LESSHISTFILE EDITOR VIMINIT
