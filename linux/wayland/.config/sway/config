@@ -249,5 +249,5 @@ exec_always {
 	#gsettings set $gnome-schema gtk-theme 'Your theme'
 	#gsettings set $gnome-schema icon-theme 'Your icon theme'
 	gsettings set $gnome-schema cursor-theme 'Windows-10-Light'
-	gsettings set $gnome-schema font-name 'Go Mono 10'
+	gsettings set $gnome-schema font-name 'Go 10'
 }
