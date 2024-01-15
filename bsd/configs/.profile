@@ -18,8 +18,8 @@ VIMINIT='colorscheme desert
 	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 PAGER LC_ALL LANG LC_TIME LESSHISTFILE EDITOR VIMINIT
-#export GPG_TTY VISUAL
+export PS1 PAGER LANG LC_TIME LESSHISTFILE EDITOR VIMINIT
+#export GPG_TTY VISUAL LC_ALL
 
 alias doas='doas '
 alias l='ls -plha'
