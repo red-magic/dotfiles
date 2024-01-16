@@ -1,4 +1,4 @@
-pkgname=ttf-gofont
+pkgname=ttf-go
 pkgver=0.15.0
 pkgrel=1
 pkgdesc='The font for the experimental Go user interface toolkit'
