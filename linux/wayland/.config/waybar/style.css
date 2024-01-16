@@ -5,36 +5,34 @@
 	font-size: 12px;
 	min-height: 0;
 	padding: 0;
-	color: #ECEFF1;
 }
 
-/* #pulseaudio,
 #network,
+#cpu,
 #memory,
 #disk,
-#cpu,
 #language,
+#pulseaudio,
 #clock {
-	padding: 0 10px;
-	background: #424242;
-} */
+	background: #F5F5F5;
+	color: #212121;
+	padding-right: 6px;
+	padding-left: 6px;
+}
 
 #workspaces, #waybar {
-	background: #263238;
+	background: #F5F5F5;
 }
 
-#workspaces  button.focused {
-	background: #424242;
+#workspaces button.focused {
+	background: #E0E0E0;
 }
 
-#workspaces  button, button.focused {
+#workspaces button, button.focused {
 	padding: 0 3px;
 }
 
-#workspaces  button:hover {
+#workspaces button:hover {
 	background: #616161;
+	color: #F5F5F5;
 }
-
-/* #clock {
-	padding-right: 15px;
-} */
