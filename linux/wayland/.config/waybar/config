@@ -9,12 +9,12 @@
 		"format-muted": " {volume}%",
 	},
 	"network": {
-		"interval": 1,
+		"interval": 2,
 		"infterface": "ens33",
 		"format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",
 	},
 	"memory": {
-		"interval": 1,
+		"interval": 2,
 		"format": " {used:0.1f}GB/{total:0.1f}GB",
 	},
 	"disk": {
@@ -23,7 +23,7 @@
 		"format": " {specific_free:0.1f}GB",
 	},
 	"cpu": {
-		"interval": 1,
+		"interval": 2,
 		"format": " {usage}%",
 	},
 	"clock": {
