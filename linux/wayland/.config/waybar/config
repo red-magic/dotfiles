@@ -3,15 +3,24 @@
 	"position": "bottom",
 	"modules-left": ["sway/workspaces"],
 	"modules-center": [""],
-	"modules-right": ["network", "cpu", "memory", "disk", "sway/language", "pulseaudio", "clock"],
+	"modules-right": ["network#down", "network#up", "cpu", "memory", "disk", "sway/language", "pulseaudio", "clock"],
 	"pulseaudio": {
 		"format": " {volume}%",
 		"format-muted": " {volume}%",
 	},
-	"network": {
+	"network#down": {
 		"interval": 2,
+		"align": 0,
+		"min-length": 12,
 		"infterface": "ens33",
-		"format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+		"format-ethernet": " {bandwidthDownBytes}",
+	},
+	"network#up": {
+		"interval": 2,
+		"align": 0,
+		"min-length": 12,
+		"infterface": "ens33",
+		"format-ethernet": " {bandwidthUpBytes}",
 	},
 	"memory": {
 		"interval": 2,
