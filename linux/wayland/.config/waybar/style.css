@@ -7,6 +7,7 @@
 	padding: 0;
 }
 
+#network,
 #cpu,
 #memory,
 #disk,
@@ -16,12 +17,6 @@
 	background: #F5F5F5;
 	color: #212121;
 	padding: 0 6px 0 6px;
-}
-
-#network.down,
-#network.up {
-	background: #F5F5F5;
-	color: #212121;
 }
 
 #workspaces, #waybar {
