@@ -11,16 +11,17 @@ PAGER='less -M'
 HISTFILE=
 LESSHISTFILE=-
 EDITOR=vim
-VIMINIT='colorscheme desert
+VIMINIT='colorscheme default
 	 syntax on
 	 set number
 	 set ruler
 	 set cursorline
 	 set viminfo=
 	 match errorMsg /\s\+$/
-	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
+	 hi Visual cterm=NONE ctermbg=black ctermfg=white
+	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black
 	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
-	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
+	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
 
 export PS1 PAGER HISTFILE LESSHISTFILE EDITOR VIMINIT
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS
