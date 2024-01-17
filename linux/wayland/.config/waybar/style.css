@@ -15,8 +15,7 @@
 #clock {
 	background: #F5F5F5;
 	color: #212121;
-	padding-right: 6px;
-	padding-left: 6px;
+	padding: 0 6px 0 6px;
 }
 
 #network.down,
