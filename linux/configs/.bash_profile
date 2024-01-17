@@ -30,6 +30,7 @@ alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
+#alias ssh-debian='TERM=xterm-256color ssh -v -p 22 username@debian'
 
 clean-pacman-cache() {
 	if [[ -x "$(command -v yay)" ]]; then
