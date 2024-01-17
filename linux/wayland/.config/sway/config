@@ -237,6 +237,7 @@ bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- -l 1.0
 bindsym Print exec grim -l 9 ~/pictures/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png
 bindsym Alt+Print exec grim -l 9 -g "$(slurp)" ~/pictures/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png
+bindsym Control+Alt+l exec swaylock -i ~/pictures/wallpaper.png
 
 set $gnome-schema org.gnome.desktop.interface
 
