@@ -1,0 +1,20 @@
+* {
+	foreground-color: #212121;
+}
+
+#outer-box {
+	border: 5px solid #E0E0E0;
+}
+
+#text:selected {
+	background-color: #212121;
+}
+
+#entry:selected {
+	foreground-color: #212121;
+	background-color: #212121;
+}
+
+#input {
+	background-color: #F5F5F5;
+}
