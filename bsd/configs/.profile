@@ -23,6 +23,7 @@ export PS1 PAGER LANG LC_TIME LESSHISTFILE EDITOR VIMINIT
 
 alias doas='doas '
 alias l='ls -plha'
+alias mg='mg -n'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 
 set -o emacs
