@@ -10,28 +10,28 @@ PS1='\h\$ '
 PAGER='less -M'
 HISTFILE=
 LESSHISTFILE=-
-EDITOR=vim
-VIMINIT='colorscheme default
-	 syntax on
-	 set number
-	 set ruler
-	 set cursorline
-	 set viminfo=
-	 match errorMsg /\s\+$/
-	 hi Visual cterm=NONE ctermbg=black ctermfg=white
-	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black
-	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
-	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
+EDITOR=mg
+#VIMINIT='colorscheme default
+#	 syntax on
+#	 set number
+#	 set ruler
+#	 set cursorline
+#	 set viminfo=
+#	 match errorMsg /\s\+$/
+#	 hi Visual cterm=NONE ctermbg=black ctermfg=white
+#	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black
+#	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
+#	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
 
-export PS1 PAGER HISTFILE LESSHISTFILE EDITOR VIMINIT
-#export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS
+export PS1 PAGER HISTFILE LESSHISTFILE EDITOR
+#export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT
 
 alias sudo='sudo -E '
-alias ls='ls --color=always'
+alias ls='ls --color=never'
 alias l='ls -plha'
 alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
 alias clean-pacman='clean-pacman-cache && remove-orphans'
-#alias ssh-debian='TERM=xterm-256color ssh -v -p 22 username@debian'
+#alias ssh-debian='TERM=xterm ssh -v -p 22 username@debian'
 
 clean-pacman-cache() {
 	if [[ -x "$(command -v yay)" ]]; then

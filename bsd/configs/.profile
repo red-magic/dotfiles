@@ -6,20 +6,20 @@ PAGER='less -M'
 LANG=en_US.UTF-8
 LC_TIME=C.UTF-8
 LESSHISTFILE=-
-EDITOR=vim
-VIMINIT='colorscheme desert
-	 syntax on
-	 set number
-	 set ruler
-	 set cursorline
-	 set viminfo=
-	 match errorMsg /\s\+$/
-	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
-	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
-	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
+EDITOR=mg
+#VIMINIT='colorscheme desert
+#	 syntax on
+#	 set number
+#	 set ruler
+#	 set cursorline
+#	 set viminfo=
+#	 match errorMsg /\s\+$/
+#	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black
+#	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
+#	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 PAGER LANG LC_TIME LESSHISTFILE EDITOR VIMINIT
-#export GPG_TTY VISUAL LC_ALL
+export PS1 PAGER LANG LC_TIME LESSHISTFILE EDITOR
+#export GPG_TTY VISUAL LC_ALL VIMINIT
 
 alias doas='doas '
 alias l='ls -plha'
