@@ -10,6 +10,7 @@ PS1='\h\$ '
 PAGER='less -M'
 HISTFILE=
 LESSHISTFILE=-
+LC_TIME=C.UTF-8
 EDITOR=mg
 #VIMINIT='colorscheme default
 #	 syntax on
@@ -23,7 +24,7 @@ EDITOR=mg
 #	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 #	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
 
-export PS1 PAGER HISTFILE LESSHISTFILE EDITOR
+export PS1 PAGER HISTFILE LESSHISTFILE LC_TIME EDITOR
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT
 
 alias sudo='sudo -E '
