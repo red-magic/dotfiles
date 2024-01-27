@@ -1,0 +1,12 @@
+# Install and enable
+
+nftables
+systemd-networkd
+systemd-resolved
+systemd-timesyncd
+
+# Disable
+
+firewalld
+chronyd
+NetworkManager
