@@ -1,6 +1,5 @@
-# Install and enable
+# Install
 
-nftables
 systemd-networkd
 systemd-resolved
 systemd-timesyncd
