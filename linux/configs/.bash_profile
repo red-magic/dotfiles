@@ -12,6 +12,7 @@ HISTFILE=
 LESSHISTFILE=-
 #LC_TIME=C.UTF-8
 LANG=en_DK.UTF-8
+TIME_STYLE=long-iso
 EDITOR=mg
 #VIMINIT='colorscheme default
 #	 syntax on
@@ -25,7 +26,7 @@ EDITOR=mg
 #	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 #	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
 
-export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
+export PS1 PAGER HISTFILE LESSHISTFILE LANG TIME_STYLE EDITOR
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT LC_TIME
 
 alias sudo='sudo -E '
