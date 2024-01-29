@@ -36,7 +36,7 @@ alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --
 alias clean-pacman='clean-pacman-cache && remove-orphans'
 #alias date='date "+%Y-%m-%d %H:%M:%S %:z"'
 alias date='date --iso-8601=seconds'
-alias journalctl='journalctl -o short-full'
+alias journalctl='journalctl -o short-iso'
 #alias ssh-debian='TERM=xterm ssh -v -p 22 username@debian'
 
 clean-pacman-cache() {
