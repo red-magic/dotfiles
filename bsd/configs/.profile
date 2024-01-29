@@ -6,7 +6,7 @@ PAGER='less -M'
 LANG=en_US.UTF-8
 LC_TIME=C.UTF-8
 LESSHISTFILE=-
-EDITOR=mg
+EDITOR='mg -n'
 #VIMINIT='colorscheme desert
 #	 syntax on
 #	 set number

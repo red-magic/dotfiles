@@ -13,7 +13,7 @@ LESSHISTFILE=-
 #LC_TIME=C.UTF-8
 LANG=en_DK.UTF-8
 TIME_STYLE=long-iso
-EDITOR=mg
+EDITOR='mg -n'
 #VIMINIT='colorscheme default
 #	 syntax on
 #	 set number
