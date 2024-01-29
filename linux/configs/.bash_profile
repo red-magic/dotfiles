@@ -30,9 +30,9 @@ export PS1 PAGER HISTFILE LESSHISTFILE LANG TIME_STYLE EDITOR
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT LC_TIME
 
 alias sudo='sudo -E '
+alias mg='mg -n'
 alias ls='ls --color=never'
 alias l='ls -plha'
-alias mg='mg -n'
 alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
 alias clean-pacman='clean-pacman-cache && remove-orphans'
 #alias date='date "+%Y-%m-%d %H:%M:%S %:z"'
