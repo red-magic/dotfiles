@@ -230,7 +230,7 @@ default_border none
 
 input * {
 	xkb_layout "us,ru"
-	xkb_options "grp:lwin_toggle"
+	xkb_options "grp:rwin_toggle"
 }
 
 bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
