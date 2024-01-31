@@ -28,7 +28,7 @@
 	},
 	"clock": {
 		"interval": 1,
-		"format": " {:%a %d.%m.%Y  %H:%M:%S}",
+		"format": " {:%a %Y-%m-%d  %H:%M:%S}",
 	},
 	"sway/language": {
 		"format": " {shortDescription}",
