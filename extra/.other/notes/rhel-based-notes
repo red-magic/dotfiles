@@ -6,6 +6,7 @@ systemd-timesyncd
 
 # Disable
 
+kdump
 firewalld
 chronyd
 NetworkManager
