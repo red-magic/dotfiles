@@ -6,7 +6,7 @@ systemd-timesyncd
 
 # Disable
 
-kdump
+kdump # crashkernel=no to grub cmd
 firewalld
 chronyd
 NetworkManager
