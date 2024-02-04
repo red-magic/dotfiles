@@ -34,22 +34,22 @@ alias mg='mg -n'
 alias ls='ls --color=never'
 alias l='ls -plha'
 alias genmirlist='sudo reflector --latest 20 --proto https --ipv4 --sort rate --save /etc/pacman.d/mirrorlist'
-alias clean-pacman='clean-pacman-cache && remove-orphans'
+alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
 #alias date='date "+%Y-%m-%d %H:%M:%S %:z"'
 #alias date='date --rfc-3339=seconds'
 alias date='date --iso-8601=seconds'
 #alias journalctl='journalctl -o short-full'
 alias journalctl='journalctl -o short-iso'
-#alias ssh-debian='TERM=xterm ssh -v -p 22 username@debian'
+#alias ssh-server='TERM=linux ssh -v -C -p 22 username@server.localdomain'
 
-clean-pacman-cache() {
+remove_pacman_cache() {
 	if [[ -x "$(command -v yay)" ]]; then
 	    yes | yay -Scc
 	fi
 	yes | sudo pacman -Scc
 }
 
-remove-orphans() {
+remove_pacman_orphans() {
 	if [[ -x "$(command -v yay)" ]]; then
 		yay -Qtdq | yay -Rns -
 	else
