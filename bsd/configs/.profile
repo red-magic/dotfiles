@@ -1,12 +1,12 @@
+PS1='\h\$ '
+EDITOR='mg -n'
 #GPG_TTY=$(tty)
 #VISUAL=emacs
-PS1='\h\$ '
-PAGER='less -M'
+#PAGER='less -M'
 #LC_ALL=en_US.UTF-8
-LANG=en_US.UTF-8
-LC_TIME=C.UTF-8
-LESSHISTFILE=-
-EDITOR='mg -n'
+#LANG=en_US.UTF-8
+#LC_TIME=C.UTF-8
+#LESSHISTFILE=-
 #VIMINIT='colorscheme desert
 #	 syntax on
 #	 set number
@@ -18,15 +18,16 @@ EDITOR='mg -n'
 #	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 PAGER LANG LC_TIME LESSHISTFILE EDITOR
-#export GPG_TTY VISUAL LC_ALL VIMINIT
+export PS1 EDITOR
+#export GPG_TTY VISUAL LC_ALL VIMINIT PAGER LANG LC_TIME LESSHISTFILE
 
 alias doas='doas '
 alias l='ls -plha'
 alias mg='mg -n'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
+alias ssh-server='ssh -v -C -p 22 user@server.localdomain'
 
-set -o emacs
+#set -o emacs
 
 #if ! tty | grep -q C
 #then
