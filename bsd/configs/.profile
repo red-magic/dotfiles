@@ -1,8 +1,8 @@
 PS1='\h\$ '
+PAGER='less -M'
 EDITOR='mg -n'
 #GPG_TTY=$(tty)
 #VISUAL=emacs
-#PAGER='less -M'
 #LC_ALL=en_US.UTF-8
 #LANG=en_US.UTF-8
 #LC_TIME=C.UTF-8
@@ -18,8 +18,8 @@ EDITOR='mg -n'
 #	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 EDITOR
-#export GPG_TTY VISUAL LC_ALL VIMINIT PAGER LANG LC_TIME LESSHISTFILE
+export PS1 PAGER EDITOR
+#export GPG_TTY VISUAL LC_ALL VIMINIT LANG LC_TIME LESSHISTFILE
 
 alias doas='doas '
 alias l='ls -plha'
