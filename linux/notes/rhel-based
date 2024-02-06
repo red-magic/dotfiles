@@ -1,0 +1,3 @@
+# Disable
+
+kdump # crashkernel=no to grub cmd
