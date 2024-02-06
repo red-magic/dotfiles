@@ -40,7 +40,7 @@ alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
 alias date='date --iso-8601=seconds'
 #alias journalctl='journalctl -o short-full'
 alias journalctl='journalctl -o short-iso'
-#alias ssh-server='TERM=linux ssh -v -C -p 22 username@server.localdomain'
+#alias ssh-server='TERM=linux ssh -v -C -p 22 user@server.localdomain'
 
 remove_pacman_cache() {
 	if [[ -x "$(command -v yay)" ]]; then
