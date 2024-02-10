@@ -7,6 +7,7 @@ arch=(x86_64)
 license=(GPL2)
 install=linux.install
 depends=(base-devel bc cpio inetutils pahole mkinitcpio grub)
+options=(!debug)
 source=(https://github.com/zen-kernel/zen-kernel/archive/refs/tags/v$pkgver-zen$zenver.tar.gz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux-zen/-/raw/$pkgver.zen$zenver-$pkgrel/config
 	linux.preset)

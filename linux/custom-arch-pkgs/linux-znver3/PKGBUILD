@@ -7,6 +7,7 @@ arch=(x86_64)
 license=(GPL2)
 install=linux.install
 depends=(base-devel bc cpio inetutils pahole mkinitcpio grub)
+options=(!debug)
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch$archver-$pkgrel/config
 	linux.preset)
