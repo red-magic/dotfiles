@@ -10,5 +10,5 @@ b2sums=(1a61c83027fc8132eb5a6afc3363533bb518f463894868aa6e7dc1235507a16d9480375d
 
 package() {
 	install -Dm 644 image-$pkgver/font/gofont/ttfs/*.ttf -t $pkgdir/usr/share/fonts/go
-	install -Dm 644 image-$pkgver/font/gofont/ttfs/README ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+	install -Dm 644 image-$pkgver/font/gofont/ttfs/README $pkgdir/usr/share/licenses/$pkgname/LICENSE
 }
