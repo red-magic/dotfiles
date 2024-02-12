@@ -40,7 +40,7 @@ alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
 alias date='date --iso-8601=seconds'
 #alias journalctl='journalctl -o short-full'
 alias journalctl='journalctl -o short-iso'
-#alias grub-update='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux && sudo grub-mkconfig -o /boot/grub/grub.cfg'
+#alias grub-update='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck && sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias ssh-server='TERM=linux ssh -v -C -p 22 user@server.localdomain'
 
 remove_pacman_cache() {
