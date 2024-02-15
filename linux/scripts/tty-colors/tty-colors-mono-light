@@ -19,4 +19,4 @@ start() {
 		echo -en "\e]PE212121" > /dev/tty"${i}" # Cyan
 		echo -en "\e]PF212121" > /dev/tty"${i}" # White
 	done
-}; start 
+}; start
