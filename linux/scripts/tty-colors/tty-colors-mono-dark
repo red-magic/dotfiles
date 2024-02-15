@@ -1,22 +1,20 @@
 #!/bin/bash
 
-start() {
-	for i in {1..6}; do
-		echo -en "\e]P0000000" > /dev/tty"${i}" # Background
-		echo -en "\e]P1BDBDBD" > /dev/tty"${i}" # Red
-		echo -en "\e]P2BDBDBD" > /dev/tty"${i}" # Green
-		echo -en "\e]P3BDBDBD" > /dev/tty"${i}" # Yellow
-		echo -en "\e]P4BDBDBD" > /dev/tty"${i}" # Blue
-		echo -en "\e]P5BDBDBD" > /dev/tty"${i}" # Magenta
-		echo -en "\e]P6BDBDBD" > /dev/tty"${i}" # Cyan
-		echo -en "\e]P7BDBDBD" > /dev/tty"${i}" # White
-		echo -en "\e]P8000000" > /dev/tty"${i}" # Black
-		echo -en "\e]P9BDBDBD" > /dev/tty"${i}" # Red
-		echo -en "\e]PABDBDBD" > /dev/tty"${i}" # Green
-		echo -en "\e]PBBDBDBD" > /dev/tty"${i}" # Yellow
-		echo -en "\e]PCBDBDBD" > /dev/tty"${i}" # Blue
-		echo -en "\e]PDBDBDBD" > /dev/tty"${i}" # Magenta
-		echo -en "\e]PEBDBDBD" > /dev/tty"${i}" # Cyan
-		echo -en "\e]PFBDBDBD" > /dev/tty"${i}" # White
-	done
-}; start
+for i in {1..6}; do
+	echo -en "\e]P0000000" > /dev/tty"${i}" # Background
+	echo -en "\e]P19E9E9E" > /dev/tty"${i}" # Red
+	echo -en "\e]P29E9E9E" > /dev/tty"${i}" # Green
+	echo -en "\e]P39E9E9E" > /dev/tty"${i}" # Yellow
+	echo -en "\e]P49E9E9E" > /dev/tty"${i}" # Blue
+	echo -en "\e]P59E9E9E" > /dev/tty"${i}" # Magenta
+	echo -en "\e]P69E9E9E" > /dev/tty"${i}" # Cyan
+	echo -en "\e]P79E9E9E" > /dev/tty"${i}" # White
+	echo -en "\e]P8000000" > /dev/tty"${i}" # Black
+	echo -en "\e]P99E9E9E" > /dev/tty"${i}" # Red
+	echo -en "\e]PA9E9E9E" > /dev/tty"${i}" # Green
+	echo -en "\e]PB9E9E9E" > /dev/tty"${i}" # Yellow
+	echo -en "\e]PC9E9E9E" > /dev/tty"${i}" # Blue
+	echo -en "\e]PD9E9E9E" > /dev/tty"${i}" # Magenta
+	echo -en "\e]PE9E9E9E" > /dev/tty"${i}" # Cyan
+	echo -en "\e]PF9E9E9E" > /dev/tty"${i}" # White
+done
