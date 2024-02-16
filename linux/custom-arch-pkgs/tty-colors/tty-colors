@@ -1,66 +1,64 @@
 #!/bin/bash
 
 mono_dark() {
-	for i in {1..6}; do
-		echo -en "\e]P0000000" > /dev/tty"${i}" # Background
-		echo -en "\e]P19E9E9E" > /dev/tty"${i}" # Red
-		echo -en "\e]P29E9E9E" > /dev/tty"${i}" # Green
-		echo -en "\e]P39E9E9E" > /dev/tty"${i}" # Yellow
-		echo -en "\e]P49E9E9E" > /dev/tty"${i}" # Blue
-		echo -en "\e]P59E9E9E" > /dev/tty"${i}" # Magenta
-		echo -en "\e]P69E9E9E" > /dev/tty"${i}" # Cyan
-		echo -en "\e]P79E9E9E" > /dev/tty"${i}" # White
-		echo -en "\e]P8000000" > /dev/tty"${i}" # Black
-		echo -en "\e]P99E9E9E" > /dev/tty"${i}" # Red
-		echo -en "\e]PA9E9E9E" > /dev/tty"${i}" # Green
-		echo -en "\e]PB9E9E9E" > /dev/tty"${i}" # Yellow
-		echo -en "\e]PC9E9E9E" > /dev/tty"${i}" # Blue
-		echo -en "\e]PD9E9E9E" > /dev/tty"${i}" # Magenta
-		echo -en "\e]PE9E9E9E" > /dev/tty"${i}" # Cyan
-		echo -en "\e]PF9E9E9E" > /dev/tty"${i}" # White
-	done
+	echo -en "\e]P0000000" # Background
+	echo -en "\e]P19E9E9E" # Red
+	echo -en "\e]P29E9E9E" # Green
+	echo -en "\e]P39E9E9E" # Yellow
+	echo -en "\e]P49E9E9E" # Blue
+	echo -en "\e]P59E9E9E" # Magenta
+	echo -en "\e]P69E9E9E" # Cyan
+	echo -en "\e]P79E9E9E" # White
+	echo -en "\e]P8000000" # Black
+	echo -en "\e]P99E9E9E" # Red
+	echo -en "\e]PA9E9E9E" # Green
+	echo -en "\e]PB9E9E9E" # Yellow
+	echo -en "\e]PC9E9E9E" # Blue
+	echo -en "\e]PD9E9E9E" # Magenta
+	echo -en "\e]PE9E9E9E" # Cyan
+	echo -en "\e]PF9E9E9E" # White
 }
 
 mono_light() {
-	for i in {1..6}; do
-		echo -en "\e]P0F5F5F5" > /dev/tty"${i}" # Background
-		echo -en "\e]P1212121" > /dev/tty"${i}" # Red
-		echo -en "\e]P2212121" > /dev/tty"${i}" # Green
-		echo -en "\e]P3212121" > /dev/tty"${i}" # Yellow
-		echo -en "\e]P4212121" > /dev/tty"${i}" # Blue
-		echo -en "\e]P5212121" > /dev/tty"${i}" # Magenta
-		echo -en "\e]P6212121" > /dev/tty"${i}" # Cyan
-		echo -en "\e]P7212121" > /dev/tty"${i}" # White
-		echo -en "\e]P8F5F5F5" > /dev/tty"${i}" # Black
-		echo -en "\e]P9212121" > /dev/tty"${i}" # Red
-		echo -en "\e]PA212121" > /dev/tty"${i}" # Green
-		echo -en "\e]PB212121" > /dev/tty"${i}" # Yellow
-		echo -en "\e]PC212121" > /dev/tty"${i}" # Blue
-		echo -en "\e]PD212121" > /dev/tty"${i}" # Magenta
-		echo -en "\e]PE212121" > /dev/tty"${i}" # Cyan
-		echo -en "\e]PF212121" > /dev/tty"${i}" # White
-	done
+	echo -en "\e]P0F5F5F5"
+	echo -en "\e]P1212121"
+	echo -en "\e]P2212121"
+	echo -en "\e]P3212121"
+	echo -en "\e]P4212121"
+	echo -en "\e]P5212121"
+	echo -en "\e]P6212121"
+	echo -en "\e]P7212121"
+	echo -en "\e]P8F5F5F5"
+	echo -en "\e]P9212121"
+	echo -en "\e]PA212121"
+	echo -en "\e]PB212121"
+	echo -en "\e]PC212121"
+	echo -en "\e]PD212121"
+	echo -en "\e]PE212121"
+	echo -en "\e]PF212121"
 }
 
 neon_dark() {
-	for i in {1..6}; do
-		echo -en "\e]P0000000" > /dev/tty"${i}" # Background
-		echo -en "\e]P1b0003a" > /dev/tty"${i}" # Red
-		echo -en "\e]P2b0003a" > /dev/tty"${i}" # Green
-		echo -en "\e]P3b0003a" > /dev/tty"${i}" # Yellow
-		echo -en "\e]P4673ab7" > /dev/tty"${i}" # Blue
-		echo -en "\e]P5b0003a" > /dev/tty"${i}" # Magenta
-		echo -en "\e]P600bcd4" > /dev/tty"${i}" # Cyan
-		echo -en "\e]P7aeaeae" > /dev/tty"${i}" # White
-		echo -en "\e]P8000000" > /dev/tty"${i}" # Black
-		echo -en "\e]P9b0003a" > /dev/tty"${i}" # Red
-		echo -en "\e]PAb0003a" > /dev/tty"${i}" # Green
-		echo -en "\e]PBb0003a" > /dev/tty"${i}" # Yellow
-		echo -en "\e]PC673ab7" > /dev/tty"${i}" # Blue
-		echo -en "\e]PDb0003a" > /dev/tty"${i}" # Magenta
-		echo -en "\e]PE00bcd4" > /dev/tty"${i}" # Cyan
-		echo -en "\e]PFaeaeae" > /dev/tty"${i}" # White
-	done
+	echo -en "\e]P0000000"
+	echo -en "\e]P1B0003A"
+	echo -en "\e]P2B0003A"
+	echo -en "\e]P3B0003A"
+	echo -en "\e]P4673AB7"
+	echo -en "\e]P5B0003A"
+	echo -en "\e]P600BCD4"
+	echo -en "\e]P7AEAEAE"
+	echo -en "\e]P8000000"
+	echo -en "\e]P9B0003A"
+	echo -en "\e]PAB0003A"
+	echo -en "\e]PBB0003A"
+	echo -en "\e]PC673AB7"
+	echo -en "\e]PDB0003A"
+	echo -en "\e]PE00BCD4"
+	echo -en "\e]PFAEAEAE"
 }
 
-"$1"
+if [[ -n "$1" ]]; then
+	for i in {1..6}; do
+		"$1" > /dev/tty"${i}"
+	done
+fi

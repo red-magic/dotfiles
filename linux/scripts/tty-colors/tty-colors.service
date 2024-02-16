@@ -1,9 +1,0 @@
-[Unit]
-Description=Change tty colors
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c "/usr/bin/tty-colors $(grep -v '#' /etc/systemd/tty-colors.conf)"
-
-[Install]
-WantedBy=getty.target
