@@ -3,6 +3,7 @@
 tty_colorschemes=(
 	mono_light
 	mono_dark
+	mono_brown_light
 	neon_dark
 )
 
@@ -42,6 +43,25 @@ mono_light=(
 	212121
 	212121
 	212121
+)
+
+mono_brown_light=(
+	F5F5F5
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	F5F5F5
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	3E2723
+	3E2723
 )
 
 neon_dark=(
