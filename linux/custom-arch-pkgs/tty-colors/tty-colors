@@ -32,7 +32,9 @@ if [[ -n "$1" ]]; then
 	selected_scheme=$1
 	if [[ -v color_scheme[$selected_scheme] ]]; then
 		tty_color="${color_scheme[$selected_scheme]}"
-		set_tty_color "$tty_color"
+		for i in {1..6}; do
+			set_tty_color "$tty_color" > /dev/tty${i}
+		done
 	else
 	echo "Invalid colorscheme provided."
 fi
