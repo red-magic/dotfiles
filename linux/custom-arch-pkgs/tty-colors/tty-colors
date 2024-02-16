@@ -1,64 +1,93 @@
 #!/bin/bash
 
 mono_dark() {
-	echo -en "\e]P0000000" # Background
-	echo -en "\e]P19E9E9E" # Red
-	echo -en "\e]P29E9E9E" # Green
-	echo -en "\e]P39E9E9E" # Yellow
-	echo -en "\e]P49E9E9E" # Blue
-	echo -en "\e]P59E9E9E" # Magenta
-	echo -en "\e]P69E9E9E" # Cyan
-	echo -en "\e]P79E9E9E" # White
-	echo -en "\e]P8000000" # Black
-	echo -en "\e]P99E9E9E" # Red
-	echo -en "\e]PA9E9E9E" # Green
-	echo -en "\e]PB9E9E9E" # Yellow
-	echo -en "\e]PC9E9E9E" # Blue
-	echo -en "\e]PD9E9E9E" # Magenta
-	echo -en "\e]PE9E9E9E" # Cyan
-	echo -en "\e]PF9E9E9E" # White
+	ttyColors=(
+		000000
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		000000
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+		9E9E9E
+	)
 }
 
 mono_light() {
-	echo -en "\e]P0F5F5F5"
-	echo -en "\e]P1212121"
-	echo -en "\e]P2212121"
-	echo -en "\e]P3212121"
-	echo -en "\e]P4212121"
-	echo -en "\e]P5212121"
-	echo -en "\e]P6212121"
-	echo -en "\e]P7212121"
-	echo -en "\e]P8F5F5F5"
-	echo -en "\e]P9212121"
-	echo -en "\e]PA212121"
-	echo -en "\e]PB212121"
-	echo -en "\e]PC212121"
-	echo -en "\e]PD212121"
-	echo -en "\e]PE212121"
-	echo -en "\e]PF212121"
+	ttyColors=(
+		F5F5F5
+		212121
+		212121
+		212121
+		212121
+		212121
+		212121
+		212121
+		F5F5F5
+		212121
+		212121
+		212121
+		212121
+		212121
+		212121
+		212121
+	)
 }
 
 neon_dark() {
-	echo -en "\e]P0000000"
-	echo -en "\e]P1B0003A"
-	echo -en "\e]P2B0003A"
-	echo -en "\e]P3B0003A"
-	echo -en "\e]P4673AB7"
-	echo -en "\e]P5B0003A"
-	echo -en "\e]P600BCD4"
-	echo -en "\e]P7AEAEAE"
-	echo -en "\e]P8000000"
-	echo -en "\e]P9B0003A"
-	echo -en "\e]PAB0003A"
-	echo -en "\e]PBB0003A"
-	echo -en "\e]PC673AB7"
-	echo -en "\e]PDB0003A"
-	echo -en "\e]PE00BCD4"
-	echo -en "\e]PFAEAEAE"
+	ttyColors=(
+		000000
+		B0003A
+		B0003A
+		B0003A
+		673AB7
+		B0003A
+		00BCD4
+		AEAEAE
+		000000
+		B0003A
+		B0003A
+		B0003A
+		673AB7
+		B0003A
+		00BCD4
+		AEAEAE
+	)
 }
+
+set_tty_color() {
+	echo -en "\e]P0${ttyColors[0]}"	 # Background
+	echo -en "\e]P1${ttyColors[1]}"  # Red
+	echo -en "\e]P2${ttyColors[2]}"  # Green
+	echo -en "\e]P3${ttyColors[3]}"  # Yellow
+	echo -en "\e]P4${ttyColors[4]}"  # Blue
+	echo -en "\e]P5${ttyColors[5]}"  # Magenta
+	echo -en "\e]P6${ttyColors[6]}"  # Cyan
+	echo -en "\e]P7${ttyColors[7]}"  # White
+	echo -en "\e]P8${ttyColors[8]}"  # Black
+	echo -en "\e]P9${ttyColors[9]}"  # Red
+	echo -en "\e]PA${ttyColors[10]}" # Green
+	echo -en "\e]PB${ttyColors[11]}" # Yellow
+	echo -en "\e]PC${ttyColors[12]}" # Blue
+	echo -en "\e]PD${ttyColors[13]}" # Magenta
+	echo -en "\e]PE${ttyColors[14]}" # Cyan
+	echo -en "\e]PF${ttyColors[15]}" # White
+}
+
+"$@"
 
 if [[ -n "$1" ]]; then
 	for i in {1..6}; do
-		"$1" > /dev/tty"${i}"
+		set_tty_color > /dev/tty"${i}"
 	done
+	else
+	echo "Choose tty color"
 fi
