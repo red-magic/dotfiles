@@ -1,67 +1,67 @@
 #!/bin/bash
 
-mono_dark() {
-	ttyColors=(
-		000000
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		000000
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-		9E9E9E
-	)
-}
+tty_colorschemes=(
+	mono_light
+	mono_dark
+	neon_dark
+)
 
-mono_light() {
-	ttyColors=(
-		F5F5F5
-		212121
-		212121
-		212121
-		212121
-		212121
-		212121
-		212121
-		F5F5F5
-		212121
-		212121
-		212121
-		212121
-		212121
-		212121
-		212121
-	)
-}
+mono_dark=(
+	000000
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	000000
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+	9E9E9E
+)
 
-neon_dark() {
-	ttyColors=(
-		000000
-		B0003A
-		B0003A
-		B0003A
-		673AB7
-		B0003A
-		00BCD4
-		AEAEAE
-		000000
-		B0003A
-		B0003A
-		B0003A
-		673AB7
-		B0003A
-		00BCD4
-		AEAEAE
-	)
-}
+mono_light=(
+	F5F5F5
+	212121
+	212121
+	212121
+	212121
+	212121
+	212121
+	212121
+	F5F5F5
+	212121
+	212121
+	212121
+	212121
+	212121
+	212121
+	212121
+)
+
+neon_dark=(
+	000000
+	B0003A
+	B0003A
+	B0003A
+	673AB7
+	B0003A
+	00BCD4
+	AEAEAE
+	000000
+	B0003A
+	B0003A
+	B0003A
+	673AB7
+	B0003A
+	00BCD4
+	AEAEAE
+)
 
 set_tty_color() {
 	echo -en "\e]P0${ttyColors[0]}"	 # Background
@@ -82,12 +82,15 @@ set_tty_color() {
 	echo -en "\e]PF${ttyColors[15]}" # White
 }
 
-"$@"
-
 if [[ -n "$1" ]]; then
 	for i in {1..6}; do
+		ARR=$1
+		eval "ttyColors=(\"\${$ARR[@]}\")"
 		set_tty_color > /dev/tty"${i}"
 	done
 	else
-	echo "Choose tty color"
+	echo -e "Usage: tty-colors [colorscheme]\nColorschemes:"
+	for i in ${tty_colorschemes[@]}; do
+		echo $i
+	done
 fi
