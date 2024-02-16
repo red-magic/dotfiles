@@ -1,49 +1,46 @@
 #!/bin/bash
 
-tty_colorschemes=(
-	mono_light
-	mono_dark
-	mono_brown_light
-	neon_dark
-)
+declare -A color_scheme
 
-#                   BG    Red   Green  Yellow  Blue  Magenta Cyan  White  Black   Red   Green  Yellow  Blue  Magenta Cyan  White
-
-mono_light=(      F5F5F5 212121 212121 212121 212121 212121 212121 212121 F5F5F5 212121 212121 212121 212121 212121 212121 212121)
-mono_dark=(       000000 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 000000 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E)
-mono_brown_light=(F5F5F5 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 F5F5F5 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723)
-neon_dark=(       000000 B0003A B0003A B0003A 673AB7 B0003A 00BCD4 AEAEAE 000000 B0003A B0003A B0003A 673AB7 B0003A 00BCD4 AEAEAE)
+#                                   BG    Red   Green  Yellow  Blue  Magenta Cyan  White  Black   Red   Green  Yellow  Blue  Magenta Cyan  White
+color_scheme["mono_light"]="      F5F5F5 212121 212121 212121 212121 212121 212121 212121 F5F5F5 212121 212121 212121 212121 212121 212121 212121"
+color_scheme["mono_dark"]="	  000000 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 000000 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E"
+color_scheme["mono_brown_light"]="F5F5F5 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 F5F5F5 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723"
+color_scheme["neon_dark"]="       000000 B0003A B0003A B0003A 673AB7 B0003A 00BCD4 AEAEAE 000000 B0003A B0003A B0003A 673AB7 B0003A 00BCD4 AEAEAE"
 
 set_tty_color() {
-	echo -en "\e]P0${tty_colors[0]}"
-	echo -en "\e]P1${tty_colors[1]}"
-	echo -en "\e]P2${tty_colors[2]}"
-	echo -en "\e]P3${tty_colors[3]}"
-	echo -en "\e]P4${tty_colors[4]}"
-	echo -en "\e]P5${tty_colors[5]}"
-	echo -en "\e]P6${tty_colors[6]}"
-	echo -en "\e]P7${tty_colors[7]}"
-	echo -en "\e]P8${tty_colors[8]}"
-	echo -en "\e]P9${tty_colors[9]}"
-	echo -en "\e]PA${tty_colors[10]}"
-	echo -en "\e]PB${tty_colors[11]}"
-	echo -en "\e]PC${tty_colors[12]}"
-	echo -en "\e]PD${tty_colors[13]}"
-	echo -en "\e]PE${tty_colors[14]}"
-	echo -en "\e]PF${tty_colors[15]}"
+	local color=($1)
+	echo -en "\e]P0${color[0]}"
+	echo -en "\e]P1${color[1]}"
+	echo -en "\e]P2${color[2]}"
+	echo -en "\e]P3${color[3]}"
+	echo -en "\e]P4${color[4]}"
+	echo -en "\e]P5${color[5]}"
+	echo -en "\e]P6${color[6]}"
+	echo -en "\e]P7${color[7]}"
+	echo -en "\e]P8${color[8]}"
+	echo -en "\e]P9${color[9]}"
+	echo -en "\e]PA${color[10]}"
+	echo -en "\e]PB${color[11]}"
+	echo -en "\e]PC${color[12]}"
+	echo -en "\e]PD${color[13]}"
+	echo -en "\e]PE${color[14]}"
+	echo -en "\e]PF${color[15]}"
 }
 
 if [[ -n "$1" ]]; then
-	for i in {1..6}; do
-		tty_colors=()
-		ARR=$1
-		eval "tty_colors=(\"\${${ARR}[@]}\")"
-		set_tty_color > /dev/tty"${i}"
-	done
+	selected_scheme=$1
+	if [[ -v color_scheme[$selected_scheme] ]]; then
+		tty_color="${color_scheme[$selected_scheme]}"
+		set_tty_color "$tty_color"
 	else
+	echo "Invalid colorscheme provided."
+fi
+else
 	echo -e "Usage: tty-colors [colorscheme]\n\nColorschemes:\n"
-	for i in "${tty_colorschemes[@]}"; do
-		echo "$i"
+	for scheme in "${!color_scheme[@]}"; do
+		echo "$scheme"
 	done
 	echo
 fi
+
