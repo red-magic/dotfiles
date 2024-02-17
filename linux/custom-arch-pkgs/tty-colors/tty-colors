@@ -38,25 +38,26 @@ _print_colored_block() {
 
 print_colorschemes() {
 	for scheme in "${!color_scheme[@]}"; do
-		echo
 		echo "$scheme"
-		IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
-		counter=0
-		for color in "${hex_colors[@]}"; do
-			_print_colored_block "$color"
-			((counter++))
-			if ((counter % 8 == 0)); then
-				printf "\n"
-			fi
-		done
+		if [[ "$colored" == "y" ]]; then
+			IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
+			counter=0
+			for color in "${hex_colors[@]}"; do
+				_print_colored_block "$color"
+				((counter++))
+				if ((counter % 8 == 0)); then
+					printf "\n"
+				fi
+			done
+		fi
 	done
-	echo
 }
 
 print_help() {
-	echo "Usage: tty-colors [colorscheme]"
+	echo "Usage: tty-colors [color_scheme]"
 	echo
-	echo "  -l    print colorschemes"
+	echo "  -l    list colorschemes"
+	echo "  -p    list colorschemes and print colors"
 	echo "  -h    print help"
 	echo
 }
@@ -78,6 +79,8 @@ if [[ "$1" == "-h" || "$1" == "" ]]; then
 	print_help
 elif [[ "$1" == "-l" ]]; then
 	print_colorschemes
+elif [[ "$1" == "-p" ]]; then
+	colored="y" print_colorschemes
 elif [[ -n "$1" ]]; then
 	main "$1"
 fi
