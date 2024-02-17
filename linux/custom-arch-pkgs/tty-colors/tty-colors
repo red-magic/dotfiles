@@ -38,8 +38,10 @@ _print_colored_block() {
 
 print_colorschemes() {
 	for scheme in "${!color_scheme[@]}"; do
-		echo -e "\n$scheme"
+		echo
+		echo "$scheme"
 		IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
+		counter=0
 		for color in "${hex_colors[@]}"; do
 			_print_colored_block "$color"
 			((counter++))
@@ -48,9 +50,19 @@ print_colorschemes() {
 			fi
 		done
 	done
+	echo
 }
 
-if [[ -n "$1" ]]; then
+print_help() {
+	echo "Usage: "$0" [colorscheme]"
+	echo
+	echo "  -l    print colorschemes"
+	echo "  -h    print help"
+	echo
+	exit 0
+}
+
+main() {
 	selected_scheme="$1"
 	if [[ -v color_scheme[$selected_scheme] ]]; then
 		IFS=" " read -r -a tty_color <<< "${color_scheme[$selected_scheme]}"
@@ -60,8 +72,12 @@ if [[ -n "$1" ]]; then
 	else
 		echo "Invalid colorscheme provided."
 	fi
-	else
-		echo -e "Usage: tty-colors [colorscheme]\n\nColorschemes:"
-		print_colorschemes
-	echo
+}
+
+if [[ "$1" == "-h" || "$1" == "" ]]; then
+	print_help
+elif [[ "$1" == "-l" ]]; then
+	print_colorschemes
+elif [[ -n "$1" ]]; then
+	main "$1"
 fi
