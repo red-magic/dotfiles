@@ -36,12 +36,12 @@ if [[ -n "$1" ]]; then
 			set_tty_color "$tty_color" > /dev/tty${i}
 		done
 	else
-	echo "Invalid colorscheme provided."
-fi
-else
-	echo -e "Usage: tty-colors [colorscheme]\n\nColorschemes:\n"
-	for scheme in "${!color_scheme[@]}"; do
-		echo "$scheme"
-	done
+		echo "Invalid colorscheme provided."
+	fi
+	else
+		echo -e "Usage: tty-colors [colorscheme]\n\nColorschemes:\n"
+		for scheme in "${!color_scheme[@]}"; do
+			echo "$scheme"
+		done
 	echo
 fi
