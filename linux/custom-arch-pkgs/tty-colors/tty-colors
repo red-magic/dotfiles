@@ -54,7 +54,7 @@ print_colorschemes() {
 }
 
 print_help() {
-	echo "Usage: "$0" [colorscheme]"
+	echo "Usage: $0 [colorscheme]"
 	echo
 	echo "  -l    print colorschemes"
 	echo "  -h    print help"
