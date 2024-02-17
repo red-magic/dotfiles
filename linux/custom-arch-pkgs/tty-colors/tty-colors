@@ -31,6 +31,25 @@ set_tty_color() {
 	echo -en "\e]PF${tty_color[15]}" # White
 }
 
+_print_colored_block() {
+	hex_color="$1"
+	printf "\e[48;2;$(printf "%d;%d;%d" 0x"${hex_color:0:2}" 0x"${hex_color:2:2}" 0x"${hex_color:4:2}")m   \e[0m"
+}
+
+print_colorschemes() {
+	for scheme in "${!color_scheme[@]}"; do
+		echo -e "\n$scheme"
+		IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
+		for color in "${hex_colors[@]}"; do
+			_print_colored_block "$color"
+			((counter++))
+			if ((counter % 8 == 0)); then
+				printf "\n"
+			fi
+		done
+	done
+}
+
 if [[ -n "$1" ]]; then
 	selected_scheme=$1
 	if [[ -v color_scheme[$selected_scheme] ]]; then
@@ -42,9 +61,7 @@ if [[ -n "$1" ]]; then
 		echo "Invalid colorscheme provided."
 	fi
 	else
-		echo -e "Usage: tty-colors [colorscheme]\n\nColorschemes:\n"
-		for scheme in "${!color_scheme[@]}"; do
-			echo "$scheme"
-		done
+		echo -e "Usage: tty-colors [colorscheme]\n\nColorschemes:"
+		print_colorschemes
 	echo
 fi
