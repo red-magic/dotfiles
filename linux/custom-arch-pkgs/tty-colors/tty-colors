@@ -59,7 +59,6 @@ print_help() {
 	echo "  -l    print colorschemes"
 	echo "  -h    print help"
 	echo
-	exit 0
 }
 
 main() {
@@ -71,6 +70,7 @@ main() {
 		done
 	else
 		echo "Invalid colorscheme provided."
+		exit 1
 	fi
 }
 
