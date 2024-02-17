@@ -51,7 +51,7 @@ print_colorschemes() {
 }
 
 if [[ -n "$1" ]]; then
-	selected_scheme=$1
+	selected_scheme="$1"
 	if [[ -v color_scheme[$selected_scheme] ]]; then
 		IFS=" " read -r -a tty_color <<< "${color_scheme[$selected_scheme]}"
 		for i in {1..6}; do
