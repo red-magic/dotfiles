@@ -37,6 +37,7 @@ _print_colored_block() {
 }
 
 print_colorschemes() {
+	colored=""
 	for scheme in "${!color_scheme[@]}"; do
 		echo "$scheme"
 		if [[ "$colored" == "y" ]]; then
