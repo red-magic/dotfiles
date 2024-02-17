@@ -26,7 +26,6 @@ set_tty_color() {
 	echo -en "\e]PD${tty_color[13]}" # Magenta
 	echo -en "\e]PE${tty_color[14]}" # Cyan
 	echo -en "\e]PF${tty_color[15]}" # White
-	clear
 }
 
 if [[ -n "$1" ]]; then
