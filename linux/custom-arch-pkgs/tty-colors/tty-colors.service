@@ -3,7 +3,8 @@ Description=Change tty colors
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c "/usr/bin/tty-colors $(grep -v '#' /etc/systemd/tty-colors.conf)"
+EnvironmentFile=/etc/tty-colors/tty-colors.conf
+ExecStart=/usr/bin/tty-colors ${COLORSCHEME}
 
 [Install]
 WantedBy=getty.target
