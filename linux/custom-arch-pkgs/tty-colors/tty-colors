@@ -12,6 +12,29 @@ color_scheme["material_dark"]="000000 F44336 4CAF50 FFEB3B 2196F3 9C27B0 00BCD4 
 color_scheme["solarized_dark"]="073642 DC322F 859900 B58900 268BD2 D33682 2AA198 EEE8D5 002B36 CB4B16 586E75 657B83 839496 6C71C4 93A1A1 FDF6E3"
 color_scheme["solarized_light"]="EEE8D5 DC322F 859900 B58900 268BD2 D33682 2AA198 073642 FDF6E3 CB4B16 93A1A1 839496 657B83 6C71C4 586E75 002B36"
 
+print_colored_block() {
+	hex_color="$1"
+	printf "\e[48;2;$(printf "%d;%d;%d" 0x"${hex_color:0:2}" 0x"${hex_color:2:2}" 0x"${hex_color:4:2}")m   \e[0m"
+}
+
+print_colorschemes() {
+	colored+=""
+	for scheme in "${!color_scheme[@]}"; do
+		echo "$scheme"
+		if [[ "$colored" == "y" ]]; then
+			IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
+			counter=0
+			for color in "${hex_colors[@]}"; do
+				print_colored_block "$color"
+				((counter++))
+				if ((counter % 8 == 0)); then
+					echo
+				fi
+			done
+		fi
+	done
+}
+
 set_tty_color() {
 	echo -en "\e]P0${tty_color[0]}"  # Background
 	echo -en "\e]P1${tty_color[1]}"  # Red
@@ -31,38 +54,6 @@ set_tty_color() {
 	echo -en "\e]PF${tty_color[15]}" # White
 }
 
-_print_colored_block() {
-	hex_color="$1"
-	printf "\e[48;2;$(printf "%d;%d;%d" 0x"${hex_color:0:2}" 0x"${hex_color:2:2}" 0x"${hex_color:4:2}")m   \e[0m"
-}
-
-print_colorschemes() {
-	colored+=""
-	for scheme in "${!color_scheme[@]}"; do
-		echo "$scheme"
-		if [[ "$colored" == "y" ]]; then
-			IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
-			counter=0
-			for color in "${hex_colors[@]}"; do
-				_print_colored_block "$color"
-				((counter++))
-				if ((counter % 8 == 0)); then
-					echo
-				fi
-			done
-		fi
-	done
-}
-
-print_help() {
-	echo "Usage: tty-colors [color_scheme]"
-	echo
-	echo "  -l    list colorschemes"
-	echo "  -p    list colorschemes and print colors"
-	echo "  -h    print help"
-	echo
-}
-
 set_tty_colorscheme() {
 	selected_scheme="$1"
 	if [[ -v color_scheme[$selected_scheme] ]]; then
@@ -74,6 +65,15 @@ set_tty_colorscheme() {
 		echo "Invalid colorscheme provided."
 		exit 1
 	fi
+}
+
+print_help() {
+	echo "Usage: tty-colors [color_scheme]"
+	echo
+	echo "  -l    list colorschemes"
+	echo "  -p    list colorschemes and print colors"
+	echo "  -h    print help"
+	echo
 }
 
 if [[ "$1" == "-h" || "$1" == "" ]]; then
