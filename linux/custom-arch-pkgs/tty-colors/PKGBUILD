@@ -5,6 +5,7 @@ pkgdesc='Change tty colors'
 arch=(any)
 depends=(bash)
 backup=(etc/tty-colors/tty-colors.conf)
+install=$pkgname.install
 source=(tty-colors
 	tty-colors.service)
 
