@@ -47,7 +47,7 @@ print_colorschemes() {
 				_print_colored_block "$color"
 				((counter++))
 				if ((counter % 8 == 0)); then
-					printf "\n"
+					echo
 				fi
 			done
 		fi
@@ -63,7 +63,7 @@ print_help() {
 	echo
 }
 
-main() {
+set_tty_colorscheme() {
 	selected_scheme="$1"
 	if [[ -v color_scheme[$selected_scheme] ]]; then
 		IFS=" " read -r -a tty_color <<< "${color_scheme[$selected_scheme]}"
@@ -83,5 +83,5 @@ elif [[ "$1" == "-l" ]]; then
 elif [[ "$1" == "-p" ]]; then
 	colored="y" print_colorschemes
 elif [[ -n "$1" ]]; then
-	main "$1"
+	set_tty_colorscheme "$1"
 fi
