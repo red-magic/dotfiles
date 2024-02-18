@@ -5,7 +5,7 @@ gen_tty_colors_conf() {
 
 	while IFS= read -r line; do
 		echo "# $line"
-	done <<< $(./tty-colors -l)
+	done <<< "$(./tty-colors -l)"
 }
 
 gen_tty_colors_conf > tty-colors.conf
