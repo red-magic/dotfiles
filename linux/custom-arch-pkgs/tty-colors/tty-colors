@@ -84,12 +84,9 @@ print_help() {
 	echo
 }
 
-if [[ "$1" == "-h" || "$1" == "" ]]; then
-	print_help
-elif [[ "$1" == "-l" ]]; then
-	print_colorschemes
-elif [[ "$1" == "-p" ]]; then
-	colored="y" print_colorschemes
-elif [[ -n "$1" ]]; then
-	set_tty_colorscheme "$1"
-fi
+case "$1" in
+	"" | "-h") print_help;;
+	-l) print_colorschemes;;
+	-p) colored="y" print_colorschemes;;
+	 *) set_tty_colorscheme "$1";;
+esac
