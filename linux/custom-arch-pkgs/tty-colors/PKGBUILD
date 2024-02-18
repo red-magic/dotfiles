@@ -6,7 +6,7 @@ arch=(any)
 depends=(bash)
 backup=(etc/tty-colors/tty-colors.conf)
 source=(tty-colors
-	tty-colors.conf
+	gen-tty-colors-conf
 	tty-colors.service)
 
 b2sums=(SKIP
@@ -14,6 +14,8 @@ b2sums=(SKIP
 	SKIP)
 
 package() {
+	./gen-tty-colors-conf
+
 	install -Dm 755 tty-colors -t $pkgdir/usr/bin
 	install -Dm 644 tty-colors.conf -t $pkgdir/etc/tty-colors
 	install -Dm 644 tty-colors.service -t $pkgdir/usr/lib/systemd/system
