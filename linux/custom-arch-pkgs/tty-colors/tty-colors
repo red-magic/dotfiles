@@ -70,7 +70,7 @@ set_tty_colorscheme() {
 		fi
 		echo "Setting $selected_scheme colorscheme"
 	else
-		echo "Invalid colorscheme provided."
+		echo "Invalid colorscheme provided"
 		exit 1
 	fi
 }
