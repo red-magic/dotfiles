@@ -6,15 +6,20 @@ arch=(any)
 depends=(bash)
 backup=(etc/tty-colors/tty-colors.conf)
 source=(tty-colors
-	gen-tty-colors-conf
 	tty-colors.service)
 
 b2sums=(SKIP
-	SKIP
 	SKIP)
 
+_gen_tty_colors_conf() {
+	echo -e "COLORSCHEME=mono_dark\n\n# Colorschemes:\n#"
+	while IFS='' read -r line; do
+		echo "# $line"
+	done <<< "$(./tty-colors -l | sort)"
+}
+
 package() {
-	./gen-tty-colors-conf
+	_gen_tty_colors_conf > tty-colors.conf
 
 	install -Dm 755 tty-colors -t $pkgdir/usr/bin
 	install -Dm 644 tty-colors.conf -t $pkgdir/etc/tty-colors
