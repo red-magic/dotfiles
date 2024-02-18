@@ -77,11 +77,9 @@ set_tty_colorscheme() {
 
 print_help() {
 	echo "Usage: tty-colors [color_scheme]"
-	echo
 	echo "  -l    list colorschemes"
 	echo "  -p    list colorschemes and print colors"
 	echo "  -h    print help"
-	echo
 }
 
 case "$1" in
