@@ -12,7 +12,7 @@ b2sums=(SKIP
 	SKIP)
 
 _gen_tty_colors_conf() {
-	echo -e "COLORSCHEME=mono_dark\n\n# Colorschemes:\n#"
+	echo -e "colorscheme = mono_dark\n\n# Colorschemes:\n#"
 	while IFS='' read -r line; do
 		echo "# $line"
 	done <<< "$(./tty-colors -l)"
