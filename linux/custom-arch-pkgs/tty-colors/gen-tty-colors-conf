@@ -4,7 +4,7 @@ gen_tty_colors_conf() {
 	echo -e "COLORSCHEME=mono_dark\n\n# Colorschemes:\n#"
 	while IFS='' read -r line; do
 		echo "# $line"
-	done <<< "$(./tty-colors -l)"
+	done <<< "$(./tty-colors -l | sort)"
 }
 
 gen_tty_colors_conf > tty-colors.conf
