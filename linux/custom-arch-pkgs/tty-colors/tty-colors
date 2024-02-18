@@ -85,7 +85,7 @@ print_help() {
 }
 
 case "$1" in
-	"" | "-h") print_help;;
+	-h | "") print_help;;
 	-l) print_colorschemes;;
 	-p) colored="y" print_colorschemes;;
 	 *) set_tty_colorscheme "$1";;
