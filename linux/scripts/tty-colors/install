@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ "$(id -u)" -ne 0 ]; then
+	echo "You must run this script as root to install tty-colors and colorschemes"
+	echo "Pass 'remove' to uninstall"
+	exit 1
+fi
+
+remove_tty_colors() {
+	rm -vf /usr/bin/tty-colors
+	rm -vrf /etc/tty-colors
+	if [ -x "$(command -v systemctl)" ]; then
+		rm -vf /usr/lib/systemd/system/tty-colors.service
+	fi
+}
+
+install_tty_colors() {
+	install -vm 755 tty-colors -t /usr/bin
+	install -vDm 644 colorschemes/* -t /etc/tty-colors/colorschemes
+	if [ -x "$(command -v systemctl)" ]; then
+		install -vm 644 extra/tty-colors.conf -t /etc/tty-colors
+		install -vm 644 extra/tty-colors.service -t /usr/lib/systemd/system
+		echo -e "\nEnable tty-colors.service to change tty colors on boot"
+		echo -e "Colorscheme can be set in /etc/tty-colors/tty-colors.conf\n"
+	fi
+}
+
+if [[ "$1" == "remove" ]]; then
+	remove_tty_colors
+elif [[ -z "$1" ]]; then
+	install_tty_colors
+fi
