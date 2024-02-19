@@ -1,5 +1,5 @@
 [Unit]
-Description=Change tty colors
+Description=Change TTY colors
 
 [Service]
 Type=oneshot
