@@ -18,8 +18,8 @@ install_tty_colors() {
 	install -vm 755 tty-colors -t /usr/bin
 	install -vDm 644 colorschemes/* -t /etc/tty-colors/colorschemes
 	if [ -x "$(command -v systemctl)" ]; then
-		install -vm 644 extra/tty-colors.conf -t /etc/tty-colors
-		install -vm 644 extra/tty-colors.service -t /usr/lib/systemd/system
+		install -vm 644 systemd/tty-colors.conf -t /etc/tty-colors
+		install -vm 644 systemd/tty-colors.service -t /usr/lib/systemd/system
 		echo -e "\nEnable tty-colors.service to change tty colors on boot"
 		echo -e "Colorscheme can be set in /etc/tty-colors/tty-colors.conf\n"
 	fi
