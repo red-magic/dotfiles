@@ -3,9 +3,13 @@
 ## Installation
 
 Run ```install``` script as root to install tty-colors script and colorschemes
+
 If you want to uninstall it simply pass remove argument ```install remove```
 
+### systemd
+
 If you are using systemd it will also install ```tty-colors.service``` which you can enable to change TTY colors on boot
+
 Desired colorscheme can be set in ```/etc/tty-colors/tty-colors.conf```
 
 ## Usage
