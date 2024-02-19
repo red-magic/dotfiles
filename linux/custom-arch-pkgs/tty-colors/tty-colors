@@ -8,22 +8,28 @@ print_colored_block() {
 }
 
 print_colorschemes() {
-	for scheme in "$colorschemes_dir"/*; do
-		scheme_name=$(basename "$scheme")
-		echo "$scheme_name"
-		if [[ -n "$colored" ]]; then
-			source "$scheme"
-			counter=0
-			for i in {1..16}; do
-				hex_value="color$i"
-				print_colored_block "${!hex_value}"
-				((counter++))
-				if ((counter % 8 == 0)); then
-					echo
-				fi
-			done
-		fi
-	done
+	if [ ! -d "$colorschemes_dir" ]; then
+		echo "Colorschemes directory doesn't exist"
+	elif [ -z "$(ls -A $colorschemes_dir)" ]; then
+		echo "No colorschemes found"
+	else
+		for scheme in "$colorschemes_dir"/*; do
+			scheme_name=$(basename "$scheme")
+			echo "$scheme_name"
+			if [[ -n "$colored" ]]; then
+				source "$scheme"
+				counter=0
+				for i in {1..16}; do
+					hex_value="color$i"
+					print_colored_block "${!hex_value}"
+					((counter++))
+					if ((counter % 8 == 0)); then
+						echo
+					fi
+				done
+			fi
+		done
+	fi
 }
 
 set_tty_color() {
