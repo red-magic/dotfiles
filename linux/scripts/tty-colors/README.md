@@ -56,4 +56,4 @@ color15=00BCD4 # Cyan
 color16=9E9E9E # White
 ```
 
-Just put change the hex values of colors and put it in ```/etc/tty-colors/colorschemes```
+Just change the hex values of colors and put it in ```/etc/tty-colors/colorschemes```
