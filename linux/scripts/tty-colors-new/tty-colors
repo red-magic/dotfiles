@@ -73,13 +73,11 @@ if [ $# -eq 0 ]; then
 	print_help
 fi
 
-while getopts ":hlpc:" opt; do
+while getopts "lph" opt; do
 	case "${opt}" in
-		h) print_help;;
 		l) print_colorschemes;;
 		p) colored="y" print_colorschemes;;
-		:) echo "Usage: -c <config_file>" && exit 1;;
-		\?) echo "Invalid option" && exit 1;;
+		h) print_help;;
 	esac
 done
 
