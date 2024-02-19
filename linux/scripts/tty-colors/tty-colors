@@ -69,7 +69,7 @@ set_tty_colorscheme() {
 }
 
 print_help() {
-	echo "Usage: tty-colors [color_scheme]"
+	echo "Usage: tty-colors [colorscheme]"
 	echo "  -l    list colorschemes"
 	echo "  -p    list colorschemes and print colors"
 	echo "  -h    print help"

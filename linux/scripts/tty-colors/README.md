@@ -15,13 +15,17 @@ Desired colorscheme can be set in ```/etc/tty-colors/tty-colors.conf```
 ## Usage
 
 ```
-Usage: tty-colors [color_scheme]
+Usage: tty-colors [colorscheme]
   -l    list colorschemes
   -p    list colorschemes and print colors
   -h    print help
 ```
 
 To change TTY colors at user logon add ```tty-colors <colorscheme>``` to ```.profile```
+
+If you get screen artifacts hit ```Ctrl+l``` or type ```clear```
+
+Type ```reset``` to get back to the system default colors
 
 ## Screenshots
 
