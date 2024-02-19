@@ -24,11 +24,10 @@ print_colored_block() {
 }
 
 print_colorschemes() {
-	colored+=""
 	mapfile -t sorted_schemes < <(printf '%s\n' "${!color_scheme[@]}" | sort )
 	for scheme in "${sorted_schemes[@]}"; do
 		echo "$scheme"
-		if [[ "$colored" == "y" ]]; then
+		if [[ -z "$colored" ]]; then
 			IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
 			counter=0
 			for color in "${hex_colors[@]}"; do
