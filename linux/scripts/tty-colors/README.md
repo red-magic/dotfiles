@@ -21,4 +21,11 @@ Usage: tty-colors [color_scheme]
   -h    print help
 ```
 
+To change TTY colors on user logon add ```tty-colors <colorscheme>``` to ```.profile```
+
 ## Screenshots
+
+![screenshot 1] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-1.png)
+![screenshot 2] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-2.png)
+![screenshot 3] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-3.png)
+![screenshot 4] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-4.png)
