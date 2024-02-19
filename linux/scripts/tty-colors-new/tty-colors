@@ -11,8 +11,8 @@ print_colorschemes() {
 	for scheme in "$colorschemes_dir"/*; do
 		scheme_name=$(basename "$scheme")
 		echo "$scheme_name"
-		source "$scheme"
 		if [[ -n "$colored" ]]; then
+			source "$scheme"
 			counter=0
 			for i in {1..16}; do
 				hex_value="color$i"
@@ -27,30 +27,28 @@ print_colorschemes() {
 }
 
 set_tty_color() {
-	echo -en "\e]P0${tty_color[0]}"  # Background
-	echo -en "\e]P1${tty_color[1]}"  # Red
-	echo -en "\e]P2${tty_color[2]}"  # Green
-	echo -en "\e]P3${tty_color[3]}"  # Yellow
-	echo -en "\e]P4${tty_color[4]}"  # Blue
-	echo -en "\e]P5${tty_color[5]}"  # Magenta
-	echo -en "\e]P6${tty_color[6]}"  # Cyan
-	echo -en "\e]P7${tty_color[7]}"  # White
-	echo -en "\e]P8${tty_color[8]}"  # Black
-	echo -en "\e]P9${tty_color[9]}"  # Red
-	echo -en "\e]PA${tty_color[10]}" # Green
-	echo -en "\e]PB${tty_color[11]}" # Yellow
-	echo -en "\e]PC${tty_color[12]}" # Blue
-	echo -en "\e]PD${tty_color[13]}" # Magenta
-	echo -en "\e]PE${tty_color[14]}" # Cyan
-	echo -en "\e]PF${tty_color[15]}" # White
+	echo -en "\e]P0$color1"  # Background
+	echo -en "\e]P1$color2"  # Red
+	echo -en "\e]P2$color3"  # Green
+	echo -en "\e]P3$color4"  # Yellow
+	echo -en "\e]P4$color5"  # Blue
+	echo -en "\e]P5$color6"  # Magenta
+	echo -en "\e]P6$color7"  # Cyan
+	echo -en "\e]P7$color8"  # White
+	echo -en "\e]P8$color9"  # Black
+	echo -en "\e]P9$color10"  # Red
+	echo -en "\e]PA$color11" # Green
+	echo -en "\e]PB$color12" # Yellow
+	echo -en "\e]PC$color13" # Blue
+	echo -en "\e]PD$color14" # Magenta
+	echo -en "\e]PE$color15" # Cyan
+	echo -en "\e]PF$color16" # White
 }
 
 set_tty_colorscheme() {
-	if [[ -z "$colorscheme" ]]; then
-		colorscheme="$1"
-	fi
-	if [[ -v color_scheme[$colorscheme] ]]; then
-		IFS=" " read -r -a tty_color <<< "${color_scheme[$colorscheme]}"
+	colorscheme="$1"
+	if [ -f "$colorschemes_dir/$colorscheme" ]; then
+		source "$colorschemes_dir/$colorscheme"
 		for i in {1..6}; do
 			set_tty_color > /dev/tty"${i}"
 		done
@@ -68,7 +66,6 @@ print_help() {
 	echo "Usage: tty-colors [color_scheme]"
 	echo "  -l    list colorschemes"
 	echo "  -p    list colorschemes and print colors"
-#	echo "  -c    <config_file>"
 	echo "  -h    print help"
 }
 
@@ -81,7 +78,6 @@ while getopts ":hlpc:" opt; do
 		h) print_help;;
 		l) print_colorschemes;;
 		p) colored="y" print_colorschemes;;
-#		c) source "$OPTARG" && set_tty_colorscheme;;
 		:) echo "Usage: -c <config_file>" && exit 1;;
 		\?) echo "Invalid option" && exit 1;;
 	esac
