@@ -1,0 +1,109 @@
+#!/bin/bash
+
+declare -A color_scheme
+
+color_scheme["mono_dark"]="000000 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 000000 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E 9E9E9E"
+color_scheme["mono_light"]="F5F5F5 212121 212121 212121 212121 212121 212121 212121 F5F5F5 212121 212121 212121 212121 212121 212121 212121"
+color_scheme["desert_dark"]="3E2723 D7CCC8 D7CCC8 D7CCC8 D7CCC8 D7CCC8 D7CCC8 D7CCC8 3E2723 D7CCC8 D7CCC8 D7CCC8 D7CCC8 D7CCC8 D7CCC8 D7CCC8"
+color_scheme["desert_light"]="EFEBE9 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 EFEBE9 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723 3E2723"
+color_scheme["material_dark"]="000000 F44336 4CAF50 FFEB3B 2196F3 9C27B0 00BCD4 9E9E9E 000000 F44336 4CAF50 FFEB3B 2196F3 9C27B0 00BCD4 9E9E9E"
+color_scheme["material_light"]="F5F5F5 B71C1C 1B5E20 BF360C 0D47A1 4A187C 006064 212121 F5F5F5 B71C1C 1B5E20 BF360C 0D47A1 4A187C 006064 212121"
+color_scheme["solarized_dark"]="073642 DC322F 859900 B58900 268BD2 D33682 2AA198 EEE8D5 002B36 CB4B16 586E75 657B83 839496 6C71C4 93A1A1 FDF6E3"
+color_scheme["solarized_light"]="EEE8D5 DC322F 859900 B58900 268BD2 D33682 2AA198 073642 FDF6E3 CB4B16 93A1A1 839496 657B83 6C71C4 586E75 002B36"
+color_scheme["temple_os"]="FFFFFF BB0000 00BB00 BBBB00 0000BB BB00BB 00BBBB 000000 FFFFFF BB0000 00BB00 BBBB00 0000BB BB00BB 00BBBB 000000"
+color_scheme["temple_os_alt"]="FFFFFF 00BBBB BB0000 BBBB00 0000BB BB00BB 00BB00 000000 FFFFFF 00BBBB BB0000 BBBB00 0000BB BB00BB 00BB00 000000"
+color_scheme["blood_dragon"]="000000 C2185B C2185B C2185B 673AB7 C2185B 00BCD4 9E9E9E 000000 C2185B C2185B C2185B 673AB7 C2185B 00BCD4 9E9E9E"
+color_scheme["matrix"]="000000 00DD00 00DD00 00DD00 00DD00 00DD00 00DD00 00DD00 000000 00DD00 00DD00 00DD00 00DD00 00DD00 00DD00 00DD00"
+color_scheme["red"]="000000 DD0000 DD0000 DD0000 DD0000 DD0000 DD0000 DD0000 000000 DD0000 DD0000 DD0000 DD0000 DD0000 DD0000 DD0000"
+color_scheme["white_on_black"]="000000 FFFFFF FFFFFF FFFFFF FFFFFF FFFFFF FFFFFF FFFFFF 000000 FFFFFF FFFFFF FFFFFF FFFFFF FFFFFF FFFFFF FFFFFF"
+color_scheme["black_on_white"]="FFFFFF 000000 000000 000000 000000 000000 000000 000000 FFFFFF 000000 000000 000000 000000 000000 000000 000000"
+
+print_colored_block() {
+	hex_color="$1"
+	printf "\e[48;2;$(printf "%d;%d;%d" 0x"${hex_color:0:2}" 0x"${hex_color:2:2}" 0x"${hex_color:4:2}")m   \e[0m"
+}
+
+print_colorschemes() {
+	mapfile -t sorted_schemes < <(printf '%s\n' "${!color_scheme[@]}" | sort )
+	for scheme in "${sorted_schemes[@]}"; do
+		echo "$scheme"
+		if [[ -n "$colored" ]]; then
+			IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
+			counter=0
+			for color in "${hex_colors[@]}"; do
+				print_colored_block "$color"
+				((counter++))
+				if ((counter % 8 == 0)); then
+					echo
+				fi
+			done
+		fi
+	done
+}
+
+set_tty_color() {
+	echo -en "\e]P0${tty_color[0]}"  # Background
+	echo -en "\e]P1${tty_color[1]}"  # Red
+	echo -en "\e]P2${tty_color[2]}"  # Green
+	echo -en "\e]P3${tty_color[3]}"  # Yellow
+	echo -en "\e]P4${tty_color[4]}"  # Blue
+	echo -en "\e]P5${tty_color[5]}"  # Magenta
+	echo -en "\e]P6${tty_color[6]}"  # Cyan
+	echo -en "\e]P7${tty_color[7]}"  # White
+	echo -en "\e]P8${tty_color[8]}"  # Black
+	echo -en "\e]P9${tty_color[9]}"  # Red
+	echo -en "\e]PA${tty_color[10]}" # Green
+	echo -en "\e]PB${tty_color[11]}" # Yellow
+	echo -en "\e]PC${tty_color[12]}" # Blue
+	echo -en "\e]PD${tty_color[13]}" # Magenta
+	echo -en "\e]PE${tty_color[14]}" # Cyan
+	echo -en "\e]PF${tty_color[15]}" # White
+}
+
+set_tty_colorscheme() {
+	if [[ -z "$colorscheme" ]]; then
+		colorscheme="$1"
+	fi
+	if [[ -v color_scheme[$colorscheme] ]]; then
+		IFS=" " read -r -a tty_color <<< "${color_scheme[$colorscheme]}"
+		for i in {1..6}; do
+			set_tty_color > /dev/tty"${i}"
+		done
+		if [[ "$TERM" == "linux" ]]; then
+			clear
+		fi
+		echo "Setting $colorscheme colorscheme"
+	else
+		echo "Invalid colorscheme provided"
+		exit 1
+	fi
+}
+
+print_help() {
+	echo "Usage: tty-colors [color_scheme]"
+	echo "  -l    list colorschemes"
+	echo "  -p    list colorschemes and print colors"
+	echo "  -c    <config_file>"
+	echo "  -h    print help"
+}
+
+if [ $# -eq 0 ]; then
+	print_help
+fi
+
+while getopts ":hlpc:" opt; do
+	case "${opt}" in
+		h) print_help;;
+		l) print_colorschemes;;
+		p) colored="y" print_colorschemes;;
+		c) source "$OPTARG" && set_tty_colorscheme;;
+		:) echo "Usage: -c <config_file>" && exit 1;;
+		\?) echo "Invalid option" && exit 1;;
+	esac
+done
+
+shift $((OPTIND -1))
+
+if [ $# -eq 1 ]; then
+	set_tty_colorscheme "$1"
+fi

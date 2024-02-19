@@ -3,8 +3,7 @@ Description=Change tty colors
 
 [Service]
 Type=oneshot
-EnvironmentFile=/etc/tty-colors/tty-colors.conf
-ExecStart=/usr/bin/tty-colors ${colorscheme}
+ExecStart=/usr/bin/tty-colors -c /etc/tty-colors/tty-colors.conf
 
 [Install]
 WantedBy=getty.target
