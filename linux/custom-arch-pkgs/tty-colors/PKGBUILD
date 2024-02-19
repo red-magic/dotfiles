@@ -8,7 +8,7 @@ depends=(bash)
 backup=(etc/tty-colors/tty-colors.conf)
 install=$pkgname.install
 source=($url/raw/master/linux/scripts/tty-colors.tar.xz)
-b2sums=(520db7bbbfbe263289cdfff632de67c76d93fd66ae731507734b19f7a659f30c5065ed99b37ad6a05cff4bc9b3966a0618aa0b58ef183614d3c494035ca41f50)
+b2sums=(SKIP)
 
 package() {
 	install -Dm 755 $pkgname/tty-colors -t $pkgdir/usr/bin
