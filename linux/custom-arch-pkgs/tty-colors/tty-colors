@@ -62,16 +62,18 @@ set_tty_color() {
 }
 
 set_tty_colorscheme() {
-	selected_scheme="$1"
-	if [[ -v color_scheme[$selected_scheme] ]]; then
-		IFS=" " read -r -a tty_color <<< "${color_scheme[$selected_scheme]}"
+	if [[ -z "$colorscheme" ]]; then
+		colorscheme="$1"
+	fi
+	if [[ -v color_scheme[$colorscheme] ]]; then
+		IFS=" " read -r -a tty_color <<< "${color_scheme[$colorscheme]}"
 		for i in {1..6}; do
 			set_tty_color > /dev/tty"${i}"
 		done
 		if [[ "$TERM" == "linux" ]]; then
 			clear
 		fi
-		echo "Setting $selected_scheme colorscheme"
+		echo "Setting $colorscheme colorscheme"
 	else
 		echo "Invalid colorscheme provided"
 		exit 1
@@ -82,12 +84,27 @@ print_help() {
 	echo "Usage: tty-colors [color_scheme]"
 	echo "  -l    list colorschemes"
 	echo "  -p    list colorschemes and print colors"
+	echo "  -c    <config_file>"
 	echo "  -h    print help"
 }
 
-case "$1" in
-	-h | "") print_help;;
-	-l) print_colorschemes;;
-	-p) colored="y" print_colorschemes;;
-	 *) set_tty_colorscheme "$1";;
-esac
+if [ $# -eq 0 ]; then
+	print_help
+fi
+
+while getopts ":hlpc:" opt; do
+	case "${opt}" in
+		h) print_help;;
+		l) print_colorschemes;;
+		p) colored="y" print_colorschemes;;
+		c) source "$OPTARG" && set_tty_colorscheme;;
+		:) echo "Usage: -c <config_file>" && exit 1;;
+		\?) echo "Invalid option" && exit 1;;
+	esac
+done
+
+shift $((OPTIND -1))
+
+if [ $# -eq 1 ]; then
+	set_tty_colorscheme "$1"
+fi
