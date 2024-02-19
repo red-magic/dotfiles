@@ -21,7 +21,9 @@ Usage: tty-colors [colorscheme]
   -h    print help
 ```
 
-To change TTY colors at user logon add ```tty-colors <colorscheme>``` to ```.profile```
+To change colors for a current TTY at user logon add ```tty-colors <colorscheme>``` to ```.profile```
+
+It still requires using ```sudo``` if you want to change colors across all TTYs
 
 If you get screen artifacts hit ```Ctrl+l``` or type ```clear```
 
