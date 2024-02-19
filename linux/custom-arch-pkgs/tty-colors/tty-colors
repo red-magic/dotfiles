@@ -27,7 +27,7 @@ print_colorschemes() {
 	mapfile -t sorted_schemes < <(printf '%s\n' "${!color_scheme[@]}" | sort )
 	for scheme in "${sorted_schemes[@]}"; do
 		echo "$scheme"
-		if [[ -z "$colored" ]]; then
+		if [[ -n "$colored" ]]; then
 			IFS=" " read -r -a hex_colors <<< "${color_scheme[$scheme]}"
 			counter=0
 			for color in "${hex_colors[@]}"; do
