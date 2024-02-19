@@ -32,3 +32,28 @@ To change TTY colors at user logon add ```tty-colors <colorscheme>``` to ```.pro
 ![screenshot 3](images/screenshot-3.png)
 
 ![screenshot 4](images/screenshot-4.png)
+
+## Customization
+
+A colorscheme file looks like this
+
+```
+color1=000000  # Background
+color2=F44336  # Red
+color3=4CAF50  # Green
+color4=FFEB3B  # Yellow
+color5=2196F3  # Blue
+color6=9C27B0  # Magenta
+color7=00BCD4  # Cyan
+color8=9E9E9E  # White
+color9=000000  # Black
+color10=F44336 # Red
+color11=4CAF50 # Green
+color12=FFEB3B # Yellow
+color13=2196F3 # Blue
+color14=9C27B0 # Magenta
+color15=00BCD4 # Cyan
+color16=9E9E9E # White
+```
+
+Just put change the hex values of colors and put it in ```/etc/tty-colors/colorschemes```
