@@ -25,7 +25,10 @@ To change TTY colors on user logon add ```tty-colors <colorscheme>``` to ```.pro
 
 ## Screenshots
 
-![screenshot 1] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-1.png)
-![screenshot 2] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-2.png)
-![screenshot 3] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-3.png)
-![screenshot 4] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screnshot-4.png)
+![screenshot 1] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screenshot-1.png)
+
+![screenshot 2] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screenshot-2.png)
+
+![screenshot 3] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screenshot-3.png)
+
+![screenshot 4] (https://github.com/red-magic/dotfiles/raw/master/linux/scripts/tty-colors/images/screenshot-4.png)
