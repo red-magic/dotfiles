@@ -21,7 +21,7 @@ Usage: tty-colors [color_scheme]
   -h    print help
 ```
 
-To change TTY colors on user logon add ```tty-colors <colorscheme>``` to ```.profile```
+To change TTY colors at user logon add ```tty-colors <colorscheme>``` to ```.profile```
 
 ## Screenshots
 
