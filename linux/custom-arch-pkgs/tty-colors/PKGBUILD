@@ -1,18 +1,18 @@
 pkgname=tty-colors
 pkgver=1.0
 pkgrel=1
-pkgdesc='Change tty colors'
-url=https://github.com/red-magic/dotfiles
+pkgdesc='Change TTY colors'
+url=https://github.com/red-magic/tty-colors
 arch=(any)
 depends=(bash)
 backup=(etc/tty-colors/tty-colors.conf)
 install=$pkgname.install
-source=($url/raw/master/linux/scripts/tty-colors.tar.xz)
-b2sums=(SKIP)
+source=($url/archive/refs/tags/v$pkgver.tar.gz)
+b2sums=(5c89f04fa4c44fb36ff34a56211358dc0dab73e2aa93ad4e8f608a0791bbde035bcc8dd3bac7cdadb9d0c48fa6ce93d87258d13c8fb229585baa0dc6552b14c1)
 
 package() {
-	install -Dm 755 $pkgname/tty-colors -t $pkgdir/usr/bin
-	install -Dm 644 $pkgname/colorschemes/* -t $pkgdir/etc/tty-colors/colorschemes
-	install -Dm 644 $pkgname/systemd/tty-colors.conf -t $pkgdir/etc/tty-colors
-	install -Dm 644 $pkgname/systemd/tty-colors.service -t $pkgdir/usr/lib/systemd/system
+	install -Dm 755 $pkgname-$pkgver/tty-colors -t $pkgdir/usr/bin
+	install -Dm 644 $pkgname-$pkgver/colorschemes/* -t $pkgdir/etc/tty-colors/colorschemes
+	install -Dm 644 $pkgname-$pkgver/systemd/tty-colors.conf -t $pkgdir/etc/tty-colors
+	install -Dm 644 $pkgname-$pkgver/systemd/tty-colors.service -t $pkgdir/usr/lib/systemd/system
 }
