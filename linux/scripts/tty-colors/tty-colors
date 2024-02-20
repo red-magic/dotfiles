@@ -2,6 +2,25 @@
 
 colorschemes_dir="/etc/tty-colors/colorschemes"
 
+print_palette() {
+	cnt=0
+	for bkgrnd in 40 41 42 43 44 45 46 47; do
+		printf '%b' "\033[${bkgrnd}m"
+		for bold in 22 1; do
+			printf '%b' "\033[${bold}m"
+			for frgrnd in 30 31 32 33 34 35 36 37; do
+				cntprt="$cnt"
+				while [ "${#cntprt}" -lt 3 ]; do
+					cntprt=" ${cntprt}"
+				done
+				printf '%b' "\033[${frgrnd}m ${cntprt} "
+				cnt="$((cnt+1))"
+			done
+		done
+		printf '%b\n' '\033[0m'
+	done
+}
+
 print_colored_block() {
 	hex_color="$1"
 	printf "\e[48;2;$(printf "%d;%d;%d" 0x"${hex_color:0:2}" 0x"${hex_color:2:2}" 0x"${hex_color:4:2}")m   \e[0m"
@@ -72,6 +91,7 @@ print_help() {
 	echo "Usage: tty-colors [colorscheme]"
 	echo "  -l    list colorschemes"
 	echo "  -p    list colorschemes and print colors"
+	echo "  -c    print current color palette"
 	echo "  -h    print help"
 }
 
@@ -79,10 +99,11 @@ if [ $# -eq 0 ]; then
 	print_help
 fi
 
-while getopts "lph" opt; do
+while getopts "lpch" opt; do
 	case "${opt}" in
 		l) print_colorschemes;;
 		p) colored="y" print_colorschemes;;
+		c) print_palette;;
 		h) print_help;;
 		*) echo "Invalid option" && exit 1;;
 	esac
