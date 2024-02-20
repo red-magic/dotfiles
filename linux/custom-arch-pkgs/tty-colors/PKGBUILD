@@ -8,7 +8,7 @@ depends=(bash)
 backup=(etc/tty-colors/tty-colors.conf)
 install=$pkgname.install
 source=($url/archive/refs/tags/v$pkgver.tar.gz)
-b2sums=(de9bda83c41af4bcbf5efd9763dd07ad741929346fee8cbda3828115d333451f09e45afed113615a588ff4a7d1a2366415180d4d1bfb52cd701989bb4b48f078)
+b2sums=(76e8bba7d277d0c18d109a87dac4e79f440b6d15f6c368cf4eade1e0779139d7ddc8b7d0d1dd847fe832f9e5a7ed6d88695922f626bc672d7650a0bcc74251cd)
 
 package() {
 	install -Dm 755 $pkgname-$pkgver/tty-colors -t $pkgdir/usr/bin
