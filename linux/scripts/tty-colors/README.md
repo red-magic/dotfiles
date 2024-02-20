@@ -2,9 +2,9 @@
 
 ## Installation
 
-Run ```install``` script as root to install ```tty-colors``` and colorschemes
+Run ```./install``` script as root to install ```tty-colors``` and colorschemes
 
-```install remove``` if you want to uninstall it
+```./install remove``` if you want to uninstall it
 
 ### systemd
 
