@@ -18,6 +18,7 @@ A desired colorscheme can be set in ```/etc/tty-colors/tty-colors.conf```
 Usage: tty-colors [colorscheme]
   -l    list colorschemes
   -p    list colorschemes and print colors
+  -c    print current color palette
   -h    print help
 ```
 
