@@ -34,13 +34,11 @@ _git_config() {
 	if uname -a | grep -q Linux; then
 		cp -f repos/dotfiles/linux/configs/.bash_profile .
 		ln -sf .bash_profile .bashrc
-	else
-	if uname | grep -q BSD; then
+	elif uname | grep -q BSD; then
 		cp -f repos/dotfiles/bsd/configs/.profile .
-	if uname | grep -q OpenBSD; then
-		cp -f repos/dotfiles/bsd/configs/.mailrc .
-	fi
-	fi
+		if uname | grep -q OpenBSD; then
+			cp -f repos/dotfiles/bsd/configs/.mailrc .
+		fi
 	fi
 
 	mkdir -p .config/ranger
@@ -61,8 +59,7 @@ workstation_config() {
 	curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
 	gpg -do archive.tar.xz archive.tar.xz.gpg
 
-	while true
-	do
+	while true; do
 		echo Continue? [y/n]
 		read -r yn
 		case $yn in
