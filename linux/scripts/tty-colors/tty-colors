@@ -90,8 +90,8 @@ set_tty_colorscheme() {
 print_help() {
 	echo "Usage: tty-colors [colorscheme]"
 	echo "  -l    list colorschemes"
-	echo "  -p    list colorschemes and print colors"
-	echo "  -c    print current color palette"
+	echo "  -c    list colorschemes and print their colors"
+	echo "  -p    print current color palette"
 	echo "  -h    print help"
 }
 
@@ -99,11 +99,11 @@ if [ $# -eq 0 ]; then
 	print_help
 fi
 
-while getopts "lpch" opt; do
+while getopts "lcph" opt; do
 	case "${opt}" in
 		l) print_colorschemes;;
-		p) colored="y" print_colorschemes;;
-		c) print_palette;;
+		c) colored="y" print_colorschemes;;
+		p) print_palette;;
 		h) print_help;;
 		*) echo "Invalid option" && exit 1;;
 	esac
