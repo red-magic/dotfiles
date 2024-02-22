@@ -1,4 +1,0 @@
-post_install() {
-	echo -e "\nEnable tty-colors.service to change tty colors on boot"
-	echo -e "Colorscheme can be set in /etc/tty-colors/tty-colors.conf\n"
-}
