@@ -4,9 +4,9 @@ if [ $# -eq 0 ]; then
 	exit 0
 fi
 
-case $1 in
+case "$1" in
 	-s) ;;
-	-w) IS_WORKSTATION="1";;
+	-w) IS_WORKSTATION=1;;
 	*) exit 0;;
 esac
 
@@ -41,9 +41,9 @@ if [ -n "$IS_WORKSTATION" ]; then
 	while true; do
 		echo Continue? [y/n]
 		read -r yn
-		case $yn in
-			[Yy]* ) echo Continuing && break;;
-			[Nn]* ) echo Exiting && exit 1;;
+		case "$yn" in
+			[Yy]*) echo Continuing && break;;
+			[Nn]*) echo Exiting && exit 1;;
 		esac
 	done
 
