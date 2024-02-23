@@ -4,7 +4,6 @@ pkgrel=1
 pkgdesc='Change TTY colors'
 url=https://github.com/red-magic/tty-colorscheme
 arch=(any)
-depends=(bash)
 backup=(etc/tty-colorscheme/tty-colorscheme.conf)
 install=$pkgname.install
 #source=($url/archive/refs/tags/v$pkgver.tar.gz)
