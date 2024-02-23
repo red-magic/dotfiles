@@ -1,0 +1,115 @@
+#!/bin/sh
+
+colorschemes_dir="/etc/tty-colorscheme/colorschemes"
+
+print_help() {
+	echo "Usage: tty-colorscheme [flags | colorscheme]"
+	echo "  -l    list colorschemes"
+	echo "  -c    list colorschemes and print their colors"
+	echo "  -p    print current color palette"
+	echo "  -r    pick a random colorscheme"
+	echo "  -h    print help"
+}
+
+if [ $# -eq 0 ]; then
+	PRINT_HELP=1
+fi
+
+while getopts ":lcprh" opt; do
+	case "$opt" in
+		l) PRINT_SCHEMES=1;;
+		c) PRINT_COLORED_SCHEMES=1;;
+		p) PRINT_CURRENT_PALETTE=1;;
+		r) PICK_RANDOM_COLORSCHEME=1;;
+		h) PRINT_HELP=1;;
+		*) echo "Invalid option -$OPTARG" && print_help && exit 1;;
+	esac
+done
+
+shift "$((OPTIND-1))"
+
+if [ -n "$PRINT_SCHEMES" ] || [ -n "$PRINT_COLORED_SCHEMES" ]; then
+	for scheme_file in "$colorschemes_dir"/*; do
+		scheme_name="$(basename "$scheme_file")"
+		echo "$scheme_name"
+		if [ -n "$PRINT_COLORED_SCHEMES" ]; then
+			cnt=0
+			while IFS= read -r line || [ -n "$line" ]; do
+				#if echo "$line" | grep -q -E "^color[0-9]+=.*$"; then
+					eval "${line}"
+					hex_color="${line#*=}"
+					printf '\e[48;2;%d;%d;%dm   \e[0m' 0x"${hex_color%"${hex_color#??}"}" 0x"${hex_color#??}" 0x"${hex_color%"${hex_color%??}"}"
+					cnt=$((cnt+1))
+					if [ $((cnt % 8)) -eq 0 ]; then
+						echo
+					fi
+				#fi
+			done < "$scheme_file"
+		fi
+	done
+fi
+
+if [ -n "$PRINT_CURRENT_PALETTE" ]; then
+	cnt=0
+	for bkgrnd in 40 41 42 43 44 45 46 47; do
+		printf '%b' "\033[${bkgrnd}m"
+		for bold in 22 1; do
+			printf '%b' "\033[${bold}m"
+			for frgrnd in 30 31 32 33 34 35 36 37; do
+				cntprt="$cnt"
+				while [ "${#cntprt}" -lt 3 ]; do
+					cntprt=" ${cntprt}"
+				done
+				printf '%b' "\033[${frgrnd}m ${cntprt} "
+				cnt=$((cnt+1))
+			done
+		done
+		printf '%b\n' '\033[0m'
+	done
+fi
+
+if [ -n "$PRINT_HELP" ]; then
+	print_help
+fi
+
+if [ "$OPTIND" -eq 1 ] && [ -n "$1" ] || [ -n "$PICK_RANDOM_COLORSCHEME" ]; then
+	if [ -n "$PICK_RANDOM_COLORSCHEME" ]; then
+		colorscheme="$(basename "$(find "$colorschemes_dir" -type f | shuf -n 1)")"
+	else
+		colorscheme="$1"
+		if [ ! -f "$colorschemes_dir/$colorscheme" ]; then
+			echo "Invalid colorscheme"
+			exit 1
+		fi
+	fi
+	while IFS= read -r line || [ -n "$line" ]; do
+		#if echo "${line}" | grep -q -E "^color[0-9]+=.*$"; then
+			eval "${line}"
+		#fi
+	done < "$colorschemes_dir/$colorscheme"
+	set_tty_colors() {
+		printf '\e]P0%s' "${color1:?}"
+		printf '\e]P1%s' "${color2:?}"
+		printf '\e]P2%s' "${color3:?}"
+		printf '\e]P3%s' "${color4:?}"
+		printf '\e]P4%s' "${color5:?}"
+		printf '\e]P5%s' "${color6:?}"
+		printf '\e]P6%s' "${color7:?}"
+		printf '\e]P7%s' "${color8:?}"
+		printf '\e]P8%s' "${color9:?}"
+		printf '\e]P9%s' "${color10:?}"
+		printf '\e]PA%s' "${color11:?}"
+		printf '\e]PB%s' "${color12:?}"
+		printf '\e]PC%s' "${color13:?}"
+		printf '\e]PD%s' "${color14:?}"
+		printf '\e]PE%s' "${color15:?}"
+		printf '\e]PF%s' "${color16:?}"
+	}
+	for i in $(seq 1 6); do
+		set_tty_colors > /dev/tty"$i"
+	done
+	if [ "$TERM" = "linux" ]; then
+		clear
+	fi
+	echo "Setting $colorscheme colorscheme"
+fi
