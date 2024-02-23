@@ -111,5 +111,5 @@ if [ "$OPTIND" -eq 1 ] && [ -n "$1" ] || [ -n "$PICK_RANDOM_COLORSCHEME" ]; then
 	if [ "$TERM" = "linux" ]; then
 		clear
 	fi
-	printf 'Setting %s colorscheme' "$colorscheme"
+	printf 'Setting %s colorscheme\n' "$colorscheme"
 fi
