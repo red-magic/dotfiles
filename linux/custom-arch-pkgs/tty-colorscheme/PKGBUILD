@@ -7,11 +7,11 @@ arch=(any)
 backup=(etc/tty-colorscheme/tty-colorscheme.conf)
 install=$pkgname.install
 #source=($url/archive/refs/tags/v$pkgver.tar.gz)
-#b2sums=(76e8bba7d277d0c18d109a87dac4e79f440b6d15f6c368cf4eade1e0779139d7ddc8b7d0d1dd847fe832f9e5a7ed6d88695922f626bc672d7650a0bcc74251cd)
+#b2sums=(SKIP)
 
 package() {
 	install -Dm 755 $pkgname-$pkgver/tty-colorscheme -t $pkgdir/usr/bin
-	install -Dm 644 $pkgname-$pkgver/colorschemes/* -t $pkgdir/etc/tty-colors/colorschemes
+	install -Dm 644 $pkgname-$pkgver/colorschemes/* -t $pkgdir/etc/tty-colorscheme/colorschemes
 	install -Dm 644 $pkgname-$pkgver/systemd/tty-colorscheme.conf -t $pkgdir/etc/tty-colorscheme
 	install -Dm 644 $pkgname-$pkgver/systemd/tty-colorscheme.service -t $pkgdir/usr/lib/systemd/system
 }
