@@ -1,0 +1,50 @@
+#!/bin/sh 
+
+server_user=
+steam_dir=/home/$server_user/.steam
+server_dir=$steam_dir/cs16
+server_conf=
+server_params=
+
+eval "$(grep server_params "$server_conf")"
+
+case $1 in
+		start)
+			su "$server_user" -c "cd $server_dir && ./hlds_run $server_params"
+			;;
+
+		restart)
+			su "$server_user" -c "kill $(pgrep hlds_linux)"
+			;;
+
+		stop)
+			su "$server_user" -c "kill $(pgrep hlds_run)"
+			su "$server_user" -c "kill $(pgrep hlds_linux)"
+			;;
+
+		"start-background")
+			su "$server_user" -c "cd $server_dir && ./hlds_run $server_params &> /dev/null &"
+			;;
+
+		"start-screen")
+			su "$server_user" -c "cd $server_dir && screen -m -d -S cs16 ./hlds_run $server_params"
+			;;
+
+		"restart-screen")
+			su "$server_user" -c "cd $server_dir && kill $(pgrep screen)"
+			su "$server_user" -c "cd $server_dir && screen -m -d -S cs16 ./hlds_run $server_params"
+			;;
+
+		"stop-screen")
+			su "$server_user" -c "kill $(pgrep screen)"
+			;;
+
+		"update")
+		su "$server_user" -c "cd $steam_dir && ./steamcmd.sh +force_install_dir $server_dir +login anonymous +app_update 90 validate +quit"
+		su "$server_user" -c "sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' ~/.steam/cs16/cstrike/liblist.gam"
+			;;
+
+		"screen")
+		su "$server_user" -c "screen -r"
+			;;
+esac

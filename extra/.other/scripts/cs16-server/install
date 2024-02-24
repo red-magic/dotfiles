@@ -1,0 +1,38 @@
+#!/bin/sh
+
+if [ "$(id -u)" -ne 0  ]; then
+	printf '\nRun under root or use sudo\n\n'
+	exit 1
+fi
+
+if ! ldconfig -p | grep libgcc | grep -q '(libc6)'; then
+	printf '\nInstall lib32-gcc-libs\n\n'
+	exit 1
+fi
+
+set -- tar gzip unzip curl yayayay
+
+for pkg in "$@"; do
+	if  [ -z "$(command -v "$pkg")" ]; then
+		to_install="$to_install $pkg"
+	fi
+done
+
+if [ -n "$to_install" ]; then
+	printf '\nInstall:%s\n\n' "$to_install"
+	exit 1
+fi
+
+server_user=steam
+server_conf=/etc/cs16-server/cs16-server.conf
+
+useradd -m $server_user
+passwd -dl $server_user
+
+install -vm 755 cs16-server -t /usr/bin
+install -vm 644 cs16-server.conf "$server_conf"
+
+sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server
+sed -i "s|server_conf=|server_conf=$server_conf|" /usr/bin/cs16-server
+
+sudo -u $server_user ./stage-two

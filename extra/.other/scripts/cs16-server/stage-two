@@ -1,0 +1,36 @@
+#!/bin/sh
+
+mkdir ~/.steam
+ln -sfv ~/.steam ~/.steam/steam
+
+cd ~/.steam || exit 1
+
+curl -LO https://www.amxmodx.org/release/metamod-1.21.1-am.zip
+curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
+curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-cstrike-linux.tar.gz
+curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz
+curl -LO https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
+
+for arc in *.tar.gz; do tar xvf "$arc"; done
+for arc in *.zip; do unzip "$arc"; done
+
+mv -vf podbot addons
+
+cnt=0
+while [ $((cnt)) -lt 3 ]; do 
+	/usr/bin/cs16-server update
+	cnt=$((cnt+1))
+done
+
+mv -vf addons cs16/cstrike
+ln -sfv ~/.steam/linux32 ~/.steam/sdk32
+
+printf 'linux addons/amxmodx/dlls/amxmodx_mm_i386.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
+printf 'linux addons/podbot/podbot_mm.so\n' >> cs16/cstrike/addons/metamod/plugins.ini
+
+# Create cfg files so steamcmd won't complain
+touch cs16/cstrike/listip.cfg
+touch cs16/cstrike/banned.cfg
+
+sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
+rm -vf ./*.zip ./*.tar.gz
