@@ -46,9 +46,9 @@ alias journalctl='journalctl -o short-iso'
 
 remove_pacman_cache() {
 	if [[ -x "$(command -v yay)" ]]; then
-	    yes | yay -Scc
+	    yes | yay -Sc
 	fi
-	yes | sudo pacman -Scc
+	yes | sudo pacman -Sc
 }
 
 remove_pacman_orphans() {
