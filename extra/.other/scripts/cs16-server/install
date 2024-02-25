@@ -19,7 +19,7 @@ for pkg in "$@"; do
 done
 
 if [ -n "$to_install" ]; then
-	printf '\nInstall:%s\n\n' "$to_install"
+	printf '\nInstall%s\n\n' "$to_install"
 	exit 1
 fi
 
