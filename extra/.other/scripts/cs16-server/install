@@ -40,3 +40,18 @@ cp -vf stage-two /tmp/stage-two.tmp
 sudo -u $server_user /tmp/stage-two.tmp
 
 rm -vf /tmp/stage-two.tmp
+
+# Notes
+#
+# Admin access
+# [cstrike/addons/amxmodx/configs/users.ini]
+# "STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
+# [console]
+# bind "]" "amxmodmenu"
+#
+# Podbots 
+# [cstrike/addons/podbot/podbot.cfg]
+# pb_password="your_password"
+# [console]
+# bind "[" "pb menu"
+# setinfo _pbadminpw "your_password"
