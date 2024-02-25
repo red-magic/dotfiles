@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$(id -u)" -ne 0  ]; then
-	printf '\nRun under root or use sudo\n\n'
+	printf '\nUse sudo to run this script\n\n'
 	exit 1
 fi
 
