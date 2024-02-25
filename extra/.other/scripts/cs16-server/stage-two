@@ -7,10 +7,19 @@ ln -sfv ~/.steam ~/.steam/steam
 
 cd ~/.steam || exit
 
-curl -LO https://www.amxmodx.org/release/metamod-1.21.1-am.zip
-curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
-curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-cstrike-linux.tar.gz
+# Steamcmd
 curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz
+
+# Metamod release and Amxmodx latest
+curl -LO https://www.amxmodx.org/release/metamod-1.21.1-am.zip
+curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz
+curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz
+
+# Amxmodx relese, crashes
+#curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
+#curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-cstrike-linux.tar.gz
+
+# Podbots
 curl -LO https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
 
 for arc in *.tar.gz; do tar xvf "$arc"; done
