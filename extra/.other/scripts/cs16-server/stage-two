@@ -10,12 +10,13 @@ cd ~/.steam || exit
 # Steamcmd
 curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz
 
-# Metamod release and Amxmodx latest
+# Metamod 1.21.1 release, Amxmodx 1.10 latest
+# With Amxmodx 1.10 server hangs after some time
 curl -LO https://www.amxmodx.org/release/metamod-1.21.1-am.zip
 curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz
 curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz
 
-# Amxmodx relese, crashes
+# Amxmodx 1.8.2 relese, crashes
 #curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
 #curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-cstrike-linux.tar.gz
 
