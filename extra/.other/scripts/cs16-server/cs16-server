@@ -9,13 +9,11 @@ server_user=
 steam_dir=/home/$server_user/.steam
 server_dir=$steam_dir/cs16
 server_conf=
-server_params=
-
-eval "$(grep server_params "$server_conf")"
 
 case $1 in
 	start) # Run in background
-		su "$server_user" -c "$server_dir/hlds_run $server_params &> /dev/null &"
+		eval "$(grep server_params "$server_conf")"
+		su "$server_user" -c "$server_dir/hlds_run ${server_params:?} &> /dev/null &"
 		;;
 	restart)
 		su "$server_user" -c "kill $(pgrep hlds_linux)"
