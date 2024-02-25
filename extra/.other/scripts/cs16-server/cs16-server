@@ -29,6 +29,7 @@ case $1 in
 		# Ater earch update liblist.gam reverts to default so we need to include metamod.so in it
 		su "$server_user" -c "sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' $steam_dir/cstrike/liblist.gam"
 		;;
+	-h | --help | *) printf 'Usage: %s [start | restart | stop | update]\n' "$(basename "$0")" && exit 1;;
 #	start)
 #		su "$server_user" -c "cd $server_dir && ./hlds_run $server_params"
 #		;;
