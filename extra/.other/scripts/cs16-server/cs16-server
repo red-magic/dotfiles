@@ -7,13 +7,12 @@ fi
 
 server_user=
 steam_dir=/home/$server_user/.steam
-server_dir=$steam_dir/cs16
 server_conf=
 
 case $1 in
 	start) # Run in background
 		eval "$(grep server_params "$server_conf")"
-		su "$server_user" -c "$server_dir/hlds_run ${server_params:?} &> /dev/null &"
+		su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
 		;;
 	restart)
 		su "$server_user" -c "kill $(pgrep hlds_linux)"
@@ -23,9 +22,9 @@ case $1 in
 		su "$server_user" -c "kill $(pgrep hlds_linux)"
 		;;
 	update)
-		su "$server_user" -c "$steam_dir/steamcmd.sh +force_install_dir $server_dir +login anonymous +app_update 90 validate +quit"
+		su "$server_user" -c "cd $steam_dir && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
 		# Ater earch update liblist.gam reverts to default so we need to include metamod.so in it
-		su "$server_user" -c "sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' $steam_dir/cstrike/liblist.gam"
+		su "$server_user" -c "cd $steam_dir && sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam"
 		;;
 	-h | --help | *) printf 'Usage: %s [start | restart | stop | update]\n' "$(basename "$0")" && exit 1;;
 #	start)
