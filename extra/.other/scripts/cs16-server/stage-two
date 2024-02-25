@@ -1,9 +1,11 @@
 #!/bin/sh
 
+cd "/home/$USER" || exit
+
 mkdir ~/.steam
 ln -sfv ~/.steam ~/.steam/steam
 
-cd ~/.steam || exit 1
+cd ~/.steam || exit
 
 curl -LO https://www.amxmodx.org/release/metamod-1.21.1-am.zip
 curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
@@ -32,5 +34,4 @@ printf 'linux addons/podbot/podbot_mm.so\n' >> cs16/cstrike/addons/metamod/plugi
 touch cs16/cstrike/listip.cfg
 touch cs16/cstrike/banned.cfg
 
-sed -i 's/gamedll_linux \"dlls\/cs.so\"/gamedll_linux \"addons\/metamod\/dlls\/metamod.so\"/g' cs16/cstrike/liblist.gam
 rm -vf ./*.zip ./*.tar.gz

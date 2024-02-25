@@ -35,4 +35,8 @@ install -vDm 644 cs16-server.conf "$server_conf"
 sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server
 sed -i "s|server_conf=|server_conf=$server_conf|" /usr/bin/cs16-server
 
-sudo -u $server_user ./stage-two
+cp -vf stage-two /tmp/stage-two.tmp
+
+sudo -u $server_user /tmp/stage-two.tmp
+
+rm -vf /tmp/stage-two.tmp
