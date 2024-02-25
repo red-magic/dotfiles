@@ -10,12 +10,15 @@ steam_dir=/home/$server_user/.steam
 server_conf=
 
 case $1 in
-	start) # Run in background
+	start)
 		eval "$(grep '^server_params' "$server_conf")"
 		su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
 		;;
 	restart)
-		su "$server_user" -c "kill $(pgrep hlds_linux)"
+		su "$server_user" -c "kill $(pgrep hlds_run) &> /dev/null"
+		su "$server_user" -c "kill $(pgrep hlds_linux) &> /dev/null"
+		eval "$(grep '^server_params' "$server_conf")"
+		su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
 		;;
 	stop)
 		su "$server_user" -c "kill $(pgrep hlds_run)"
