@@ -15,8 +15,8 @@ start_server() {
 }
 
 stop_server() {
-	su "$server_user" -c "kill -15 $(pgrep hlds_run) &> /dev/null"
 	su "$server_user" -c "kill -15 $(pgrep hlds_linux) &> /dev/null"
+	su "$server_user" -c "kill -15 $(pgrep hlds_run) &> /dev/null"
 }
 
 update_server() {
