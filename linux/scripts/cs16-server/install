@@ -64,6 +64,8 @@ if [ -x "$(command -v systemctl)" ]; then
 	install -vm 644 cs16-server.service -t /usr/lib/systemd/system
 fi
 
+printf '\nInstallation completed\n\n'
+
 # Notes
 #
 # Admin access

@@ -30,5 +30,3 @@ printf 'linux addons/podbot/podbot_mm.so\n' >> cs16/cstrike/addons/metamod/plugi
 # Create cfg files so steamcmd won't complain
 touch cs16/cstrike/listip.cfg
 touch cs16/cstrike/banned.cfg
-
-printf '\nInstallation completed\n\n'
