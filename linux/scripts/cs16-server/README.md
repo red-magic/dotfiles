@@ -7,7 +7,7 @@
 Make sure you have 32 bit libraries first
 
 - ```lib32-gcc-libs``` on Arch
-- ```lib32gcc1``` on Debian based distros
+- ```lib32stdc++6``` on Debian based distros
 - ```glibc.i686 libstdc++.i686``` on RHEL based distros
 
 And basic tools
