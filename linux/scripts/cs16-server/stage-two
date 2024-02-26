@@ -7,29 +7,8 @@ ln -sfv ~/.steam ~/.steam/steam
 
 cd ~/.steam || exit
 
-# Steamcmd
-printf '==> Downloading steamcmd\n'
-curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz
-
-# Metamod-p 1.21p38 release
-printf '==> Downloading metamod-p\n'
-curl -LO https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz
-
-# Amxmodx 1.10 latest
-printf '==> Downloading amxmodx\n'
-curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz
-curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz
-
-# Amxmodx 1.8.2 relese
-#curl -LO https://www.amxmodx.org/release/amxmodx-1.8.2-base-linux.tar.gz
-#curl -LO https://www.amxmodx.org/release/metamod-1.21.1-am.zip
-
-# Podbot
-printf '==> Downloading podbot\n'
-curl -LO https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
-
-for arc in *.tar.*; do tar xvf "$arc"; done
-for arc in *.zip; do unzip "$arc"; done
+for arc in /tmp/cs16-server/*.tar.*; do tar xvf "$arc"; done
+for arc in /tmp/cs16-server/*.zip; do unzip "$arc"; done
 
 mkdir -pv addons/metamod/dlls
 mv -vf metamod.* addons/metamod/dlls
@@ -52,4 +31,4 @@ printf 'linux addons/podbot/podbot_mm.so\n' >> cs16/cstrike/addons/metamod/plugi
 touch cs16/cstrike/listip.cfg
 touch cs16/cstrike/banned.cfg
 
-rm -vf *.zip *.tar.*
+printf '\nInstallation completed\n\n'

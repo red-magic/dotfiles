@@ -23,6 +23,24 @@ if [ -n "$to_install" ]; then
 	exit 1
 fi
 
+mkdir -m 755 /tmp/cs16-server
+
+set -- \
+https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz \
+https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz \
+https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz \
+https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz \
+https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
+
+for arc in "$@"; do
+	printf "==> Downloading %s\n" "$arc"
+	curl -fLO "$arc" --output-dir /tmp/cs16-server && continue
+	printf "Failed downloading %s\n" "$arc"
+	exit 1
+done
+
+chmod 644 /tmp/c16-server/*
+
 server_user=steam
 server_conf=/etc/cs16-server/cs16-server.conf
 
@@ -36,6 +54,7 @@ sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server
 sed -i "s|server_conf=|server_conf=$server_conf|" /usr/bin/cs16-server
 
 cp -vf stage-two /tmp/stage-two.tmp
+chmod 755 /tmp/stage-two.tmp
 
 sudo -u $server_user /tmp/stage-two.tmp
 

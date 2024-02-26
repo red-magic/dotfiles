@@ -16,13 +16,15 @@ And basic tools:
 
 ## Installation
 
-Run ```./install```, it will place ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_parms``` to ```/etc/cs16-server```.
+Run ```./install``` script, first it downloads **steamcmd**, **metamod-p-v1.21p38**, **amxmodx-1.10-latest** and **podbot-V3B24** to ```/tmp/cs16-server```.
 
-It will also create ```steam``` user which will launch ```stage-two``` script.
+Once it's done it places ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_parms``` to ```/etc/cs16-server```.
 
-```stage-two``` downloads and installs **steamcmd**, **metamod-p**, **amxmodx-1.10-latest** and **podbot**.
+It also creates ```steam``` user which launches ```stage-two``` script.
 
-```steam``` user is created without a password and account locked, use ```sudo su - steam``` if you need to do further server configurations in ```~/.steam``` directory.
+```stage-two``` is run by ```steam``` user and basically extracts all acrhives from ```/tmp/cs16-server``` to ```~.steam/``` directory, makes necessary symlinks and updates **steamcmd**.
+
+```steam``` user is created with account locked and password disabled, use ```sudo su - steam``` if you need to do further server configuration in ```~/.steam``` directory.
 
 **metamod is disabled by default**, if you need to enable it uncomment the second line in ```cs16-server.conf``` and comment the first one.
 
