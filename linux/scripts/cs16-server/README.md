@@ -38,7 +38,7 @@ If you use a systemd based distro it will install ```cs16-server.service``` to `
 
 Default ```$server_params``` var looks like this
 
-```server_params="-game cstrike -pingboost 3 -maxplayers 16 -secure +map de_dust2"```
+```server_params="-game cstrike -pingboost 3 -maxplayers 16 -secure +sv_lan 0 +map de_dust2"```
 
 You can change it to whatever you want to, it just passes options to ```hlds_run```
 
