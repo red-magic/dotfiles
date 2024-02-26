@@ -5,27 +5,33 @@ if [ "$(id -u)" -ne 0 ]; then
 	exit 1
 fi
 
-server_user=
+server_user=steam
 steam_dir=/home/$server_user/.steam
-server_conf=
+server_conf=/etc/cs16-server/cs16-server.conf
+
+start_server() {
+	eval "$(grep '^server_params' "$server_conf")"
+	su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
+}
+
+stop_server() {
+	su "$server_user" -c "kill $(pgrep hlds_run) &> /dev/null"
+	su "$server_user" -c "kill $(pgrep hlds_linux) &> /dev/null"
+}
+
+update_server() {
+	su "$server_user" -c "cd $steam_dir && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
+}
+
+print_help() {
+	printf 'Usage: %s [start | restart | stop | update]\n' "$(basename "$0")"
+	exit 1
+}
 
 case $1 in
-	start)
-		eval "$(grep '^server_params' "$server_conf")"
-		su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
-		;;
-	restart)
-		su "$server_user" -c "kill $(pgrep hlds_run) &> /dev/null"
-		su "$server_user" -c "kill $(pgrep hlds_linux) &> /dev/null"
-		eval "$(grep '^server_params' "$server_conf")"
-		su "$server_user" -c "cd $steam_dir/cs16 && ./hlds_run ${server_params:?} &> /dev/null &"
-		;;
-	stop)
-		su "$server_user" -c "kill $(pgrep hlds_run) &> /dev/null"
-		su "$server_user" -c "kill $(pgrep hlds_linux) &> /dev/null"
-		;;
-	update)
-		su "$server_user" -c "cd $steam_dir && ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit"
-		;;
-	-h | --help | *) printf 'Usage: %s [start | restart | stop | update]\n' "$(basename "$0")" && exit 1;;
+	start) start_server;;
+	restart) stop_server && start_server;;
+	stop) stop_server;;
+	update) update_server;;
+	-h | --help | *) print_help;;
 esac
