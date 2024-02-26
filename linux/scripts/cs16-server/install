@@ -41,6 +41,10 @@ sudo -u $server_user /tmp/stage-two.tmp
 
 rm -vf /tmp/stage-two.tmp
 
+if [ -x "$(command -v systemctl)" ]; then
+	install -vm 644 cs16-server.service -t /usr/lib/systemd/system
+fi
+
 # Notes
 #
 # Admin access
