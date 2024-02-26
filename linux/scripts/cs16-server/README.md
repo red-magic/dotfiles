@@ -2,6 +2,18 @@
 
 ![screenshot](screenshot.jpg)
 
+## Requirements
+
+Make sure you have 32 bit libraries first
+
+-```lib32-gcc-libs``` on Arch
+-```lib32gcc1``` on Debian based distros
+-```glibc.i686 libstdc++.i686``` on RHEL based distros
+
+And basic tools
+
+```sudo tar xz gzip unzip curl```
+
 ## Installation
 
 Run ```./install```, it will place ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_parms``` to ```/etc/cs16-server```

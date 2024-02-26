@@ -10,7 +10,7 @@ if ! ldconfig -p | grep libgcc | grep -q '(libc6)'; then
 	exit 1
 fi
 
-set -- sudo tar gzip unzip curl
+set -- sudo tar xz gzip unzip curl
 
 for pkg in "$@"; do
 	if  [ -z "$(command -v "$pkg")" ]; then
