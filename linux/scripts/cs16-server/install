@@ -23,7 +23,7 @@ if [ -n "$to_install" ]; then
 	exit 1
 fi
 
-mkdir -m 755 /tmp/cs16-server
+mkdir -vm 755 /tmp/cs16-server
 
 set -- \
 https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz \
@@ -39,7 +39,7 @@ for arc in "$@"; do
 	exit 1
 done
 
-chmod 644 /tmp/c16-server/*
+chmod -v 644 /tmp/c16-server/*
 
 server_user=steam
 server_conf=/etc/cs16-server/cs16-server.conf
@@ -54,7 +54,7 @@ sed -i "s|server_user=|server_user=$server_user|" /usr/bin/cs16-server
 sed -i "s|server_conf=|server_conf=$server_conf|" /usr/bin/cs16-server
 
 cp -vf stage-two /tmp/stage-two.tmp
-chmod 755 /tmp/stage-two.tmp
+chmod -v 755 /tmp/stage-two.tmp
 
 sudo -u $server_user /tmp/stage-two.tmp
 
