@@ -26,7 +26,7 @@ fi
 server_user=steam
 server_conf=/etc/cs16-server/cs16-server.conf
 
-useradd -m $server_user
+useradd -m -s /bin/bash $server_user
 passwd -dl $server_user
 
 install -vm 755 cs16-server -t /usr/bin

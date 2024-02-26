@@ -1,14 +1,14 @@
-# Counter-Strike 1.6 Dedicated Server
+# Counter-Strike 1.6 Dedicated Server for Linux
 
 ![screenshot](screenshot.jpg)
 
 ## Requirements
 
-Make sure you have 32 bit libraries first
+Make sure you have 32 bit libraries before installation
 
-- ```lib32-gcc-libs``` on Arch
-- ```lib32stdc++6``` on Debian based distros
-- ```glibc.i686 libstdc++.i686``` on RHEL based distros
+- ```pacman -S lib32-gcc-libs``` for Arch (enable multilib repo first)
+- ```apt install lib32stdc++6``` for Debian based distros
+- ```dnf install glibc.i686 libstdc++.i686``` for RHEL based distros
 
 And basic tools
 
