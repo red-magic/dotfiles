@@ -5,9 +5,9 @@ if [ "$(id -u)" -ne 0 ]; then
 	exit 1
 fi
 
-server_user=steam
+server_user=
 steam_dir=/home/$server_user/.steam
-server_conf=/etc/cs16-server/cs16-server.conf
+server_conf=
 
 start_server() {
 	eval "$(grep '^server_params' "$server_conf")"
