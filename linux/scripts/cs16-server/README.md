@@ -24,7 +24,7 @@ It will also create ```steam``` user which will launch ```stage-two``` script
 
 ```steam``` user is created without a password and account locked, use ```sudo su - steam``` if you need to do further server configurations in ```~/.steam``` directory
 
-```metamod``` is disabled by default, if you need to enable it uncomment the second line in ```cs16-server.conf``` and comment the first one
+```metamod``` **is disabled by default**, if you need to enable it uncomment the second line in ```cs16-server.conf``` and comment the first one
 
 ### systemd
 
