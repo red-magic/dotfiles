@@ -22,7 +22,7 @@ Once it's done it places ```cs16-server``` main script to ```/usr/bin``` and ```
 
 It also creates ```steam``` user which launches ```stage-two``` script.
 
-```stage-two``` is run by ```steam``` user and basically extracts all acrhives from ```/tmp/cs16-server``` to ```~.steam/``` directory, makes necessary symlinks and updates **steamcmd**.
+```stage-two``` is run by ```steam``` user and basically extracts all acrhives from ```/tmp/cs16-server``` to ```~/.steam``` directory, makes necessary symlinks and updates **steamcmd**.
 
 ```steam``` user is created with account locked and password disabled, use ```sudo su - steam``` if you need to do further server configuration in ```~/.steam``` directory.
 
