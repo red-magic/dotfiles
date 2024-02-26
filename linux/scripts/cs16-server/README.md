@@ -32,7 +32,7 @@ If you use a systemd based distro it will install ```cs16-server.service``` to `
 
 ## Usage
 
-```Usage cs16-server [start | restart | stop | update]```
+```Usage: cs16-server [start | restart | stop | update]```
 
 ## cs16-server.conf
 
