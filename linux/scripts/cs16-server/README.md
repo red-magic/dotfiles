@@ -28,7 +28,7 @@ It will also create ```steam``` user which will launch ```stage-two``` script
 
 ### systemd
 
-If you use a systemd based distro it will install ```cs16-server.service``` to ```/usr/lib/systemd/system``` which you can enable to start ```cs16-server``` on boot
+If you use a systemd based distro ```cs16-server.service``` will be installed to ```/usr/lib/systemd/system``` which you can enable to start ```cs16-server``` on boot
 
 ## Usage
 
