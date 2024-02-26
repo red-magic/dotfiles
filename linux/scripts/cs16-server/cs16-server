@@ -30,8 +30,8 @@ print_help() {
 
 case $1 in
 	start) start_server;;
-	restart) stop_server && start_server;;
+	restart) stop_server; start_server;;
 	stop) stop_server;;
-	update) stop_server && update_server;;
+	update) stop_server; update_server;;
 	-h | --help | *) print_help;;
 esac
