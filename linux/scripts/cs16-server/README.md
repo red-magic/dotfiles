@@ -26,7 +26,7 @@ It also creates ```steam``` user which launches ```stage-two``` script.
 
 ```steam``` user is created with account locked and password disabled, use ```sudo su - steam``` if you need to do further server configuration in ```~/.steam``` directory.
 
-**metamod is disabled by default**, if you need to enable it uncomment the second line in ```cs16-server.conf``` and comment the first one.
+**metamod is disabled by default**, if you need to enable it uncomment ```enable_metamod=``` line in ```cs16-server.conf```
 
 Optionally you can install ```nftables.example``` for a simple firewall.
 
