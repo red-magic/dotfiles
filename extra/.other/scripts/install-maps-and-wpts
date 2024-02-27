@@ -23,7 +23,7 @@ cp -v maps-and-wpts/podbot-waypoints/* /home/$server_user/.steam/cs16/cstrike/ad
 # Add all maps
 cat maps-and-wpts/map-list >> /home/$server_user/.steam/cs16/cstrike/addons/amxmodx/configs/maps.ini
 
-# Add maps only with podbot waypoints
+# Add maps only with podbot waypoints, may take some time to start the server
 #for map in /home/"$server_user"/.steam/cs16/cstrike/addons/podbot/wptdefault/*; do
 #	printf '%s\n' "$(basename "${map%.*}")";
 #done | uniq >> /home/$server_user/.steam/cs16/cstrike/addons/amxmodx/configs/maps.ini
