@@ -88,20 +88,20 @@ printf '\nInstallation completed\n\n'
 # Notes
 #
 # Admin access
-# [cstrike/addons/amxmodx/configs/users.ini]
+# [cs16/cstrike/addons/amxmodx/configs/users.ini]
 # "STEAM_0:0:YOUR_STEAM_ID" "" "abcdefghijklmnopqrstuv" "ce"
 # [console]
 # bind "]" "amxmodmenu"
 #
 # Podbots 
-# [cstrike/addons/podbot/podbot.cfg]
+# [cs16/cstrike/addons/podbot/podbot.cfg]
 # pb_password="your_password"
 # [console]
 # bind "[" "pb menu"
 # setinfo _pbadminpw "your_password"
 #
 # Additional config
-# [server.cfg]
+# [cs16/cstrike/server.cfg]
 # mp_timelimit 0
 # mp_freezetime 0
 # mp_buytime 10
