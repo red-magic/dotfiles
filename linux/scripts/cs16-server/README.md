@@ -1,6 +1,6 @@
 # Counter-Strike 1.6 Dedicated Server for Linux
 
-![screenshot](screenshot.jpg)
+![logo](logo.jpg)
 
 ## Requirements
 

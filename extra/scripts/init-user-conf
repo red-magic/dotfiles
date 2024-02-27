@@ -27,7 +27,7 @@ if [ -n "$to_install" ]; then
 	exit 1
 fi
 
-cd ~/ || exit 1
+cd ~/ || exit
 
 mkdir -m 700 .ssh
 mkdir repos
