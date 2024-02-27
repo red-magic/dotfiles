@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Map pack
-# https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z
-
 server_user=steam
 
 if [ "$(id -un)" != "$server_user" ]; then
@@ -20,10 +17,4 @@ tar xvf maps-and-wpts.tar.xz
 cp -vr maps-and-wpts/cstrike/* /home/$server_user/.steam/cs16/cstrike
 cp -v maps-and-wpts/podbot-waypoints/* /home/$server_user/.steam/cs16/cstrike/addons/podbot/wptdefault
 
-# Add all maps
 cat maps-and-wpts/map-list >> /home/$server_user/.steam/cs16/cstrike/addons/amxmodx/configs/maps.ini
-
-# Add maps only with podbot waypoints, may take some time to start the server
-#for map in /home/"$server_user"/.steam/cs16/cstrike/addons/podbot/wptdefault/*; do
-#	printf '%s\n' "$(basename "${map%.*}")";
-#done | uniq >> /home/$server_user/.steam/cs16/cstrike/addons/amxmodx/configs/maps.ini
