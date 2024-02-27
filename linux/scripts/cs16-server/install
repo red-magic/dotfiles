@@ -32,10 +32,10 @@ https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-base-linux.tar.gz \
 https://www.amxmodx.org/amxxdrop/1.10/amxmodx-latest-cstrike-linux.tar.gz \
 https://github.com/APGRoboCop/podbot_mm/releases/download/V3B24-APG/podbot_full_V3B24.zip
 
-for arc in "$@"; do
-	printf "==> Downloading %s\n" "$arc"
-	curl -fLO "$arc" --output-dir /tmp/cs16-server && continue
-	printf "Failed downloading %s\n" "$arc"
+for link in "$@"; do
+	printf "==> Downloading %s\n" "$link"
+	curl -fLO "$link" --output-dir /tmp/cs16-server && continue
+	printf "Failed downloading %s\n" "$link"
 	exit 1
 done
 
