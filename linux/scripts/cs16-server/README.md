@@ -60,3 +60,6 @@ rm -vrf /home/steam
 rm -vf /usr/lib/systemd/system/cs16-server.service
 userdel steam
 ```
+## Maps
+
+You can download a map pack from the [Internet Archive](https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z)
