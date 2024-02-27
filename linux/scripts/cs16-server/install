@@ -7,21 +7,24 @@ fi
 
 if [ -n "$(command -v pacman)" ]; then
 	if [ ! -d /usr/lib32 ] || [ "$(find /usr/lib32 -type f | grep libstdc++)" = "" ] ; then
-		printf '\nInstall 32 bit libstdc++\n\n'
+		printf '\nInstall 32 bit libstdc++\n'
+		printf 'Read README.md for info\n\n'
 		exit 1
 	fi
 fi
 
 if [ -n "$(command -v apt)" ]; then
 	if [ "$(find /usr/lib32 -type f | grep libstdc++)" = "" ]; then
-		printf '\nInstall 32 bit libstdc++\n\n'
+		printf '\nInstall 32 bit libstdc++\n'
+		printf 'Read README.md for info\n\n'
 		exit 1
 	fi
 fi
 
 if [ -n "$(command -v dnf)" ]; then
 	if [ "$(find /usr/lib -type f | grep libstdc++)" = "" ] ; then
-		printf '\nInstall 32 bit libstdc++\n\n'
+		printf '\nInstall 32 bit libstdc++\n'
+		printf 'Read README.md for info\n\n'
 		exit 1
 	fi
 fi
