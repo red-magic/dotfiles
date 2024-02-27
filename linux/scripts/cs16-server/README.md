@@ -24,9 +24,9 @@ It also creates ```steam``` user which launches ```stage-two``` script.
 
 ```stage-two``` is run by ```steam``` user and basically extracts all acrhives from ```/tmp/cs16-server``` to ```/home/steam/.steam``` directory, makes necessary symlinks and updates **steamcmd**.
 
-```steam``` user is created with account locked and password disabled, use ```sudo su - steam``` if you need to do further server configuration in ```/home/steam/.steam``` directory.
+```steam``` user is created with account locked and password disabled, you need to use ```sudo su - steam``` if you want to do further server configuration in ```/home/steam/.steam``` directory.
 
-**metamod is disabled by default**, if you need to enable it uncomment ```enable_metamod``` line in ```cs16-server.conf```
+**metamod is disabled by default**, if you want to enable it uncomment ```enable_metamod``` line in ```cs16-server.conf```
 
 Optionally you can install ```nftables.example``` for a simple firewall.
 
