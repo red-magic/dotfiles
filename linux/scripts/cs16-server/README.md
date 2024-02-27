@@ -26,7 +26,7 @@ It also creates ```steam``` user which launches ```stage-two``` script.
 
 ```steam``` user is created with account locked and password disabled, use ```sudo su - steam``` if you need to do further server configuration in ```~/.steam``` directory.
 
-**metamod is disabled by default**, if you need to enable it uncomment ```enable_metamod=``` line in ```cs16-server.conf```
+**metamod is disabled by default**, if you need to enable it uncomment ```enable_metamod``` line in ```cs16-server.conf```
 
 Optionally you can install ```nftables.example``` for a simple firewall.
 
@@ -46,7 +46,7 @@ custom_params="-pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2"
 #enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
 server_params="-game cstrike -secure $custom_params $enable_metamod"
 ```
-By default it's a vanilla server, but you can uncomment ```enable_metamod=``` line which enables **amxmodx** and **podbod**.
+By default it's a vanilla server, but you can uncomment ```enable_metamod``` line which enables **amxmodx** and **podbod**.
 
 You can change ```custom_params``` to whatever you want to, it all just passes options to ```hlds_run```.
 
