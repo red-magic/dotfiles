@@ -45,7 +45,7 @@ custom_params="-pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2"
 #enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
 server_params="-game cstrike -secure $custom_params $enable_metamod"
 ```
-By default it's a vanilla server, but you can uncomment ```enable_metamod``` line which enables **amxmodx** and **podbod**.
+By default it's a vanilla server, but you can uncomment ```enable_metamod``` line which enables **amxmodx** and **podbot**.
 
 You can change ```custom_params``` to whatever you want to, it all just passes options to ```hlds_run```.
 
