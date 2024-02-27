@@ -65,6 +65,7 @@ fi
 
 if [ -f .ssh/id_ed25519 ]; then
 	git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
+	git clone ssh://git@github.com/red-magic/dotfiles repos/tty-colorscheme
 else
 	git clone https://github.com/red-magic/dotfiles repos/dotfiles
 fi
