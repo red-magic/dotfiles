@@ -42,7 +42,6 @@ If you use a systemd based distro ```cs16-server.service``` will be installed to
 
 ```
 custom_params="-pingboost 3 -maxplayers 32 +sv_lan 0 +map de_dust2"
-
 #enable_metamod="-dll cstrike/addons/metamod/dlls/metamod.so"
 server_params="-game cstrike -secure $custom_params $enable_metamod"
 ```
