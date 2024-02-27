@@ -18,7 +18,7 @@ And basic tools:
 
 Run ```./install``` script, first it downloads **steamcmd**, **metamod-p-v1.21p38**, **amxmodx-1.10-latest** and **podbot-V3B24** to ```/tmp/cs16-server```.
 
-Once it's done it places ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_parms``` to ```/etc/cs16-server```.
+Once it's done it places ```cs16-server``` main script to ```/usr/bin``` and ```cs16-server.conf``` with ```$server_params``` to ```/etc/cs16-server```.
 
 It also creates ```steam``` user which launches ```stage-two``` script.
 
