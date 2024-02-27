@@ -22,7 +22,7 @@ start_server() {
 }
 
 stop_server() {
-	if [ -z "$(pgrep hlds)" ] && [ -z "$UPDATE_SERVER" ]; then
+	if [ -z "$(pgrep hlds)" ]; then
 		printf 'Server is not running\n'
 		exit 1
 	fi
