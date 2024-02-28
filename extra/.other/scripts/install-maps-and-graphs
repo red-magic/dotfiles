@@ -23,12 +23,12 @@ fi
 mkdir -v cs16-maps-and-graphs
 cd cs16-maps-and-graphs || exit
 
-curl -fLO https://archive.org/details/cs-1.6-mega-map-pack-v-2018.1.7z || printf 'Failed to download archive\n' && exit 1
+curl -fLO 'https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z' || printf 'Failed to download archive\n' && exit 1
 git clone https://github.com/yapb/graph
 
 7z x cs-1.6-mega-map-pack-v-2018.1.7z
 
 cp -vr cstrike/* /home/$server_user/.steam/cs16/cstrike
-cp -vf graph/graph/* /home/$server_user/.steam/cs16/cstrike/addons/yapb/data/graph
+cp -v graph/graph/* /home/$server_user/.steam/cs16/cstrike/addons/yapb/data/graph
 
 printf '\nInstallation completed\n\n'
