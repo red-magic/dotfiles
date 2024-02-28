@@ -23,7 +23,7 @@ fi
 mkdir -v cs16-maps-and-graphs
 cd cs16-maps-and-graphs || exit
 
-curl -fLO 'https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z' || printf 'Failed to download archive\n' && exit 1
+curl -fL 'https://archive.org/download/cs-1.6-mega-map-pack-v-2018.1.7z/CS%201.6%20Mega%20Map%20Pack%20v2018.1.7z' -o cs-1.6-mega-map-pack-v-2018.1.7z || printf 'Failed to download archive\n' && exit 1
 git clone https://github.com/yapb/graph
 
 7z x cs-1.6-mega-map-pack-v-2018.1.7z
