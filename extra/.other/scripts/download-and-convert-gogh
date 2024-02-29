@@ -12,7 +12,7 @@ cd gogh || exit
 
 curl -LO $gogh_link
 tar xvf v$gogh_ver.tar.gz
-mkdir -v Gogh-$gogh_ver/converted-schemes
+mkdir -v converted-schemes
 
 for scheme_file in Gogh-"$gogh_ver"/installs/*.sh; do
 	get_colors() {
@@ -34,17 +34,17 @@ for scheme_file in Gogh-"$gogh_ver"/installs/*.sh; do
 		printf 'color16=%s\n' "$(grep FOREGROUND_COLOR "$scheme_file" | awk -F '#' '{print $2}' | cut -c 1-6)"
 	}
 	printf 'Converting %s\n' "$(basename "$scheme_file" .sh)"
-	get_colors > Gogh-$gogh_ver/converted-schemes/"$(basename "$scheme_file" .sh)"
+	get_colors > converted-schemes/"$(basename "$scheme_file" .sh)"
 done
 
 # c64 dirs are completely unreadable
 printf 'Fixing c64\n'
-sed -i 's|color5=40318D|color5=7869C4|' Gogh-$gogh_ver/converted-schemes/c64
-sed -i 's|color13=40318D|color13=7869C4|' Gogh-$gogh_ver/converted-schemes/c64
+sed -i 's|color5=40318D|color5=7869C4|' converted-schemes/c64
+sed -i 's|color13=40318D|color13=7869C4|' converted-schemes/c64
 
 printf '\nCompleted\n'
 printf 'Duplicate colorschemes:\n\n'
 
 # Checking for duplicates
-find Gogh-$gogh_ver/converted-schemes -type f -exec sha256sum {} + > checksums.txt
+find converted-schemes -type f -exec sha256sum {} + > checksums.txt
 awk '{print $1}' checksums.txt | sort | uniq -d | while read -r dup; do grep "$dup" checksums.txt; done
