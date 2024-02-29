@@ -1,6 +1,8 @@
 #!/bin/sh
 #
-# Converting gogh colorschemes for tty-colorscheme
+# Converting Gogh schemes for tty-colorscheme.
+# TTY background is color1 and foreground is color8.
+# color9 and color16 are the same but for reversed colors.
 
 gogh_ver=254
 gogh_link="https://github.com/Gogh-Co/Gogh/archive/refs/tags/v$gogh_ver.tar.gz"
@@ -43,5 +45,6 @@ sed -i 's|color13=40318D|color13=7869C4|' Gogh-$gogh_ver/converted-schemes/c64
 printf '\nCompleted\n'
 printf 'Duplicate colorschemes:\n\n'
 
+# Checking for duplicates
 find Gogh-$gogh_ver/converted-schemes -type f -exec sha256sum {} + > checksums.txt
 awk '{print $1}' checksums.txt | sort | uniq -d | while read -r dup; do grep "$dup" checksums.txt; done
