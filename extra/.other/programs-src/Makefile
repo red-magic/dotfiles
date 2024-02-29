@@ -8,11 +8,11 @@ EXECS = $(SOURCES:%.c=%)
 all: $(EXECS)
 
 install:
-	install -Dm755 $(EXECS) -t $(DESTDIR)/$(PREFIX)/bin
-	cd $(DESTDIR)/$(PREFIX)/bin && strip -s $(EXECS)
+	install -Dm 755 $(EXECS) -t $(DESTDIR)/$(PREFIX)/bin
+	strip -s $(DESTDIR)/$(PREFIX)/bin/$(EXECS)
 
 clean:
 	rm -vf $(EXECS)
 
 uninstall:
-	cd $(DESTDIR)/$(PREFIX)/bin && rm -vf $(EXECS)
+	rm -vf $(DESTDIR)/$(PREFIX)/bin/$(EXECS)
