@@ -1,0 +1,10 @@
+#!/bin/sh
+
+mkdir -v colorschemes
+
+for colorscheme_json in *json; do
+	for i in $(seq 1 16); do
+		printf 'color%s=' "$i"
+		awk -v color=$((i*2)) '{print $color}' $colorscheme_json | cut -c 3-8
+	done > colorschemes/"$(basename $colorscheme_json .json)"
+done
