@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# Converting gogh colorschemes for tty-colorscheme
 
 gogh_ver=254
 gogh_link="https://github.com/Gogh-Co/Gogh/archive/refs/tags/v$gogh_ver.tar.gz"
