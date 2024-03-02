@@ -13,3 +13,5 @@
  ;;'(global-font-lock-mode nil)
  ;;'(global-hl-line-mode t)
 )
+
+(global-set-key (kbd "TAB") 'self-insert-command)

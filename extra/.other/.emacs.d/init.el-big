@@ -8,6 +8,7 @@
  '(make-backup-files nil)
  '(menu-bar-mode nil)
  '(require-final-newline t)
+ '(show-paren-mode nil)
  '(show-trailing-whitespace t)
  '(size-indication-mode t)
  '(use-short-answers t)
@@ -17,13 +18,13 @@
  ;;'(inhibit-startup-screen t)
  ;;'(scroll-bar-mode nil)
  ;;'(tool-bar-mode nil)
- )
+)
 
 (setq
  fg-color "#000000"
  bg-color "#ffffff"
  ;;mg-color "#d7ccc8"
- )
+)
 
 (custom-set-faces
  `(region ((t (:foreground ,fg-color :background ,bg-color))))
@@ -51,3 +52,5 @@
  ;;`(completions-annotations ((t (:foreground ,fg-color :background ,bg-color))))
  ;;`(button ((t (:foreground ,bg-color :background ,fg-color))))
  )
+
+(global-set-key (kbd "TAB") 'self-insert-command)
