@@ -2,6 +2,7 @@ stty werase undef
 bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
+#printf '\033[?112;255;127c'
 
 #GPG_TTY=$(tty)
 #VISUAL=emacs
