@@ -7,8 +7,8 @@
   '(menu-bar-mode nil)
   '(require-final-newline t)
   '(show-paren-mode nil)
-  '(show-trailing-whitespace t)
   '(size-indication-mode t)
   '(use-short-answers t))
 
 (global-set-key (kbd "TAB") 'self-insert-command)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
