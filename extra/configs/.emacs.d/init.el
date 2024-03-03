@@ -6,9 +6,10 @@
   '(make-backup-files nil)
   '(menu-bar-mode nil)
   '(require-final-newline t)
+  '(sh-basic-offset 8)
   '(show-paren-mode nil)
   '(size-indication-mode t)
   '(use-short-answers t))
 
-(global-set-key (kbd "TAB") 'self-insert-command)
+;;(global-set-key (kbd "TAB") 'self-insert-command)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
