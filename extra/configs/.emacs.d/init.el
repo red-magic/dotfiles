@@ -2,6 +2,7 @@
   '(auto-save-default nil)
   '(auto-save-list-file-prefix nil)
   '(column-number-mode t)
+  '(electric-indent-mode nil)
   '(global-display-line-numbers-mode t)
   '(make-backup-files nil)
   '(menu-bar-mode nil)
