@@ -22,7 +22,7 @@ order += "cpu_usage"
 order += "tztime local"
 #order += "cpu_temperature cpu0"
 #order += "cpu_temperature acpitz0"
- 
+
 cpu_usage {
 	format = " %usage"
 }

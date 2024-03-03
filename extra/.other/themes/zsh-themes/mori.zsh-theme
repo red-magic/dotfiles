@@ -17,7 +17,7 @@ ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[blue]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%}*%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
- 
+
 #Customized git status, oh-my-zsh currently does not allow render dirty status before branch
 git_custom_status() {
 local cb=$(git_current_branch)

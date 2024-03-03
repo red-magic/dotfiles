@@ -45,7 +45,7 @@ font-4 = FontAwesome:size=10;0
 font-5 = unifont:pixelsize=11:fontformat=truetype:antialias=true;1
 
 modules-left = bspwm i3 mpd
-modules-center = 
+modules-center =
 modules-right = eth cpu memory filesystem xbacklight volume xkeyboard wlan battery temperature date
 
 tray-position = right
@@ -53,7 +53,7 @@ tray-padding = 0
 tray-detached = false
 
 bottom = true
-wm-restack = 
+wm-restack =
 override-redirect = false
 
 [module/xwindow]

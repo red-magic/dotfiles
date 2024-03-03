@@ -186,7 +186,7 @@ bar {
 		statusline #b0bec5
 		separator #080808
 		background #080808
-		
+
 		focused_workspace #080808 #212121 #bcaaa4
 		inactive_workspace #080808 #080808 #bcaaa4
 		active_workspace #080808 #1b0000 #bcaaa4

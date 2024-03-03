@@ -6,6 +6,6 @@
 
 "i3lock -i ~/pics/wallpaper.png"
 	Control+period
-	
+
 "maim ~/pics/screens/$(date +%Y-%m-%d-%T)-screenshot.png"
 	Print

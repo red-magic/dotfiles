@@ -186,7 +186,7 @@ exec_always --no-startup-id picom		\
 #		statusline #aeaeae
 #		separator #000000
 #		background #000000
-#		
+#
 #		focused_workspace #000000 #212121 #aeaeae
 #		inactive_workspace #000000 #000000 #aeaeae
 #		active_workspace #000000 #000000 #aeaeae

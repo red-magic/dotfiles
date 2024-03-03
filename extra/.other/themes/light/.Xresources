@@ -77,7 +77,7 @@ rofi.columns: 2
 ! Use extended color schem
 rofi.color-enabled:                  true
 ! Color scheme for normal row
-rofi.color-normal:                   argb:00000000,  #586e75 , argb:00000000,  argb:00fdf6e3,  #b58900 
+rofi.color-normal:                   argb:00000000,  #586e75 , argb:00000000,  argb:00fdf6e3,  #b58900
 ! Color scheme for urgent row
 rofi.color-urgent:                   argb:90000000,  #2f343f , argb:90000000,  #2f343f ,  #2f343f
 ! Color scheme for active row

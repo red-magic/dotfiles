@@ -10,7 +10,7 @@ Xft.lcdfilter: lcddefault
 !URxvt*font: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
 !URxvt*boldFont: -ibm-vga-normal-r-normal--16-120-96-96-c-80-iso10646-1
 
-URxvt*font: xft: IBM IBM VGA 8x16 
+URxvt*font: xft: IBM IBM VGA 8x16
 URxvt*boldFont: xft: IBM IBM VGA 8x16
 
 URxvt*letterSpace: 0

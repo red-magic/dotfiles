@@ -2,7 +2,7 @@
 
 MUTDROP_PATH=/tmp/tdrop_"$USER"
 # shellcheck disable=SC2174
-mkdir -m 700 -p "$MUTDROP_PATH" 
+mkdir -m 700 -p "$MUTDROP_PATH"
 
 print_help() {
 	echo "

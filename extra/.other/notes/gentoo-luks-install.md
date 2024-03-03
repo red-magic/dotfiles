@@ -13,7 +13,7 @@
 11. [Zram swap](#zram-swap)
 
 
-You can use any live iso to install gentoo, I suggest to use archlinux.iso since it has a script for 
+You can use any live iso to install gentoo, I suggest to use archlinux.iso since it has a script for
 generating fstab file.
 
 ## Disk preparation
@@ -211,7 +211,7 @@ sys-kernel/genkernel cryptsetup
 ```
 Emerge these
 ```
-emerge -av genkernel cryptsetup 
+emerge -av genkernel cryptsetup
 emerge -av1 kmod
 ```
 

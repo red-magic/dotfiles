@@ -4,24 +4,23 @@
 
 rm -rvf ~/downloads/wget-list
 mkdir -pv ~/downloads/wget-list
-cd ~/downloads/wget-list
+cd ~/downloads/wget-list || exit
 
 echo "===> Wgetting"
 
-array="https://github.com/tremc/tremc/archive/0.9.1.tar.gz 
-        https://github.com/robbyrussell/oh-my-zsh/archive/master.zip 
-        https://github.com/noctuid/tdrop/archive/v0.2.tar.gz"
+array="	https://github.com/tremc/tremc/archive/0.9.1.tar.gz
+	https://github.com/robbyrussell/oh-my-zsh/archive/master.zip
+	https://github.com/noctuid/tdrop/archive/v0.2.tar.gz"
 
-for element in $array
-do
-    echo "==> Downloading $element"
-    wget $element
+for element in $array; do
+	echo "==> Downloading $element"
+	wget "$element"
 done
 
 echo "===> Done"
 
-#       https://github.com/farsil/ibmfonts/archive/0.1.tar.gz
-#       https://github.com/IBM/plex/releases/download/v1.2.1/TrueType.zip
-#       https://github.com/nana-4/materia-theme/archive/v20181125.tar.gz
-#       https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/20181120.tar.gz
-#       https://github.com/google/material-design-icons/raw/master/iconfont/MaterialIcons-Regular.ttf
+#https://github.com/farsil/ibmfonts/archive/0.1.tar.gz
+#https://github.com/IBM/plex/releases/download/v1.2.1/TrueType.zip
+#https://github.com/nana-4/materia-theme/archive/v20181125.tar.gz
+#https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/20181120.tar.gz
+#https://github.com/google/material-design-icons/raw/master/iconfont/MaterialIcons-Regular.ttf

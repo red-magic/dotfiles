@@ -224,7 +224,7 @@ vec4 hook() {
     // Soft limited anti-ringing with tanh, wpmean to control compression slope
     sharpdiff = wpmean(max(sharpdiff, 0.0), soft_lim( max(sharpdiff, 0.0), min_dist ), cs.x )
               - wpmean(min(sharpdiff, 0.0), soft_lim( min(sharpdiff, 0.0), min_dist ), cs.y );
-    
+
     float sharpdiff_lim = sat(c0_Y + sharpdiff) - c0_Y;
     /*float satmul = (c0_Y + max(sharpdiff_lim*0.9, sharpdiff_lim)*0.3 + 0.03)/(c0_Y + 0.03);
     vec3 res = c0_Y + sharpdiff_lim + (c[0] - c0_Y)*satmul;

@@ -47,7 +47,7 @@ font-5 = unifont:pixelsize=11:fontformat=truetype:antialias=true;1
 
 modules-left = i3
 modules-center =
-modules-right = eth cpu memory filesystem volume date 
+modules-right = eth cpu memory filesystem volume date
 
 tray-position = right
 tray-padding = 0

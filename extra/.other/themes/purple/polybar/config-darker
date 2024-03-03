@@ -47,7 +47,7 @@ font-5 = unifont:pixelsize=11:fontformat=truetype:antialias=true;1
 
 modules-left = bspwm i3 mpd
 modules-center =
-modules-right = eth cpu memory filesystem xbacklight volume xkeyboard wlan battery temperature date 
+modules-right = eth cpu memory filesystem xbacklight volume xkeyboard wlan battery temperature date
 ;powermenu
 
 tray-position = right

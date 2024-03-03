@@ -52,7 +52,7 @@ rofi.font: IBM IBM VGA 8x16 12
 *color6:  #64b5f6
 *color14: #64b5f6
 
-! white 
+! white
 *color7:  #ffffff
 *color15: #ffffff
 
