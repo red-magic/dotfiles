@@ -11,5 +11,4 @@
   '(use-short-answers t))
 
 (global-set-key (kbd "TAB") 'self-insert-command)
-(global-set-key (kbd "\C-j") 'new-line)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
