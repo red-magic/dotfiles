@@ -46,14 +46,14 @@ alias journalctl='journalctl -o short-iso'
 #alias ssh-server='TERM=linux ssh -v -C -p 22 user@server.localdomain'
 
 remove_pacman_cache() {
-	if [ -x "$(command -v yay)" ]; then
+	if [ -n "$(command -v yay)" ]; then
 		yes | yay -Scc
 	fi
 	yes | sudo pacman -Scc
 }
 
 remove_pacman_orphans() {
-	if [ -x "$(command -v yay)" ]; then
+	if [ -n "$(command -v yay)" ]; then
 		yay -Qtdq | yay -Rns -
 	else
 		pacman -Qtdq | sudo pacman -Rns -
