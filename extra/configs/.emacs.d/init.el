@@ -11,4 +11,7 @@
  '(size-indication-mode t)
  '(use-short-answers t))
 
+;;(custom-set-faces
+;; '(italic ((t (:foreground "blue")))))
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
