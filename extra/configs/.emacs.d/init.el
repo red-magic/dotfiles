@@ -13,6 +13,7 @@
 
 (custom-set-faces
  '(italic ((t (:foreground "blue"))))
+ '(region ((t (:background "blue" :foreground "black"))))
  '(shr-h3 ((t (:foreground "blue")))))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
