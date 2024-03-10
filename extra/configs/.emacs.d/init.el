@@ -12,7 +12,9 @@
  '(use-short-answers t))
 
 (custom-set-faces
+ '(isearch ((t (:background "blue" :foreground "black"))))
  '(italic ((t (:foreground "blue"))))
+ '(lazy-highlight ((t (:background "blue" :foreground "black"))))
  '(region ((t (:background "blue" :foreground "black"))))
  '(shr-h3 ((t (:foreground "blue")))))
 
