@@ -3,17 +3,18 @@
 vows=(a e i o u)
 cons=(b c d f g h j k l m n p q r s t v w x y z)
 
-length=8
-words=10
+syl=8
+words=20
 
 cnt=0
-while [ "$cnt" -lt $((words)) ]; do
-	for ((i=0;i<length;i++)); do
+while [ "$cnt" -lt "$words" ]; do
+	i=0
+	while [ "$i" -lt "$syl" ]; do
 		vowel=${vows[$((RANDOM % ${#vows[@]}))]}
 		consonant=${cons[$((RANDOM % ${#cons[@]}))]}
 		printf '%s' "$consonant$vowel"
+		i=$((i+1))
 	done
-
 	printf '\n'
 	cnt=$((cnt+1))
 done
