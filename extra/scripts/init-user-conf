@@ -65,8 +65,11 @@ fi
 
 if [ -f .ssh/id_ed25519 ]; then
 	git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
-	git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
-	git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
+
+	if uname -a | grep -q Linux; then
+		git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
+		git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
+	fi
 
 	if [ -f /etc/arch-release ]; then
 		./repos/dotfiles/linux/scripts/git-clone-aur
