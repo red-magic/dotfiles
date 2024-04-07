@@ -13,7 +13,7 @@ esac
 set -- curl ssh git xz tar
 
 if [ -n "$IS_WORKSTATION" ]; then
-	set -- "$@" gpg dirmngr gpg-agent
+	set -- "$@" gpg dirmngr gpg-agent pinentry
 fi
 
 for pkg in "$@"; do
