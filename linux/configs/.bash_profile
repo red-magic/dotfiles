@@ -30,9 +30,9 @@ EDITOR='mg -n'
 export PS1 PAGER HISTFILE LESSHISTFILE LANG TIME_STYLE EDITOR
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT LC_TIME
 
-alias sudo='sudo -E '
+alias sudo='sudo HOME=$HOME -E '
 alias mg='mg -n'
-alias ls='ls --color=never'
+alias ls='ls --color=always'
 alias l='ls -plha'
 alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'
 alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
