@@ -30,7 +30,7 @@ EDITOR='mg -n'
 export PS1 PAGER HISTFILE LESSHISTFILE LANG TIME_STYLE EDITOR
 #export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT LC_TIME
 
-alias sudo='sudo HOME=$HOME -E '
+alias sudo='sudo -E '
 alias mg='mg -n'
 alias ls='ls --color=always'
 alias l='ls -plha'
