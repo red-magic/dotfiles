@@ -32,6 +32,7 @@ export PS1 PAGER HISTFILE LESSHISTFILE LANG TIME_STYLE EDITOR
 
 alias sudo='sudo -E '
 alias mg='mg -n'
+alias emacs='emacs --user user'
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'
