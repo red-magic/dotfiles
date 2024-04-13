@@ -1,6 +1,17 @@
 PS1='\h\$ '
 PAGER='less -M'
 EDITOR='mg -n'
+
+export PS1 PAGER EDITOR
+
+alias doas='doas '
+alias l='ls -plha'
+alias mg='mg -n'
+alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
+#alias ssh-server='ssh -v -C -o Ciphers=chacha20-poly1305@openssh.com -o KexAlgorithms=curve25519-sha256 user@server.localdomain'
+
+# Extra
+
 #GPG_TTY=$(tty)
 #VISUAL=emacs
 #LC_ALL=en_US.UTF-8
@@ -18,14 +29,7 @@ EDITOR='mg -n'
 #	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
 #	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black'
 
-export PS1 PAGER EDITOR
 #export GPG_TTY VISUAL LC_ALL VIMINIT LANG LC_TIME LESSHISTFILE
-
-alias doas='doas '
-alias l='ls -plha'
-alias mg='mg -n'
-alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
-#alias ssh-server='ssh -v -C -o Ciphers=chacha20-poly1305@openssh.com -o KexAlgorithms=curve25519-sha256 user@server.localdomain'
 
 #set -o emacs
 

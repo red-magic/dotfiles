@@ -2,46 +2,22 @@ stty werase undef
 bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
-#printf '\033[?112;255;127c'
 
-#GPG_TTY=$(tty)
-#VISUAL=emacs
-#WLR_NO_HARDWARE_CURSORS=1
 PS1='\h\$ '
 PAGER='less -M'
 HISTFILE=
 LESSHISTFILE=-
-#LC_TIME=C.UTF-8
 LANG=en_DK.UTF-8
-TIME_STYLE=long-iso
 EDITOR='mg -n'
-#VIMINIT='colorscheme default
-#	 syntax on
-#	 set number
-#	 set ruler
-#	 set cursorline
-#	 set viminfo=
-#	 match errorMsg /\s\+$/
-#	 hi Visual cterm=NONE ctermbg=black ctermfg=white
-#	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black
-#	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
-#	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
 
-export PS1 PAGER HISTFILE LESSHISTFILE LANG TIME_STYLE EDITOR
-#export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT LC_TIME
+export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
 
 alias sudo='sudo -E '
 alias mg='mg -n'
-alias emacs='emacs --user user'
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'
 alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
-#alias date='date "+%Y-%m-%d %H:%M:%S %:z"'
-#alias date='date --rfc-3339=seconds'
-alias date='date --iso-8601=seconds'
-#alias journalctl='journalctl -o short-full'
-alias journalctl='journalctl -o short-iso'
 #alias defrag-root='for i in {1..3}; do sudo e4defrag /; done'
 #alias grub-update='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck && sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias ssh-server='TERM=linux ssh -v -C -o Ciphers=chacha20-poly1305@openssh.com -o KexAlgorithms=curve25519-sha256 user@server.localdomain'
@@ -60,6 +36,35 @@ remove_pacman_orphans() {
 		pacman -Qtdq | sudo pacman -Rns -
 	fi
 }
+
+# Extra
+
+#printf '\033[?112;255;127c'
+
+#LC_TIME=C.UTF-8
+#TIME_STYLE=long-iso
+#GPG_TTY=$(tty)
+#VISUAL=emacs
+#WLR_NO_HARDWARE_CURSORS=1
+#VIMINIT='colorscheme default
+#	 syntax on
+#	 set number
+#	 set ruler
+#	 set cursorline
+#	 set viminfo=
+#	 match errorMsg /\s\+$/
+#	 hi Visual cterm=NONE ctermbg=black ctermfg=white
+#	 hi CursorLine cterm=NONE ctermbg=white ctermfg=black
+#	 hi CursorLineNr cterm=NONE ctermbg=white ctermfg=black
+#	 hi ErrorMsg cterm=NONE ctermbg=darkred ctermfg=black'
+
+#export GPG_TTY VISUAL WLR_NO_HARDWARE_CURSORS VIMINIT LC_TIME TIME_STYLE
+
+#alias date='date "+%Y-%m-%d %H:%M:%S %:z"'
+#alias date='date --rfc-3339=seconds'
+#alias date='date --iso-8601=seconds'
+#alias journalctl='journalctl -o short-full'
+#alias journalctl='journalctl -o short-iso'
 
 #if tty | grep -q tty || tty | grep -q pts
 #then
