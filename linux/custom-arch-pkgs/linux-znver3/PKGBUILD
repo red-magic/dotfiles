@@ -1,11 +1,11 @@
 pkgname=linux-znver3
-pkgver=6.7.4
+pkgver=6.8.7
 _archver=1
 pkgrel=1
 pkgdesc='Linux kernel for znver3 architecture'
 arch=(x86_64)
 license=(GPL2)
-depends=(base-devel bc cpio inetutils pahole mkinitcpio grub)
+depends=(base-devel bc cpio inetutils pahole)
 options=(!debug)
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch$_archver-$pkgrel/config)
