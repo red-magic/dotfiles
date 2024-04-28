@@ -72,7 +72,11 @@ if [ -f .ssh/id_ed25519 ]; then
 	fi
 
 	if [ -f /etc/arch-release ]; then
-		./repos/dotfiles/linux/scripts/git-clone-aur
+		set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
+		mkdir -v "/home/$USER/repos/aur"
+		for aurpkg in "$@"; do
+			git clone "ssh://aur@aur.archlinux.org/$aurpkg" "/home/$USER/repos/aur/$aurpkg"
+		done
 	fi
 else
 	git clone https://github.com/red-magic/dotfiles repos/dotfiles
