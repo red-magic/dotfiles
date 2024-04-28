@@ -6,13 +6,13 @@ fi
 
 case $1 in
 	-s) ;;
-	-w) IS_WORKSTATION=1;;
+	-w) workstation=1;;
 	*) exit 0;;
 esac
 
 set -- curl ssh git xz tar
 
-if [ -n "$IS_WORKSTATION" ]; then
+if [ -n "$workstation" ]; then
 	set -- "$@" gpg dirmngr gpg-agent pinentry
 fi
 
@@ -32,7 +32,7 @@ cd ~/ || exit
 mkdir -m 700 .ssh
 mkdir repos
 
-if [ -n "$IS_WORKSTATION" ]; then
+if [ -n "$workstation" ]; then
 	gpg --keyserver hkps://keys.openpgp.org --search-keys 159C66B3104E3E30
 	gpg --edit-key 159C66B3104E3E30 trust
 	curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
@@ -78,7 +78,7 @@ else
 	git clone https://github.com/red-magic/dotfiles repos/dotfiles
 fi
 
-if [ -n "$IS_WORKSTATION" ]; then
+if [ -n "$workstation" ]; then
 	cp -f repos/dotfiles/extra/configs/.gitconfig .
 fi
 
