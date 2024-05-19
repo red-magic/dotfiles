@@ -1,11 +1,16 @@
 pkgname=linux-znver3
-pkgver=6.8.7
+pkgver=6.9.1
 _archver=1
 pkgrel=1
 pkgdesc='Linux kernel for znver3 architecture'
 arch=(x86_64)
 license=(GPL2)
-depends=(base-devel bc cpio inetutils pahole)
+depends=(base-devel
+	 bc
+	 cpio
+	 pahole
+	 #inetutils
+	)
 options=(!debug)
 source=(https://cdn.kernel.org/pub/linux/kernel/v${pkgver::1}.x/linux-$pkgver.tar.xz
 	https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/raw/$pkgver.arch$_archver-$pkgrel/config)
@@ -15,7 +20,7 @@ b2sums=(SKIP
 _linuxsrc=linux-$pkgver
 
 _kernelmake() {
-	_ncpu=$(( $(nproc) +1 ))
+	_ncpu=$(($(nproc)+1))
 	_arch=znver3
 	_flags="-O2 -pipe -march=$_arch -mtune=$_arch"
 	make -j$_ncpu LOCALVERSION=-arch$_archver-$pkgrel-$_arch KCFLAGS="$_flags" KCPPFLAGS="$_flags" "$@"
