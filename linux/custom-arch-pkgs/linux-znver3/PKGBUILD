@@ -1,11 +1,11 @@
 pkgname=linux-znver3
-pkgver=6.9.1
+pkgver=6.11
 _archver=1
 pkgrel=1
 pkgdesc='Linux kernel for znver3 architecture'
 arch=(x86_64)
 license=(GPL2)
-depends=(base-devel
+makedepends=(base-devel
 	 bc
 	 cpio
 	 pahole
