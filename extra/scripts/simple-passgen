@@ -1,20 +1,44 @@
 #!/bin/bash
 
-vows=(a e i o u)
-cons=(b c d f g h j k l m n p q r s t v w x y z)
+# Function to generate a random word
+generate_word() {
+	local length=$1
+	local word=""
+	#local syllables=("ta" "ke" "mi" "no" "ra" "si" "ku" "lo" "za" "bi" "fe" "jo" "va" "ru" "de" "ne" "sa")
+	local syllables=("ta" "ke" "mi" "no" "ra" "si" "ku" "lo" "za" "bi" "fe" "jo" "va" "ru" "de" "ne" "sa" "mo" "chi" "ri" "pu" "te" "yu" "ka" "sha" "la" "ti" "na" "to" "wu" "xe" "ge")
 
-syl=8
-words=20
-
-cnt=0
-while [ "$cnt" -lt "$words" ]; do
-	i=0
-	while [ "$i" -lt "$syl" ]; do
-		vowel=${vows[$((RANDOM % ${#vows[@]}))]}
-		consonant=${cons[$((RANDOM % ${#cons[@]}))]}
-		printf '%s' "$consonant$vowel"
-		i=$((i+1))
+	for (( i=0; i<length; i++ )); do
+		word+="${syllables[RANDOM % ${#syllables[@]}]}"
 	done
-	printf '\n'
-	cnt=$((cnt+1))
-done
+
+	echo "$word"
+}
+
+# Function to generate a password
+generate_password() {
+	local word_count=$1
+	local password=""
+
+	for (( i=0; i<word_count; i++ )); do
+		local word_length=$(( RANDOM % 3 + 2 ))  # Length of the word from 2 to 4 syllables
+		password+=$(generate_word "$word_length")
+	done
+
+	# Add a number and a special character only at the end
+	local special_chars=("!" "@" "#" "$" "%" "^" "&" "*" "(" ")" "_" "-" "+" "=" "~")
+	local random_number=$(( RANDOM % 100 ))
+	local random_special=${special_chars[RANDOM % ${#special_chars[@]}]}
+
+	# Form the final password
+	echo "$password$random_number$random_special"
+}
+
+# Main program
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 <number_of_words>"
+	exit 1
+fi
+
+word_count=$1
+password=$(generate_password "$word_count")
+echo "Generated password: $password"
