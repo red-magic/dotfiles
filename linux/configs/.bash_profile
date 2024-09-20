@@ -21,7 +21,7 @@ alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
 alias short-logs='sudo journalctl --no-hostname -b'
 #alias defrag-root='for i in {1..3}; do sudo e4defrag /; done'
 #alias grub-update='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck && sudo grub-mkconfig -o /boot/grub/grub.cfg'
-#alias ssh-server='TERM=linux ssh -v -C -o Ciphers=chacha20-poly1305@openssh.com -o KexAlgorithms=curve25519-sha256 user@server.localdomain'
+#alias ssh-server='TERM=linux ssh -v -o Ciphers=aes128-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 
 remove_pacman_cache() {
 	if [ -n "$(command -v yay)" ]; then

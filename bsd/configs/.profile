@@ -8,7 +8,7 @@ alias doas='doas '
 alias l='ls -plha'
 alias mg='mg -n'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
-#alias ssh-server='ssh -v -C -o Ciphers=chacha20-poly1305@openssh.com -o KexAlgorithms=curve25519-sha256 user@server.localdomain'
+#alias ssh-server='ssh -v -C -o Ciphers=aes128-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 
 # Extra
 
