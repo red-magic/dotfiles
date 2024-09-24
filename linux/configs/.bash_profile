@@ -68,8 +68,7 @@ remove_pacman_orphans() {
 #alias journalctl='journalctl -o short-full'
 #alias journalctl='journalctl -o short-iso'
 
-#if tty | grep -q tty || tty | grep -q pts
-#then
+#if tty | grep -q tty || tty | grep -q pts; then
 #	fortune | cowthink
 #fi
 
@@ -77,7 +76,7 @@ remove_pacman_orphans() {
 #	gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
 #}
 
-#if [ -z "$(pgrep gammastep)" && -n "$(tty | grep tty)" && -x "$(command -v gammastep)" ]; then
+#if [ -z "$(pgrep gammastep)" ] && tty | grep -q tty && [ -x "$(command -v gammastep)" ]; then
 #	gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
 #fi
 
@@ -103,7 +102,7 @@ remove_pacman_orphans() {
 #	fi
 #
 #	if [ -z "$(ls -A $mnt_dir)" ]; then
-#		sshfs -p $ssh_port -C $USER@$remote_host:$remote_dir $mnt_dir
+#		sshfs -p "$ssh_port" -C "$USER@$remote_host":"$remote_dir" $mnt_dir
 #	else
 #		echo "$mnt_dir directory is not empty, refusing to mount"
 #	fi
@@ -112,7 +111,7 @@ remove_pacman_orphans() {
 #umount-remote-host() {
 #	fusermount3 -u $mnt_dir
 #
-#	if [ -z "$(ls -A $mnt_dir)" && -z "$(ps aux | grep sshfs | grep $remote_host)" ]; then
+#	if [ -z "$(ls -A $mnt_dir)" ] && [ -z "$(ps aux | grep sshfs | grep $remote_host)" ]; then
 #		rm -rfv $mnt_dir
 # 	else
 #		echo "$mnt_dir directory is not empty or still mounted, refusing to remove"
@@ -120,7 +119,7 @@ remove_pacman_orphans() {
 #}
 
 #go-get-some-sleep() {
-#	if [ -n "$(tty | grep tty)" ]; then
+#	if tty | grep -q tty; then
 #		sudo systemctl suspend && physlock
 #		else
 #		sudo true && i3lock -i pictures/lock.png && sudo systemctl suspend
