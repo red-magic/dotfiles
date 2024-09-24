@@ -101,7 +101,7 @@ remove_pacman_orphans() {
 #		mkdir -v $mnt_dir
 #	fi
 #
-#	if [ -z "$(ls -A $mnt_dir)" ]; then
+#	if [ -z "$(ls -A "$mnt_dir")" ]; then
 #		sshfs -p "$ssh_port" -C "$USER@$remote_host":"$remote_dir" $mnt_dir
 #	else
 #		echo "$mnt_dir directory is not empty, refusing to mount"
@@ -111,7 +111,7 @@ remove_pacman_orphans() {
 #umount-remote-host() {
 #	fusermount3 -u $mnt_dir
 #
-#	if [ -z "$(ls -A $mnt_dir)" ] && [ -z "$(ps aux | grep sshfs | grep $remote_host)" ]; then
+#	if [ -z "$(ls -A "$mnt_dir")" ] && [ -z "$(ps aux | grep sshfs | grep $remote_host)" ]; then
 #		rm -rfv $mnt_dir
 # 	else
 #		echo "$mnt_dir directory is not empty or still mounted, refusing to remove"
