@@ -9,7 +9,7 @@ HISTFILE=
 LESSHISTFILE=-
 LANG=en_DK.UTF-8
 EDITOR='mg -n'
-#all_proxy="socks5://127.0.0.1:9050"
+#all_proxy='socks5://127.0.0.1:9050'
 
 export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
 
@@ -74,11 +74,11 @@ remove_pacman_orphans() {
 #fi
 
 #gammastep-tty() {
-#	gammastep -l 55.0:73.3 -t 2700:3000 -m drm &> /dev/null &
+#	gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
 #}
 
-#if [[ -z "$(pgrep gammastep)" && ! -z "$(tty | grep tty)" && -x "$(command -v gammastep)" ]]; then
-#	gammastep -l 55.0:73.3 -t 2700:3000 -m drm &> /dev/null &
+#if [ -z "$(pgrep gammastep)" && -n "$(tty | grep tty)" && -x "$(command -v gammastep)" ]; then
+#	gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
 #fi
 
 #ssh_port=
@@ -98,11 +98,11 @@ remove_pacman_orphans() {
 #alias spl="ssh -v -f -N -L 127.0.0.1:$local_proxy_port:$remote_host:9050 $remote_host"
 
 #mount-remote-host() {
-#	if [[ ! -d $mnt_dir  ]]; then
+#	if [ ! -d "$mnt_dir"  ]; then
 #		mkdir -v $mnt_dir
 #	fi
 #
-#	if [[ -z "$(ls -A $mnt_dir)" ]]; then
+#	if [ -z "$(ls -A $mnt_dir)" ]; then
 #		sshfs -p $ssh_port -C $USER@$remote_host:$remote_dir $mnt_dir
 #	else
 #		echo "$mnt_dir directory is not empty, refusing to mount"
@@ -112,7 +112,7 @@ remove_pacman_orphans() {
 #umount-remote-host() {
 #	fusermount3 -u $mnt_dir
 #
-#	if [[ -z "$(ls -A $mnt_dir)" && -z "$(ps aux | grep sshfs | grep $remote_host)" ]]; then
+#	if [ -z "$(ls -A $mnt_dir)" && -z "$(ps aux | grep sshfs | grep $remote_host)" ]; then
 #		rm -rfv $mnt_dir
 # 	else
 #		echo "$mnt_dir directory is not empty or still mounted, refusing to remove"
@@ -120,7 +120,7 @@ remove_pacman_orphans() {
 #}
 
 #go-get-some-sleep() {
-#	if [[ $(tty | grep tty) != "" ]]; then
+#	if [ -n "$(tty | grep tty)" ]; then
 #		sudo systemctl suspend && physlock
 #		else
 #		sudo true && i3lock -i pictures/lock.png && sudo systemctl suspend
