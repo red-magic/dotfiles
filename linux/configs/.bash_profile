@@ -74,11 +74,11 @@ remove_pacman_orphans() {
 #fi
 
 #gammastep-tty() {
-#	gammastep -l 55.0:73.3 -t 2700:3400 -m drm &> /dev/null &
+#	gammastep -l 55.0:73.3 -t 2700:3000 -m drm &> /dev/null &
 #}
 
 #if [[ -z "$(pgrep gammastep)" && ! -z "$(tty | grep tty)" && -x "$(command -v gammastep)" ]]; then
-#	gammastep -l 55.0:73.3 -t 2700:3400 -m drm &> /dev/null &
+#	gammastep -l 55.0:73.3 -t 2700:3000 -m drm &> /dev/null &
 #fi
 
 #ssh_port=
