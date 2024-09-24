@@ -1,3 +1,2 @@
-# Disable
-
-kdump # crashkernel=no to grub cmd
+Disable kdump.service
+"crashkernel=no" to grub cmd

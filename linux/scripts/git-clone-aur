@@ -1,15 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
-set -- \
-pacproxy-bin \
-simple-and-soft-cursor \
-snowflake-pt-client-bin \
-tor-relay-scanner-bin \
-tty-colorscheme \
-windows-10-cursor
+aurpkgs=(
+	pacproxy-bin
+	simple-and-soft-cursor
+	snowflake-pt-client-bin
+	tor-relay-scanner-bin
+	tty-colorscheme
+	windows-10-cursor
+)
 
 mkdir -v "/home/$USER/repos/aur"
 
-for aurpkg in "$@"; do
+for aurpkg in "${aurpkgs[@]}"; do
 	git clone "ssh://aur@aur.archlinux.org/$aurpkg" "/home/$USER/repos/aur/$aurpkg"
 done
