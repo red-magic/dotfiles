@@ -33,9 +33,9 @@ remove_pacman_cache() {
 
 remove_pacman_orphans() {
 	if [ -x "$(command -v yay)" ]; then
-		yay -Qtdq | yay -Rns -
+		yay -Qttdq | yay -Rns -
 	else
-		pacman -Qtdq | sudo pacman -Rns -
+		pacman -Qttdq | sudo pacman -Rns -
 	fi
 }
 
