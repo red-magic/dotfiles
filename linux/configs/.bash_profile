@@ -25,14 +25,14 @@ alias short-logs='sudo journalctl --no-hostname -b'
 #alias ssh-server='TERM=linux ssh -v -o Ciphers=aes128-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 
 remove_pacman_cache() {
-	if [ -x "$(command -v yay)" ]; then
+	if [[ -x "$(command -v yay)" ]]; then
 		yes | yay -Scc
 	fi
 	yes | sudo pacman -Scc
 }
 
 remove_pacman_orphans() {
-	if [ -x "$(command -v yay)" ]; then
+	if [[ -x "$(command -v yay)" ]]; then
 		yay -Qttdq | yay -Rns -
 	else
 		pacman -Qttdq | sudo pacman -Rns -
