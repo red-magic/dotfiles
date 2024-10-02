@@ -15,10 +15,10 @@ if [ -n "${workstation}" ]; then
 fi
 
 for pkg in "$@"; do
-	[ -x "$(command -v "$pkg")" ] || to_install="${to_install} ${pkg}"
+	[ -x "$(command -v "$pkg")" ] || missing_pkgs="${missing_pkgs} ${pkg}"
 done
 
-[ -n "${to_install}" ] && printf '\nInstall%s\n\n' "${to_install}" && exit 1
+[ -n "${missing_pkgs}" ] && printf '\nInstall missing packages:%s\n\n' "${missing_pkgs}" && exit 1
 
 cd ~/ || exit 1
 
