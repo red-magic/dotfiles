@@ -1,38 +1,31 @@
 #!/bin/sh
 
-if [ $# -eq 0 ]; then
-	exit 0
-fi
+[ "$#" -eq 0 ] && exit 1
 
-case $1 in
+case "$1" in
 	-s) ;;
-	-w) workstation=1;;
-	*) exit 0;;
+	-w) workstation=1 ;;
+	*) exit 0 ;;
 esac
 
 set -- curl ssh git xz tar
 
-if [ -n "$workstation" ]; then
+if [ -n "${workstation}" ]; then
 	set -- "$@" gpg dirmngr gpg-agent pinentry
 fi
 
 for pkg in "$@"; do
-	if [ -z "$(command -v "$pkg")" ]; then
-		to_install="$to_install $pkg"
-	fi
+	[ -x "$(command -v "$pkg")" ] || to_install="${to_install} ${pkg}"
 done
 
-if [ -n "$to_install" ]; then
-	printf '\nInstall%s\n\n' "$to_install"
-	exit 1
-fi
+[ -n "${to_install}" ] && printf '\nInstall%s\n\n' "${to_install}" && exit 1
 
-cd ~/ || exit
+cd ~/ || exit 1
 
 mkdir -m 700 .ssh
 mkdir repos
 
-if [ -n "$workstation" ]; then
+if [ -n "${workstation}" ]; then
 	gpg --keyserver hkps://keys.openpgp.org --search-keys 159C66B3104E3E30
 	gpg --edit-key 159C66B3104E3E30 trust
 	curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
@@ -41,9 +34,9 @@ if [ -n "$workstation" ]; then
 	while true; do
 		printf 'Continue? [y/n] '
 		read -r yn
-		case $yn in
-			[Yy]*) printf 'Continuing' && break;;
-			[Nn]*) printf 'Exiting' && exit 1;;
+		case "${yn}" in
+			[Yy]*) printf 'Continuing' && break ;;
+			[Nn]*) printf 'Exiting' && exit 1 ;;
 		esac
 	done
 
@@ -63,7 +56,7 @@ else
 	chmod 400 .ssh/authorized_keys
 fi
 
-if [ -f .ssh/id_ed25519 ]; then
+if [ -f ".ssh/id_ed25519" ]; then
 	git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
 
 	if uname -a | grep -q Linux; then
@@ -71,18 +64,18 @@ if [ -f .ssh/id_ed25519 ]; then
 		git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
 	fi
 
-	if [ -f /etc/arch-release ]; then
+	if [ -f "/etc/arch-release" ]; then
 		set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
-		mkdir -v "/home/$USER/repos/aur"
+		mkdir -v "/home/${USER}/repos/aur"
 		for aurpkg in "$@"; do
-			git clone "ssh://aur@aur.archlinux.org/$aurpkg" "/home/$USER/repos/aur/$aurpkg"
+			git clone "ssh://aur@aur.archlinux.org/${aurpkg}" "/home/${USER}/repos/aur/${aurpkg}"
 		done
 	fi
 else
 	git clone https://github.com/red-magic/dotfiles repos/dotfiles
 fi
 
-if [ -n "$workstation" ]; then
+if [ -n "${workstation}" ]; then
 	cp -f repos/dotfiles/extra/configs/.gitconfig .
 fi
 
