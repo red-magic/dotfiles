@@ -3,13 +3,13 @@ bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 
-PS1='\h\$ '
-PAGER='less -M'
-HISTFILE=
-LESSHISTFILE=-
-LANG=en_DK.UTF-8
-EDITOR='mg -n'
-#all_proxy='socks5://127.0.0.1:9050'
+PS1="\h\$ "
+PAGER="less -M"
+HISTFILE=""
+LESSHISTFILE="-"
+LANG="C.UTF-8"
+EDITOR="mg -n"
+#all_proxy="socks5://127.0.0.1:9050"
 
 export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
 

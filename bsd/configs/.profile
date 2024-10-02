@@ -1,6 +1,6 @@
-PS1='\h\$ '
-PAGER='less -M'
-EDITOR='mg -n'
+PS1="\h\$ "
+PAGER="less -M"
+EDITOR="mg -n"
 
 export PS1 PAGER EDITOR
 
