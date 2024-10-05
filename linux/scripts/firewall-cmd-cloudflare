@@ -1,9 +1,11 @@
 #!/bin/bash
 
-echo "Adding cloudflare IPv4 HTTPS"
-for i in $(curl "https://www.cloudflare.com/ips-v4"); do
-    echo "Adding ${i}"
-    sudo firewall-cmd --permanent --zone=drop --add-rich-rule 'rule family="ipv4" source address="'$i'" port port=443 protocol=tcp accept';
+echo "Downloading Cloudflare IPv4 List"
+mapfile -t cf_ips < <(curl "https://www.cloudflare.com/ips-v4")
+
+for ip in "${cf_ips[@]}"; do
+    echo "Adding ${ip}"
+    sudo firewall-cmd --permanent --zone=drop --add-rich-rule 'rule family="ipv4" source address="${ip}" port port=443 protocol=tcp accept';
 done
 
 echo "Adding SSH port"
