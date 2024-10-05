@@ -8,10 +8,10 @@ case "$1" in
     *) exit 0 ;;
 esac
 
-set -- curl ssh git xz tar
+set -- "curl" "ssh" "git" "xz" "tar"
 
 if [ -n "${workstation}" ]; then
-    set -- "$@" gpg dirmngr gpg-agent pinentry
+    set -- "$@" "gpg" "dirmngr" "gpg-agent" "pinentry"
 fi
 
 for pkg in "$@"; do
