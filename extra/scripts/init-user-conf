@@ -3,19 +3,19 @@
 [ "$#" -eq 0 ] && exit 1
 
 case "$1" in
-	-s) ;;
-	-w) workstation=1 ;;
-	*) exit 0 ;;
+    -s) ;;
+    -w) workstation=1 ;;
+    *) exit 0 ;;
 esac
 
 set -- curl ssh git xz tar
 
 if [ -n "${workstation}" ]; then
-	set -- "$@" gpg dirmngr gpg-agent pinentry
+    set -- "$@" gpg dirmngr gpg-agent pinentry
 fi
 
 for pkg in "$@"; do
-	[ -x "$(command -v "$pkg")" ] || missing_pkgs="${missing_pkgs} ${pkg}"
+    [ -x "$(command -v "${pkg}")" ] || missing_pkgs="${missing_pkgs} ${pkg}"
 done
 
 [ -n "${missing_pkgs}" ] && printf '\nInstall missing packages:%s\n\n' "${missing_pkgs}" && exit 1
@@ -26,67 +26,67 @@ mkdir -m 700 .ssh
 mkdir repos
 
 if [ -n "${workstation}" ]; then
-	gpg --keyserver hkps://keys.openpgp.org --search-keys 159C66B3104E3E30
-	gpg --edit-key 159C66B3104E3E30 trust
-	curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
-	gpg -do archive.tar.xz archive.tar.xz.gpg
+    gpg --keyserver hkps://keys.openpgp.org --search-keys 159C66B3104E3E30
+    gpg --edit-key 159C66B3104E3E30 trust
+    curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
+    gpg -do archive.tar.xz archive.tar.xz.gpg
 
-	while true; do
-		printf 'Continue? [y/n] '
-		read -r yn
-		case "${yn}" in
-			[Yy]*) printf 'Continuing' && break ;;
-			[Nn]*) printf 'Exiting' && exit 1 ;;
-		esac
-	done
+    while true; do
+        printf 'Continue? [y/n] '
+        read -r yn
+        case "${yn}" in
+            [Yy]*) printf 'Continuing' && break ;;
+            [Nn]*) printf 'Exiting' && exit 1 ;;
+        esac
+    done
 
-	unxz archive.tar.xz
-	tar xf archive.tar
-	gpg --import archive/gpg/*.*
-	cp -f archive/ssh/id_ed25519 .ssh
-	cp -f archive/ssh/id_ed25519.pub .ssh
-	cp -f archive/ssh/id_ed25519.pub .ssh/authorized_keys
-	touch .ssh/known_hosts
-	touch .ssh/known_hosts.old
-	chmod 600 .ssh/known_hosts*
-	rm -rf archive*
+    unxz archive.tar.xz
+    tar xf archive.tar
+    gpg --import archive/gpg/*.*
+    cp -f archive/ssh/id_ed25519 .ssh
+    cp -f archive/ssh/id_ed25519.pub .ssh
+    cp -f archive/ssh/id_ed25519.pub .ssh/authorized_keys
+    touch .ssh/known_hosts
+    touch .ssh/known_hosts.old
+    chmod 600 .ssh/known_hosts*
+    rm -rf archive*
 else
-	curl -LO https://github.com/red-magic.keys
-	mv -f red-magic.keys .ssh/authorized_keys
-	chmod 400 .ssh/authorized_keys
+    curl -LO https://github.com/red-magic.keys
+    mv -f red-magic.keys .ssh/authorized_keys
+    chmod 400 .ssh/authorized_keys
 fi
 
 if [ -f ".ssh/id_ed25519" ]; then
-	git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
+    git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
 
-	if uname -a | grep -q Linux; then
-		git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
-		git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
-	fi
+    if uname -a | grep -q Linux; then
+        git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
+        git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
+    fi
 
-	if [ -f "/etc/arch-release" ]; then
-		set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
-		mkdir -v "/home/${USER}/repos/aur"
-		for aurpkg in "$@"; do
-			git clone "ssh://aur@aur.archlinux.org/${aurpkg}" "/home/${USER}/repos/aur/${aurpkg}"
-		done
-	fi
+    if [ -f "/etc/arch-release" ]; then
+        set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
+        mkdir -v "/home/${USER}/repos/aur"
+        for aurpkg in "$@"; do
+            git clone "ssh://aur@aur.archlinux.org/${aurpkg}" "/home/${USER}/repos/aur/${aurpkg}"
+        done
+    fi
 else
-	git clone https://github.com/red-magic/dotfiles repos/dotfiles
+    git clone https://github.com/red-magic/dotfiles repos/dotfiles
 fi
 
 if [ -n "${workstation}" ]; then
-	cp -f repos/dotfiles/extra/configs/.gitconfig .
+    cp -f repos/dotfiles/extra/configs/.gitconfig .
 fi
 
 if uname -a | grep -q Linux; then
-	cp -f repos/dotfiles/linux/configs/.bash_profile .
-	ln -sf .bash_profile .bashrc
+    cp -f repos/dotfiles/linux/configs/.bash_profile .
+    ln -sf .bash_profile .bashrc
 elif uname | grep -q BSD; then
-	cp -f repos/dotfiles/bsd/configs/.profile .
-	if uname | grep -q OpenBSD; then
-		cp -f repos/dotfiles/bsd/configs/.mailrc .
-	fi
+    cp -f repos/dotfiles/bsd/configs/.profile .
+    if uname | grep -q OpenBSD; then
+        cp -f repos/dotfiles/bsd/configs/.mailrc .
+    fi
 fi
 
 mkdir -p .config/ranger
