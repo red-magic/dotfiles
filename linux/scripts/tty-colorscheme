@@ -32,26 +32,29 @@ print_current_palette() {
 
 shift_colorschemes() {
     mapfile -t colorschemes_list < <(list_colorschemes)
-    max_ind="$((${#colorschemes_list[@]}-1))"
-    i=-1
+    max_ind_schemes="$((${#colorschemes_list[@]}-1))"
+    ind_schemes=-1
 
-    mapfile -t fonts_list < <(ls /usr/share/kbd/consolefonts/*.gz)
+    mapfile -t fonts_list < <(ls /usr/share/kbd/consolefonts/*.psf*)
     max_ind_fonts="$((${#fonts_list[@]}-1))"
-    j=""
+    ind_fonts=-1
 
     while true; do
-        if [[ "${i}" -gt -1 ]]; then
-            colorscheme="${colorschemes_list[${i}]}"
+        if [[ "${ind_fonts}" -gt -1 ]]; then
+            font="${fonts_list[${ind_fonts}]}"
+            setfont "${font}" > /dev/null 2>&1
+        fi
+
+        if [[ "${ind_schemes}" -gt -1 ]]; then
+            colorscheme="${colorschemes_list[${ind_schemes}]}"
             $(basename "$0") "${colorscheme}"
         else
             clear
             print_current_palette
         fi
 
-        if [[ -n "${j}" ]]; then
-            font="${fonts_list[${j}]}"
-            setfont "${font}" > /dev/null 2>&1
-            printf "Setting %s font\n" "$(basename "${font}" .gz)"
+        if [[ "${ind_fonts}" -gt -1 ]]; then
+            printf "Setting %s font\n" "$(basename "${font}")"
         fi
 
         printf "\nUse j and k keys to shift through colorschemes\n"
@@ -59,10 +62,10 @@ shift_colorschemes() {
 
         read -rsn1
         case "${REPLY}" in
-            j) [[ "${i}" -lt "${max_ind}" ]] && ((i++)) ;;
-            k) [[ "${i}" -gt 0 ]] && ((i--)) ;;
-            l) [[ "${j}" -lt "${max_ind_fonts}" ]] && ((j++)) ;;
-            h) [[ "${j}" -gt 0 ]] && ((j--)) ;;
+            j) [[ "${ind_schemes}" -lt "${max_ind_schemes}" ]] && ((ind_schemes++)) ;;
+            k) [[ "${ind_schemes}" -gt 0 ]] && ((ind_schemes--)) ;;
+            l) [[ "${ind_fonts}" -lt "${max_ind_fonts}" ]] && ((ind_fonts++)) ;;
+            h) [[ "${ind_fonts}" -gt 0 ]] && ((ind_fonts--)) ;;
             *) exit 0 ;;
         esac
     done
