@@ -67,39 +67,34 @@ cs_shift() {
     max_ind_fnt="$((${#fnt_arr[@]}-1))"
     ind_fnt=-1
 
+    mode=""
+
     while true; do
         clear
-        if [[ "${ind_fnt}" -gt -1 ]]; then
-            fnt="${fnt_arr[${ind_fnt}]}"
-            setfont "${fnt}" > /dev/null 2>&1
-        fi
 
-        if [[ "${ind_cs}" -gt -1 ]]; then
+        if [[ "${mode}" == "cs" && "${ind_cs}" -gt -1 ]]; then
             cs="${cs_arr[${ind_cs}]}"
             cs_set_scheme "${cs}" > /dev/null 2>&1
             clear
             cs_print_palette
-        fi
-
-        if [[ "${ind_fnt}" -gt -1 ]]; then
-            printf "\n"
+            printf "Setting %s colorscheme\n" "${cs}"
+        elif [[ "${mode}" == "fnt" && "${ind_fnt}" -gt -1 ]]; then
+            fnt="${fnt_arr[${ind_fnt}]}"
+            setfont "${fnt}" > /dev/null 2>&1
+            clear
             showconsolefont
             printf "Setting %s font\n" "$(basename "${fnt}" | cut -d. -f1)"
         fi
 
-        if [[ "${ind_cs}" -gt -1 ]]; then
-            printf "Setting %s colorscheme\n" "${cs}"
-        fi
-
         printf "\nUse j and k keys to shift through colorschemes\n"
-        printf "Use h and l keys to shift through fonts\n\n"
+        printf "Use h and l keys to shift through fonts\n"
 
         read -rsn1
         case "${REPLY}" in
-            j) [[ "${ind_cs}" -lt "${max_ind_cs}" ]] && ((ind_cs++)) ;;
-            k) [[ "${ind_cs}" -gt 0 ]] && ((ind_cs--)) ;;
-            l) [[ "${ind_fnt}" -lt "${max_ind_fnt}" ]] && ((ind_fnt++)) ;;
-            h) [[ "${ind_fnt}" -gt 0 ]] && ((ind_fnt--)) ;;
+            j) [[ "${ind_cs}" -lt "${max_ind_cs}" ]] && ((ind_cs++)); mode="cs" ;;
+            k) [[ "${ind_cs}" -gt 0 ]] && ((ind_cs--)); mode="cs" ;;
+            l) [[ "${ind_fnt}" -lt "${max_ind_fnt}" ]] && ((ind_fnt++)); mode="fnt" ;;
+            h) [[ "${ind_fnt}" -gt 0 ]] && ((ind_fnt--)); mode="fnt" ;;
             *) exit 0 ;;
         esac
     done
