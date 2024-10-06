@@ -36,12 +36,13 @@ cs_shift() {
     ind_cs=-1
 
     get_fonts() {
-        find /usr/share/kbd/consolefonts/*.psf* -exec file {} + \
+        find /usr/share -name "*.psf*" -exec file {} + \
             | grep -E 'PC Screen Font | gzip' \
-            | cut -d: -f 1
+            | cut -d: -f 1 \
+            | sort -V
     }
 
-    mapfile -t fnt_arr < <(get_fonts)
+    mapfile -t fnt_arr < <(get_fonts 2>/dev/null)
     max_ind_fnt="$((${#fnt_arr[@]}-1))"
     ind_fnt=-1
 
@@ -64,7 +65,7 @@ cs_shift() {
         fi
 
         printf "\nUse j and k keys to shift through colorschemes\n"
-        printf "Use h and l keys to shift through fonts\n"
+        printf "Use h and l keys to shift through fonts\n\n"
 
         read -rsn1
         case "${REPLY}" in
