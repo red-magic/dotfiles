@@ -68,6 +68,7 @@ cs_shift() {
     ind_fnt=-1
 
     while true; do
+        clear
         if [[ "${ind_fnt}" -gt -1 ]]; then
             fnt="${fnt_arr[${ind_fnt}]}"
             setfont "${fnt}" > /dev/null 2>&1
@@ -75,14 +76,19 @@ cs_shift() {
 
         if [[ "${ind_cs}" -gt -1 ]]; then
             cs="${cs_arr[${ind_cs}]}"
-            $(basename "$0") "${cs}"
-        else
+            cs_set_scheme "${cs}" > /dev/null 2>&1
             clear
             cs_print_palette
         fi
 
         if [[ "${ind_fnt}" -gt -1 ]]; then
+            printf "\n"
+            showconsolefont
             printf "Setting %s font\n" "$(basename "${fnt}" | cut -d. -f1)"
+        fi
+
+        if [[ "${ind_cs}" -gt -1 ]]; then
+            printf "Setting %s colorscheme\n" "${cs}"
         fi
 
         printf "\nUse j and k keys to shift through colorschemes\n"
