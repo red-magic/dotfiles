@@ -78,7 +78,7 @@ cs_shift() {
             $(basename "$0") "${cs}"
         else
             clear
-            cs_palette
+            cs_print_palette
         fi
 
         if [[ "${ind_fnt}" -gt -1 ]]; then
