@@ -36,8 +36,9 @@ cs_shift() {
     ind_cs=-1
 
     get_fonts() {
-        find /usr/share -name "*.psf*" -exec file {} + \
-            | grep -E 'PC Screen Font | gzip' \
+        fnt_dir="$(find /usr -type d -name "consolefonts")"
+        find "${fnt_dir}" -name "*.psf*" -exec file {} + \
+            | grep -E 'gzip | PC Screen Font' \
             | cut -d: -f 1 \
             | sort -V
     }
