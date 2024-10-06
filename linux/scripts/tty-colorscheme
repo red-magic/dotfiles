@@ -72,13 +72,13 @@ cs_shift() {
     while true; do
         clear
 
-        if [[ "${mode}" == "cs" && "${ind_cs}" -gt -1 ]]; then
+        if [[ "${mode}" == "cs" ]] && [[ "${ind_cs}" -gt -1 ]]; then
             cs="${cs_arr[${ind_cs}]}"
             cs_set_scheme "${cs}" > /dev/null 2>&1
             clear
             cs_print_palette
             printf "Setting %s colorscheme\n" "${cs}"
-        elif [[ "${mode}" == "fnt" && "${ind_fnt}" -gt -1 ]]; then
+        elif [[ "${mode}" == "fnt" ]] && [[ "${ind_fnt}" -gt -1 ]]; then
             fnt="${fnt_arr[${ind_fnt}]}"
             setfont "${fnt}" > /dev/null 2>&1
             clear
