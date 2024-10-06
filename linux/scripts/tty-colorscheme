@@ -96,7 +96,7 @@ cs_shift() {
                 mode="cs"
                 ;;
             k)
-                [[ "${ind_cs}" -gt 0 ]] && ((ind_cs--));
+                [[ "${ind_cs}" -gt 0 ]] && ((ind_cs--))
                 mode="cs"
                 ;;
             l)
