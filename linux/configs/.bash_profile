@@ -8,13 +8,12 @@ PAGER="less -M"
 HISTFILE=""
 LESSHISTFILE="-"
 LANG="C.UTF-8"
-EDITOR="mg -n"
+EDITOR="mg"
 #all_proxy="socks5://127.0.0.1:9050"
 
 export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
 
 alias sudo='sudo -E '
-alias mg='mg -n'
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'

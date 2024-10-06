@@ -20,7 +20,7 @@ done
 
 [ -n "${missing_pkgs}" ] && printf '\nInstall missing packages:%s\n\n' "${missing_pkgs}" && exit 1
 
-cd ~/ || exit 1
+cd "/home/${USER}" || exit 1
 
 mkdir -m 700 .ssh
 mkdir repos
@@ -91,3 +91,4 @@ fi
 
 mkdir -p .config/ranger
 cp -f repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
+cp -f repos/dotfiles/extra/configs/.mg .
