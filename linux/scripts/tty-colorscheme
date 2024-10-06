@@ -91,11 +91,25 @@ cs_shift() {
 
         read -rsn1
         case "${REPLY}" in
-            j) [[ "${ind_cs}" -lt "${max_ind_cs}" ]] && ((ind_cs++)); mode="cs" ;;
-            k) [[ "${ind_cs}" -gt 0 ]] && ((ind_cs--)); mode="cs" ;;
-            l) [[ "${ind_fnt}" -lt "${max_ind_fnt}" ]] && ((ind_fnt++)); mode="fnt" ;;
-            h) [[ "${ind_fnt}" -gt 0 ]] && ((ind_fnt--)); mode="fnt" ;;
-            *) exit 0 ;;
+            j)
+                [[ "${ind_cs}" -lt "${max_ind_cs}" ]] && ((ind_cs++))
+                mode="cs"
+                ;;
+            k)
+                [[ "${ind_cs}" -gt 0 ]] && ((ind_cs--));
+                mode="cs"
+                ;;
+            l)
+                [[ "${ind_fnt}" -lt "${max_ind_fnt}" ]] && ((ind_fnt++))
+                mode="fnt"
+                ;;
+            h)
+                [[ "${ind_fnt}" -gt 0 ]] && ((ind_fnt--))
+                mode="fnt"
+                ;;
+            *)
+                exit 0
+                ;;
         esac
     done
 }
