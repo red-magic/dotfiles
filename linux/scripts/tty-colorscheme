@@ -5,13 +5,30 @@ cs_dir="/etc/tty-colorscheme/colorschemes"
 cs_help() {
     printf "Usage: %s [-lps | colorscheme]\n" "$(basename "$0")"
     printf "  -l    list colorschemes\n"
+    printf "  -f    list psf fonts\n"
     printf "  -p    print current palette\n"
     printf "  -s    shift through colorschemes and fonts\n"
 }
 
-cs_list() {
+cs_list_schemes() {
     for cs_name in "${cs_dir}"/*; do
         basename "${cs_name}"
+    done
+}
+
+_get_fonts() {
+    fnt_dir="$(find /usr -type d -name "consolefonts")"
+    find "${fnt_dir}" -name "*.psf*" -exec file {} + \
+        | grep -E 'gzip | PC Screen Font' \
+        | cut -d: -f 1 \
+        | sort -V
+}
+
+cs_list_fonts() {
+    mapfile -t fnt_list < <(_get_fonts 2>/dev/null)
+
+    for fnt_name in "${fnt_list[@]}"; do
+        basename "${fnt_name}" | cut -d. -f1
     done
 }
 
@@ -31,19 +48,11 @@ cs_palette() {
 }
 
 cs_shift() {
-    mapfile -t cs_arr < <(cs_list)
+    mapfile -t cs_arr < <(cs_list_schemes)
     max_ind_cs="$((${#cs_arr[@]}-1))"
     ind_cs=-1
 
-    get_fonts() {
-        fnt_dir="$(find /usr -type d -name "consolefonts")"
-        find "${fnt_dir}" -name "*.psf*" -exec file {} + \
-            | grep -E 'gzip | PC Screen Font' \
-            | cut -d: -f 1 \
-            | sort -V
-    }
-
-    mapfile -t fnt_arr < <(get_fonts 2>/dev/null)
+    mapfile -t fnt_arr < <(_get_fonts 2>/dev/null)
     max_ind_fnt="$((${#fnt_arr[@]}-1))"
     ind_fnt=-1
 
@@ -62,7 +71,7 @@ cs_shift() {
         fi
 
         if [[ "${ind_fnt}" -gt -1 ]]; then
-            printf "Setting %s font\n" "$(basename "${fnt}")"
+            printf "Setting %s font\n" "$(basename "${fnt}" | cut -d. -f1)"
         fi
 
         printf "\nUse j and k keys to shift through colorschemes\n"
@@ -79,7 +88,7 @@ cs_shift() {
     done
 }
 
-cs_set() {
+cs_set_scheme() {
     cs_file="${cs_dir}/$1"
     [[ ! -f "${cs_file}" ]] && printf "Invalid colorscheme: %s\n" "$1" && exit 1
     source "${cs_file}"
@@ -111,10 +120,14 @@ cs_set() {
     printf "Setting %s colorscheme\n" "$1"
 }
 
-while getopts ":lps" opt; do
+while getopts ":lfps" opt; do
     case "${opt}" in
         l)
-            cs_list
+            cs_list_schemes
+            exit 0
+            ;;
+        f)
+            cs_list_fonts
             exit 0
             ;;
         p)
@@ -133,6 +146,6 @@ while getopts ":lps" opt; do
     esac
 done
 
-[[ "$#" -eq 1 ]] && cs_set "$1" && exit 0
+[[ "$#" -eq 1 ]] && cs_set_scheme "$1" && exit 0
 
 cs_help
