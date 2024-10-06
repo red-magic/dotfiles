@@ -77,6 +77,7 @@ fi
 
 if [ -n "${workstation}" ]; then
     cp -f repos/dotfiles/extra/configs/.gitconfig .
+    cp -f repos/dotfiles/extra/configs/.mg .
 fi
 
 if uname -a | grep -q Linux; then
@@ -91,4 +92,3 @@ fi
 
 mkdir -p .config/ranger
 cp -f repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
-cp -f repos/dotfiles/extra/configs/.mg .
