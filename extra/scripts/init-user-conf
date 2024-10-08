@@ -2,11 +2,13 @@
 
 [ "$#" -eq 0 ] && exit 1
 
-case "$1" in
-    -s) ;;
-    -w) workstation=1 ;;
-    *) exit 0 ;;
-esac
+while getopts ":sw" opt; do
+    case "${opt}" in
+        s) ;;
+        w) workstation=1 ;;
+        *) exit 0 ;;
+    esac
+done
 
 set -- "curl" "ssh" "git" "xz" "tar"
 
@@ -77,7 +79,6 @@ fi
 
 if [ -n "${workstation}" ]; then
     cp -f repos/dotfiles/extra/configs/.gitconfig .
-    cp -f repos/dotfiles/extra/configs/.mg .
 fi
 
 if uname -a | grep -q Linux; then

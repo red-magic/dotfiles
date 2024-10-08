@@ -8,7 +8,7 @@ PAGER="less -M"
 HISTFILE=""
 LESSHISTFILE="-"
 LANG="C.UTF-8"
-EDITOR="mg"
+EDITOR="mg -n"
 #all_proxy="socks5://127.0.0.1:9050"
 
 export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
@@ -16,6 +16,7 @@ export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
 alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
+alias mg='mg -n'
 alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'
 alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
 alias short-logs='sudo journalctl --no-hostname -b'
