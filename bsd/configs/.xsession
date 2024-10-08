@@ -1,2 +1,0 @@
-. "${HOME}/.profile"
-exec fvwm
