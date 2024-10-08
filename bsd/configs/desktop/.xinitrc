@@ -1,3 +1,3 @@
 export ENV="${HOME}/.profile"
-xsetroot -solid 27
+xsetroot -solid grey27
 exec cwm
