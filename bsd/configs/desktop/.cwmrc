@@ -1,0 +1,2 @@
+bind-key M-Return "xterm -fa fixed -fs 16 -fullscreen"
+bind-key M-f window-fullscreen
