@@ -3,15 +3,14 @@ bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 
+LANG="C.UTF-8"
 PS1="\h\$ "
 PAGER="less -M"
 HISTFILE=""
 LESSHISTFILE="-"
-LANG="C.UTF-8"
 EDITOR="mg -n"
-#all_proxy="socks5://127.0.0.1:9050"
 
-export PS1 PAGER HISTFILE LESSHISTFILE LANG EDITOR
+export LANG PS1 PAGER HISTFILE LESSHISTFILE EDITOR
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
@@ -40,6 +39,8 @@ remove_pacman_orphans() {
 }
 
 # Extra
+
+#all_proxy="socks5://127.0.0.1:9050"
 
 #printf "\033[?112;255;127c"
 

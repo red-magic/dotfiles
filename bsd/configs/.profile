@@ -1,9 +1,10 @@
+LANG="C.UTF-8"
+TERM="xterm"
 PS1="\h\$ "
 PAGER="less -M"
-LANG="C.UTF-8"
 EDITOR="mg -n"
 
-export PS1 PAGER LANG EDITOR
+export LANG TERM PS1 PAGER EDITOR
 
 alias doas='doas '
 alias l='ls -plha'
