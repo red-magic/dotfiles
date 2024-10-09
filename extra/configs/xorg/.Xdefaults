@@ -1,3 +1,5 @@
+*scrollBar: false
+
 *foreground:  #bcaaa4
 *background:  #1b0000
 *cursorColor: #bcaaa4
