@@ -1,3 +1,4 @@
+*font: xft: Go Mono:style=regular:size=11
 *scrollBar: false
 
 *foreground:  #bcaaa4

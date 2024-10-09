@@ -1,3 +1,3 @@
-bind-key M-j 'xterm -fa "Go Mono" -fs 11 -fullscreen'
+bind-key M-j "xterm -fullscreen"
 bind-key M-f window-fullscreen
 bind-key MS-q window-close
