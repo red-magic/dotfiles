@@ -6,4 +6,4 @@ daemon="/usr/local/bin/qbittorrent-nox -d"
 
 . /etc/rc.d/rc.subr
 
-rc_cmd $1
+rc_cmd "$1"
