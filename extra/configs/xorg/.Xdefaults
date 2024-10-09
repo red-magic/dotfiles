@@ -1,8 +1,5 @@
 ! Alt+d fix
 *metaSendsEscape: true
-*altIsNotMeta: false
-*eightBitInput: false
-*allowSendEvents: true
 
 *font: xft: Go Mono:style=regular:size=11
 *scrollBar: false
