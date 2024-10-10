@@ -1,3 +1,0 @@
-#!/bin/sh
-
-tor-relay-scanner --torrc --timeout 1 -g 20 -o /etc/tor/bridges && rcctl restart tor
