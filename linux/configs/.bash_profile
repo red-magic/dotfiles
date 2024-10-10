@@ -19,7 +19,7 @@ alias mg='mg -n'
 alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'
 alias clean-pacman='remove_pacman_cache && remove_pacman_orphans'
 alias short-logs='sudo journalctl --no-hostname -b'
-#alias defrag-root='for i in {1..3}; do sudo e4defrag /; done'
+#alias defrag-root='for i in {1..3}; echo "Defrag Pass: ${i}" > /dev/null && do sudo e4defrag /; done'
 #alias grub-update='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck && sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias ssh-server='ssh -v -o Ciphers=aes128-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 
