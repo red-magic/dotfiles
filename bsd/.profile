@@ -1,10 +1,11 @@
+PATH="${PATH}:${HOME}/.bin"
 LANG="C.UTF-8"
 TERM="xterm"
 PS1="\h\$ "
 PAGER="less -M"
 EDITOR="mg -n"
 
-export LANG TERM PS1 PAGER EDITOR
+export PATH LANG TERM PS1 PAGER EDITOR
 
 alias doas='doas '
 alias l='ls -plha'
