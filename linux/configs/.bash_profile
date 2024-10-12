@@ -1,4 +1,4 @@
-stty werase undef
+#stty werase undef
 bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
