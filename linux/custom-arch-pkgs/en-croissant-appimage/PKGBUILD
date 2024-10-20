@@ -25,4 +25,6 @@ package() {
 	install -Dm 644 usr/share/icons/hicolor/32x32/apps/${_pkgname}.png -t $pkgdir/usr/share/icons/hicolor/32x32/apps
 	install -Dm 644 usr/share/icons/hicolor/128x128/apps/${_pkgname}.png -t $pkgdir/usr/share/icons/hicolor/128x128/apps
 	install -Dm 644 usr/share/icons/hicolor/256x256@2/apps/${_pkgname}.png -t $pkgdir/usr/share/icons/hicolor/256x256@2/apps
+
+	sed -i 's/Name=en-croissant/Name=En Croissant/' $pkgdir/usr/share/applications/${_pkgname}.desktop
 }
