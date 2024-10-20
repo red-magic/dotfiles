@@ -10,7 +10,9 @@ conflicts=(en-croissant en-croissant-bin)
 license=(GPL-3.0)
 options=(!strip !debug)
 source=($url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.AppImage
+	# Only to get icons and .desktop file
 	$url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.deb)
+
 b2sums=(20d7195afcab2685cc92f161b0d4aa50b80eca9742518e14043dbf3b033ae844fe5d6797056c62c19fe2c95d235285321a965abf04c25bc803a419c10c467b76
 	d290f96adeead002c64ddeab30e84e8e7c2e2e49cbaeb2219e4538d23cd68f0c69adcc65a3ca1546c9eb9b070b99ad72a481f92771c72f8dd40511755c2f6970)
 
