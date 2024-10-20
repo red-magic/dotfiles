@@ -9,12 +9,18 @@ depends=(fuse2)
 conflicts=(en-croissant en-croissant-bin)
 license=(GPL-3.0)
 options=(!strip !debug)
-source=($url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.AppImage
+source=(
+	$url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.AppImage
 	# Only to get icons and .desktop file
-	$url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.deb)
+	$url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.deb
+	https://raw.githubusercontent.com/franciscoBSalgueiro/${_pkgname}/refs/tags/v${pkgver}/LICENSE
+)
 
-b2sums=(20d7195afcab2685cc92f161b0d4aa50b80eca9742518e14043dbf3b033ae844fe5d6797056c62c19fe2c95d235285321a965abf04c25bc803a419c10c467b76
-	d290f96adeead002c64ddeab30e84e8e7c2e2e49cbaeb2219e4538d23cd68f0c69adcc65a3ca1546c9eb9b070b99ad72a481f92771c72f8dd40511755c2f6970)
+b2sums=(
+	20d7195afcab2685cc92f161b0d4aa50b80eca9742518e14043dbf3b033ae844fe5d6797056c62c19fe2c95d235285321a965abf04c25bc803a419c10c467b76
+	d290f96adeead002c64ddeab30e84e8e7c2e2e49cbaeb2219e4538d23cd68f0c69adcc65a3ca1546c9eb9b070b99ad72a481f92771c72f8dd40511755c2f6970
+	74915e048cf8b5207abf603136e7d5fcf5b8ad512cce78a2ebe3c88fc3150155893bf9824e6ed6a86414bbe4511a6bd4a42e8ec643c63353dc8eea4a44a021cd
+)
 
 package() {
 	install -Dm 755 ${_pkgname}_${pkgver}_amd64.AppImage $pkgdir/usr/bin/${_pkgname}
@@ -27,4 +33,6 @@ package() {
 	install -Dm 644 usr/share/icons/hicolor/256x256@2/apps/${_pkgname}.png -t $pkgdir/usr/share/icons/hicolor/256x256@2/apps
 
 	sed -i 's/Name=en-croissant/Name=En Croissant/' $pkgdir/usr/share/applications/${_pkgname}.desktop
+
+	install -Dm 644 LICENSE -t $pkgdir/usr/share/licenses/${_pkgname}
 }
