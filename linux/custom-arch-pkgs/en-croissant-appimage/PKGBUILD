@@ -14,6 +14,7 @@ optdepends=(
 	'gnu-free-fonts: Chess symbols support'
 	'ttf-dejavu: Chess symbols support'
 )
+
 source=(
 	$url/releases/download/v${pkgver}/${_pkgname}_${pkgver}_amd64.AppImage
 	# Only to get icons and .desktop file
