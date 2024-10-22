@@ -10,9 +10,9 @@ conflicts=(en-croissant en-croissant-bin)
 license=(GPL-3.0)
 options=(!strip !debug)
 optdepends=(
-	'noto-fonts: UTF-8 chess symbols support'
 	'gnu-free-fonts: UTF-8 chess symbols support'
 	'ttf-dejavu: UTF-8 chess symbols support'
+	'noto-fonts: UTF-8 chess symbols support'
 )
 
 source=(
