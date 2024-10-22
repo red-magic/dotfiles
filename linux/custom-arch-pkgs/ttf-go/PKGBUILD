@@ -1,13 +1,13 @@
 pkgname=ttf-go
 pkgver=2.010
 pkgrel=1
-_imagever=0.15.0
+_imagever=0.21.0
 pkgdesc='The font for the experimental Go user interface toolkit'
 url=https://go.dev/blog/go-fonts
 arch=(any)
 license=(BSD-3-Clause)
 source=(https://github.com/golang/image/archive/refs/tags/v$_imagever.tar.gz)
-b2sums=(1a61c83027fc8132eb5a6afc3363533bb518f463894868aa6e7dc1235507a16d9480375d916a7c08c9ab4600ae8fbddb50af873208877ab0495ba3ba4f0fa5e2)
+b2sums=(bc774fa9a5182b722681832c1195b33888885ad9693f7635524fa7a5cdd231afe45122d3ac4bf3a004c22dd7d29848e0df3f992f75229d187a3045f4525cac7d)
 
 package() {
 	install -Dm 644 image-$_imagever/font/gofont/ttfs/*.ttf -t $pkgdir/usr/share/fonts/go
