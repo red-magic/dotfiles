@@ -21,7 +21,8 @@ alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort ra
 alias clean-pacman='remove_pacman_cache_and_orphans'
 alias short-logs='sudo journalctl --no-hostname -b'
 alias defrag-root='for i in {1..3}; do echo "Defrag Pass: ${i}" && sudo e4defrag / > /dev/null; done'
-alias grub-update='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck && sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck'
+alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias ssh-server='ssh -v -o Ciphers=aes128-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -df && git reset --hard'
 
