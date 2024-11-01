@@ -1,0 +1,12 @@
+[Unit]
+Description=Arti with Snowflake
+After=network.target
+
+[Service]
+Type=simple
+User=arti
+KillSignal=SIGINT
+ExecStart=/usr/bin/arti proxy -c /etc/arti/snowflake.toml
+
+[Install]
+WantedBy=multi-user.target

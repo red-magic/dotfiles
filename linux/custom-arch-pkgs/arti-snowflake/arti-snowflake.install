@@ -1,0 +1,9 @@
+post_install() {
+	mkdir -m 700 /var/lib/arti
+	useradd -d /var/lib/arti -s /usr/bin/nologin arti
+	chown arti:arti /var/lib/arti
+}
+
+post_remove() {
+	userdel -r arti
+}
