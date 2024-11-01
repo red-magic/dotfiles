@@ -15,6 +15,6 @@ b2sums=(SKIP
 	SKIP)
 
 package() {
-	install -Dm 644 snowflake.toml -t $pkgdir/etc/arti
+	install -Dm 644 snowflake.toml -t $pkgdir/etc/arti.d
 	install -Dm 644 arti-snowflake.service -t $pkgdir/usr/lib/systemd/system
 }
