@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=arti
 KillSignal=SIGINT
-ExecStart=/usr/bin/arti proxy -c /etc/arti/snowflake.toml
+ExecStart=/usr/bin/arti proxy -c /etc/arti.d/snowflake.toml
 
 [Install]
 WantedBy=multi-user.target
