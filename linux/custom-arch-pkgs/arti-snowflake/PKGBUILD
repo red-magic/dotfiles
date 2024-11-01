@@ -11,8 +11,8 @@ install=$pkgname.install
 source=(snowflake.toml
 	arti-snowflake.service)
 
-b2sums=(SKIP
-	SKIP)
+b2sums=(94f9f5c43141ceb12a948ebdbdd93e230437065380e89e9606d6157ff56ce1f171f1580ec1dba645a6b7acb85400f2a61e909c2b17eb8b712ea6b7ba8686c141
+	36b8e4eb609f71c356eb0077a3a92be912d065c643c21c7fc6b23c5ee93e6e89e96f959465b6805a584f8b6530279c38d62531f0761c3b2ade8f14ee8f864a09)
 
 package() {
 	install -Dm 644 snowflake.toml -t $pkgdir/etc/arti.d
