@@ -7,7 +7,6 @@ pkgrel=1
 pkgdesc='Arti with Snowflake'
 url=https://gitlab.torproject.org/tpo/core/arti
 arch=(x86_64)
-license=(BSD-3-Clause)
 depends=(arti snowflake-pt-client-bin)
 backup=(etc/arti.d/snowflake.toml)
 install=$pkgname.install
