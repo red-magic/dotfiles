@@ -34,7 +34,7 @@ if [ -n "${workstation}" ]; then
     gpg -do archive.tar.xz archive.tar.xz.gpg
 
     while true; do
-        printf 'Continue? [y/n] '
+        printf 'Continue? [Yy/Nn] '
         read -r yn
         case "${yn}" in
             [Yy]*) printf 'Continuing' && break ;;
