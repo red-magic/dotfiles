@@ -1,7 +1,7 @@
 pkgname=ttf-go
 pkgver=2.010
 pkgrel=1
-_imagever=0.21.0
+_imagever=0.29.0
 pkgdesc='The font for the experimental Go user interface toolkit'
 url=https://go.dev/blog/go-fonts
 arch=(any)
