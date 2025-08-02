@@ -1,4 +1,4 @@
-pkgname=stockfish-$_subarch
+pkgname=stockfish-bmi2
 _defpkgname=stockfish
 pkgver=17.1
 pkgrel=1
