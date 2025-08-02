@@ -1,16 +1,16 @@
-pkgname=stockfish-bmi2
+pkgname=stockfish-$_subarch
 _defpkgname=stockfish
-_subarch=bmi2
 pkgver=17.1
 pkgrel=1
 pkgdesc='A free and strong UCI chess engine'
 url=https://github.com/official-stockfish/Stockfish
 arch=(x86_64)
+_subarch=bmi2
 conflicts=(stockfish)
 license=(GPL-3.0)
 options=(!debug)
 
-source=(https://github.com/official-stockfish/Stockfish/releases/download/sf_$pkgver/${_defpkgname}-ubuntu-x86-64-$_subarch.tar)
+source=($url/releases/download/sf_$pkgver/${_defpkgname}-ubuntu-x86-64-$_subarch.tar)
 
 b2sums=(8347648876a2c84499c34155e78feff55ecfa8621bc5282229b0ad5a6d31a9e4f764a4864ecc8beba956682f97701e011faa0bda37296d56532c36e90fc99877)
 
