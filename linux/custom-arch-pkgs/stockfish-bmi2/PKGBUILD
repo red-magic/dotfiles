@@ -15,5 +15,5 @@ b2sums=(8347648876a2c84499c34155e78feff55ecfa8621bc5282229b0ad5a6d31a9e4f764a486
 
 package() {
 	install -Dm 755 ${_defpkgname}/${_defpkgname}-ubuntu-x86-64-bmi2 $pkgdir/usr/bin/${_defpkgname}
-	install -Dm 644 ${_defpkgname}/Copying.txt $pkgdir/usr/share/licenses/${pkgname}/LICENSE
+	install -Dm 644 ${_defpkgname}/Copying.txt $pkgdir/usr/share/licenses/${_defpkgname}/LICENSE
 }
