@@ -7,6 +7,6 @@ Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerpri
 
 [[bridges.transports]]
 protocols = ["snowflake"]
-path = "/home/${USER}/.local/bin/snowflake-client"
+path = "/home/user/.local/bin/snowflake-client"
 arguments = []
 run_on_startup = true

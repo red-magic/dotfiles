@@ -7,6 +7,6 @@ Bridge obfs4 185.177.207.57:13630 A3D55AA6178E80AE486B6DAEAFBA5AB79B29B399 cert=
 
 [[bridges.transports]]
 protocols = ["obfs4"]
-path = "/home/${USER}/.local/bin/obfs4proxy"
+path = "/home/user/.local/bin/obfs4proxy"
 arguments = []
 run_on_startup = true
