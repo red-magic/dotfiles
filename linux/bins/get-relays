@@ -1,3 +1,0 @@
-#!/bin/bash
-
-./tor-relay-scanner -4 -g 100 -o relays
