@@ -64,6 +64,7 @@ if [ -f ".ssh/id_ed25519" ]; then
     if uname -a | grep -q Linux; then
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
+        git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
     fi
 
     if [ -f "/etc/arch-release" ]; then
