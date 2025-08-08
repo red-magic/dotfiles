@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./build/bin/llama-server -m LLMs/gemma-3-27b-it-qat-Q2_K.gguf -c 8192
