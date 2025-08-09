@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ -z "${1:-}" ]]; then
+    echo "Usage: ${0} <directory>"
+    exit 1
+fi
+
+target_dir="${1}"
+
+cd "${target_dir}" 2> /dev/null || { printf "Error: Cannot cd to %s\n" "${target_dir}" && exit 1; }
+
+for file in *; do
+    if [[ -f "${file}" ]]; then
+        extension="${file##*.}"
+        if [[ "${extension}" != "${file}" ]]; then
+            extension=".${extension}"
+            newname="$(head -c 256 /dev/urandom | sha256sum | awk '{print $1}' | head -c 32)"
+            mv -vn -- "${file}" "${newname}${extension}"
+        fi
+    fi
+done
