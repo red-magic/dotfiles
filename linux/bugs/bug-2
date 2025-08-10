@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Memory not cleared after finishing the for loop.
+# The script eats about 6Gb of RAM.
+# Works fine in other shells.
+#
+
+set -euo pipefail
+
+trigger_seq() {
+    for _i in {1..20000000}; do continue; done
+
+    echo "Done"
+
+    sleep infinity
+}
+
+trigger_seq &
