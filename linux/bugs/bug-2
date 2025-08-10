@@ -3,7 +3,6 @@
 # Memory not cleared after finishing the for loop.
 # The script eats about 6Gb of RAM.
 # Works fine in other shells.
-#
 
 set -euo pipefail
 

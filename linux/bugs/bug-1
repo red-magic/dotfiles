@@ -9,7 +9,6 @@
 # ldconfig -p | grep -q 'libstdc++.so.6 (libc6)'
 # may just straight print FALSE without
 # even entering the while cycle.
-#
 
 set -euo pipefail
 
