@@ -7,6 +7,7 @@ aurpkgs=(
     "tor-relay-scanner-bin"
     "tty-colorscheme"
     "windows-10-cursor"
+    "ttf-go"
 )
 
 mkdir -v "/home/${USER}/repos/aur"
