@@ -20,7 +20,10 @@ for pkg in "$@"; do
     [ -x "$(command -v "${pkg}")" ] || missing_pkgs="${missing_pkgs} ${pkg}"
 done
 
-[ -n "${missing_pkgs}" ] && printf '\nInstall missing packages:%s\n\n' "${missing_pkgs}" && exit 1
+if [ -n "${missing_pkgs}" ]; then
+    printf "Install missing packages:%s\n" "${missing_pkgs}"
+    exit 1
+fi
 
 cd "/home/${USER}" || exit 1
 
@@ -34,11 +37,11 @@ if [ -n "${workstation}" ]; then
     gpg -do archive.tar.xz archive.tar.xz.gpg
 
     while true; do
-        printf 'Continue? [Yy/Nn] '
+        printf "Continue? [y/n] "
         read -r yn
         case "${yn}" in
-            [Yy]*) printf 'Continuing' && break ;;
-            [Nn]*) printf 'Exiting' && exit 1 ;;
+            [Yy]*) printf "Continuing" && break ;;
+            [Nn]*) printf "Exiting" && exit 1 ;;
         esac
     done
 
