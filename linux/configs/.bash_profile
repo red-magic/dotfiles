@@ -17,16 +17,32 @@ alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias mg='mg -n'
-alias genmirlist='reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist && sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d && rm -vf /tmp/mirrorlist'
-alias clean-pacman='remove_pacman_cache_and_orphans'
+alias genmirlist='fn_genmirlist'
+alias clean-pacman='fn_clean_pacman'
 alias short-logs='sudo journalctl --no-hostname -b'
-alias defrag-root='for i in {1..3}; do echo "Defrag Pass: ${i}" && sudo e4defrag / &> /dev/null; done'
+alias defrag-root-ext4='fn_defrag_root_ext4'
 alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck'
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
+alias rless='fn_rless'
 
-remove_pacman_cache_and_orphans() {
+fn_defrag_root_ext4() {
+    sudo printf "Starting defragmentation...\n"
+    for i in {1..3}; do
+        printf "Defrag pass: %s\n" "${i}"
+        sudo e4defrag / &> /dev/null
+    done
+}
+
+fn_genmirlist() {
+    sudo printf "Generating mirror list...\n"
+    reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist
+    sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d
+    rm -vf /tmp/mirrorlist
+}
+
+fn_clean_pacman() {
     if [[ -x "$(command -v yay)" ]]; then
         yes | yay -Scc
         yay -Qttdq | yay -Rns -
@@ -34,6 +50,17 @@ remove_pacman_cache_and_orphans() {
         yes | sudo pacman -Scc
         pacman -Qttdq | sudo pacman -Rns -
     fi
+}
+
+fn_rless() {
+    # Examples:
+    # rless file.txt. 60 40
+    # rless file.txt. - 80
+    width="80"
+    indent="0"
+    [[ -n "${2}" ]] && [[ "${2}" != "-" ]] && width="${2}"
+    [[ -n "${3}" ]] && indent="${3}" || { [[ "${2}" == "-" ]] && [[ -n "${3}" ]] && indent="${3}"; }
+    fold -sw "${width}" "${1}" | pr -To "${indent}" | less -J
 }
 
 # Extra
@@ -71,7 +98,7 @@ remove_pacman_cache_and_orphans() {
 #    fortune | cowthink
 #fi
 
-#gammastep-tty() {
+#fn_gammastep_tty() {
 #    gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
 #}
 
@@ -95,7 +122,7 @@ remove_pacman_cache_and_orphans() {
 #alias sp-torsocks="torsocks ssh -v -f -N -D ${local_proxy_port} ${tor_host}"
 #alias spl="ssh -v -f -N -L 127.0.0.1:${local_proxy_port}:${remote_host}:9050 ${remote_host}"
 
-#mount-remote-host() {
+#fn_mount_remote_host() {
 #    if [[ ! -d "${mnt_dir}"  ]; then
 #        mkdir -v "${mnt_dir}"
 #    fi
@@ -107,7 +134,7 @@ remove_pacman_cache_and_orphans() {
 #    fi
 #}
 
-#umount-remote-host() {
+#fn_umount_remote_host() {
 #    fusermount3 -u $mnt_dir
 #
 #    if [[ -z "$(ls -A "${mnt_dir}")" ]] && [ -z "$(ps aux | grep sshfs | grep "${remote_host}")" ]]; then
@@ -117,7 +144,7 @@ remove_pacman_cache_and_orphans() {
 #    fi
 #}
 
-#go-get-some-sleep() {
+#fn_go_get_some_sleep() {
 #    if tty | grep -q tty; then
 #        sudo systemctl suspend && physlock
 #        else
