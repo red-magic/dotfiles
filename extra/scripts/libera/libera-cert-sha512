@@ -1,0 +1,3 @@
+#!/bin/bash
+
+openssl x509 -in libera.pem -noout -fingerprint -sha512 | awk -F= '{gsub(":",""); print tolower ($2)}'
