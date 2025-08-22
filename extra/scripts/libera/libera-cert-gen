@@ -1,3 +1,0 @@
-#!/bin/bash
-
-openssl req -x509 -new -newkey rsa:8192 -sha256 -nodes -days 365000 -out libera.pem -keyout libera.pem
