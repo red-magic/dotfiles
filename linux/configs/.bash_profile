@@ -3,7 +3,7 @@ bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 
-PATH="${PATH}:${HOME}/.bin"
+PATH="${PATH}:${HOME}/.local/bin"
 LANG="C.UTF-8"
 PS1="\h\$ "
 PAGER="less -M"
