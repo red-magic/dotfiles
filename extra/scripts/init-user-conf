@@ -97,4 +97,4 @@ fi
 
 mkdir -p .config/ranger
 cp -f repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
-cp -f repos/dotfiles/extra/configs/.config/.mg .
+cp -f repos/dotfiles/extra/configs/.mg .
