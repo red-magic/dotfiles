@@ -47,7 +47,7 @@ RUN apt-get clean -y; \
     apt-get autoremove -y; \
     apt-get autopurge -y; \
     rm -vrf /var/lib/apt/lists/*; \
-    rm -rfv /tmp/cs16-server
+    rm -vrf /tmp/cs16-server
 
 USER hlds
 
