@@ -1,8 +1,10 @@
 FROM debian:13
 
-RUN apt-get update && \
+RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y lib32stdc++6 curl xz-utils mg && \
+    apt-get install -y locales && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
     mkdir -v /tmp/cs16-server && \
     cd /tmp/cs16-server && \
     curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz && \
@@ -11,6 +13,8 @@ RUN apt-get update && \
     curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-cstrike-linux.tar.gz && \
     curl -LO https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz && \
     useradd -r -m -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds
+
+ENV LANG="en_US.UTF-8"
 
 USER hlds
 
@@ -37,11 +41,11 @@ RUN mkdir -v /var/hlds/.steam && \
 
 USER root
 
-RUN apt-get clean && \
+RUN apt-get clean -y && \
     apt-get autoremove -y && \
     apt-get autopurge -y && \
-    rm -rfv /tmp/cs16-server && \
-    rm -vrf /var/lib/apt/lists/*
+    rm -vrf /var/lib/apt/lists/* && \
+    rm -rfv /tmp/cs16-server
 
 USER hlds
 
