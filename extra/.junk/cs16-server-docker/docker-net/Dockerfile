@@ -37,7 +37,8 @@ RUN mkdir -v /var/hlds/.steam && \
 
 USER root
 
-RUN apt-get autoremove -y && \
+RUN apt-get clean && \
+    apt-get autoremove -y && \
     apt-get autopurge -y && \
     rm -rfv /tmp/cs16-server && \
     rm -vrf /var/lib/apt/lists/*
