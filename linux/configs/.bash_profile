@@ -3,7 +3,6 @@ bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 
-PATH="${PATH}:${HOME}/.local/bin"
 LANG="C.UTF-8"
 PS1="\h\$ "
 PAGER="less -M"
@@ -11,7 +10,7 @@ HISTFILE=""
 LESSHISTFILE="-"
 EDITOR="mg -n"
 
-export PATH LANG PS1 PAGER HISTFILE LESSHISTFILE EDITOR
+export LANG PS1 PAGER HISTFILE LESSHISTFILE EDITOR
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
