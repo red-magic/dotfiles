@@ -14,7 +14,7 @@ RUN mkdir -v /arti-build && \
     cd /arti-build && \
     tar xvf ../arti-arti-v${ARTI_VER}.tar.gz && \
     cd arti-arti-v${ARTI_VER} && \
-    cargo build -p arti --locked --release --features static && \
+    cargo build -p arti --locked --release && \
     strip -sv target/release/arti
 
 RUN apt-get clean -y && \
