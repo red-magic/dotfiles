@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ARTI_VER=1.5.0
+ARTI_VER="1.5.0"
 
 if docker build --progress plain -t arti-build .; then
-    docker run --rm -v $(pwd):/output arti-build cp /arti-build/arti-arti-v${ARTI_VER}/target/release/arti /output
-    sudo chown $USER:$USER arti
+    docker run --rm -v "$(pwd)":/output arti-build cp "/arti-build/arti-arti-v${ARTI_VER}/target/release/arti" /output
+    sudo chown "${USER}":"${USER}" arti
 fi
