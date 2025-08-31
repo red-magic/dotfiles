@@ -1,4 +1,3 @@
-#FROM debian:13
 FROM rust:slim-trixie
 
 ARG ARTI_VER=1.5.0
