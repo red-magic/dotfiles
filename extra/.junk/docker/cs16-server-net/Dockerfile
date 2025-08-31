@@ -6,28 +6,28 @@ RUN apt-get update -y && \
     apt-get install -y locales && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen && \
-    mkdir -v /tmp/cs16-server && \
-    cd /tmp/cs16-server && \
-    curl -LO https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz && \
-    curl -LO https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz && \
-    curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-base-linux.tar.gz && \
-    curl -LO https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-cstrike-linux.tar.gz && \
-    curl -LO https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz && \
     useradd -r -m -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds
+
+RUN apt-get clean -y && \
+    apt-get autoremove -y && \
+    apt-get autopurge -y && \
+    rm -vrf /var/lib/apt/lists/*
 
 USER hlds
 
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
     ln -sfv . steam && \
-    tar xvf /tmp/cs16-server/steamcmd_linux.tar.gz && \
-    ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit && \
-    ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit && \
-    ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit && \
-    tar xvf /tmp/cs16-server/metamod_i686_linux_win32-1.21p38.tar.xz && \
-    tar xvf /tmp/cs16-server/amxmodx-1.10.0-git5468-base-linux.tar.gz && \
-    tar xvf /tmp/cs16-server/amxmodx-1.10.0-git5468-cstrike-linux.tar.gz && \
-    tar xvf /tmp/cs16-server/yapb-4.4.957-linux.tar.xz && \
+    curl -L https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz | tar zxvf - -C . && \
+    for i in {1..3}; do ./steamcmd.sh +force_install_dir cs16 +login anonymous +app_update 90 validate +quit; done
+
+RUN cd /var/hlds/.steam && \
+    curl -L https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz | tar Jxvf - -C . && \
+    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-base-linux.tar.gz | tar zxvf - -C . && \
+    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-cstrike-linux.tar.gz | tar zxvf - -C . && \
+    curl -L https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz | tar Jxvf - -C .
+
+RUN cd /var/hlds/.steam && \
     chmod -v 755 addons/yapb/data/* && \
     mv -vf addons cs16/cstrike && \
     mkdir -vp cs16/cstrike/addons/metamod/dlls && \
@@ -35,16 +35,7 @@ RUN mkdir -v /var/hlds/.steam && \
     rm -vf metamod.dll && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > cs16/cstrike/addons/metamod/plugins.ini && \
     echo ";;linux addons/yapb/bin/yapb.so" >> cs16/cstrike/addons/metamod/plugins.ini && \
-    ln -sfv linux32 sdk32 && \
-    touch cs16/cstrike/{listip.cfg,banned.cfg}
-
-USER root
-
-RUN apt-get clean -y && \
-    apt-get autoremove -y && \
-    apt-get autopurge -y && \
-    rm -vrf /var/lib/apt/lists/* && \
-    rm -vrf /tmp/cs16-server
+    ln -sfv linux32 sdk32
 
 USER hlds
 
