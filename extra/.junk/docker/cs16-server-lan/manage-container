@@ -11,6 +11,6 @@ case "${1}" in
         docker start cs16-server-lan
         ;;
     "stop")
-        docker stop --signal INT cs16-server-lan
+        docker stop cs16-server-lan
         ;;
 esac
