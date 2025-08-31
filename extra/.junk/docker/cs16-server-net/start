@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker start cs16-server-net || docker run -d --name cs16-server-net cs16-server-net

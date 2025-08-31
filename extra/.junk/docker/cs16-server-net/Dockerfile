@@ -41,6 +41,4 @@ USER hlds
 
 WORKDIR /var/hlds/.steam/cs16
 
-EXPOSE 27015/tcp 27015/udp
-
 CMD ["./hlds_run", "-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "+map", "de_dust2", "-dll", "cstrike/addons/metamod/dlls/metamod.so"]

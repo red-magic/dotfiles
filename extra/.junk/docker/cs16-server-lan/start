@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker start cs16-server-lan || docker run -d --name cs16-server-lan cs16-server-lan
