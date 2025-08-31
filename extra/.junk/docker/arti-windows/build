@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ARTI_VER="1.5.0"
+
+if docker build --progress plain -t arti-build-windows .; then
+    docker run --rm -v "$(pwd)":/output arti-build-windows cp "/arti-build/arti-arti-v${ARTI_VER}/target/x86_64-pc-windows-gnu/release/arti.exe" /output
+    sudo chown "${USER}":"${USER}" arti.exe
+fi
