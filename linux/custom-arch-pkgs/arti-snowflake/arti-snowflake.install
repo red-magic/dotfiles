@@ -1,12 +1,9 @@
 post_install() {
-	useradd -d /var/lib/arti -s /usr/bin/nologin arti
-	if [[ ! -d /var/lib/arti ]]; then
-		mkdir -m 700 /var/lib/arti
-		chown arti:arti /var/lib/arti
-	fi
+	mkdir -m 700 /var/lib/arti
+	useradd -M -r -s /usr/bin/nologin -d /var/lib/arti -c "Arti Tor Service" arti
+	chown arti:arti /var/lib/arti
 }
 
 post_remove() {
-	userdel arti
-	printf "\nYou can remove /var/lib/arti directory now\n\n"
+	userdel -r arti
 }

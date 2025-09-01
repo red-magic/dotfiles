@@ -1,12 +1,12 @@
 [Unit]
-Description=Arti with Snowflake
+Description=Arti Tor service with snowflake
 After=network.target
 
 [Service]
 Type=simple
 User=arti
+ExecStart=/usr/bin/arti proxy -c /etc/arti/arti-snowflake.toml
 KillSignal=SIGINT
-ExecStart=/usr/bin/arti proxy -c /etc/arti.d/snowflake.toml
 
 [Install]
 WantedBy=multi-user.target
