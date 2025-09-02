@@ -16,7 +16,6 @@ docker_build() {
     tar xvf /src/lyrebird/lyrebird-lyrebird-${lyrebird_ver}.tar.gz -C /build/lyrebird
     cd /build/lyrebird/lyrebird-lyrebird-${lyrebird_ver}
     GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-X main.lyrebirdVersion=${LYREBIRD_VER}" -v -o lyrebird.exe ./cmd/lyrebird
-    strip -v --strip-unneeded lyrebird.exe
     cp -v lyrebird.exe /src/lyrebird/
 }
 
