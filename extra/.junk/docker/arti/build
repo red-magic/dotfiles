@@ -1,8 +1,23 @@
 #!/bin/bash
 
-ARTI_VER="1.5.0"
+set -euo pipefail
 
-if docker build --progress plain -t arti-build .; then
-    docker run --rm -v "$(pwd)":/output arti-build cp "/arti-build/arti-arti-v${ARTI_VER}/target/release/arti" /output
-    sudo chown "${USER}":"${USER}" arti
-fi
+container="rust:slim-trixie"
+
+docker_build() {
+    arti_ver="1.5.0"
+
+    apt-get update -y
+    apt-get upgrade -y
+    apt-get install -y pkg-config libssl-dev libsqlite3-dev locales
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    locale-gen
+
+    tar xvf /src/arti/arti-arti-v${arti_ver}.tar.gz -C /build/arti
+    cd /build/arti/arti-arti-v${arti_ver}
+    cargo build -p arti --locked --release
+    strip -sv target/release/arti
+    cp -v target/release/arti /src/arti
+}
+
+docker run --rm -v "$(pwd)":/src/arti -w /build/arti "${container}" bash -c "$(declare -f docker_build) && docker_build"

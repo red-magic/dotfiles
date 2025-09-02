@@ -1,8 +1,23 @@
 #!/bin/bash
 
-LYREBIRD_VER="0.6.1"
+set -euo pipefail
 
-if docker build --progress plain -t lyrebird-build .; then
-    docker run --rm -v "$(pwd)":/output lyrebird-build cp "/lyrebird-build/lyrebird-lyrebird-${LYREBIRD_VER}/lyrebird" /output
-    sudo chown "${USER}":"${USER}" lyrebird
-fi
+container="golang:trixie"
+
+docker_build() {
+    lyrebird_ver="0.6.1"
+
+    apt-get update -y
+    apt-get upgrade -y
+    apt-get install -y locales
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    locale-gen
+
+    tar xvf /src/lyrebird/lyrebird-lyrebird-${lyrebird_ver}.tar.gz -C /build/lyrebird
+    cd /build/lyrebird/lyrebird-lyrebird-${lyrebird_ver}
+    CGO_ENABLED=1 go build -ldflags="-X main.lyrebirdVersion=${LYREBIRD_VER}" -v -o lyrebird ./cmd/lyrebird
+    strip -sv lyrebird
+    cp -v lyrebird /src/lyrebird
+}
+
+docker run --rm -v "$(pwd)":/src/lyrebird -w /build/lyrebird "${container}" bash -c "$(declare -f docker_build) && docker_build"
