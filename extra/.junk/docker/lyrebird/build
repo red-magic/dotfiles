@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LYREBIRD_VER="0.6.1"
+
+if docker build --progress plain -t lyrebird-build .; then
+    docker run --rm -v "$(pwd)":/output lyrebird-build cp "/lyrebird-build/lyrebird-lyrebird-${LYREBIRD_VER}/lyrebird" /output
+    sudo chown "${USER}":"${USER}" lyrebird
+fi
