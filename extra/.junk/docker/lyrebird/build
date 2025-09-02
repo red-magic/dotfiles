@@ -15,8 +15,7 @@ docker_build() {
 
     tar xvf /src/lyrebird/lyrebird-lyrebird-${lyrebird_ver}.tar.gz -C /build/lyrebird
     cd /build/lyrebird/lyrebird-lyrebird-${lyrebird_ver}
-    CGO_ENABLED=1 go build -ldflags="-X main.lyrebirdVersion=${LYREBIRD_VER}" -v -o lyrebird ./cmd/lyrebird
-    strip -sv lyrebird
+    CGO_ENABLED=1 go build -ldflags="-X main.lyrebirdVersion=${LYREBIRD_VER} -w -s" -v -o lyrebird ./cmd/lyrebird
     cp -v lyrebird /src/lyrebird
 }
 
