@@ -8,13 +8,10 @@ docker_build() {
     arti_ver="1.5.0"
 
     apt-get update -y
-    apt-get upgrade -y
-    apt-get install -y pkg-config libssl-dev libsqlite3-dev locales
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-    locale-gen
+    apt-get install -y pkg-config libssl-dev libsqlite3-dev
 
     tar xvf /src/arti/arti-arti-v${arti_ver}.tar.gz -C /build/arti
-    cd /build/arti/arti-arti-v${arti_ver}
+    cd arti-arti-v${arti_ver}
     cargo build -p arti --locked --release
     strip -sv target/release/arti
     cp -v target/release/arti /src/arti

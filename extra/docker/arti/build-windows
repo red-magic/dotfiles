@@ -8,16 +8,13 @@ docker_build() {
     arti_ver="1.5.0"
 
     apt-get update -y
-    apt-get upgrade -y
-    apt-get install -y mingw-w64 pkg-config libssl-dev libsqlite3-dev locales
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-    locale-gen
+    apt-get install -y mingw-w64 pkg-config libssl-dev libsqlite3-dev
 
     tar xvf /src/arti/arti-arti-v${arti_ver}.tar.gz -C /build/arti
-    cd /build/arti/arti-arti-v${arti_ver}
+    cd arti-arti-v${arti_ver}
     rustup target add x86_64-pc-windows-gnu
     cargo build -p arti --locked --release --target x86_64-pc-windows-gnu --features static
-    strip -sv target/x86_64-pc-windows-gnurelease/arti.exe
+    strip -sv target/x86_64-pc-windows-gnu/release/arti.exe
     cp -v target/x86_64-pc-windows-gnu/release/arti.exe /src/arti
 }
 

@@ -7,14 +7,8 @@ container="golang:trixie"
 docker_build() {
     lyrebird_ver="0.6.1"
 
-    apt-get update -y
-    apt-get upgrade -y
-    apt-get install -y locales
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-    locale-gen
-
     tar xvf /src/lyrebird/lyrebird-lyrebird-${lyrebird_ver}.tar.gz -C /build/lyrebird
-    cd /build/lyrebird/lyrebird-lyrebird-${lyrebird_ver}
+    cd lyrebird-lyrebird-${lyrebird_ver}
     CGO_ENABLED=1 go build -ldflags="-X main.lyrebirdVersion=${lyrebird_ver} -w -s" -v -o lyrebird ./cmd/lyrebird
     cp -v lyrebird /src/lyrebird
 }
