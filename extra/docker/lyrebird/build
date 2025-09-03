@@ -6,11 +6,16 @@ container="golang:trixie"
 
 docker_build() {
     lyrebird_ver="0.6.1"
+    lyrebird_url="https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird/-/archive/lyrebird-${lyrebird_ver}/lyrebird-lyrebird-${lyrebird_ver}.tar.gz"
 
-    tar xvf /src/lyrebird/lyrebird-lyrebird-${lyrebird_ver}.tar.gz -C /build/lyrebird
+    if ! curl --connect-timeout 10 -LO "${lyrebird_url}"; then
+        curl --socks5 127.0.0.1:9150 -LO "${lyrebird_url}"
+    fi
+
+    tar xvf lyrebird-lyrebird-${lyrebird_ver}.tar.gz
     cd lyrebird-lyrebird-${lyrebird_ver}
     CGO_ENABLED=1 go build -ldflags="-X main.lyrebirdVersion=${lyrebird_ver} -w -s" -v -o lyrebird ./cmd/lyrebird
     cp -v lyrebird /src/lyrebird
 }
 
-docker run --rm -v "$(pwd)":/src/lyrebird -w /build/lyrebird "${container}" bash -c "$(declare -f docker_build) && docker_build"
+docker run --rm --network=host -v "$(pwd)":/src/lyrebird -w /build/lyrebird "${container}" bash -c "$(declare -f docker_build) && docker_build"

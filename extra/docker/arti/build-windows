@@ -6,11 +6,16 @@ container="rust:slim-trixie"
 
 docker_build() {
     arti_ver="1.5.0"
+    arti_url="https://gitlab.torproject.org/tpo/core/arti/-/archive/arti-v${arti_ver}/arti-arti-v${arti_ver}.tar.gz"
 
     apt-get update -y
-    apt-get install -y mingw-w64 pkg-config libssl-dev libsqlite3-dev
+    apt-get install -y mingw-w64 pkg-config libssl-dev libsqlite3-dev curl
 
-    tar xvf /src/arti/arti-arti-v${arti_ver}.tar.gz -C /build/arti
+    if ! curl --connect-timeout 10 -LO "${arti_url}"; then
+        curl --socks5 127.0.0.1:9150 -LO "${arti_url}"
+    fi
+
+    tar xvf arti-arti-v${arti_ver}.tar.gz
     cd arti-arti-v${arti_ver}
     rustup target add x86_64-pc-windows-gnu
     cargo build -p arti --locked --release --target x86_64-pc-windows-gnu --features static
@@ -18,4 +23,4 @@ docker_build() {
     cp -v target/x86_64-pc-windows-gnu/release/arti.exe /src/arti
 }
 
-docker run --rm -v "$(pwd)":/src/arti -w /build/arti "${container}" bash -c "$(declare -f docker_build) && docker_build"
+docker run --rm --network=host -v "$(pwd)":/src/arti -w /build/arti "${container}" bash -c "$(declare -f docker_build) && docker_build"
