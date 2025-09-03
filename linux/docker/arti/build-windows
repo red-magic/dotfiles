@@ -20,7 +20,7 @@ docker_build() {
     rustup target add x86_64-pc-windows-gnu
     cargo build -p arti --locked --release --target x86_64-pc-windows-gnu --features static
     strip -sv target/x86_64-pc-windows-gnu/release/arti.exe
-    cp -v target/x86_64-pc-windows-gnu/release/arti.exe /src/arti
+    cp -v target/x86_64-pc-windows-gnu/release/arti.exe /out
 }
 
-docker run --rm --network=host -v "$(pwd)":/src/arti -w /build/arti "${container}" bash -c "$(declare -f docker_build) && docker_build"
+docker run --rm --network=host -v "$(pwd)":/out -w /build "${container}" bash -c "$(declare -f docker_build) && docker_build"

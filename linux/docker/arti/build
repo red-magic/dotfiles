@@ -19,7 +19,7 @@ docker_build() {
     cd arti-arti-v${arti_ver}
     cargo build -p arti --locked --release
     strip -sv target/release/arti
-    cp -v target/release/arti /src/arti
+    cp -v target/release/arti /out
 }
 
-docker run --rm --network=host -v "$(pwd)":/src/arti -w /build/arti "${container}" bash -c "$(declare -f docker_build) && docker_build"
+docker run --rm --network=host -v "$(pwd)":/out -w /build "${container}" bash -c "$(declare -f docker_build) && docker_build"

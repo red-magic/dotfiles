@@ -15,7 +15,7 @@ docker_build() {
     tar xvf lyrebird-lyrebird-${lyrebird_ver}.tar.gz
     cd lyrebird-lyrebird-${lyrebird_ver}
     CGO_ENABLED=1 go build -ldflags="-X main.lyrebirdVersion=${lyrebird_ver} -w -s" -v -o lyrebird ./cmd/lyrebird
-    cp -v lyrebird /src/lyrebird
+    cp -v lyrebird /out
 }
 
-docker run --rm --network=host -v "$(pwd)":/src/lyrebird -w /build/lyrebird "${container}" bash -c "$(declare -f docker_build) && docker_build"
+docker run --rm --network=host -v "$(pwd)":/out -w /build "${container}" bash -c "$(declare -f docker_build) && docker_build"
