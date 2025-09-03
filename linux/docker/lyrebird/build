@@ -3,11 +3,13 @@
 container="golang:trixie"
 
 docker_build() {
+    set -euo pipefail
+
     lyrebird_ver="0.6.1"
     lyrebird_url="https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird/-/archive/lyrebird-${lyrebird_ver}/lyrebird-lyrebird-${lyrebird_ver}.tar.gz"
 
     if ! curl --socks5 127.0.0.1:9150 -LO "${lyrebird_url}"; then
-        curl -LO "${lyrebird_url}"
+        curl -LO --connect-timeout 10 "${lyrebird_url}"
     fi
 
     tar xvf lyrebird-lyrebird-${lyrebird_ver}.tar.gz
