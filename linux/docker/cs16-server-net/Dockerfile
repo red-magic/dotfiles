@@ -1,4 +1,4 @@
-FROM debian:13-slim
+FROM debian:trixie-slim
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
