@@ -22,7 +22,7 @@ USER hlds
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
     ln -sfv . steam && \
-    curl -L https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz| tar zxvf - -C . && \
+    curl -L https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz | tar zxvf - -C . && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done && \
     curl -L https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz | tar Jxvf - -C .
 

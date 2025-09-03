@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-
 container="rust:slim-trixie"
 
 docker_build() {
@@ -11,8 +9,8 @@ docker_build() {
     apt-get update -y
     apt-get install -y mingw-w64 pkg-config libssl-dev libsqlite3-dev curl
 
-    if ! curl --connect-timeout 10 -LO "${arti_url}"; then
-        curl --socks5 127.0.0.1:9150 -LO "${arti_url}"
+    if ! curl --socks5 127.0.0.1:9150 -LO "${arti_url}"; then
+        curl -LO "${arti_url}"
     fi
 
     tar xvf arti-arti-v${arti_ver}.tar.gz
