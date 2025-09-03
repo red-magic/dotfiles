@@ -13,4 +13,7 @@ case "${1}" in
     "stop")
         docker stop cs16-server-net
         ;;
+    "restart")
+        docker restart cs16-server-net
+        ;;
 esac
