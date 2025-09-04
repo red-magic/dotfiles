@@ -1,2 +1,3 @@
-Disable kdump.service
-"crashkernel=no" to grub cmd
+systemctl disable kdump.service
+auto_reset_crashkernel no -> /etc/kdump.conf
+grub2-mkconfig --update-bls-cmdline -o /boot/grub2/grub.cfg
