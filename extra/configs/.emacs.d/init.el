@@ -37,7 +37,6 @@
 (advice-add 'eww--dwim-expand-url
 	    :around
 	    (lambda (orig &rest args)
-	      "Use https"
 	      (let ((orig-url (apply orig args)))
 		(if (string-match "http://" orig-url)
 		    (replace-match "https://" nil nil orig-url)

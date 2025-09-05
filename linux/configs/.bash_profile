@@ -66,7 +66,9 @@ fn_rless() {
 
 #all_proxy="socks5://127.0.0.1:9050"
 
-#printf "\033[?112;255;127c"
+#printf "\e[?25l" # Disable blinking cursor
+#printf "\e[?25h" # Enable blinking cursor
+#printf "\033[?112;255;127c" # White non-blinking cursor
 
 #LC_TIME="C.UTF-8"
 #TIME_STYLE="long-iso"
