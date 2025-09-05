@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 printf "Downloading Cloudflare IPv4 List\n"
 mapfile -t cf_ips < <(curl -LO "https://www.cloudflare.com/ips-v4")
 
