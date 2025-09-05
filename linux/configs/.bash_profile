@@ -114,11 +114,11 @@ fn_rless() {
 #fi
 
 #fn_gammastep_tty() {
-#    gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
+#    gammastep -l 55.0:73.3 -t 2700:3000 -m drm &> /dev/null &
 #}
 
-#if [ -z "$(pgrep gammastep)" ] && tty | grep -q tty && [ -x "$(command -v gammastep)" ]; then
-#    gammastep -l 55.0:73.3 -t 2700:3000 -m drm > /dev/null 2>&1 &
+#if [[ -z "$(pgrep gammastep)" ]] && tty | grep -q tty && [[ -x "$(command -v gammastep)" ]]; then
+#    gammastep -l 55.0:73.3 -t 2700:3000 -m drm &> /dev/null &
 #fi
 
 #ssh_port=""
@@ -154,7 +154,7 @@ fn_rless() {
 #
 #    if [[ -z "$(ls -A "${mnt_dir}")" ]] && [ -z "$(ps aux | grep sshfs | grep "${remote_host}")" ]]; then
 #        rm -rfv "${mnt_dir}"
-#     else
+#    else
 #        echo "${mnt_dir} directory is not empty or still mounted, refusing to remove"
 #    fi
 #}
@@ -162,7 +162,7 @@ fn_rless() {
 #fn_go_get_some_sleep() {
 #    if tty | grep -q tty; then
 #        sudo systemctl suspend && physlock
-#        else
+#    else
 #        sudo true && i3lock -i pictures/lock.png && sudo systemctl suspend
 #    fi
 #}
