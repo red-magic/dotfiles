@@ -1,14 +1,14 @@
-(custom-set-variables
- '(auto-save-default nil)
- '(auto-save-list-file-prefix nil)
- '(column-number-mode t)
- '(global-display-line-numbers-mode t)
- '(make-backup-files nil)
- '(menu-bar-mode nil)
- '(require-final-newline t)
- '(show-paren-mode t)
- '(size-indication-mode t)
- '(use-short-answers t))
+(setq auto-save-default nil
+      auto-save-list-file-prefix nil
+      make-backup-files nil
+      require-final-newline t
+      use-short-answers t)
+
+(menu-bar-mode -1)
+(column-number-mode t)
+(global-display-line-numbers-mode t)
+(show-paren-mode t)
+(size-indication-mode t)
 
 (defun my/insert-tab-or-indent ()
   (interactive)
