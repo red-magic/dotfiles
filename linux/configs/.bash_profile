@@ -5,22 +5,21 @@ bind '\C-p:history-search-backward'
 
 LANG="C.UTF-8"
 PS1="\h\$ "
-PAGER="less -M"
-HISTFILE=""
-#HISTSIZE="10000"
-LESSHISTFILE="-"
 EDITOR="mg -n"
 #EDITOR="emacs"
+HISTFILE=""
+#HISTSIZE="10000"
+PAGER="less -M"
+LESSHISTFILE="-"
 
-export LANG PS1 PAGER HISTFILE LESSHISTFILE EDITOR
-#export HISTSIZE
+export LANG PS1 EDITOR HISTFILE HISTSIZE PAGER LESSHISTFILE
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias mg='mg -n'
-#alias emacs='emacsclient'
-#alias semacs='fn_semacs'
+alias emacs='emacsclient'
+alias semacs='fn_semacs'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
 alias short-logs='sudo journalctl --no-hostname -b'
