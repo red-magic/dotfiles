@@ -60,13 +60,19 @@ fn_clean_pacman() {
 }
 
 fn_rless() {
-    # Examples:
+    # Example:
     # rless file.txt. 60 40
     # rless file.txt. - 80
     width="80"
     indent="0"
-    [[ -n "${2}" ]] && [[ "${2}" != "-" ]] && width="${2}"
-    [[ -n "${3}" ]] && indent="${3}" || { [[ "${2}" == "-" ]] && [[ -n "${3}" ]] && indent="${3}"; }
+    if [[ -n "${2}" ]] && [[ "${2}" != "-" ]]; then
+        width="${2}"
+    fi
+    if [[ -n "${3}" ]]; then
+        indent="${3}"
+    elif [[ "${2}" == "-" ]] && [[ -n "${3}" ]]; then
+        indent="${3}"
+    fi
     fold -sw "${width}" "${1}" | pr -To "${indent}" | less -J
 }
 
