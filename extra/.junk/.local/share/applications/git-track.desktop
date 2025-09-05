@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/mori/scripts/git-track.sh
+Exec=/home/user/scripts/git-track.sh
 Name=Git Track
