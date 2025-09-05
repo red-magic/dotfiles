@@ -34,10 +34,5 @@
  '(show-paren-match ((t (:background "white" :foreground "black"))))
  '(shr-h3 ((t (:foreground "blue")))))
 
-(advice-add 'eww--dwim-expand-url
-	    :around
-	    (lambda (orig &rest args)
-	      (let ((orig-url (apply orig args)))
-		(if (string-match "http://" orig-url)
-		    (replace-match "https://" nil nil orig-url)
-		  orig-url))))
+(advice-add 'eww--dwim-expand-url :filter-return
+	    (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
