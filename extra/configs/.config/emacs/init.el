@@ -12,7 +12,7 @@
 
 (defun my/insert-tab-or-indent ()
   (interactive)
-  (if (region-active-p)
+  (if (use-region-p)
       (indent-region (region-beginning) (region-end))
     (insert "\t")))
 
