@@ -6,9 +6,17 @@
  '(make-backup-files nil)
  '(menu-bar-mode nil)
  '(require-final-newline t)
- '(show-paren-mode nil)
+ '(show-paren-mode t)
  '(size-indication-mode t)
  '(use-short-answers t))
+
+(defun my/insert-tab-or-indent ()
+  (interactive)
+  (if (region-active-p)
+      (indent-region (region-beginning) (region-end))
+    (insert "\t")))
+
+(global-set-key (kbd "TAB") 'my/insert-tab-or-indent)
 
 (add-hook 'sh-mode-hook
 	  (lambda ()
@@ -23,6 +31,7 @@
  '(italic ((t (:foreground "blue"))))
  '(lazy-highlight ((t (:background "blue" :foreground "black"))))
  '(region ((t (:background "blue" :foreground "black"))))
+ '(show-paren-match ((t (:background "white" :foreground "black"))))
  '(shr-h3 ((t (:foreground "blue")))))
 
 (advice-add 'eww--dwim-expand-url
