@@ -89,9 +89,9 @@ if uname -a | grep -q Linux; then
     cp -f repos/dotfiles/linux/configs/.bash_profile .
     ln -sf .bash_profile .bashrc
 elif uname | grep -q BSD; then
-    cp -f repos/dotfiles/bsd/.profile .
+    cp -f repos/dotfiles/bsd/configs/.profile .
     if uname | grep -q OpenBSD; then
-        cp -f repos/dotfiles/bsd/openbsd/.mailrc .
+        cp -f repos/dotfiles/bsd/openbsd/configs/.mailrc .
     fi
 fi
 
