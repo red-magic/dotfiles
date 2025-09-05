@@ -19,6 +19,8 @@ alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias mg='mg -n'
+#alias emacs='emacsclient'
+#alias semacs='fn_semacs'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
 alias short-logs='sudo journalctl --no-hostname -b'
@@ -28,6 +30,10 @@ alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias rless='fn_rless'
+
+fn_semacs() {
+    emacs "/sudo::${1}"
+}
 
 fn_defrag_root_ext4() {
     sudo printf "Starting defragmentation...\n"
