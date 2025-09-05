@@ -10,7 +10,7 @@ HISTFILE=""
 #HISTSIZE="10000"
 LESSHISTFILE="-"
 EDITOR="mg -n"
-#EDITOR="emacsclient"
+#EDITOR="emacs"
 
 export LANG PS1 PAGER HISTFILE LESSHISTFILE EDITOR
 #export HISTSIZE
@@ -19,7 +19,6 @@ alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias mg='mg -n'
-#alias emacs='emacsclient'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
 alias short-logs='sudo journalctl --no-hostname -b'
