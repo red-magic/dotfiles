@@ -1,18 +1,18 @@
 #!/bin/bash
 
-echo "Downloading Cloudflare IPv4 List"
-mapfile -t cf_ips < <(curl "https://www.cloudflare.com/ips-v4")
+printf "Downloading Cloudflare IPv4 List\n"
+mapfile -t cf_ips < <(curl -LO "https://www.cloudflare.com/ips-v4")
 
 for ip in "${cf_ips[@]}"; do
-    echo "Adding ${ip}"
-    sudo firewall-cmd --permanent --zone=drop --add-rich-rule 'rule family="ipv4" source address="${ip}" port port=443 protocol=tcp accept';
+    printf "Adding %s" "${ip}"
+    sudo firewall-cmd --permanent --zone=drop --add-rich-rule 'rule family="ipv4" source address="${ip}" port port=443 protocol=tcp accept'
 done
 
-echo "Adding SSH port"
+printf "Adding SSH port\n"
 sudo firewall-cmd --permanent --zone=drop --add-port=22/tcp
 
-echo "Reloading firewall"
+printf "Reloading firewall\n"
 sudo firewall-cmd --reload
 
-echo "Setting default zone to drop"
+printf "Setting default zone to drop\n"
 sudo firewall-cmd --set-default-zone=drop
