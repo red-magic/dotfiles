@@ -5,6 +5,6 @@ route add -inet default 10.0.0.1
 
 # /etc/hostname.vio0
 inet 123.123.123.123 netmask 255.255.255.255
-!sleep 2
+!sleep 3
 !route -v add -inet 10.0.0.1 -link -iface vio0
 !route -v add -inet default 10.0.0.1
