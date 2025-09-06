@@ -26,12 +26,12 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (custom-set-faces
- '(isearch ((t (:background "blue" :foreground "black"))))
- '(italic ((t (:foreground "blue"))))
- '(lazy-highlight ((t (:background "blue" :foreground "black"))))
- '(region ((t (:background "blue" :foreground "black"))))
- '(show-paren-match ((t (:background "white" :foreground "black"))))
- '(shr-h3 ((t (:foreground "blue")))))
+ '(isearch ((t (:foreground "black" :background "blue"))))
+ '(italic ((t (:foreground "blue" :background "black"))))
+ '(lazy-highlight ((t (:foreground "black" :background "blue"))))
+ '(region ((t (:foreground "black" :background "blue"))))
+ '(show-paren-match ((t (:foreground "black" :background "white"))))
+ '(shr-h3 ((t (:foreground "blue" :background "black")))))
 
 (advice-add 'eww--dwim-expand-url :filter-return
 	    (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
