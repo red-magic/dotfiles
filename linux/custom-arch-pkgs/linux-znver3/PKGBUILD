@@ -1,5 +1,5 @@
 pkgname=linux-znver3
-pkgver=6.11
+pkgver=6.16
 _archver=1
 pkgrel=1
 pkgdesc='Linux kernel for znver3 architecture'
@@ -28,7 +28,7 @@ _linuxsrc=linux-$pkgver
 _kernelmake() {
 	_arch=znver3
 	_flags="-O3 -pipe -march=$_arch -mtune=$_arch"
-	make LOCALVERSION=-arch$_archver-$pkgrel-$_arch KCFLAGS="$_flags" KCPPFLAGS="$_flags" "$@"
+	make -j$(nproc) LOCALVERSION=-arch$_archver-$pkgrel-$_arch KCFLAGS="$_flags" KCPPFLAGS="$_flags" "$@"
 }
 
 prepare() {
