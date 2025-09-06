@@ -1,9 +1,0 @@
-post_install() {
-	mkdir -m 700 /var/lib/arti
-	useradd -M -r -s /usr/bin/nologin -d /var/lib/arti -c "Arti Tor Service" arti
-	chown arti:arti /var/lib/arti
-}
-
-post_remove() {
-	userdel -r arti
-}
