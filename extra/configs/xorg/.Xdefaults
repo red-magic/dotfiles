@@ -11,8 +11,8 @@
 ! Colors 0-15.
 
 ! black
-*.color0:  #bcaaa4
-*.color8:  #bcaaa4
+*.color0:  #1b0000
+*.color8:  #1b0000
 
 ! red
 *.color1:  #bcaaa4
