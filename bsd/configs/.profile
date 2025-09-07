@@ -15,7 +15,8 @@ alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curv
 alias full-clean-git='git clean -dfx && git reset --hard'
 
 fn_semacs() {
-    emacs "/doas::$(pwd)/${1}"
+    file_path="$(realpath -- "${1}")"
+    emacs "/doas::${file_path}"
 }
 
 # Extra
