@@ -31,7 +31,7 @@ alias full-clean-git='git clean -dfx && git reset --hard'
 alias rless='fn_rless'
 
 fn_semacs() {
-    emacs "/sudo::${1}"
+    emacs "/sudo::$(pwd)/${1}"
 }
 
 fn_defrag_root_ext4() {
