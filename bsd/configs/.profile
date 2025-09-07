@@ -19,6 +19,15 @@ fn_semacs() {
     emacs "/doas::${file_path}"
 }
 
+fn_semacs() {
+    if [[ -e "${1}" ]]; then
+        file_path="$(realpath -- "${1}")"
+    else
+        file_path="$(realpath -- "$(dirname -- "${1}")")/$(basename -- "${1}")"
+    fi
+    emacs "/doas::${file_path}"
+}
+
 # Extra
 
 #GPG_TTY="$(tty)"

@@ -31,7 +31,11 @@ alias full-clean-git='git clean -dfx && git reset --hard'
 alias rless='fn_rless'
 
 fn_semacs() {
-    file_path="$(realpath -- "${1}")"
+    if [[ -e "${1}" ]]; then
+        file_path="$(realpath -- "${1}")"
+    else
+        file_path="$(realpath -- "$(dirname -- "${1}")")/$(basename -- "${1}")"
+    fi
     emacs "/sudo::${file_path}"
 }
 
