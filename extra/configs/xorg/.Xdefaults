@@ -2,6 +2,7 @@
 *metaSendsEscape: true
 
 *font: xft: Go Mono:style=regular:size=11
+*allowBoldFonts: false
 *scrollBar: false
 
 *foreground:  #bcaaa4
