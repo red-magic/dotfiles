@@ -1,15 +1,14 @@
-PATH="${PATH}:${HOME}/.bin"
 LANG="C.UTF-8"
-TERM="xterm"
 PS1="\h\$ "
 PAGER="less -M"
 EDITOR="mg -n"
 
-export PATH LANG TERM PS1 PAGER EDITOR
+export LANG PS1 PAGER EDITOR
 
 alias doas='doas '
 alias l='ls -plha'
 alias mg='mg -n'
+alias ranger='TERM=xterm ranger '
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
