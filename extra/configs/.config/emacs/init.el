@@ -2,7 +2,8 @@
       auto-save-list-file-prefix nil
       make-backup-files nil
       require-final-newline t
-      use-short-answers t)
+      use-short-answers t
+      tramp-histfile-override t)
 
 (setq-default fill-column 80)
 
