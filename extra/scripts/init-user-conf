@@ -2,7 +2,7 @@
 
 set -e
 
-[ $# -eq 0 ] && exit 1
+[[ $# -eq 0 ]] && exit 1
 
 while getopts :sw opt; do
     case $opt in
@@ -65,19 +65,17 @@ fi
 
 if [ -f .ssh/id_ed25519 ]; then
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
-
     if uname -a | grep -q Linux; then
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
-    fi
-
-    if [ -f /etc/arch-release ]; then
-        set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
-        mkdir -v repos/aur
-        for aurpkg in "$@"; do
-            git clone "ssh://aur@aur.archlinux.org/$aurpkg" "repos/aur/$aurpkg"
-        done
+        if [ -f /etc/arch-release ]; then
+            set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
+            mkdir -v repos/aur
+            for aurpkg in "$@"; do
+                git clone "ssh://aur@aur.archlinux.org/$aurpkg" "repos/aur/$aurpkg"
+            done
+        fi
     fi
 else
     git clone https://github.com/red-magic/dotfiles repos/dotfiles
