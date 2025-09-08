@@ -12,20 +12,15 @@ ffmpeg -i anime.mkv -map 0:v -c:v libx264 -profile:v high10 -level:v 4.0 -preset
 
 x264-r3103-941cae6.exe --crf 15 -I 240 --vf crop:0,140,0,140 --tune film --preset veryslow --fps 24000/1001 --level 40 -o output.mkv input.mkv
 
-# Encoding VP9
+# vp9
 
 ffmpeg -i input.mkv			\
 -ss 00:01:00 -to 00:02:00		\
 -c:v libvpx-vp9				\
--quality best				\
--speed 0				\
--crf 32					\
 -vf scale=1280:-1			\
--b:v 0					\
 -c:a libopus -ac 2			\
 -map_metadata -1 -map_chapters -1	\
--sn -max_muxing_queue_size 1000		\
--filter:a "volume=6dB"			\
+#-sn -max_muxing_queue_size 1000	\
 output.webm
 
 # Encoding HEVC
@@ -37,8 +32,9 @@ ffmpeg -i input.mkv			\
 -pix_fmt yuv420p10			\
 -filter:v crop=1920:1080-264		\
 -c:a ac3 -c:s copy			\
--x265-params level-idc=4.1:strong-intra-smoothing=0:sao=0:deblock=-3,-3:min-keyint=23:keyint=240:subme=7:rc-lookahead=60:tu-intra-depth=4:tu-inter-depth=4 \
+-x265-params level-idc=4.0:strong-intra-smoothing=0:sao=0:deblock=-3,-3:min-keyint=23:keyint=240	\
 output.mkv
 
-# Encoding AV1
+# av1
+
 ffmpeg -i intput.mkv -map 0:v -map 0:a -map 0:s -c:s ass -map_metadata -1 -map_chapters -1 -c:a libopus -b:a 128k -ac 2 -c:v libsvtav1 -preset 4 -g 120 -crf 20 -svtav1-params tune=0:film-grain=10:scd=1 -pix_fmt yuv420p10 -filter:v crop=1920:1080-286 out-1.mkv

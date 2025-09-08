@@ -4,7 +4,7 @@
 killall -q gammastep
 
 # Wait until the processes have been shut down
-while pgrep -u $UID -x gammastep >/dev/null; do sleep 1; done
+while pgrep -u $UID -x gammastep &> /dev/null; do sleep 1; done
 
 # Launch gammastep
-gammastep -l 55.0:73.3 -t 2500:2000 &
+gammastep -l 55.0:73.3 -t 3000:2700 &
