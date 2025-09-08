@@ -2,17 +2,19 @@ stty werase undef
 bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
+shopt -s histappend
 
 LANG="C.UTF-8"
 PS1="\h\$ "
 EDITOR="mg -n"
 #EDITOR="emacs"
-HISTFILE=""
-#HISTSIZE="10000"
 PAGER="less -M"
 LESSHISTFILE="-"
+HISTFILE=""
+#HISTSIZE="10000"
+#HISTCONTROL="ignoreboth"
 
-export LANG PS1 EDITOR HISTFILE HISTSIZE PAGER LESSHISTFILE
+export LANG PS1 EDITOR PAGER LESSHISTFILE HISTFILE HISTSIZE HISTCONTROL
 
 alias sudo='sudo -E '
 alias ls='ls --color=always'
