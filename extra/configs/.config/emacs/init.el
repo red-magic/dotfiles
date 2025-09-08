@@ -4,6 +4,8 @@
       require-final-newline t
       use-short-answers t)
 
+(setq-default fill-column 80)
+
 (menu-bar-mode -1)
 (column-number-mode t)
 (global-display-line-numbers-mode t)
