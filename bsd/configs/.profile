@@ -9,23 +9,18 @@ alias doas='doas '
 alias l='ls -plha'
 alias mg='mg -n'
 alias semacs='fn_semacs'
-alias ranger='TERM=xterm ranger '
+alias ranger='TERM=xterm ranger'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
 
 fn_semacs() {
-    file_path="$(realpath -- "${1}")"
-    emacs "/doas::${file_path}"
-}
-
-fn_semacs() {
-    if [[ -e "${1}" ]]; then
-        file_path="$(realpath -- "${1}")"
+    if [ -e "$1" ]; then
+        file_path=$(realpath -- "$1")
     else
-        file_path="$(realpath -- "$(dirname -- "${1}")")/$(basename -- "${1}")"
+        file_path=$(realpath -- "$(dirname -- "$1")")/$(basename -- "$1")
     fi
-    emacs "/doas::${file_path}"
+    emacs "/doas::$file_path"
 }
 
 # Extra
