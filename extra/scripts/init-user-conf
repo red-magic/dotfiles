@@ -2,37 +2,37 @@
 
 set -e
 
-[ "${#}" -eq 0 ] && exit 1
+[ $# -eq 0 ] && exit 1
 
-while getopts ":sw" opt; do
-    case "${opt}" in
+while getopts :sw opt; do
+    case $opt in
         s) ;;
-        w) workstation="1" ;;
+        w) workstation=1 ;;
         *) exit 1 ;;
     esac
 done
 
-set -- "curl" "ssh" "git" "xz" "tar"
+set -- curl ssh git xz tar
 
-if [ -n "${workstation}" ]; then
-    set -- "$@" "gpg" "dirmngr" "gpg-agent" "pinentry"
+if [ -n "$workstation" ]; then
+    set -- "$@" gpg dirmngr gpg-agent pinentry
 fi
 
 for pkg in "$@"; do
-    [ -x "$(command -v "${pkg}")" ] || missing_pkgs="${missing_pkgs} ${pkg}"
+    [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
 done
 
-if [ -n "${missing_pkgs}" ]; then
-    printf "Install missing packages:%s\n" "${missing_pkgs}"
+if [ -n "$missing_pkgs" ]; then
+    printf "Install missing packages:%s\n" "$missing_pkgs"
     exit 1
 fi
 
-cd "/home/${USER}"
+cd "/home/$USER"
 
 mkdir -m 700 .ssh
 mkdir repos
 
-if [ -n "${workstation}" ]; then
+if [ -n "$workstation" ]; then
     gpg --keyserver hkps://keys.openpgp.org --search-keys 159C66B3104E3E30
     gpg --edit-key 159C66B3104E3E30 trust
     curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
@@ -41,7 +41,7 @@ if [ -n "${workstation}" ]; then
     while true; do
         printf "Continue? [y/n] "
         read -r yn
-        case "${yn}" in
+        case $yn in
             [Yy]*) printf "Continuing" && break ;;
             [Nn]*) printf "Exiting" && exit 1 ;;
         esac
@@ -63,7 +63,7 @@ else
     chmod 400 .ssh/authorized_keys
 fi
 
-if [ -f ".ssh/id_ed25519" ]; then
+if [ -f .ssh/id_ed25519 ]; then
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
 
     if uname -a | grep -q Linux; then
@@ -72,18 +72,18 @@ if [ -f ".ssh/id_ed25519" ]; then
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
     fi
 
-    if [ -f "/etc/arch-release" ]; then
-        set -- "pacproxy-bin" "simple-and-soft-cursor" "snowflake-pt-client-bin" "tor-relay-scanner-bin" "tty-colorscheme" "windows-10-cursor"
-        mkdir -v "/home/${USER}/repos/aur"
+    if [ -f /etc/arch-release ]; then
+        set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
+        mkdir -v "/home/$USER/repos/aur"
         for aurpkg in "$@"; do
-            git clone "ssh://aur@aur.archlinux.org/${aurpkg}" "/home/${USER}/repos/aur/${aurpkg}"
+            git clone "ssh://aur@aur.archlinux.org/$aurpkg" "/home/$USER/repos/aur/$aurpkg"
         done
     fi
 else
     git clone https://github.com/red-magic/dotfiles repos/dotfiles
 fi
 
-if [ -n "${workstation}" ]; then
+if [ -n "$workstation" ]; then
     cp -f repos/dotfiles/extra/configs/.gitconfig .
 fi
 
