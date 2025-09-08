@@ -1,9 +1,0 @@
-#!/bin/sh
-
-cp -f ~/themes/desaturated/.Xresources ~/.Xresources
-cp -f ~/themes/desaturated/i3/config ~/.config/i3/config
-cp -f ~/themes/desaturated/polybar/config ~/.config/polybar/config
-cp -f ~/themes/desaturated/.gtkrc-2.0 ~/.gtkrc-2.0
-cp -f ~/themes/desaturated/settings.ini ~/.config/gtk-3.0/settings.ini
-xrdb ~/.Xresources
-i3-msg restart

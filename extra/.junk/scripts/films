@@ -1,7 +1,0 @@
-#!/bin/bash
-
-LIST=$(find -L ~/ -name "*.mkv" -o -name "*.avi")
-
-NAME=$(echo "$LIST" | sed 's:.*/::' | rofi -width 64 -lines 16 -dmenu)
-
-mpv "$(echo "$LIST" | grep -F "$NAME")"

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-ftp -o /tmp/pf.blocked https://lists.blocklist.de/lists/all.txt
-mv -v /tmp/pf.blocked /etc/pf.blocked
-chown root:wheel /etc/pf.blocked
-chmod 400 /etc/pf.blocked
-pfctl -f /etc/pf.conf

@@ -1,8 +1,0 @@
-#!/bin/bash
-
-modprobe zram
-size=8192
-echo zstd > /sys/block/zram0/comp_algorithm
-echo $(($size*1024*1024)) > /sys/block/zram0/disksize
-mkswap /dev/zram0
-swapon -p 100 /dev/zram0

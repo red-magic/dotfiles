@@ -1,9 +1,0 @@
-#!/bin/sh
-
-cp -f ~/themes/sky/.Xresources ~/.Xresources
-cp -f ~/themes/sky/i3/config ~/.config/i3/config
-cp -f ~/themes/sky/polybar/config ~/.config/polybar/config
-cp -f ~/themes/sky/.gtkrc-2.0 ~/.gtkrc-2.0
-cp -f ~/themes/sky/settings.ini ~/.config/gtk-3.0/settings.ini
-xrdb ~/.Xresources
-i3-msg restart

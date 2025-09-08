@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Eventually prints FALSE on Fedora.
+# Eventually prints FALSE on Fedora 42.
 # Works alright with:
 # grep -q 'libc.so.6' < <(ldconfig -p)
 # and

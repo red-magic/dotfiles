@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Terminal=True
-Exec=urxvt -e sh /home/user/scripts/tarxz-backup.sh
-Name=TAR.XZ Backup
