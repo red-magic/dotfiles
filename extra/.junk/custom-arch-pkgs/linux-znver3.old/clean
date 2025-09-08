@@ -1,3 +1,0 @@
-#!/bin/bash
-
-rm -rfv pkg src *.tar.* config *.pkg
