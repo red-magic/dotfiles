@@ -2,10 +2,10 @@
 
 # Function to generate a random word
 generate_word() {
-    local length="$1"
-    local word=""
-    #local syllables=("ta" "ke" "mi" "no" "ra" "si" "ku" "lo" "za" "bi" "fe" "jo" "va" "ru" "de" "ne" "sa")
-    local syllables=("ta" "ke" "mi" "no" "ra" "si" "ku" "lo" "za" "bi" "fe" "jo" "va" "ru" "de" "ne" "sa" "mo" "chi" "ri" "pu" "te" "yu" "ka" "sha" "la" "ti" "na" "to" "wu" "xe" "ge")
+    length="${1}"
+    word=""
+    #syllables=("ta" "ke" "mi" "no" "ra" "si" "ku" "lo" "za" "bi" "fe" "jo" "va" "ru" "de" "ne" "sa")
+    syllables=("ta" "ke" "mi" "no" "ra" "si" "ku" "lo" "za" "bi" "fe" "jo" "va" "ru" "de" "ne" "sa" "mo" "chi" "ri" "pu" "te" "yu" "ka" "sha" "la" "ti" "na" "to" "wu" "xe" "ge")
 
     for ((i=0;i<length;i++)); do
         word+="${syllables[RANDOM%${#syllables[@]}]}"
@@ -16,30 +16,30 @@ generate_word() {
 
 # Function to generate a password
 generate_password() {
-    local word_count="$1"
-    local password=""
+    word_count="${1}"
+    password=""
 
     for ((i=0;i<word_count;i++)); do
         # Length of the word from 2 to 4 syllables
-        local word_length="$((RANDOM%3+2))"
+        word_length="$((RANDOM%3+2))"
         password+="$(generate_word "${word_length}")"
     done
 
     # Add a number and a special character only at the end
-    local special_chars=("!" "@" "#" "$" "%" "^" "&" "*" "(" ")" "_" "-" "+" "=" "~")
-    local random_number="$((RANDOM%100))"
-    local random_special="${special_chars[RANDOM%${#special_chars[@]}]}"
+    special_chars=("!" "@" "#" "$" "%" "^" "&" "*" "(" ")" "_" "-" "+" "=" "~")
+    random_number="$((RANDOM%100))"
+    random_special="${special_chars[RANDOM%${#special_chars[@]}]}"
 
     # Form the final password
     echo "${password}${random_number}${random_special}"
 }
 
 # Main program
-if [[ "$#" -ne 1 ]]; then
+if [[ "${#}" -ne 1 ]]; then
     echo "Usage: $0 [number-of-words]"
     exit 1
 fi
 
-word_count="$1"
+word_count="${1}"
 password="$(generate_password "${word_count}")"
 echo "Generated password: ${password}"

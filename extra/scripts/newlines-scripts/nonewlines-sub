@@ -1,4 +1,4 @@
 #!/bin/sh
 
-# Find a way to put all this shit into one script
+# Find a way to put all this command into one script
 test "$(tail -c 1 "$1")" && echo "no newline at eof: '$1'"

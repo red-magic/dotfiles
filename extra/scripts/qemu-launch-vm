@@ -1,22 +1,24 @@
 #!/bin/sh
 
-usage() {
-    echo "Usage: qemu-launch-vm [-d <system-image-file>] [-c <cd-iso-file>]"
+print_help() {
+    echo "Usage: $(basename "$0") [-d <system-image-file>] [-c <cd-iso-file>]"
 }
 
-while getopts ":d:c:" opt; do
-    qemu_args="qemu-system-x86_64 -cpu host -smp 16 -m 8G -enable-kvm -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
-    case "${opt}" in
-        c) cd_args="-cdrom ${OPTARG}" ;;
-        d) drive_args="-drive file=${OPTARG},format=raw" ;;
-        :) echo "Option -${OPTARG} requires an argument" && exit 1 ;;
-        *) usage && exit 1 ;;
+while getopts :d:c: opt; do
+    # -enable-kvm Linux
+    # -enable-vvm OpenBSD
+    qemu_args="qemu-system-x86_64 -cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
+    case $opt in
+        c) cd_args="-cdrom $OPTARG" ;;
+        d) drive_args="-drive file=$OPTARG,format=raw" ;;
+        :) echo "Option -$OPTARG requires an argument" && exit 1 ;;
+        *) print_help && exit 1 ;;
     esac
 done
 
-if [ -z "${qemu_args}" ]; then
-    usage && exit 1
+if [ -z "$qemu_args" ]; then
+    print_help && exit 1
 else
-    echo "${qemu_args} ${drive_args} ${cd_args}"
-    eval "${qemu_args} ${drive_args} ${cd_args}"
+    echo "$qemu_args $drive_args $cd_args"
+    eval "$qemu_args $drive_args $cd_args"
 fi
