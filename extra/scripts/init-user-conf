@@ -33,8 +33,8 @@ mkdir -m 700 .ssh
 mkdir repos
 
 if [ -n "$workstation" ]; then
-    gpg --keyserver hkps://keys.openpgp.org --receive-keys 159C66B3104E3E30
-    printf "trust\n5\ny\nsave\n" | gpg --command-fd 0 --edit-key 159C66B3104E3E30
+    gpg --keyserver hkps://keys.openpgp.org --receive-keys DB9A54FFE9854317497D69BB159C66B3104E3E30
+    printf "trust\n5\ny\nsave\n" | gpg --command-fd 0 --edit-key DB9A54FFE9854317497D69BB159C66B3104E3E30
     curl -LO https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.gz.gpg
     gpg -do archive.tar.gz archive.tar.gz.gpg
 
