@@ -67,28 +67,28 @@ fn_clean_pacman() {
     fi
 }
 
-fn_rless() {
-    # Example:
-    # rless file.txt. 60 40
-    # rless file.txt. - 80
-    width="80"
-    indent="0"
-    if [[ -n "${2}" ]] && [[ "${2}" != "-" ]]; then
-        width="${2}"
-    fi
-    if [[ -n "${3}" ]]; then
-        indent="${3}"
-    elif [[ "${2}" == "-" ]] && [[ -n "${3}" ]]; then
-        indent="${3}"
-    fi
-    fold -sw "${width}" "${1}" | pr -To "${indent}" | less -J
-}
+#fn_rless() {
+#    # Example:
+#    # rless file.txt. 60 40
+#    # rless file.txt. - 80
+#    width="80"
+#    indent="0"
+#    if [[ -n "${2}" ]] && [[ "${2}" != "-" ]]; then
+#        width="${2}"
+#    fi
+#    if [[ -n "${3}" ]]; then
+#        indent="${3}"
+#    elif [[ "${2}" == "-" ]] && [[ -n "${3}" ]]; then
+#        indent="${3}"
+#    fi
+#    fold -sw "${width}" "${1}" | pr -To "${indent}" | less -J
+#}
 
-fn_ssh_tor_connect() {
-    # OpenBSD netcat
-    tor_domain="verylongtordomain.onion"
-    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$USER@$tor_domain"
-}
+#fn_ssh_tor_connect() {
+#    # OpenBSD netcat
+#    tor_domain="verylongtordomain.onion"
+#    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$USER@$tor_domain"
+#}
 
 # Extra
 
