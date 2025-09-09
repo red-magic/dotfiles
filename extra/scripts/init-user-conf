@@ -12,10 +12,10 @@ while getopts :sw opt; do
     esac
 done
 
-set -- curl ssh git xz tar
+set -- curl ssh git tar gzip
 
 if [ -n "$workstation" ]; then
-    set -- "$@" gpg dirmngr gpg-agent pinentry
+    set -- "$@" gpg
 fi
 
 for pkg in "$@"; do
@@ -33,10 +33,10 @@ mkdir -vm 700 .ssh
 mkdir -v repos
 
 if [ -n "$workstation" ]; then
-    gpg --keyserver hkps://keys.openpgp.org --search-keys 159C66B3104E3E30
-    gpg --edit-key 159C66B3104E3E30 trust
-    curl -L https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.xz.gpg -o archive.tar.xz.gpg
-    gpg -do archive.tar.xz archive.tar.xz.gpg
+    gpg --keyserver hkps://keys.openpgp.org --receive-keys 159C66B3104E3E30
+    printf "trust\n5\ny\nsave\n" | gpg --command-fd 0 --edit-key 159C66B3104E3E30
+    curl -LO https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.gz.gpg
+    gpg -do archive.tar.gz archive.tar.gz.gpg
 
     while true; do
         printf "Continue? [y/n] "
@@ -47,8 +47,7 @@ if [ -n "$workstation" ]; then
         esac
     done
 
-    unxz archive.tar.xz
-    tar xf archive.tar
+    tar xzf archive.tar.gz
     gpg --import archive/gpg/*.*
     cp -f archive/ssh/id_ed25519 .ssh
     cp -f archive/ssh/id_ed25519.pub .ssh
