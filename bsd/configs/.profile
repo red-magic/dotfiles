@@ -1,9 +1,10 @@
 LANG="C.UTF-8"
 PS1="\h\$ "
-PAGER="less -M"
 EDITOR="mg -n"
+#EDITOR="emacs"
+PAGER="less -M"
 
-export LANG PS1 PAGER EDITOR
+export LANG PS1 EDITOR PAGER
 
 alias doas='doas '
 alias l='ls -plha'
@@ -12,7 +13,7 @@ alias semacs='fn_semacs'
 alias ranger='TERM=xterm ranger'
 #alias fastfetch='fastfetch --pipe'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
-alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
+#alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
 
 fn_semacs() {

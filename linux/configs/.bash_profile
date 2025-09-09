@@ -28,7 +28,7 @@ alias short-logs='sudo journalctl --no-hostname -b'
 alias defrag-root-ext4='fn_defrag_root_ext4'
 alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck'
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
+#alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias rless='fn_rless'
 
