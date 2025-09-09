@@ -15,6 +15,7 @@ alias ranger='TERM=xterm ranger'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 #alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
+#alias ssh-tor-connect='fn_ssh_tor_connect'
 
 fn_semacs() {
     if [ -e "$1" ]; then
@@ -24,6 +25,12 @@ fn_semacs() {
     fi
     emacs "/doas::$file_path"
 }
+
+#fn_ssh_tor_connect() {
+#    # OpenBSD netcat
+#    tor_domain="verylongtordomain.onion"
+#    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$USER@$tor_domain"
+#}
 
 # Extra
 

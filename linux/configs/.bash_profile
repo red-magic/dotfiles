@@ -30,7 +30,8 @@ alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-direct
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias ssh-server='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 -p 22 user@server.localdomain'
 alias full-clean-git='git clean -dfx && git reset --hard'
-alias rless='fn_rless'
+#alias rless='fn_rless'
+#alias ssh-tor-connect='fn_ssh_tor_connect'
 
 fn_semacs() {
     if [[ -e "${1}" ]]; then
@@ -83,16 +84,18 @@ fn_rless() {
     fold -sw "${width}" "${1}" | pr -To "${indent}" | less -J
 }
 
-# Extra
+fn_ssh_tor_connect() {
+    # OpenBSD netcat
+    tor_domain="verylongtordomain.onion"
+    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$USER@$tor_domain"
+}
 
-#all_proxy="socks5://127.0.0.1:9050"
+# Extra
 
 #printf "\e[?25l" # Disable blinking cursor
 #printf "\e[?25h" # Enable blinking cursor
 #printf "\033[?112;255;127c" # White non-blinking cursor
 
-#LC_TIME="C.UTF-8"
-#TIME_STYLE="long-iso"
 #GPG_TTY="$(tty)"
 #VISUAL="emacs"
 #WLR_NO_HARDWARE_CURSORS=1
