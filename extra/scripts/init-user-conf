@@ -29,8 +29,8 @@ fi
 
 cd "$HOME"
 
-mkdir -vm 700 .ssh
-mkdir -v repos
+mkdir -m 700 .ssh
+mkdir repos
 
 if [ -n "$workstation" ]; then
     gpg --keyserver hkps://keys.openpgp.org --receive-keys 159C66B3104E3E30
@@ -70,7 +70,7 @@ if [ -f .ssh/id_ed25519 ]; then
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
         if [ -f /etc/arch-release ]; then
             set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
-            mkdir -v repos/aur
+            mkdir repos/aur
             for aurpkg in "$@"; do
                 git clone "ssh://aur@aur.archlinux.org/$aurpkg" "repos/aur/$aurpkg"
             done
@@ -80,12 +80,14 @@ else
     git clone https://github.com/red-magic/dotfiles repos/dotfiles
 fi
 
-mkdir -v .config
+mkdir .config
 
 if [ -n "$workstation" ]; then
-    mkdir -v .config/emacs
+    mkdir .config/emacs
+    mkdir .fonts
     cp -vf repos/dotfiles/extra/configs/.config/emacs/init.el .config/emacs
     cp -vf repos/dotfiles/extra/configs/.gitconfig .
+    cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
 fi
 
 if uname -a | grep -q Linux; then
@@ -103,5 +105,5 @@ elif uname | grep -q BSD; then
     fi
 fi
 
-mkdir -v .config/ranger
+mkdir .config/ranger
 cp -vf repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
