@@ -35,8 +35,6 @@ alias ssh-connect='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=cur
 alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
 alias ssh-connect-tor='fn_ssh_connect_tor'
 
-alias rless='fn_rless'
-
 fn_semacs() {
     if [[ -e "${1}" ]]; then
         file_path="$(realpath -- "${1}")"
@@ -75,21 +73,4 @@ fn_ssh_connect_tor() {
     # OpenBSD netcat
     tor_domain="verylongtordomain.onion"
     ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
-}
-
-fn_rless() {
-    # Example:
-    # rless file.txt. 60 40
-    # rless file.txt. - 80
-    width="80"
-    indent="0"
-    if [[ -n "${2}" ]] && [[ "${2}" != "-" ]]; then
-        width="${2}"
-    fi
-    if [[ -n "${3}" ]]; then
-        indent="${3}"
-    elif [[ "${2}" == "-" ]] && [[ -n "${3}" ]]; then
-        indent="${3}"
-    fi
-    fold -sw "${width}" "${1}" | pr -To "${indent}" | less -J
 }
