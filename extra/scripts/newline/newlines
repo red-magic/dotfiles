@@ -1,0 +1,6 @@
+#!/bin/sh
+
+dir=${1:-.}
+
+find "$dir" -not -type d -exec file "{}" ";" | grep CRLF
+find "$dir" -not -type d -exec file "{}" ";" | grep  LF

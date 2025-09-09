@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dir=${1:-.}
+
+find "$dir" -type f -exec sh -c 'last=$(tail -c 1 "$1"); [ -n "$last" ] && [ "$last" != "$(printf "\n")" ] && [ "$last" != "$(printf "\r")" ] && echo "No line terminator at eof: '\''$1'\''"' _ {} \;

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dir=${1:-.}
+
+find "$dir" -type f -exec sh -c '[ -z "$(sed -n "\$p" "$1")" ]' _ {} \; -print
