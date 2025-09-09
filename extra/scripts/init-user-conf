@@ -84,10 +84,8 @@ mkdir .config
 
 if [ -n "$workstation" ]; then
     mkdir .config/emacs
-    mkdir .fonts
     cp -vf repos/dotfiles/extra/configs/.config/emacs/init.el .config/emacs
     cp -vf repos/dotfiles/extra/configs/.gitconfig .
-    cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
 fi
 
 if uname -a | grep -q Linux; then
@@ -102,6 +100,8 @@ elif uname | grep -q BSD; then
             cp -vf repos/dotfiles/extra/configs/xorg/.cwmrc .
             cp -vf repos/dotfiles/extra/configs/xorg/.xsession .
             cp -vf repos/dotfiles/extra/configs/xorg/.Xdefaults .
+            mkdir .fonts
+            cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
         fi
     fi
 fi
