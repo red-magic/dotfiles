@@ -222,15 +222,15 @@ bindsym $mod+r mode "resize"
 
 include /etc/sway/config.d/*
 
-exec_always bash ~/.config/waybar/waybar
-exec_always bash ~/.config/gammastep/gammastep
+exec_always sh ~/.config/waybar/waybar
+exec_always sh ~/.config/gammastep/gammastep
 
 default_border none
 #default_border pixel 8
 
 input * {
 	xkb_layout "us,ru"
-	xkb_options "grp:rwin_toggle"
+	xkb_options "grp:caps_toggle"
 }
 
 bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
