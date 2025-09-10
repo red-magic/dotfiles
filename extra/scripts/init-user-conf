@@ -86,6 +86,8 @@ if [ -n "$workstation" ]; then
     mkdir .config/emacs
     cp -vf repos/dotfiles/extra/configs/.config/emacs/init.el .config/emacs
     cp -vf repos/dotfiles/extra/configs/.gitconfig .
+    cp -vf repos/dotfiles/extra/configs/.ssh/config .ssh
+    chmod 400 .ssh/config
 fi
 
 if uname -a | grep -q Linux; then

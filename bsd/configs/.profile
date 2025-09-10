@@ -15,7 +15,7 @@ alias fastfetch='fastfetch --pipe'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias full-clean-git='git clean -dfx && git reset --hard'
 
-alias ssh-connect='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 server.domain'
+alias ssh-connect='ssh -v server.domain'
 alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
 alias ssh-connect-tor='fn_ssh_connect_tor'
 

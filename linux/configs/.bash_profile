@@ -31,7 +31,7 @@ alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
 
-alias ssh-connect='ssh -v -o Ciphers=aes256-gcm@openssh.com -o KexAlgorithms=curve25519-sha256 -o HostKeyAlgorithms=ssh-ed25519 server.domain'
+alias ssh-connect='ssh -v server.domain'
 alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
 alias ssh-connect-tor='fn_ssh_connect_tor'
 
