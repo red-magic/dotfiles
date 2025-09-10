@@ -31,9 +31,9 @@ alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
 
-alias ssh-connect='ssh -v server.domain'
-alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
-alias ssh-connect-tor='fn_ssh_connect_tor'
+#alias ssh-connect='ssh -v server.domain'
+#alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
+#alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_semacs() {
     if [[ -e "${1}" ]]; then
@@ -69,7 +69,7 @@ fn_clean_pacman() {
     fi
 }
 
-fn_ssh_connect_tor() {
-    tor_domain="verylongtordomain.onion"
-    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
-}
+#fn_ssh_connect_tor() {
+#    tor_domain="verylongtordomain.onion"
+#    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
+#}

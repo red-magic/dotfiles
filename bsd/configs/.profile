@@ -15,9 +15,9 @@ alias fastfetch='fastfetch --pipe'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias full-clean-git='git clean -dfx && git reset --hard'
 
-alias ssh-connect='ssh -v server.domain'
-alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
-alias ssh-connect-tor='fn_ssh_connect_tor'
+#alias ssh-connect='ssh -v server.domain'
+#alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
+#alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_semacs() {
     if [ -e "$1" ]; then
@@ -28,7 +28,7 @@ fn_semacs() {
     emacs "/doas::$file_path"
 }
 
-fn_ssh_connect_tor() {
-    tor_domain="verylongtordomain.onion"
-    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
-}
+#fn_ssh_connect_tor() {
+#    tor_domain="verylongtordomain.onion"
+#    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
+#}
