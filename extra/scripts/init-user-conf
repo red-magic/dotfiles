@@ -63,6 +63,8 @@ else
 fi
 
 if [ -f .ssh/id_ed25519 ]; then
+    curl -L https://github.com/red-magic/dotfiles/raw/master/extra/configs/.ssh/config -o .ssh/config
+    chmod 400 .ssh/config
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
     if uname -a | grep -q Linux; then
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
@@ -86,8 +88,6 @@ if [ -n "$workstation" ]; then
     mkdir .config/emacs
     cp -vf repos/dotfiles/extra/configs/.config/emacs/init.el .config/emacs
     cp -vf repos/dotfiles/extra/configs/.gitconfig .
-    cp -vf repos/dotfiles/extra/configs/.ssh/config .ssh
-    chmod 400 .ssh/config
 fi
 
 if uname -a | grep -q Linux; then
