@@ -7,7 +7,7 @@ shopt -s histappend
 LANG="C.UTF-8"
 PS1="\h\$ "
 EDITOR="mg -n"
-#EDITOR="emacs"
+#EDITOR="emacsclient"
 PAGER="less -M"
 LESSHISTFILE="-"
 HISTFILE=""
@@ -70,7 +70,6 @@ fn_clean_pacman() {
 }
 
 fn_ssh_connect_tor() {
-    # OpenBSD netcat
     tor_domain="verylongtordomain.onion"
     ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
 }
