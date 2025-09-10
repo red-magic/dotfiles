@@ -9,6 +9,6 @@ setxkbmap -layout "us,ru" -option "grp:caps_toggle"
 #xset s off # Disable screensaver
 #redshift -l 55.0:73.3 -t 2700:3000 &> /dev/null &
 #xmodmap -e "pointer = 1 2 3 4 5 6 7 0 9 10 11 12" # Mouse wheel fix for Firefox
-#"$HOME/.bin/oneko" -fg black -bg white -sakura &
+#oneko -fg black -bg white -sakura &
 
 exec cwm
