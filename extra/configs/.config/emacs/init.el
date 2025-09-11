@@ -1,6 +1,5 @@
 (setq auto-save-default nil
       auto-save-list-file-prefix nil
-      create-lock-files nil
       make-backup-files nil
       require-final-newline t
       use-short-answers t)
