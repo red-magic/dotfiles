@@ -19,6 +19,7 @@
     (insert "\t")))
 
 (global-set-key (kbd "TAB") 'my/insert-tab-or-indent)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 
 (add-hook 'sh-mode-hook
 	  (lambda ()
