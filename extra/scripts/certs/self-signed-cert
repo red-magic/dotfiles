@@ -1,4 +1,4 @@
 #!/bin/sh
 
-openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:P-256 -out key
-openssl req -key key -x509 -new -days 365000 -out crt
+openssl req -x509 -newkey ed25519 -sha512 -nodes -days 365000 -keyout key -out crt
+openssl x509 -in crt -text -noout
