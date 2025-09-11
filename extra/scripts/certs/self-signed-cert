@@ -1,4 +1,4 @@
 #!/bin/sh
 
-openssl req -x509 -newkey EC -pkeyopt ec_paramgen_curve:P-256 -sha256 -nodes -days 365000 -keyout server.key -out server.crt
-openssl x509 -in server.crt -text -noout
+openssl req -x509 -newkey EC -pkeyopt ec_paramgen_curve:P-256 -sha256 -nodes -days 365000 -keyout key.pem -out crt.pem
+openssl x509 -in crt.pem -text -noout
