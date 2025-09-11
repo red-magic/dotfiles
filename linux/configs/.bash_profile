@@ -25,7 +25,7 @@ alias semacs='fn_semacs'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias short-logs='sudo journalctl --no-hostname -b'
 alias defrag-root-ext4='fn_defrag_root_ext4'
-alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux --recheck'
+alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux'
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
 alias genmirlist='fn_genmirlist'

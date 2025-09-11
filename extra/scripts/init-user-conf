@@ -53,8 +53,7 @@ if [ -n "$workstation" ]; then
     cp -f archive/ssh/id_ed25519.pub .ssh
     cp -f archive/ssh/id_ed25519.pub .ssh/authorized_keys
     touch .ssh/known_hosts
-    touch .ssh/known_hosts.old
-    chmod 600 .ssh/known_hosts*
+    chmod 600 .ssh/known_hosts
     rm -rf archive*
 else
     curl -LO https://github.com/red-magic.keys
