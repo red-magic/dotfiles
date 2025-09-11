@@ -36,11 +36,8 @@ alias clean-pacman='fn_clean_pacman'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_semacs() {
-    if [[ -e "${1}" ]]; then
-        file_path="$(realpath -- "${1}")"
-    else
-        file_path="$(realpath -- "$(dirname -- "${1}")")/$(basename -- "${1}")"
-    fi
+    file_path="$(readlink -f -- "${1}")"
+
     emacs "/sudo::${file_path}"
 }
 
