@@ -3,7 +3,6 @@
       create-lock-files nil
       make-backup-files nil
       require-final-newline t
-      tramp-histfile-override t
       use-short-answers t)
 
 (setq-default fill-column 80)
