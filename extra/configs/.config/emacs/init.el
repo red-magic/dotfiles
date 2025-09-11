@@ -1,9 +1,10 @@
 (setq auto-save-default nil
       auto-save-list-file-prefix nil
+      create-lock-files nil
       make-backup-files nil
       require-final-newline t
-      use-short-answers t
-      tramp-histfile-override t)
+      tramp-histfile-override t
+      use-short-answers t)
 
 (setq-default fill-column 80)
 
