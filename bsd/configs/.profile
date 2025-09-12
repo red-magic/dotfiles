@@ -20,7 +20,7 @@ alias full-clean-git='git clean -dfx && git reset --hard'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_semacs() {
-    file_path=$(readlink -f -- "$1")
+    file_path=$(realpath -- "$(dirname -- "$1")")/$(basename -- "$1")
     emacs "/doas::$file_path"
 }
 
