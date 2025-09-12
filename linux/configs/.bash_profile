@@ -37,7 +37,6 @@ alias clean-pacman='fn_clean_pacman'
 
 fn_semacs() {
     file_path="$(readlink -f -- "${1}")"
-
     emacs "/sudo::${file_path}"
 }
 
