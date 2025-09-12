@@ -7,9 +7,8 @@
 (setq-default fill-column 80)
 
 (menu-bar-mode -1)
-(column-number-mode t)
 (global-display-line-numbers-mode t)
-(show-paren-mode t)
+(column-number-mode t)
 (size-indication-mode t)
 
 (defun my/insert-tab-or-indent ()
