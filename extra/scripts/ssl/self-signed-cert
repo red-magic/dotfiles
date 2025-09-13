@@ -4,7 +4,8 @@ openssl req -x509                                                               
         -newkey EC                                                                    \
         -pkeyopt ec_paramgen_curve:prime256v1                                         \
         -sha256                                                                       \
-        -nodes -days 365000                                                           \
+        -nodes                                                                        \
+        -days 365000                                                                  \
         -subj "/CN=server.localdomain"                                                \
         -addext "subjectAltName = DNS:server.localdomain, DNS:sub.server.localdomain" \
         -keyout key.pem                                                               \
