@@ -1,12 +1,12 @@
 #!/bin/sh
 
-[ ! -f irc.pem ] && openssl req -x509                   \
-                            -newkey rsa:4096            \
-                            -sha256                     \
-                            -nodes                      \
-                            -days 365000                \
-                            -subj "/CN=irc.libera.chat" \
-                            -out irc.pem                \
+[ ! -f irc.pem ] && openssl req -x509                            \
+                            -newkey rsa:4096                     \
+                            -sha256                              \
+                            -nodes                               \
+                            -days 365000                         \
+                            -subj "/CN=irc.libera.chat/O=CertFP" \
+                            -out irc.pem                         \
                             -keyout irc.pem
 
 openssl x509                 \
