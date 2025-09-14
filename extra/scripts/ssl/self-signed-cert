@@ -6,7 +6,7 @@ openssl req -x509                                                               
         -sha256                                                                       \
         -nodes                                                                        \
         -days 365000                                                                  \
-        -subj "/CN=server.localdomain"                                                \
+        -subj "/CN=domain.localdomain"                                                \
         -addext "subjectAltName = DNS:domain.localdomain, DNS:sub.domain.localdomain" \
         -keyout key.pem                                                               \
         -out crt.pem
