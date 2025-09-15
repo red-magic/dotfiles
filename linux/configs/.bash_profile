@@ -7,7 +7,7 @@ bind '\C-p:history-search-backward'
 LANG="C.UTF-8"
 PS1="\h\$ "
 EDITOR="mg -n"
-#EDITOR="emacsclient"
+#EDITOR="emacsclient -nw"
 PAGER="less -M"
 LESSHISTFILE="-"
 HISTFILE=""
@@ -20,7 +20,7 @@ alias sudo='sudo -E '
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias mg='mg -n'
-alias emacs='emacsclient'
+alias emacs='emacsclient -nw'
 alias semacs='fn_semacs'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias short-logs='sudo journalctl --no-hostname -b'

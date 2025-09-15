@@ -1,7 +1,7 @@
 LANG="C.UTF-8"
 PS1="\h\$ "
 EDITOR="mg -n"
-#EDITOR="emacs"
+#EDITOR="emacsclient -nw"
 PAGER="less -M"
 
 export LANG PS1 EDITOR PAGER
@@ -9,6 +9,7 @@ export LANG PS1 EDITOR PAGER
 alias doas='doas '
 alias l='ls -plha'
 alias mg='mg -n'
+alias emacs='emacsclient -nw'
 alias semacs='fn_semacs'
 alias ranger='TERM=xterm ranger'
 alias fastfetch='fastfetch --pipe'

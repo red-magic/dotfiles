@@ -2,6 +2,7 @@ export ENV="$HOME/.profile"
 
 setxkbmap -layout "us,ru" -option "grp:caps_toggle"
 
+#emacs --daemon
 #feh --bg-scale pics/de_prodigy.jpg
 #xsetroot -solid grey27
 #xrandr -s 1920x1080
