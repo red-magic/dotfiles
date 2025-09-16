@@ -31,8 +31,8 @@ alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
 
-#alias ssh-connect='ssh -v server.domain'
-#alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
+#alias ssh-connect='ssh -v domain.tld'
+#alias ssh-connect-tunnel='ssh -f -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_semacs() {

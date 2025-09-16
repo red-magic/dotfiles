@@ -16,8 +16,8 @@ alias fastfetch='fastfetch --pipe'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias full-clean-git='git clean -dfx && git reset --hard'
 
-#alias ssh-connect='ssh -v server.domain'
-#alias ssh-connect-tunnel='ssh -f -N -D 1080 server.domain'
+#alias ssh-connect='ssh -v domain.tld'
+#alias ssh-connect-tunnel='ssh -f -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_semacs() {
