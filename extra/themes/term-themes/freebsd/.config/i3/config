@@ -174,7 +174,7 @@ for_window [class=".*"] border pixel 8
 # Hide edge borders
 hide_edge_borders both
 
-exec_always feh --bg-scale /home/mori/pics/wallpaper.png
+exec_always feh --bg-scale ~/pics/wallpaper.png
 exec_always --no-startup-id compton		\
 			--backend xrender		\
 			-c -C -o 0.2 -f -D 2 -m 1.0 -i 1.0 -e 1.0

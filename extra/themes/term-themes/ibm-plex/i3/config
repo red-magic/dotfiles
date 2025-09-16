@@ -171,8 +171,8 @@ for_window [class=".*"] border pixel 8
 # Hide edge borders
 hide_edge_borders both
 
-exec_always feh --bg-scale /home/mori/pictures/purple-skyscrappers.jpg
-exec_always --no-startup-id ~/.config/polybar/polybar.sh
+exec_always feh --bg-scale ~/pictures/purple-skyscrappers.jpg
+exec_always --no-startup-id ~/.config/polybar/polybar
 exec_always --no-startup-id compton		\
 			--backend glx		\
 			--vsync			\

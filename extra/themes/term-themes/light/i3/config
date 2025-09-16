@@ -163,8 +163,8 @@ gaps outer 16
 # Hide edge borders
 hide_edge_borders both
 
-exec_always feh --bg-scale /home/mori/pictures/minimal-white-bg-black-bird.jpg
-exec_always --no-startup-id ~/.config/polybar/polybar.sh
+exec_always feh --bg-scale ~/pictures/minimal-white-bg-black-bird.jpg
+exec_always --no-startup-id ~/.config/polybar/polybar
 exec_always --no-startup-id compton		\
 			--backend glx		\
 			--vsync 		\

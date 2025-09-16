@@ -163,7 +163,7 @@ gaps outer 20
 # Hide edge borders
 hide_edge_borders both
 
-exec_always feh --bg-scale /home/mori/pictures/forest-mountains-road.jpg
+exec_always feh --bg-scale ~/pictures/forest-mountains-road.jpg
 exec_always --no-startup-id ~/.config/polybar/polybar.sh
 exec_always --no-startup-id compton		\
 			--backend glx		\

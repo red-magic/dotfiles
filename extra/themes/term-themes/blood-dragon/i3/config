@@ -175,8 +175,8 @@ for_window [class=".*"] border pixel 8
 hide_edge_borders both
 
 #exec always --no-startup-id polybar example
-exec_always feh --bg-scale /home/mori/pics/wallpaper.png
-#exec_always --no-startup-id ~/.config/polybar/polybar.sh
+exec_always feh --bg-scale ~/pics/wallpaper.png
+#exec_always --no-startup-id ~/.config/polybar/polybar
 exec_always --no-startup-id compton		\
 			--backend glx		\
 			-c -C -o 0.2 -f -D 2
