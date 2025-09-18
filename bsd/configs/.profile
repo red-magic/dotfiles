@@ -27,5 +27,5 @@ fn_semacs() {
 
 #fn_ssh_connect_tor() {
 #    tor_domain="verylongtordomain.onion"
-#    ssh -v -C -o ProxyCommand="nc -x 127.0.0.1:9150 %h %p" "$tor_domain"
+#    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "$tor_domain"
 #}
