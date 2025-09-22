@@ -2,15 +2,13 @@
 
 set -e
 
-[ $# -eq 0 ] && exit 1
+[ $# -ne 1 ] && exit 1
 
-while getopts :sw opt; do
-    case $opt in
-        s) ;;
-        w) workstation=1 ;;
-        *) exit 1 ;;
-    esac
-done
+case $1 in
+    -s) ;;
+    -w) workstation=1 ;;
+    *) exit 1 ;;
+esac
 
 set -- curl ssh git tar gzip
 
