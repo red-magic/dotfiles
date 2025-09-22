@@ -1,0 +1,6 @@
+# Upgrade OpenBSD server without installing X.Org Server, games and comp sets.
+# Add the following lines after "Pathname to the sets = ${SETSDIR}/" in
+# /usr/sbin/sysupgrade.
+
+Set name(s) = -x* -game* -comp*
+Set name(s) = done

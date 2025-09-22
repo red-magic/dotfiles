@@ -65,7 +65,7 @@ if [ -f .ssh/id_ed25519 ]; then
     curl -L https://github.com/red-magic/dotfiles/raw/master/extra/configs/.ssh/config -o .ssh/config
     chmod 400 .ssh/config
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
-    if uname -a | grep -q Linux; then
+    if uname -s | grep -q Linux; then
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
@@ -89,21 +89,19 @@ if [ -n "$workstation" ]; then
     cp -vf repos/dotfiles/extra/configs/.gitconfig .
 fi
 
-if uname -a | grep -q Linux; then
+if uname -s | grep -q Linux; then
     cp -vf repos/dotfiles/linux/configs/.bash_profile .
     ln -sf .bash_profile .bashrc
-elif uname | grep -q BSD; then
-    cp -vf repos/dotfiles/bsd/configs/.profile .
-    if uname | grep -q OpenBSD; then
-        chmod 700 "$HOME"
-        cp -vf repos/dotfiles/bsd/openbsd/configs/.mailrc .
-        if [ -n "$workstation" ]; then
-            cp -vf repos/dotfiles/extra/configs/xorg/.cwmrc .
-            cp -vf repos/dotfiles/extra/configs/xorg/.xsession .
-            cp -vf repos/dotfiles/extra/configs/xorg/.Xdefaults .
-            mkdir .fonts
-            cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
-        fi
+elif uname -s | grep -q OpenBSD; then
+    cp -vf repos/dotfiles/openbsd/configs/.profile .
+    cp -vf repos/dotfiles/openbsd/configs/.mailrc .
+    chmod 700 "$HOME"
+    if [ -n "$workstation" ]; then
+        cp -vf repos/dotfiles/extra/configs/xorg/.cwmrc .
+        cp -vf repos/dotfiles/extra/configs/xorg/.xsession .
+        cp -vf repos/dotfiles/extra/configs/xorg/.Xdefaults .
+        mkdir .fonts
+        cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
     fi
 fi
 
