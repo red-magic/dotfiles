@@ -1,0 +1,13 @@
+#!/bin/sh
+
+openssl req -x509 \
+        -newkey RSA:4096 \
+        -sha256 \
+        -nodes \
+        -days 365000 \
+        -subj "/CN=domain.localdomain" \
+        -addext "subjectAltName = DNS:domain.localdomain, DNS:sub.domain.localdomain" \
+        -keyout rsa-key.pem \
+        -out rsa-crt.pem
+
+openssl x509 -in rsa-crt.pem -text -noout

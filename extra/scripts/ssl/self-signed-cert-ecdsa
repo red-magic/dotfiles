@@ -1,0 +1,14 @@
+#!/bin/sh
+
+openssl req -x509 \
+        -newkey EC \
+        -pkeyopt ec_paramgen_curve:prime256v1 \
+        -sha256 \
+        -nodes \
+        -days 365000 \
+        -subj "/CN=domain.localdomain" \
+        -addext "subjectAltName = DNS:domain.localdomain, DNS:sub.domain.localdomain" \
+        -keyout ecdsa-key.pem \
+        -out ecdsa-crt.pem
+
+openssl x509 -in ecdsa-crt.pem -text -noout
