@@ -5,14 +5,15 @@
       tramp-histfile-override "/dev/null"
       use-short-answers t)
 
-(setq-default fill-column 80)
+(setq-default fill-column 80
+	      indent-tabs-mode nil)
 
 (column-number-mode t)
 (global-display-line-numbers-mode t)
 (size-indication-mode t)
 (menu-bar-mode -1)
-;;(global-font-lock-mode -1)
-;;(show-paren-mode -1)
+(global-font-lock-mode -1)
+(show-paren-mode -1)
 
 (defun my/insert-tab-or-indent ()
   (interactive)
