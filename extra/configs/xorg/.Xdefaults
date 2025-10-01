@@ -8,9 +8,9 @@
 ! foreground: hsl(10, 15%, 65%)
 ! background: hsl(10, 95%, 5%)
 
-*foreground:  #b39f98
+*foreground:  #b39d98
 *background:  #190501
-*cursorColor: #b39f98
+*cursorColor: #b39d98
 
 ! black
 *.color0:  #190501
