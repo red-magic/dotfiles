@@ -98,6 +98,8 @@ elif uname -s | grep -q OpenBSD; then
         cp -vf repos/dotfiles/extra/configs/xorg/.cwmrc .
         cp -vf repos/dotfiles/extra/configs/xorg/.xsession .
         cp -vf repos/dotfiles/extra/configs/xorg/.Xdefaults .
+        echo >> .Xdefaults
+        cat repos/dotfiles/extra/themes/xorg/.Xdefaults-mono-brown >> .Xdefaults
         mkdir .fonts
         cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
     fi
