@@ -3,8 +3,8 @@
 *cursorColor: #94A3A5
 
 ! black
-*.color0:  #141414
-*.color8:  #141414
+*.color0:  #282A2E
+*.color8:  #373B41
 
 ! red
 *.color1:  #A54242
@@ -31,5 +31,5 @@
 *.color14: #8ABEB7
 
 ! white
-*.color7:  #94A3A5
-*.color15: #94A3A5
+*.color7:  #969896
+*.color15: #C5C8C6

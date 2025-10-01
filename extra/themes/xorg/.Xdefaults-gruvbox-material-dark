@@ -3,8 +3,8 @@
 *cursorColor: #D4BE98
 
 ! black
-*.color0:  #282828
-*.color8:  #282828
+*.color0:  #3C3836
+*.color8:  #3C3836
 
 ! red
 *.color1:  #EA6962
