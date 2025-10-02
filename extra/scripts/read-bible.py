@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+import signal
+
+# Handle broken pipe gracefully
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+def justify_text(filename, width=80):
+    with open(filename, 'r') as file:
+        for line in file:
+            line = line.rstrip()
+            if not line:
+                print()
+                continue
+
+            # Check if line starts with a verse number (digit followed by space)
+            verse_match = re.match(r'^(\d+)\s+(.*)$', line)
+
+            if verse_match:
+                verse_num = verse_match.group(1)
+                text_after_verse = verse_match.group(2)
+                words = text_after_verse.split()
+
+                if not words:
+                    print(line)
+                    continue
+
+                # Calculate available width for the text (minus verse number and space)
+                available_width = width - len(verse_num) - 1
+
+                # Build lines manually for justification
+                current_line = []
+                current_len = 0
+                is_first_line = True
+
+                for word in words:
+                    if current_len + len(word) + len(current_line) <= available_width:
+                        current_line.append(word)
+                        current_len += len(word)
+                    else:
+                        # Justify and print current line with verse number
+                        if len(current_line) > 1:
+                            spaces_needed = available_width - current_len
+                            gaps = len(current_line) - 1
+                            spaces_per_gap = spaces_needed // gaps
+                            extra_spaces = spaces_needed % gaps
+
+                            justified = current_line[0]
+                            for i in range(1, len(current_line)):
+                                spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
+                                justified += ' ' * spaces + current_line[i]
+
+                            if is_first_line:
+                                print(f"{verse_num} {justified}")
+                                is_first_line = False
+                            else:
+                                print(" " * (len(verse_num) + 1) + justified)
+                        else:
+                            if is_first_line:
+                                print(f"{verse_num} {' '.join(current_line)}")
+                                is_first_line = False
+                            else:
+                                print(" " * (len(verse_num) + 1) + ' '.join(current_line))
+
+                        current_line = [word]
+                        current_len = len(word)
+
+                # Print last line
+                if current_line:
+                    if is_first_line:
+                        print(f"{verse_num} {' '.join(current_line)}")
+                    else:
+                        print(" " * (len(verse_num) + 1) + ' '.join(current_line))
+
+            else:
+                # Regular line processing (no verse number)
+                words = line.split()
+                if not words:
+                    continue
+
+                # Build lines manually for justification
+                current_line = []
+                current_len = 0
+
+                for word in words:
+                    if current_len + len(word) + len(current_line) <= width:
+                        current_line.append(word)
+                        current_len += len(word)
+                    else:
+                        # Justify and print current line
+                        if len(current_line) > 1:
+                            spaces_needed = width - current_len
+                            gaps = len(current_line) - 1
+                            spaces_per_gap = spaces_needed // gaps
+                            extra_spaces = spaces_needed % gaps
+
+                            justified = current_line[0]
+                            for i in range(1, len(current_line)):
+                                spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
+                                justified += ' ' * spaces + current_line[i]
+                                print(justified)
+                        else:
+                            print(' '.join(current_line))
+
+                        current_line = [word]
+                        current_len = len(word)
+
+                # Print last line (left-aligned)
+                if current_line:
+                    print(' '.join(current_line))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <filename> [width]")
+        print(f"Example: {sys.argv[0]} input.txt 80")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    width = int(sys.argv[2]) if len(sys.argv) > 2 else 80
+
+    try:
+        justify_text(filename, width)
+    except BrokenPipeError:
+        # Exit gracefully when pipe is broken (e.g., less quits)
+        sys.exit(0)
