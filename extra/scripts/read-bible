@@ -27,8 +27,19 @@ def justify_text(filename, width=80):
                     print(line)
                     continue
 
-                # Calculate available width for the text (minus verse number and space)
-                available_width = width - len(verse_num) - 1
+                # Add proper spacing based on verse number
+                if len(verse_num) == 1:
+                    # Numbers 1-9: add 2 spaces before
+                    verse_prefix = "  " + verse_num
+                elif len(verse_num) == 2:
+                    # Numbers 10-99: add 1 space before
+                    verse_prefix = " " + verse_num
+                else:
+                    # Numbers 100+: no extra space
+                    verse_prefix = verse_num
+
+                # Calculate available width for the text (minus verse prefix and space)
+                available_width = width - len(verse_prefix) - 1
 
                 # Build lines manually for justification
                 current_line = []
@@ -40,7 +51,7 @@ def justify_text(filename, width=80):
                         current_line.append(word)
                         current_len += len(word)
                     else:
-                        # Justify and print current line with verse number
+                        # Justify and print current line with verse prefix
                         if len(current_line) > 1:
                             spaces_needed = available_width - current_len
                             gaps = len(current_line) - 1
@@ -53,16 +64,17 @@ def justify_text(filename, width=80):
                                 justified += ' ' * spaces + current_line[i]
 
                             if is_first_line:
-                                print(f"{verse_num} {justified}")
+                                print(f"{verse_prefix} {justified}")
                                 is_first_line = False
                             else:
-                                print(" " * (len(verse_num) + 1) + justified)
+                                # For continuation lines, use spaces equal to verse prefix length + 1
+                                print(" " * (len(verse_prefix) + 1) + justified)
                         else:
                             if is_first_line:
-                                print(f"{verse_num} {' '.join(current_line)}")
+                                print(f"{verse_prefix} {' '.join(current_line)}")
                                 is_first_line = False
                             else:
-                                print(" " * (len(verse_num) + 1) + ' '.join(current_line))
+                                print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
 
                         current_line = [word]
                         current_len = len(word)
@@ -70,14 +82,15 @@ def justify_text(filename, width=80):
                 # Print last line
                 if current_line:
                     if is_first_line:
-                        print(f"{verse_num} {' '.join(current_line)}")
+                        print(f"{verse_prefix} {' '.join(current_line)}")
                     else:
-                        print(" " * (len(verse_num) + 1) + ' '.join(current_line))
+                        print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
 
             else:
                 # Regular line processing (no verse number)
                 words = line.split()
                 if not words:
+                    print()
                     continue
 
                 # Build lines manually for justification
