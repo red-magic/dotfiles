@@ -15,6 +15,17 @@ def justify_text(filename, width=80):
                 print()
                 continue
 
+            # Check if line doesn't start with a number and is not empty
+            if not re.match(r'^\d', line) and line.strip():
+                # Center non-verse lines (chapter titles, etc.)
+                clean_line = line.strip()
+                padding = (width - len(clean_line)) // 2
+                if padding > 0:
+                    print(' ' * padding + clean_line)
+                else:
+                    print(clean_line)
+                continue
+
             # Check if line starts with a verse number (digit followed by space)
             verse_match = re.match(r'^(\d+)\s+(.*)$', line)
 
