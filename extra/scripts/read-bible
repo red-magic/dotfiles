@@ -24,13 +24,15 @@ def justify_text(filename, width=80):
         next_empty = (i == total_lines - 1) or (i < total_lines - 1 and not lines[i+1].strip())
 
         if prev_empty and next_empty and line.strip():
-            # Center chapter titles (lines surrounded by empty lines)
+            # Center chapter titles (lines surrounded by empty lines) with 4-space indent
             clean_line = line.strip()
-            padding = (width - len(clean_line)) // 2
+            # Calculate padding for centering within the remaining width after 4 spaces
+            available_width = width - 4
+            padding = (available_width - len(clean_line)) // 2
             if padding > 0:
-                print(' ' * padding + clean_line)
+                print(' ' * 4 + ' ' * padding + clean_line)
             else:
-                print(clean_line)
+                print(' ' * 4 + clean_line)
             continue
 
         # Check if line starts with a verse number (digit followed by space)
