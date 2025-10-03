@@ -8,148 +8,155 @@ import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 def justify_text(filename, width=80):
+    # Read all lines first to check context
     with open(filename, 'r') as file:
-        for line in file:
-            line = line.rstrip()
-            if not line:
-                print()
-                continue
+        lines = [line.rstrip() for line in file]
 
-            # Check if line doesn't start with a number and is not empty
-            if not re.match(r'^\d', line) and line.strip():
-                # Center non-verse lines (chapter titles, etc.)
-                clean_line = line.strip()
-                padding = (width - len(clean_line)) // 2
-                if padding > 0:
-                    print(' ' * padding + clean_line)
-                else:
-                    print(clean_line)
-                continue
+    total_lines = len(lines)
 
-            # Check if line starts with a verse number (digit followed by space)
-            verse_match = re.match(r'^(\d+)\s+(.*)$', line)
+    for i, line in enumerate(lines):
+        if not line:
+            print()
+            continue
 
-            if verse_match:
-                verse_num = verse_match.group(1)
-                text_after_verse = verse_match.group(2)
-                words = text_after_verse.split()
+        # Check if this line is surrounded by empty lines (chapter title)
+        prev_empty = (i == 0) or (i > 0 and not lines[i-1].strip())
+        next_empty = (i == total_lines - 1) or (i < total_lines - 1 and not lines[i+1].strip())
 
-                if not words:
-                    print(line)
-                    continue
-
-                # Add proper spacing based on verse number
-                if len(verse_num) == 1:
-                    # Numbers 1-9: add 2 spaces before
-                    verse_prefix = "  " + verse_num
-                elif len(verse_num) == 2:
-                    # Numbers 10-99: add 1 space before
-                    verse_prefix = " " + verse_num
-                else:
-                    # Numbers 100+: no extra space
-                    verse_prefix = verse_num
-
-                # Calculate available width for the text (minus verse prefix and space)
-                available_width = width - len(verse_prefix) - 1
-
-                # Build lines manually for justification
-                current_line = []
-                current_len = 0
-                is_first_line = True
-
-                for word in words:
-                    if current_len + len(word) + len(current_line) <= available_width:
-                        current_line.append(word)
-                        current_len += len(word)
-                    else:
-                        # Justify and print current line with verse prefix
-                        if len(current_line) > 1:
-                            spaces_needed = available_width - current_len
-                            gaps = len(current_line) - 1
-                            spaces_per_gap = spaces_needed // gaps
-                            extra_spaces = spaces_needed % gaps
-
-                            justified = current_line[0]
-                            for i in range(1, len(current_line)):
-                                spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
-                                justified += ' ' * spaces + current_line[i]
-
-                            if is_first_line:
-                                print(f"{verse_prefix} {justified}")
-                                is_first_line = False
-                            else:
-                                # For continuation lines, use spaces equal to verse prefix length + 1
-                                print(" " * (len(verse_prefix) + 1) + justified)
-                        else:
-                            if is_first_line:
-                                print(f"{verse_prefix} {' '.join(current_line)}")
-                                is_first_line = False
-                            else:
-                                print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
-
-                        current_line = [word]
-                        current_len = len(word)
-
-                # Print last line
-                if current_line:
-                    if is_first_line:
-                        print(f"{verse_prefix} {' '.join(current_line)}")
-                    else:
-                        print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
-
+        if prev_empty and next_empty and line.strip():
+            # Center chapter titles (lines surrounded by empty lines)
+            clean_line = line.strip()
+            padding = (width - len(clean_line)) // 2
+            if padding > 0:
+                print(' ' * padding + clean_line)
             else:
-                # Regular line processing (no verse number) - add 4 spaces indent
-                words = line.split()
-                if not words:
-                    print("    ")  # 4 spaces for empty lines
-                    continue
+                print(clean_line)
+            continue
 
-                # Build lines manually for justification
-                current_line = []
-                current_len = 0
-                is_first_line = True
+        # Check if line starts with a verse number (digit followed by space)
+        verse_match = re.match(r'^(\d+)\s+(.*)$', line)
 
-                for word in words:
-                    # For regular text, available width is reduced by 4 spaces for indent
-                    available_width = width - 4
+        if verse_match:
+            verse_num = verse_match.group(1)
+            text_after_verse = verse_match.group(2)
+            words = text_after_verse.split()
 
-                    if current_len + len(word) + len(current_line) <= available_width:
-                        current_line.append(word)
-                        current_len += len(word)
-                    else:
-                        # Justify and print current line with 4-space indent
-                        if len(current_line) > 1:
-                            spaces_needed = available_width - current_len
-                            gaps = len(current_line) - 1
-                            spaces_per_gap = spaces_needed // gaps
-                            extra_spaces = spaces_needed % gaps
+            if not words:
+                print(line)
+                continue
 
-                            justified = current_line[0]
-                            for i in range(1, len(current_line)):
-                                spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
-                                justified += ' ' * spaces + current_line[i]
+            # Add proper spacing based on verse number
+            if len(verse_num) == 1:
+                # Numbers 1-9: add 2 spaces before
+                verse_prefix = "  " + verse_num
+            elif len(verse_num) == 2:
+                # Numbers 10-99: add 1 space before
+                verse_prefix = " " + verse_num
+            else:
+                # Numbers 100+: no extra space
+                verse_prefix = verse_num
 
-                            if is_first_line:
-                                print(f"    {justified}")  # 4 spaces
-                                is_first_line = False
-                            else:
-                                print("    " + justified)  # 4 spaces for continuation lines
+            # Calculate available width for the text (minus verse prefix and space)
+            available_width = width - len(verse_prefix) - 1
+
+            # Build lines manually for justification
+            current_line = []
+            current_len = 0
+            is_first_line = True
+
+            for word in words:
+                if current_len + len(word) + len(current_line) <= available_width:
+                    current_line.append(word)
+                    current_len += len(word)
+                else:
+                    # Justify and print current line with verse prefix
+                    if len(current_line) > 1:
+                        spaces_needed = available_width - current_len
+                        gaps = len(current_line) - 1
+                        spaces_per_gap = spaces_needed // gaps
+                        extra_spaces = spaces_needed % gaps
+
+                        justified = current_line[0]
+                        for i in range(1, len(current_line)):
+                            spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
+                            justified += ' ' * spaces + current_line[i]
+
+                        if is_first_line:
+                            print(f"{verse_prefix} {justified}")
+                            is_first_line = False
                         else:
-                            if is_first_line:
-                                print(f"    {' '.join(current_line)}")  # 4 spaces
-                                is_first_line = False
-                            else:
-                                print("    " + ' '.join(current_line))  # 4 spaces
-
-                        current_line = [word]
-                        current_len = len(word)
-
-                # Print last line (left-aligned with 4-space indent)
-                if current_line:
-                    if is_first_line:
-                        print(f"    {' '.join(current_line)}")  # 4 spaces
+                            # For continuation lines, use spaces equal to verse prefix length + 1
+                            print(" " * (len(verse_prefix) + 1) + justified)
                     else:
-                        print("    " + ' '.join(current_line))  # 4 spaces
+                        if is_first_line:
+                            print(f"{verse_prefix} {' '.join(current_line)}")
+                            is_first_line = False
+                        else:
+                            print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
+
+                    current_line = [word]
+                    current_len = len(word)
+
+            # Print last line
+            if current_line:
+                if is_first_line:
+                    print(f"{verse_prefix} {' '.join(current_line)}")
+                else:
+                    print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
+
+        else:
+            # Regular line processing (no verse number) - add 4 spaces indent
+            words = line.split()
+            if not words:
+                print("    ")  # 4 spaces for empty lines
+                continue
+
+            # Build lines manually for justification
+            current_line = []
+            current_len = 0
+            is_first_line = True
+
+            for word in words:
+                # For regular text, available width is reduced by 4 spaces for indent
+                available_width = width - 4
+
+                if current_len + len(word) + len(current_line) <= available_width:
+                    current_line.append(word)
+                    current_len += len(word)
+                else:
+                    # Justify and print current line with 4-space indent
+                    if len(current_line) > 1:
+                        spaces_needed = available_width - current_len
+                        gaps = len(current_line) - 1
+                        spaces_per_gap = spaces_needed // gaps
+                        extra_spaces = spaces_needed % gaps
+
+                        justified = current_line[0]
+                        for i in range(1, len(current_line)):
+                            spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
+                            justified += ' ' * spaces + current_line[i]
+
+                        if is_first_line:
+                            print(f"    {justified}")  # 4 spaces
+                            is_first_line = False
+                        else:
+                            print("    " + justified)  # 4 spaces for continuation lines
+                    else:
+                        if is_first_line:
+                            print(f"    {' '.join(current_line)}")  # 4 spaces
+                            is_first_line = False
+                        else:
+                            print("    " + ' '.join(current_line))  # 4 spaces
+
+                    current_line = [word]
+                    current_len = len(word)
+
+            # Print last line (left-aligned with 4-space indent)
+            if current_line:
+                if is_first_line:
+                    print(f"    {' '.join(current_line)}")  # 4 spaces
+                else:
+                    print("    " + ' '.join(current_line))  # 4 spaces
 
 
 if __name__ == "__main__":
