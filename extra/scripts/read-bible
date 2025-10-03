@@ -7,10 +7,24 @@ import signal
 # Handle broken pipe gracefully
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-def justify_text(filename, width=80):
+def print_usage(script_name):
+    print(f"Usage: {script_name} [filename] [width]")
+    print(f"Examples:")
+    print(f"  {script_name}               Read from stdin, width=60")
+    print(f"  {script_name} bible.txt     Read from file,  width=60")
+    print(f"  {script_name} bible.txt 70  Read from file,  width=70")
+    print(f"  {script_name} 70            Read from stdin, width=70")
+    print(f"  {script_name} -             Read from stdin, width=60")
+    print(f"  {script_name} - 70          Read from stdin, width=70")
+
+def justify_text(file_input, width=60):
     # Read all lines first to check context
-    with open(filename, 'r') as file:
-        lines = [line.rstrip() for line in file]
+    if hasattr(file_input, 'read'):
+        # It's a file object (stdin or opened file)
+        lines = [line.rstrip() for line in file_input]
+    else:
+        # It's a list of lines
+        lines = file_input
 
     total_lines = len(lines)
 
@@ -162,16 +176,33 @@ def justify_text(filename, width=80):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print(f"Usage: {sys.argv[0]} <filename> [width]")
-        print(f"Example: {sys.argv[0]} input.txt 60")
-        sys.exit(1)
-
-    filename = sys.argv[1]
-    width = int(sys.argv[2]) if len(sys.argv) > 2 else 60
-
-    try:
-        justify_text(filename, width)
-    except BrokenPipeError:
-        # Exit gracefully when pipe is broken (e.g., less quits)
+    # If no arguments provided, print help and exit
+    if len(sys.argv) == 1:
+        print_usage(sys.argv[0])
         sys.exit(0)
+
+    width = 60
+
+    # Handle command line arguments
+    if len(sys.argv) > 1:
+        # Check if first argument is a width number
+        if sys.argv[1].isdigit():
+            width = int(sys.argv[1])
+            # Read from stdin
+            justify_text(sys.stdin, width)
+        else:
+            # First argument is filename or width
+            if len(sys.argv) >= 2:
+                if sys.argv[1] in ['-h', '--help', 'help']:
+                    print_usage(sys.argv[0])
+                    sys.exit(0)
+                elif sys.argv[1] == '-':
+                    # Read from stdin
+                    justify_text(sys.stdin, width)
+                else:
+                    # Check if second argument is width
+                    if len(sys.argv) >= 3 and sys.argv[2].isdigit():
+                        width = int(sys.argv[2])
+                    # Read from file
+                    with open(sys.argv[1], 'r') as f:
+                        justify_text(f, width)
