@@ -33,12 +33,18 @@ def justify_text(file_input, width=60):
             print()
             continue
 
-        # Check if this line is surrounded by empty lines (chapter title)
+        # Check if this line is a book title
+        # Book titles are followed by an empty line and then a chapter title
         prev_empty = (i == 0) or (i > 0 and not lines[i-1].strip())
-        next_empty = (i == total_lines - 1) or (i < total_lines - 1 and not lines[i+1].strip())
+        next_empty = (i < total_lines - 1) and (not lines[i+1].strip())
+        has_chapter_after = (i < total_lines - 2) and lines[i+2] and is_chapter_title_line(lines[i+2])
 
-        if prev_empty and next_empty and line.strip():
-            # Center chapter titles (lines surrounded by empty lines) with 4-space indent
+        # Only center if it's a book title (followed by empty line and chapter)
+        is_book_title = (prev_empty and next_empty and has_chapter_after and
+                         line.strip() and not re.match(r'^\d+\s+', line))
+
+        if is_book_title:
+            # Center book titles with 4-space indent
             clean_line = line.strip()
             # Calculate padding for centering within the remaining width after 4 spaces
             available_width = width - 4
@@ -49,10 +55,93 @@ def justify_text(file_input, width=60):
                 print(' ' * 4 + clean_line)
             continue
 
-        # Check if line starts with a verse number (digit followed by space)
-        verse_match = re.match(r'^(\d+)\s+(.*)$', line)
+        # Check if line is a chapter title
+        is_chapter = is_chapter_title_line(line)
+        prev_empty_for_chapter = (i == 0) or (i > 0 and not lines[i-1].strip())
+        next_empty_for_chapter = (i == total_lines - 1) or (i < total_lines - 1 and not lines[i+1].strip())
 
-        if verse_match:
+        is_chapter_title = (is_chapter and prev_empty_for_chapter and
+                            next_empty_for_chapter and line.strip())
+
+        if is_chapter_title:
+            # Center chapter titles with 4-space indent
+            clean_line = line.strip()
+            # Calculate padding for centering within the remaining width after 4 spaces
+            available_width = width - 4
+            padding = (available_width - len(clean_line)) // 2
+            if padding > 0:
+                print(' ' * 4 + ' ' * padding + clean_line)
+            else:
+                print(' ' * 4 + clean_line)
+            continue
+
+        # Check if line is an annotation (starts with number but is surrounded by empty lines)
+        verse_match = re.match(r'^(\d+)\s+(.*)$', line)
+        prev_empty_for_annotation = (i == 0) or (i > 0 and not lines[i-1].strip())
+        next_empty_for_annotation = (i == total_lines - 1) or (i < total_lines - 1 and not lines[i+1].strip())
+
+        is_annotation = (verse_match and prev_empty_for_annotation and
+                         next_empty_for_annotation and line.strip())
+
+        if is_annotation:
+            # Annotations get 4-space indent and full justification (not verse formatting)
+            # Use the ENTIRE line including the starting number
+            words = line.split()
+
+            if not words:
+                print("    " + line)  # 4 spaces
+                continue
+
+            # For annotations, available width is reduced by 4 spaces for indent
+            available_width = width - 4
+
+            # Build lines manually for justification
+            current_line = []
+            current_len = 0
+            is_first_line = True
+
+            for word in words:
+                if current_len + len(word) + len(current_line) <= available_width:
+                    current_line.append(word)
+                    current_len += len(word)
+                else:
+                    # Justify and print current line with 4-space indent
+                    if len(current_line) > 1:
+                        spaces_needed = available_width - current_len
+                        gaps = len(current_line) - 1
+                        spaces_per_gap = spaces_needed // gaps
+                        extra_spaces = spaces_needed % gaps
+
+                        justified = current_line[0]
+                        for i in range(1, len(current_line)):
+                            spaces = spaces_per_gap + (1 if i <= extra_spaces else 0)
+                            justified += ' ' * spaces + current_line[i]
+
+                        if is_first_line:
+                            print(f"    {justified}")  # 4 spaces
+                            is_first_line = False
+                        else:
+                            print("    " + justified)  # 4 spaces for continuation lines
+                    else:
+                        if is_first_line:
+                            print(f"    {' '.join(current_line)}")  # 4 spaces
+                            is_first_line = False
+                        else:
+                            print("    " + ' '.join(current_line))  # 4 spaces
+
+                    current_line = [word]
+                    current_len = len(word)
+
+            # Print last line (left-aligned with 4-space indent)
+            if current_line:
+                if is_first_line:
+                    print(f"    {' '.join(current_line)}")  # 4 spaces
+                else:
+                    print("    " + ' '.join(current_line))  # 4 spaces
+            continue
+
+        # Check if line starts with a verse number (digit followed by space) - regular verse
+        if verse_match and not is_annotation:
             verse_num = verse_match.group(1)
             text_after_verse = verse_match.group(2)
             words = text_after_verse.split()
@@ -127,15 +216,15 @@ def justify_text(file_input, width=60):
                 print("    ")  # 4 spaces for empty lines
                 continue
 
+            # For regular text, available width is reduced by 4 spaces for indent
+            available_width = width - 4
+
             # Build lines manually for justification
             current_line = []
             current_len = 0
             is_first_line = True
 
             for word in words:
-                # For regular text, available width is reduced by 4 spaces for indent
-                available_width = width - 4
-
                 if current_len + len(word) + len(current_line) <= available_width:
                     current_line.append(word)
                     current_len += len(word)
@@ -174,6 +263,40 @@ def justify_text(file_input, width=60):
                 else:
                     print("    " + ' '.join(current_line))  # 4 spaces
 
+def is_chapter_title_line(line):
+    """Check if a line looks like a chapter title"""
+    line = line.strip()
+
+    # Don't treat verse lines as chapter titles - verses have text after the number
+    if re.match(r'^\d+\s+', line) and len(line.split()) > 2:
+        # Check if it's actually a verse with substantial text
+        parts = line.split(None, 1)  # Split only on first space
+        if len(parts) > 1 and len(parts[1].strip()) > 10:  # If there's substantial text after verse number
+            return False
+
+    # Look for patterns like "Book Name Chapter" where chapter is a number
+    # This matches: "1 Ездры 1", "Бытие 1", "Genesis 1", "1 Corinthians 1", "1 Тимофею 1"
+    patterns = [
+        r'^.*\b\d+$',                           # Ends with number (Бытие 1, Genesis 1)
+        r'^\d+\s+.*\s+\d+$',                    # Starts and ends with number (1 Ездры 1, 1 Тимофею 1, 1 Corinthians 1)
+        r'^.*\s+\d+\s*$',                       # Contains number at end with optional space
+        r'^\d+\s+[A-Za-zА-Яа-я]+\s+\d+$',      # Number Word Number (1 Timothy 1, 1 Тимофею 1)
+        r'^[A-Za-zА-Яа-я]+\s+\d+$',            # Word Number (Genesis 1, Бытие 1)
+    ]
+
+    for pattern in patterns:
+        if re.search(pattern, line):
+            return True
+
+    # Also check if it's a simple "Book Chapter" pattern with exactly 2-3 words and ends with number
+    words = line.split()
+    if 2 <= len(words) <= 3:
+        # Check if last word is a number
+        if words[-1].isdigit():
+            return True
+
+    return False
+
 
 if __name__ == "__main__":
     # If no arguments provided, print help and exit
@@ -203,6 +326,6 @@ if __name__ == "__main__":
                     # Check if second argument is width
                     if len(sys.argv) >= 3 and sys.argv[2].isdigit():
                         width = int(sys.argv[2])
-                    # Read from file
+                        # Read from file
                     with open(sys.argv[1], 'r') as f:
                         justify_text(f, width)
