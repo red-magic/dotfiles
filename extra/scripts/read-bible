@@ -277,11 +277,11 @@ def is_chapter_title_line(line):
     # Look for patterns like "Book Name Chapter" where chapter is a number
     # This matches: "1 Ездры 1", "Бытие 1", "Genesis 1", "1 Corinthians 1", "1 Тимофею 1"
     patterns = [
-        r'^.*\b\d+$',                           # Ends with number (Бытие 1, Genesis 1)
-        r'^\d+\s+.*\s+\d+$',                    # Starts and ends with number (1 Ездры 1, 1 Тимофею 1, 1 Corinthians 1)
-        r'^.*\s+\d+\s*$',                       # Contains number at end with optional space
-        r'^\d+\s+[A-Za-zА-Яа-я]+\s+\d+$',      # Number Word Number (1 Timothy 1, 1 Тимофею 1)
-        r'^[A-Za-zА-Яа-я]+\s+\d+$',            # Word Number (Genesis 1, Бытие 1)
+        r'^.*\b\d+$',                     # Ends with number (Бытие 1, Genesis 1)
+        r'^\d+\s+.*\s+\d+$',              # Starts and ends with number (1 Ездры 1, 1 Тимофею 1, 1 Corinthians 1)
+        r'^.*\s+\d+\s*$',                 # Contains number at end with optional space
+        r'^\d+\s+[A-Za-zА-Яа-я]+\s+\d+$', # Number Word Number (1 Timothy 1, 1 Тимофею 1)
+        r'^[A-Za-zА-Яа-я]+\s+\d+$',       # Word Number (Genesis 1, Бытие 1)
     ]
 
     for pattern in patterns:
