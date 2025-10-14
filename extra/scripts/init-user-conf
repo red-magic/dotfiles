@@ -90,7 +90,7 @@ fi
 if uname -s | grep -q Linux; then
     cp -vf repos/dotfiles/linux/configs/.bash_profile .
     ln -sf .bash_profile .bashrc
-elif uname -s | grep -q OpenBSD; then
+elif uname -s | grep -q BSD; then
     cp -vf repos/dotfiles/openbsd/configs/.profile .
     cp -vf repos/dotfiles/openbsd/configs/.mailrc .
     chmod 700 "$HOME"
