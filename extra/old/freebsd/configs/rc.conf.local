@@ -1,4 +1,5 @@
 allscreens_flags="-f vgarom-8x16"
 kern_securelevel_enable="YES"
 kern_securelevel="1"
+clear_tmp_enable="YES"
 pf_enable="YES"
