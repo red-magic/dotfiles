@@ -1,6 +1,8 @@
 ! Alt+D fix
 *metaSendsEscape: true
 
-*font: xft: Go Mono:style=regular:size=11
+*faceName: Go Mono
+*faceSize: 11
+
 *allowBoldFonts: false
 *scrollBar: false
