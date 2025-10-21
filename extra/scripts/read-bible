@@ -8,12 +8,16 @@ import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 def print_usage(script_name):
-    print(f"Usage: {script_name} <filename> [width]")
+    print(f"Usage: {script_name} [width] <filename>")
+    print(f"Options:")
+    print(f"  -n, --no-justify  Disable text justification")
+    print(f"  -h, --help        Show this help")
     print(f"Examples:")
-    print(f"  {script_name} bible.txt")
-    print(f"  {script_name} bible.txt 80")
+    print(f"  {script_name} kjv.txt")
+    print(f"  {script_name} 80 kjv.txt")
+    print(f"  {script_name} -n kjv.txt")
 
-def justify_text(file_input, width=60):
+def justify_text(file_input, width=60, justify=True):
     # Read all lines first to check context
     lines = [line.rstrip() for line in file_input]
     total_lines = len(lines)
@@ -60,7 +64,7 @@ def justify_text(file_input, width=60):
             # Calculate available width for the text
             available_width = width - len(verse_prefix) - 1
 
-            # Build lines manually for justification
+            # Build lines manually
             current_line = []
             current_len = 0
             is_first_line = True
@@ -70,8 +74,9 @@ def justify_text(file_input, width=60):
                     current_line.append(word)
                     current_len += len(word)
                 else:
-                    # Justify current line
-                    if len(current_line) > 1:
+                    # Print current line (justified or regular)
+                    if justify and len(current_line) > 1:
+                        # Justify the line
                         spaces_needed = available_width - current_len
                         gaps = len(current_line) - 1
                         spaces_per_gap = spaces_needed // gaps
@@ -88,21 +93,24 @@ def justify_text(file_input, width=60):
                         else:
                             print(" " * (len(verse_prefix) + 1) + justified)
                     else:
+                        # Regular line (no justification)
+                        line_text = ' '.join(current_line)
                         if is_first_line:
-                            print(f"{verse_prefix} {' '.join(current_line)}")
+                            print(f"{verse_prefix} {line_text}")
                             is_first_line = False
                         else:
-                            print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
+                            print(" " * (len(verse_prefix) + 1) + line_text)
 
                     current_line = [word]
                     current_len = len(word)
 
             # Print last line
             if current_line:
+                line_text = ' '.join(current_line)
                 if is_first_line:
-                    print(f"{verse_prefix} {' '.join(current_line)}")
+                    print(f"{verse_prefix} {line_text}")
                 else:
-                    print(" " * (len(verse_prefix) + 1) + ' '.join(current_line))
+                    print(" " * (len(verse_prefix) + 1) + line_text)
         else:
             # Regular text - just print as is with 4-space indent
             print(' ' * 4 + line)
@@ -115,16 +123,23 @@ if __name__ == "__main__":
 
     width = 60
     filename = None
+    justify = True
 
     # Parse arguments
-    for arg in sys.argv[1:]:
+    i = 1
+    while i < len(sys.argv):
+        arg = sys.argv[i]
         if arg.isdigit():
             width = int(arg)
+        elif arg in ['-n', '--no-justify']:
+            justify = False
         elif arg in ['-h', '--help', 'help']:
             print_usage(sys.argv[0])
             sys.exit(0)
         else:
             filename = arg
+
+        i += 1
 
     if not filename:
         print("Error: No filename provided")
@@ -133,7 +148,7 @@ if __name__ == "__main__":
 
     try:
         with open(filename, 'r', encoding='utf-8') as f:
-            justify_text(f, width)
+            justify_text(f, width, justify)
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found")
         sys.exit(1)
