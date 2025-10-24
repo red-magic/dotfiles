@@ -1,3 +1,5 @@
 #!/bin/sh
 
+set -e
+
 certbot certonly --dry-run --webroot -w /var/www/domain -d domain.tld -d www.domain.tld

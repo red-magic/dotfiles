@@ -1,14 +1,22 @@
 #!/bin/sh
 
+set -e
+
+domain="domain.localdomain"
+ip="123.123.123.123"
+
 openssl req -x509 \
         -newkey EC \
         -pkeyopt ec_paramgen_curve:prime256v1 \
         -sha256 \
         -nodes \
         -days 365000 \
-        -subj "/CN=domain.localdomain" \
-        -addext "subjectAltName = DNS:domain.localdomain, IP:123.123.123.123" \
+        -subj "/CN=$domain" \
+        -addext "subjectAltName = DNS:$domain, IP:$ip" \
         -keyout ecdsa-key.pem \
         -out ecdsa-crt.pem
+
+chmod 400 ecdsa-key.pem
+chmod 444 ecdsa-crt.pem
 
 openssl x509 -in ecdsa-crt.pem -text -noout
