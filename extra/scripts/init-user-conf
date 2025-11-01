@@ -10,13 +10,13 @@ case $1 in
     *) exit 1 ;;
 esac
 
-set -- curl ssh git tar gzip
+pkgs="curl ssh git tar gzip"
 
 if [ -n "$workstation" ]; then
-    set -- "$@" gpg
+    pkgs="$pkgs gpg"
 fi
 
-for pkg in "$@"; do
+for pkg in $pkgs; do
     [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
 done
 
