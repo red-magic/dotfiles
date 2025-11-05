@@ -12,9 +12,7 @@ esac
 
 pkgs="curl ssh git tar gzip"
 
-if [ -n "$workstation" ]; then
-    pkgs="$pkgs gpg"
-fi
+[ -n "$workstation" ] && pkgs="$pkgs gpg"
 
 for pkg in $pkgs; do
     [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
@@ -54,8 +52,7 @@ if [ -n "$workstation" ]; then
     chmod 600 .ssh/known_hosts
     rm -rf archive*
 else
-    curl -LO https://github.com/red-magic.keys
-    mv -vf red-magic.keys .ssh/authorized_keys
+    curl -L https://github.com/red-magic.keys -o .ssh/authorized_keys
     chmod 400 .ssh/authorized_keys
 fi
 
@@ -68,9 +65,9 @@ if [ -f .ssh/id_ed25519 ]; then
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
         if [ -f /etc/arch-release ]; then
-            set -- pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor
+            aurpkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor"
             mkdir repos/aur
-            for aurpkg in "$@"; do
+            for aurpkg in $aurpkgs; do
                 git clone "ssh://aur@aur.archlinux.org/$aurpkg" "repos/aur/$aurpkg"
             done
         fi
