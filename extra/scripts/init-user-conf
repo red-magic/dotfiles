@@ -60,11 +60,11 @@ if [ -f .ssh/id_ed25519 ]; then
     curl -L https://github.com/red-magic/dotfiles/raw/master/extra/configs/.ssh/config -o .ssh/config
     chmod 400 .ssh/config
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
+    git clone ssh://git@github.com/red-magic/bible repos/bible
     if uname -s | grep -q Linux; then
-        repos="tty-colorscheme cs16-server arti-bin bible"
-        for repo in $repos; do
-            git clone "ssh://git@github.com/red-magic/$repo" "repos/$repo"
-        done
+        git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
+        git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
+        git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
         if [ -f /etc/arch-release ]; then
             aurpkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin tty-colorscheme windows-10-cursor"
             mkdir repos/aur
