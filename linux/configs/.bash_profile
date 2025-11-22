@@ -41,7 +41,7 @@ fn_semacs() {
 }
 
 fn_defrag_root_ext4() {
-    sudo printf "Starting defragmentation...\n"
+    printf "Starting defragmentation...\n"
     for i in {1..3}; do
         printf "Defrag pass: %s\n" "${i}"
         sudo e4defrag / &> /dev/null
@@ -49,7 +49,7 @@ fn_defrag_root_ext4() {
 }
 
 fn_genmirlist() {
-    sudo printf "Generating mirror list...\n"
+    printf "Generating mirror list...\n"
     reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist
     sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d
     rm -vf /tmp/mirrorlist
