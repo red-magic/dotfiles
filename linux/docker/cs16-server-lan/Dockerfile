@@ -7,15 +7,15 @@ RUN apt-get update -y && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
 
-RUN mkdir -v /var/hlds && \
-    chmod -v 700 /var/hlds && \
-    useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    chown -v hlds:hlds /var/hlds
-
 RUN apt-get clean -y && \
     apt-get autoremove -y && \
     apt-get autopurge -y && \
     rm -vrf /var/lib/apt/lists/*
+
+RUN mkdir -v /var/hlds && \
+    chmod -v 700 /var/hlds && \
+    useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
+    chown -v hlds:hlds /var/hlds
 
 USER hlds
 
