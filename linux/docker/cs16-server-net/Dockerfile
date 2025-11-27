@@ -27,8 +27,8 @@ RUN mkdir -v /var/hlds/.steam && \
 
 RUN cd /var/hlds/.steam && \
     curl -L https://github.com/Bots-United/metamod-p/releases/download/v1.21p38/metamod_i686_linux_win32-1.21p38.tar.xz | tar Jxvf - -C . && \
-    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-base-linux.tar.gz | tar zxvf - -C . && \
-    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5468-cstrike-linux.tar.gz | tar zxvf - -C . && \
+    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5473-base-linux.tar.gz | tar zxvf - -C . && \
+    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5473-cstrike-linux.tar.gz | tar zxvf - -C . && \
     curl -L https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz | tar Jxvf - -C .
 
 RUN cd /var/hlds/.steam && \
