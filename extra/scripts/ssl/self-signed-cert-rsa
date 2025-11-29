@@ -12,10 +12,10 @@ openssl req -x509 \
         -days 365000 \
         -subj "/CN=$domain" \
         -addext "subjectAltName = DNS:$domain, IP:$ip" \
-        -keyout rsa-key.pem \
-        -out rsa-crt.pem
+        -keyout $domain.key \
+        -out $domain.crt
 
-chmod 400 rsa-key.pem
-chmod 444 rsa-crt.pem
+chmod 400 $domain.key
+chmod 444 $domain.crt
 
-openssl x509 -in rsa-crt.pem -text -noout
+openssl x509 -in $domain.crt -text -noout
