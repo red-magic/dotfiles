@@ -6,7 +6,8 @@
       use-short-answers t)
 
 (setq-default fill-column 60
-	      indent-tabs-mode nil)
+	      indent-tabs-mode nil
+              truncate-lines t)
 
 (column-number-mode t)
 (global-display-line-numbers-mode t)
