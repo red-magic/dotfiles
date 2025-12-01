@@ -6,7 +6,7 @@
       use-short-answers t)
 
 (setq-default fill-column 60
-	      indent-tabs-mode nil
+              indent-tabs-mode nil
               truncate-lines t)
 
 (column-number-mode t)
@@ -26,9 +26,8 @@
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
 (add-hook 'sh-mode-hook
-	  (lambda ()
-	    (setq sh-indentation 4)
-	    (setq indent-tabs-mode nil)))
+          (lambda ()
+            (setq sh-indentation 4)))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -42,4 +41,4 @@
  '(shr-h3 ((t (:foreground "blue" :background "black")))))
 
 (advice-add 'eww--dwim-expand-url :filter-return
-	    (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
+            (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
