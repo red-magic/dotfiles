@@ -2,4 +2,4 @@
 
 set -e
 
-certbot certonly --dry-run --webroot -w /var/www/domain -d domain.tld -d www.domain.tld
+certbot certonly --dry-run --webroot -w /var/www/domain.tld -d domain.tld -d www.domain.tld
