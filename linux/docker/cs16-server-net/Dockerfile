@@ -26,8 +26,8 @@ RUN mkdir -v /var/hlds/.steam && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN cd /var/hlds/.steam && \
-    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5473-base-linux.tar.gz | tar zxvf - -C . && \
-    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5473-cstrike-linux.tar.gz | tar zxvf - -C . && \
+    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5474-base-linux.tar.gz | tar zxvf - -C . && \
+    curl -L https://www.amxmodx.org/amxxdrop/1.10/amxmodx-1.10.0-git5474-cstrike-linux.tar.gz | tar zxvf - -C . && \
 
 RUN cd /var/hlds/.steam && \
     echo '"STEAM_0:0:123456" "" "abcdefghijklmnopqrstuv" "ce"' >> addons/amxmodx/configs/users.ini && \
