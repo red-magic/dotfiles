@@ -9,7 +9,7 @@ openssl req -x509 \
         -pkeyopt ec_paramgen_curve:prime256v1 \
         -sha256 \
         -nodes \
-        -days 365000 \
+        -days 3650 \
         -subj "/CN=$domain" \
         -addext "subjectAltName = DNS:$domain" \
         -keyout $domain.key \

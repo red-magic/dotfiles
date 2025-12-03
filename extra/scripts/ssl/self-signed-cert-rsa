@@ -8,7 +8,7 @@ openssl req -x509 \
         -newkey RSA:4096 \
         -sha256 \
         -nodes \
-        -days 365000 \
+        -days 3650 \
         -subj "/CN=$domain" \
         -addext "subjectAltName = DNS:$domain" \
         -keyout $domain.key \
