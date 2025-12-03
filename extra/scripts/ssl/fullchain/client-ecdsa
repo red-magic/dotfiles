@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -e
+
+client_cn=domain.internal
+valid_days=3650
+
+openssl genpkey \
+        -algorithm EC \
+        -pkeyopt ec_paramgen_curve:prime256v1 \
+        -out $client_cn.key
+
+cat > $client_cn.ext <<EOF
+keyUsage = digitalSignature
+extendedKeyUsage = serverAuth, clientAuth
+subjectAltName = DNS:$client_cn
+EOF
+
+openssl req \
+        -new \
+        -key $client_cn.key \
+        -subj "/CN=$client_cn" \
+        -out $client_cn.csr
+
+openssl x509 \
+        -req \
+        -in $client_cn.csr \
+        -CA ca.crt \
+        -CAkey ca.key \
+        -CAcreateserial \
+        -days $valid_days -sha256 \
+        -extfile $client_cn.ext \
+        -out $client_cn.crt
+
+rm -f $client_cn.ext $client_cn.csr ca.srl
+
+chmod 400 $client_cn.key
+chmod 444 $client_cn.crt
+
+openssl x509 -in $client_cn.crt -text -noout
+openssl verify -CAfile ca.crt $client_cn.crt

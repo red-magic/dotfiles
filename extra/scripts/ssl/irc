@@ -2,7 +2,8 @@
 
 set -e
 
-[ ! -f irc.pem ] && openssl req -x509 \
+[ ! -f irc.pem ] && openssl req \
+                            -x509 \
                             -newkey RSA:4096 \
                             -sha256 \
                             -nodes \
