@@ -22,8 +22,6 @@ openssl req \
         -addext "keyUsage = digitalSignature, keyCertSign, cRLSign" \
         -out ca.crt
 
-#rm -f $client_cn.ext $client_cn.csr ca.srl
-
 chmod 400 ca.key
 chmod 444 ca.crt
 
