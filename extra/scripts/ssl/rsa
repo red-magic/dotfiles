@@ -18,7 +18,7 @@ openssl req \
         -nodes \
         -days 3650 \
         -subj "/CN=$domain" \
-        -addext "subjectAltName = DNS:$domain, DNS:*.$domain" \
+        -addext "subjectAltName = DNS:$domain" \
         -keyout "$domain"/"$domain".key \
         -out "$domain"/"$domain".crt
 

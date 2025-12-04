@@ -20,7 +20,7 @@ openssl genpkey \
 cat > "$server_cn"/"$server_cn".ext <<EOF
 keyUsage = digitalSignature
 extendedKeyUsage = serverAuth
-subjectAltName = DNS:$server_cn, DNS:*.$server_cn
+subjectAltName = DNS:$server_cn
 EOF
 
 openssl req \
