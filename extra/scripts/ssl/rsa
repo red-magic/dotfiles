@@ -19,6 +19,8 @@ openssl req \
         -days 3650 \
         -subj "/CN=$domain" \
         -addext "subjectAltName = DNS:$domain" \
+        -addext "keyUsage = digitalSignature" \
+        -addext "extendedKeyUsage = serverAuth" \
         -keyout "$domain"/"$domain".key \
         -out "$domain"/"$domain".crt
 
