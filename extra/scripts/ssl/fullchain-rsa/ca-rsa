@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+ca_cn="Internal CA"
+valid_days=7300
+
+mkdir ca
+
+openssl genpkey \
+        -algorithm RSA \
+        -pkeyopt rsa_keygen_bits:4096 \
+        -out ca/ca.key
+
+openssl req \
+        -x509 \
+        -new \
+        -nodes \
+        -key ca/ca.key \
+        -sha256 \
+        -days $valid_days \
+        -subj "/CN=$ca_cn" \
+        -addext "keyUsage = critical, digitalSignature, keyCertSign, cRLSign" \
+        -addext "basicConstraints = critical, CA:TRUE" \
+        -addext "subjectKeyIdentifier = hash" \
+        -out ca/ca.crt
+
+chmod 400 ca/ca.key
+chmod 444 ca/ca.crt
+
+openssl x509 -in ca/ca.crt -text -noout

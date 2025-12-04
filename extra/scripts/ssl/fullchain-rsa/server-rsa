@@ -1,0 +1,52 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <domain.internal>"
+    exit 1
+fi
+
+server_cn=$1
+valid_days=3650
+
+mkdir "$server_cn"
+
+openssl genpkey \
+        -algorithm RSA \
+        -pkeyopt rsa_keygen_bits:4096 \
+        -out "$server_cn"/"$server_cn".key
+
+cat > "$server_cn"/"$server_cn".ext <<EOF
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+basicConstraints = critical, CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+subjectAltName = DNS:$server_cn
+EOF
+
+openssl req \
+        -new \
+        -key "$server_cn"/"$server_cn".key \
+        -subj "/CN=$server_cn" \
+        -out "$server_cn"/"$server_cn".csr
+
+openssl x509 \
+        -req \
+        -in "$server_cn"/"$server_cn".csr \
+        -CA ca/ca.crt \
+        -CAkey ca/ca.key \
+        -CAcreateserial \
+        -sha256 \
+        -days $valid_days \
+        -extfile "$server_cn"/"$server_cn".ext \
+        -out "$server_cn"/"$server_cn".crt
+
+rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr ca/ca.srl
+
+chmod 400 "$server_cn"/"$server_cn".key
+chmod 444 "$server_cn"/"$server_cn".crt
+
+openssl x509 -in "$server_cn"/"$server_cn".crt -text -noout
+openssl verify -CAfile ca/ca.crt "$server_cn"/"$server_cn".crt
