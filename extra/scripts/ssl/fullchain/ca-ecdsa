@@ -5,25 +5,26 @@ set -e
 ca_cn="Internal CA"
 valid_days=3650
 
+mkdir ca
+
 openssl genpkey \
         -algorithm EC \
         -pkeyopt ec_paramgen_curve:prime256v1 \
-        -out ca.key
+        -out ca/ca.key
 
 openssl req \
         -x509 \
         -new \
         -nodes \
-        -key ca.key \
+        -key ca/ca.key \
         -sha256 \
         -days $valid_days \
         -subj "/CN=$ca_cn" \
         -addext "basicConstraints = critical, CA:TRUE" \
-        -addext "keyUsage = digitalSignature, keyCertSign, cRLSign" \
-        -addext "extendedKeyUsage = serverAuth, clientAuth" \
-        -out ca.crt
+        -addext "keyUsage = critical, digitalSignature, keyCertSign, cRLSign" \
+        -out ca/ca.crt
 
-chmod 400 ca.key
-chmod 444 ca.crt
+chmod 400 ca/ca.key
+chmod 444 ca/ca.crt
 
-openssl x509 -in ca.crt -text -noout
+openssl x509 -in ca/ca.crt -text -noout

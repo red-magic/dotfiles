@@ -2,7 +2,14 @@
 
 set -e
 
-domain="domain.internal"
+if [ -z "$1" ]; then
+    echo "Usage: $0 <domain.internal>"
+    exit 1
+fi
+
+domain=$1
+
+mkdir "$domain"
 
 openssl req \
         -x509 \
@@ -11,11 +18,11 @@ openssl req \
         -nodes \
         -days 3650 \
         -subj "/CN=$domain" \
-        -addext "subjectAltName = DNS:$domain" \
-        -keyout $domain.key \
-        -out $domain.crt
+        -addext "subjectAltName = DNS:$domain, DNS:*.$domain" \
+        -keyout "$domain"/"$domain".key \
+        -out "$domain"/"$domain".crt
 
-chmod 400 $domain.key
-chmod 444 $domain.crt
+chmod 400 "$domain"/"$domain".key
+chmod 444 "$domain"/"$domain".crt
 
-openssl x509 -in $domain.crt -text -noout
+openssl x509 -in "$domain"/"$domain".crt -text -noout

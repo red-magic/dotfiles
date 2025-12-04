@@ -2,6 +2,8 @@
 
 set -e
 
+mkdir libera
+
 [ ! -f irc.pem ] && openssl req \
                             -x509 \
                             -newkey RSA:4096 \
@@ -9,17 +11,17 @@ set -e
                             -nodes \
                             -days 365000 \
                             -subj "/CN=irc.libera.chat/O=CertFP" \
-                            -out irc.pem \
-                            -keyout irc.pem
+                            -out libera/libera.pem \
+                            -keyout libera/libera.pem
 
-chmod 400 irc.pem
+chmod 400 libera/libera.pem
 
 openssl x509 \
-        -in irc.pem \
+        -in libera/libera.pem \
         -noout \
         -fingerprint -sha512 \
-    | awk -F= '{gsub(":",""); print tolower ($2)}' > irc.fp
+    | awk -F= '{gsub(":",""); print tolower ($2)}' > libera/libera.fp
 
-chmod 444 irc.fp
+chmod 444 libera/libera.fp
 
-cat irc.fp
+cat libera/libera.fp
