@@ -3,7 +3,7 @@
 set -e
 
 ca_cn="Internal CA"
-valid_days=3650
+valid_days=7300
 
 mkdir ca
 
