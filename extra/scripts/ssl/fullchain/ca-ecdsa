@@ -20,8 +20,9 @@ openssl req \
         -sha384 \
         -days $valid_days \
         -subj "/CN=$ca_cn" \
-        -addext "basicConstraints = critical, CA:TRUE" \
         -addext "keyUsage = critical, digitalSignature, keyCertSign, cRLSign" \
+        -addext "basicConstraints = critical, CA:TRUE" \
+        -addext "subjectKeyIdentifier = hash" \
         -out ca/ca.crt
 
 chmod 400 ca/ca.key

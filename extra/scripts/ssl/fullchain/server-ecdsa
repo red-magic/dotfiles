@@ -18,8 +18,11 @@ openssl genpkey \
         -out "$server_cn"/"$server_cn".key
 
 cat > "$server_cn"/"$server_cn".ext <<EOF
-keyUsage = digitalSignature
+keyUsage = critical, digitalSignature
 extendedKeyUsage = serverAuth
+basicConstraints = critical, CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
 subjectAltName = DNS:$server_cn
 EOF
 
