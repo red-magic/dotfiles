@@ -35,7 +35,8 @@ openssl x509 \
         -CA ca/ca.crt \
         -CAkey ca/ca.key \
         -CAcreateserial \
-        -days $valid_days -sha256 \
+        -sha256 \
+        -days $valid_days \
         -extfile "$server_cn"/"$server_cn".ext \
         -out "$server_cn"/"$server_cn".crt
 
