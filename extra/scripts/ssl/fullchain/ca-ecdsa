@@ -9,7 +9,7 @@ mkdir ca
 
 openssl genpkey \
         -algorithm EC \
-        -pkeyopt ec_paramgen_curve:prime256v1 \
+        -pkeyopt ec_paramgen_curve:secp384r1 \
         -out ca/ca.key
 
 openssl req \
@@ -17,7 +17,7 @@ openssl req \
         -new \
         -nodes \
         -key ca/ca.key \
-        -sha256 \
+        -sha384 \
         -days $valid_days \
         -subj "/CN=$ca_cn" \
         -addext "basicConstraints = critical, CA:TRUE" \
