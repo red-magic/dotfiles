@@ -12,7 +12,7 @@ openssl genpkey \
 
 cat > $client_cn.ext <<EOF
 keyUsage = digitalSignature
-extendedKeyUsage = serverAuth, clientAuth
+extendedKeyUsage = serverAuth
 subjectAltName = DNS:$client_cn
 EOF
 

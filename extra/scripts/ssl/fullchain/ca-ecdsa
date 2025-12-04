@@ -20,6 +20,7 @@ openssl req \
         -subj "/CN=$ca_cn" \
         -addext "basicConstraints = critical, CA:TRUE" \
         -addext "keyUsage = digitalSignature, keyCertSign, cRLSign" \
+        -addext "extendedKeyUsage = serverAuth, clientAuth" \
         -out ca.crt
 
 chmod 400 ca.key
