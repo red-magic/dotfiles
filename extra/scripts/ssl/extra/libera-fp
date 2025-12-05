@@ -9,7 +9,7 @@ mkdir libera
                             -newkey RSA:4096 \
                             -sha256 \
                             -nodes \
-                            -days 365000 \
+                            -days 3650 \
                             -subj "/CN=irc.libera.chat/O=CertFP" \
                             -out libera/libera.pem \
                             -keyout libera/libera.pem
