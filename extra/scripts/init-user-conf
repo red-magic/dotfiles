@@ -35,11 +35,11 @@ if [ -n "$workstation" ]; then
     gpg -do archive.tar.gz archive.tar.gz.gpg
 
     while true; do
-        printf "Continue? [y/n] "
+        echo -n "Continue? [y/n] "
         read -r yn
         case $yn in
-            [Yy]*) printf "Continuing" && break ;;
-            [Nn]*) printf "Exiting" && exit 1 ;;
+            [Yy]*) break ;;
+            [Nn]*) exit 1 ;;
         esac
     done
 
