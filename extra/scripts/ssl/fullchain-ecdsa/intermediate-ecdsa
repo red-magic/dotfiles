@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -e
+
+ca_name="internal-ca"
+intermediate_cn="Internal Intermediate 1"
+intermediate_name="internal-intermediate-1"
+valid_days=5475
+
+mkdir "$intermediate_name"
+
+openssl genpkey \
+        -algorithm EC \
+        -pkeyopt ec_paramgen_curve:secp384r1 \
+        -out "$intermediate_name"/"$intermediate_name".key
+
+cat > "$intermediate_name"/"$intermediate_name".ext <<EOF
+keyUsage = critical, keyCertSign, cRLSign
+basicConstraints = critical, CA:TRUE, pathlen:0
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+EOF
+
+openssl req \
+        -new \
+        -key "$intermediate_name"/"$intermediate_name".key \
+        -subj "/CN=$intermediate_cn" \
+        -out "$intermediate_name"/"$intermediate_name".csr
+
+openssl x509 \
+        -req \
+        -in "$intermediate_name"/"$intermediate_name".csr \
+        -CA "$ca_name"/"$ca_name".crt \
+        -CAkey "$ca_name"/"$ca_name".key \
+        -CAcreateserial \
+        -sha384 \
+        -days $valid_days \
+        -extfile "$intermediate_name"/"$intermediate_name".ext \
+        -out "$intermediate_name"/"$intermediate_name".crt
+
+rm -f "$intermediate_name"/"$intermediate_name".ext "$intermediate_name"/"$intermediate_name".csr "$ca_name"/"$ca_name".srl
+
+chmod 400 "$intermediate_name"/"$intermediate_name".key
+chmod 444 "$intermediate_name"/"$intermediate_name".crt
+
+openssl x509 -in "$intermediate_name"/"$intermediate_name".crt -text -noout
+openssl verify -CAfile "$ca_name"/"$ca_name".crt "$intermediate_name"/"$intermediate_name".crt

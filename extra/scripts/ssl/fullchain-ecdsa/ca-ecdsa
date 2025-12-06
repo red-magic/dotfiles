@@ -3,29 +3,30 @@
 set -e
 
 ca_cn="Internal CA"
+ca_name="internal-ca"
 valid_days=7300
 
-mkdir ca
+mkdir "$ca_name"
 
 openssl genpkey \
         -algorithm EC \
         -pkeyopt ec_paramgen_curve:secp384r1 \
-        -out ca/ca.key
+        -out "$ca_name"/"$ca_name".key
 
 openssl req \
         -x509 \
         -new \
         -nodes \
-        -key ca/ca.key \
+        -key "$ca_name"/"$ca_name".key \
         -sha384 \
         -days $valid_days \
         -subj "/CN=$ca_cn" \
-        -addext "keyUsage = critical, digitalSignature, keyCertSign, cRLSign" \
-        -addext "basicConstraints = critical, CA:TRUE" \
+        -addext "keyUsage = critical, keyCertSign, cRLSign" \
+        -addext "basicConstraints = critical, CA:TRUE, pathlen:1" \
         -addext "subjectKeyIdentifier = hash" \
-        -out ca/ca.crt
+        -out "$ca_name"/"$ca_name".crt
 
-chmod 400 ca/ca.key
-chmod 444 ca/ca.crt
+chmod 400 "$ca_name"/"$ca_name".key
+chmod 444 "$ca_name"/"$ca_name".crt
 
-openssl x509 -in ca/ca.crt -text -noout
+openssl x509 -in "$ca_name"/"$ca_name".crt -text -noout
