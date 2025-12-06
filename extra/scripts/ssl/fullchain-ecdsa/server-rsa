@@ -7,10 +7,12 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-ca_name="internal-ca"
-intermediate_name="internal-intermediate-1"
 server_cn=$1
+
 valid_days=3650
+
+ca_cn="RCA"
+ica_cn="ICA1"
 
 mkdir "$server_cn"
 
@@ -37,21 +39,21 @@ openssl req \
 openssl x509 \
         -req \
         -in "$server_cn"/"$server_cn".csr \
-        -CA "$intermediate_name"/"$intermediate_name".crt \
-        -CAkey "$intermediate_name"/"$intermediate_name".key \
+        -CA "$ica_cn"/"$ica_cn".crt \
+        -CAkey "$ica_cn"/"$ica_cn".key \
         -CAcreateserial \
         -sha256 \
         -days $valid_days \
         -extfile "$server_cn"/"$server_cn".ext \
         -out "$server_cn"/"$server_cn".crt
 
-rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr "$intermediate_name"/"$intermediate_name".srl
+rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr "$ica_cn"/"$ica_cn".srl
 
 chmod 400 "$server_cn"/"$server_cn".key
 chmod 444 "$server_cn"/"$server_cn".crt
 
-cat "$server_cn"/"$server_cn".crt "$intermediate_name"/"$intermediate_name".crt > "$server_cn"/"$server_cn".fullchain.pem
-cat "$intermediate_name"/"$intermediate_name".crt "$ca_name"/"$ca_name".crt > "$server_cn"/ca-bundle.pem
+cat "$server_cn"/"$server_cn".crt "$ica_cn"/"$ica_cn".crt > "$server_cn"/"$server_cn".fullchain.pem
+cat "$ica_cn"/"$ica_cn".crt "$ca_cn"/"$ca_cn".crt > "$server_cn"/ca-bundle.pem
 
 chmod 444 "$server_cn"/"$server_cn".fullchain.pem
 

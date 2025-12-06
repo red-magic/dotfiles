@@ -2,31 +2,33 @@
 
 set -e
 
-ca_cn="Internal CA"
-ca_name="internal-ca"
+ca_c="AQ"
+ca_o="Internal"
+ca_cn="RCA"
+
 valid_days=7300
 
-mkdir "$ca_name"
+mkdir "$ca_cn"
 
 openssl genpkey \
         -algorithm RSA \
         -pkeyopt rsa_keygen_bits:4096 \
-        -out "$ca_name"/"$ca_name".key
+        -out "$ca_cn"/"$ca_cn".key
 
 openssl req \
         -x509 \
         -new \
         -nodes \
-        -key "$ca_name"/"$ca_name".key \
+        -key "$ca_cn"/"$ca_cn".key \
         -sha256 \
         -days $valid_days \
-        -subj "/CN=$ca_cn" \
+        -subj "/C=$ca_c/O=$ca_o/CN=$ca_cn" \
         -addext "keyUsage = critical, keyCertSign, cRLSign" \
         -addext "basicConstraints = critical, CA:TRUE, pathlen:1" \
         -addext "subjectKeyIdentifier = hash" \
-        -out "$ca_name"/"$ca_name".crt
+        -out "$ca_cn"/"$ca_cn".crt
 
-chmod 400 "$ca_name"/"$ca_name".key
-chmod 444 "$ca_name"/"$ca_name".crt
+chmod 400 "$ca_cn"/"$ca_cn".key
+chmod 444 "$ca_cn"/"$ca_cn".crt
 
-openssl x509 -in "$ca_name"/"$ca_name".crt -text -noout
+openssl x509 -in "$ca_cn"/"$ca_cn".crt -text -noout
