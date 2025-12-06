@@ -17,18 +17,18 @@ openssl genpkey \
         -pkeyopt ec_paramgen_curve:secp384r1 \
         -out "$ica_cn"/"$ica_cn".key
 
+openssl req \
+        -new \
+        -key "$ica_cn"/"$ica_cn".key \
+        -subj "/C=$ica_c/O=$ica_o/CN=$ica_cn" \
+        -out "$ica_cn"/"$ica_cn".csr
+
 cat > "$ica_cn"/"$ica_cn".ext <<EOF
 keyUsage = critical, keyCertSign, cRLSign
 basicConstraints = critical, CA:TRUE, pathlen:0
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 EOF
-
-openssl req \
-        -new \
-        -key "$ica_cn"/"$ica_cn".key \
-        -subj "/C=$ica_c/O=$ica_o/CN=$ica_cn" \
-        -out "$ica_cn"/"$ica_cn".csr
 
 openssl x509 \
         -req \
