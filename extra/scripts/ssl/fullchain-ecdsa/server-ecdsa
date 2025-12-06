@@ -50,12 +50,12 @@ rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr "$intermediate
 chmod 400 "$server_cn"/"$server_cn".key
 chmod 444 "$server_cn"/"$server_cn".crt
 
-cat "$server_cn"/"$server_cn".crt "$intermediate_name"/"$intermediate_name".crt "$ca_name"/"$ca_name".crt > "$server_cn"/"$server_cn".fullchain.crt
-cat "$intermediate_name"/"$intermediate_name".crt "$ca_name"/"$ca_name".crt > "$server_cn"/ca-bundle.crt
+cat "$server_cn"/"$server_cn".crt "$intermediate_name"/"$intermediate_name".crt > "$server_cn"/"$server_cn".fullchain.pem
+cat "$intermediate_name"/"$intermediate_name".crt "$ca_name"/"$ca_name".crt > "$server_cn"/ca-bundle.pem
 
-chmod 444 "$server_cn"/"$server_cn".fullchain.crt
+chmod 444 "$server_cn"/"$server_cn".fullchain.pem
 
 openssl x509 -in "$server_cn"/"$server_cn".crt -text -noout
-openssl verify -CAfile "$server_cn"/ca-bundle.crt "$server_cn"/"$server_cn".crt
+openssl verify -CAfile "$server_cn"/ca-bundle.pem "$server_cn"/"$server_cn".crt
 
-rm -f "$server_cn"/ca-bundle.crt
+rm -f "$server_cn"/ca-bundle.pem
