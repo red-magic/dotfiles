@@ -3,7 +3,7 @@
 set -e
 
 if [ -z "$1" ]; then
-    echo "Usage: $0 <domain.internal>"
+    printf "Usage: %s <domain.internal>\n" "$(basename "$0")"
     exit 1
 fi
 

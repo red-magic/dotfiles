@@ -3,7 +3,7 @@
 set -e
 
 print_help() {
-    echo "Usage: $(basename "$0") [-d <system-image-file>] [-c <cd-iso-file>]"
+    printf "Usage: %s -d <system.img> -c <cd.iso-file>\n" "$(basename "$0")"
 }
 
 while getopts :d:c: opt; do
@@ -13,7 +13,7 @@ while getopts :d:c: opt; do
     case $opt in
         c) cd_args="-cdrom $OPTARG" ;;
         d) drive_args="-drive file=$OPTARG,format=raw" ;;
-        :) echo "Option -$OPTARG requires an argument" && exit 1 ;;
+        :) printf "Option -%s requires an argument\n" "$OPTARG" && exit 1 ;;
         *) print_help && exit 1 ;;
     esac
 done
@@ -21,6 +21,6 @@ done
 if [ -z "$qemu_args" ]; then
     print_help && exit 1
 else
-    echo "$qemu_args $drive_args $cd_args"
+    printf "%s %s %s\n" "$qemu_args" "$drive_args" "$cd_args"
     eval "$qemu_args $drive_args $cd_args"
 fi

@@ -35,8 +35,8 @@ generate_password() {
 }
 
 # Main program
-if [[ "${#}" -ne 1 ]]; then
-    echo "Usage: $0 [number-of-words]"
+if [[ -z "${1}" ]]; then
+    printf "Usage: %s <number-of-words>\n" "$(basename "${0}")"
     exit 1
 fi
 
