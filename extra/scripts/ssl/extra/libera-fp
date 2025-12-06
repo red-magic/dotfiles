@@ -10,11 +10,16 @@ mkdir libera
                             -sha256 \
                             -nodes \
                             -days 3650 \
-                            -subj "/CN=irc.libera.chat/O=CertFP" \
+                            -subj "/CN=irc.libera.chat" \
                             -out libera/libera.pem \
                             -keyout libera/libera.pem
 
 chmod 400 libera/libera.pem
+
+openssl x509 \
+        -in libera/libera.pem \
+        -text \
+        -noout
 
 openssl x509 \
         -in libera/libera.pem \
