@@ -2,33 +2,33 @@
 
 set -e
 
-ca_c="AQ"
-ca_o="Internal"
-ca_cn="RCA"
+rca_c="AQ"
+rca_o="Internal"
+rca_cn="RCA"
 
 valid_days=7300
 
-mkdir "$ca_cn"
+mkdir "$rca_cn"
 
 openssl genpkey \
         -algorithm EC \
         -pkeyopt ec_paramgen_curve:secp384r1 \
-        -out "$ca_cn"/"$ca_cn".key
+        -out "$rca_cn"/"$rca_cn".key
 
 openssl req \
         -x509 \
         -new \
         -nodes \
-        -key "$ca_cn"/"$ca_cn".key \
+        -key "$rca_cn"/"$rca_cn".key \
         -sha384 \
         -days $valid_days \
-        -subj "/C=$ca_c/O=$ca_o/CN=$ca_cn" \
+        -subj "/C=$rca_c/O=$rca_o/CN=$rca_cn" \
         -addext "keyUsage = critical, keyCertSign, cRLSign" \
         -addext "basicConstraints = critical, CA:TRUE, pathlen:1" \
         -addext "subjectKeyIdentifier = hash" \
-        -out "$ca_cn"/"$ca_cn".crt
+        -out "$rca_cn"/"$rca_cn".crt
 
-chmod 400 "$ca_cn"/"$ca_cn".key
-chmod 444 "$ca_cn"/"$ca_cn".crt
+chmod 400 "$rca_cn"/"$rca_cn".key
+chmod 444 "$rca_cn"/"$rca_cn".crt
 
-openssl x509 -in "$ca_cn"/"$ca_cn".crt -text -noout
+openssl x509 -in "$rca_cn"/"$rca_cn".crt -text -noout

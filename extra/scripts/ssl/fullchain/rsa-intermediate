@@ -8,7 +8,7 @@ ica_cn="ICA1"
 
 valid_days=5475
 
-ca_cn="RCA"
+rca_cn="RCA"
 
 mkdir "$ica_cn"
 
@@ -33,18 +33,18 @@ EOF
 openssl x509 \
         -req \
         -in "$ica_cn"/"$ica_cn".csr \
-        -CA "$ca_cn"/"$ca_cn".crt \
-        -CAkey "$ca_cn"/"$ca_cn".key \
+        -CA "$rca_cn"/"$rca_cn".crt \
+        -CAkey "$rca_cn"/"$rca_cn".key \
         -CAcreateserial \
         -sha256 \
         -days $valid_days \
         -extfile "$ica_cn"/"$ica_cn".ext \
         -out "$ica_cn"/"$ica_cn".crt
 
-rm -f "$ica_cn"/"$ica_cn".ext "$ica_cn"/"$ica_cn".csr "$ca_cn"/"$ca_cn".srl
+rm -f "$ica_cn"/"$ica_cn".ext "$ica_cn"/"$ica_cn".csr "$rca_cn"/"$rca_cn".srl
 
 chmod 400 "$ica_cn"/"$ica_cn".key
 chmod 444 "$ica_cn"/"$ica_cn".crt
 
 openssl x509 -in "$ica_cn"/"$ica_cn".crt -text -noout
-openssl verify -CAfile "$ca_cn"/"$ca_cn".crt "$ica_cn"/"$ica_cn".crt
+openssl verify -CAfile "$rca_cn"/"$rca_cn".crt "$ica_cn"/"$ica_cn".crt

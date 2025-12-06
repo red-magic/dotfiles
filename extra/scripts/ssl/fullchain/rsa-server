@@ -11,7 +11,7 @@ server_cn=$1
 
 valid_days=3650
 
-ca_cn="RCA"
+rca_cn="RCA"
 ica_cn="ICA1"
 
 mkdir "$server_cn"
@@ -53,7 +53,7 @@ chmod 400 "$server_cn"/"$server_cn".key
 chmod 444 "$server_cn"/"$server_cn".crt
 
 cat "$server_cn"/"$server_cn".crt "$ica_cn"/"$ica_cn".crt > "$server_cn"/"$server_cn".fullchain.pem
-cat "$ica_cn"/"$ica_cn".crt "$ca_cn"/"$ca_cn".crt > "$server_cn"/ca-bundle.pem
+cat "$ica_cn"/"$ica_cn".crt "$rca_cn"/"$rca_cn".crt > "$server_cn"/ca-bundle.pem
 
 chmod 444 "$server_cn"/"$server_cn".fullchain.pem
 
