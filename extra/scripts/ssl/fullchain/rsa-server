@@ -9,7 +9,7 @@ fi
 
 server_cn=$1
 
-valid_days=3650
+valid_days=1825
 
 rca_cn="RCA"
 ica_cn="ICA1"

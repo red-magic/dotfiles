@@ -6,7 +6,7 @@ ica_c="AQ"
 ica_o="Internal"
 ica_cn="ICA1"
 
-valid_days=5475
+valid_days=3650
 
 rca_cn="RCA"
 
