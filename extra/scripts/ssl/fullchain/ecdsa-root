@@ -26,6 +26,7 @@ openssl req \
         -addext "keyUsage = critical, keyCertSign, cRLSign" \
         -addext "basicConstraints = critical, CA:TRUE, pathlen:1" \
         -addext "subjectKeyIdentifier = hash" \
+        -set_serial 0x"$(openssl rand -hex 16)" \
         -out "$rca_cn"/"$rca_cn".crt
 
 chmod 400 "$rca_cn"/"$rca_cn".key

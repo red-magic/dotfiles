@@ -45,6 +45,7 @@ openssl x509 \
         -sha256 \
         -days $valid_days \
         -extfile "$server_cn"/"$server_cn".ext \
+        -set_serial 0x"$(openssl rand -hex 16)" \
         -out "$server_cn"/"$server_cn".crt
 
 cat "$server_cn"/"$server_cn".crt "$ica_cn"/"$ica_cn".crt > "$server_cn"/"$server_cn".fullchain.pem

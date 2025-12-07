@@ -39,9 +39,10 @@ openssl x509 \
         -sha384 \
         -days $valid_days \
         -extfile "$ica_cn"/"$ica_cn".ext \
-        -out "$ica_cn"/"$ica_cn".crt
+        -set_serial 0x"$(openssl rand -hex 16)" \
+        -out "$ica_cn"/"$ica_cn".crt \
 
-chmod 400 "$ica_cn"/"$ica_cn".key
+        chmod 400 "$ica_cn"/"$ica_cn".key
 chmod 444 "$ica_cn"/"$ica_cn".crt
 
 openssl x509 -in "$ica_cn"/"$ica_cn".crt -text -noout
