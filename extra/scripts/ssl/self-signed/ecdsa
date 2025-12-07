@@ -14,8 +14,8 @@ mkdir "$domain"
 openssl req \
         -x509 \
         -newkey EC \
-        -pkeyopt ec_paramgen_curve:prime256v1 \
-        -sha256 \
+        -pkeyopt ec_paramgen_curve:secp384r1 \
+        -sha384 \
         -nodes \
         -days 1825 \
         -subj "/CN=$domain" \

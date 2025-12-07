@@ -18,7 +18,7 @@ mkdir "$server_cn"
 
 openssl genpkey \
         -algorithm EC \
-        -pkeyopt ec_paramgen_curve:prime256v1 \
+        -pkeyopt ec_paramgen_curve:secp384r1 \
         -out "$server_cn"/"$server_cn".key
 
 openssl req \
@@ -41,7 +41,7 @@ openssl x509 \
         -in "$server_cn"/"$server_cn".csr \
         -CA "$ica_cn"/"$ica_cn".crt \
         -CAkey "$ica_cn"/"$ica_cn".key \
-        -sha256 \
+        -sha384 \
         -days $valid_days \
         -extfile "$server_cn"/"$server_cn".ext \
         -set_serial 0x"$(openssl rand -hex 16)" \
