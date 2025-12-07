@@ -8,7 +8,7 @@ mkdir libera
                             -x509 \
                             -newkey RSA \
                             -pkeyopt rsa_keygen_bits:4096 \
-                            -sha256 \
+                            -sha384 \
                             -nodes \
                             -days 1825 \
                             -subj "/CN=irc.libera.chat" \

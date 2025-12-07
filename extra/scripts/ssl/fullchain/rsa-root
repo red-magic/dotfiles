@@ -20,7 +20,7 @@ openssl req \
         -x509 \
         -new \
         -key "$rca_cn"/"$rca_cn".key \
-        -sha256 \
+        -sha384 \
         -days $valid_days \
         -subj "/C=$rca_c/O=$rca_o/CN=$rca_cn" \
         -addext "keyUsage = critical, keyCertSign, cRLSign" \
