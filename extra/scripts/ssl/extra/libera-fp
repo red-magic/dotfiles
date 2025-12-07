@@ -6,10 +6,11 @@ mkdir libera
 
 [ ! -f irc.pem ] && openssl req \
                             -x509 \
-                            -newkey RSA:4096 \
+                            -newkey RSA \
+                            -pkeyopt rsa_keygen_bits:4096 \
                             -sha256 \
                             -nodes \
-                            -days 3650 \
+                            -days 1825 \
                             -subj "/CN=irc.libera.chat" \
                             -out libera/libera.pem \
                             -keyout libera/libera.pem
