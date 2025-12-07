@@ -35,7 +35,6 @@ openssl x509 \
         -in "$ica_cn"/"$ica_cn".csr \
         -CA "$rca_cn"/"$rca_cn".crt \
         -CAkey "$rca_cn"/"$rca_cn".key \
-        -CAcreateserial \
         -sha384 \
         -days $valid_days \
         -extfile "$ica_cn"/"$ica_cn".ext \
