@@ -19,9 +19,12 @@ openssl req \
         -nodes \
         -days 3650 \
         -subj "/CN=$domain" \
-        -addext "subjectAltName = DNS:$domain" \
-        -addext "keyUsage = digitalSignature" \
+        -addext "keyUsage = critical, digitalSignature" \
         -addext "extendedKeyUsage = serverAuth" \
+        -addext "basicConstraints = critical, CA:FALSE" \
+        -addext "subjectKeyIdentifier = hash" \
+        -addext "subjectAltName = DNS:$domain" \
+        -set_serial 0x"$(openssl rand -hex 16)" \
         -keyout "$domain"/"$domain".key \
         -out "$domain"/"$domain".crt
 
