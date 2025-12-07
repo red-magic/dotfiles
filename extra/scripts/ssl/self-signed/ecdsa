@@ -17,7 +17,7 @@ openssl req \
         -pkeyopt ec_paramgen_curve:prime256v1 \
         -sha256 \
         -nodes \
-        -days 3650 \
+        -days 1825 \
         -subj "/CN=$domain" \
         -addext "keyUsage = critical, digitalSignature" \
         -addext "extendedKeyUsage = serverAuth" \

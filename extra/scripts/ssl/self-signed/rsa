@@ -17,7 +17,7 @@ openssl req \
         -pkeyopt rsa_keygen_bits:4096 \
         -sha256 \
         -nodes \
-        -days 3650 \
+        -days 1825 \
         -subj "/CN=$domain" \
         -addext "keyUsage = critical, digitalSignature, keyEncipherment" \
         -addext "extendedKeyUsage = serverAuth" \
