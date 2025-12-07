@@ -13,12 +13,12 @@ mkdir "$rca_cn"
 openssl genpkey \
         -algorithm EC \
         -pkeyopt ec_paramgen_curve:secp384r1 \
+        -aes256 \
         -out "$rca_cn"/"$rca_cn".key
 
 openssl req \
         -x509 \
         -new \
-        -nodes \
         -key "$rca_cn"/"$rca_cn".key \
         -sha384 \
         -days $valid_days \

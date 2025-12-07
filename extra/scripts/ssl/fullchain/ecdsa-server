@@ -57,4 +57,4 @@ chmod 444 "$server_cn"/"$server_cn".fullchain.pem
 openssl x509 -in "$server_cn"/"$server_cn".fullchain.pem -text -noout
 openssl verify -CAfile "$server_cn"/ca-bundle.pem "$server_cn"/"$server_cn".fullchain.pem
 
-rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr "$ica_cn"/"$ica_cn".srl "$server_cn"/ca-bundle.pem
+rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr "$server_cn"/ca-bundle.pem

@@ -47,4 +47,4 @@ chmod 444 "$ica_cn"/"$ica_cn".crt
 openssl x509 -in "$ica_cn"/"$ica_cn".crt -text -noout
 openssl verify -CAfile "$rca_cn"/"$rca_cn".crt "$ica_cn"/"$ica_cn".crt
 
-rm -f "$ica_cn"/"$ica_cn".ext "$ica_cn"/"$ica_cn".csr "$rca_cn"/"$rca_cn".srl
+rm -f "$ica_cn"/"$ica_cn".ext "$ica_cn"/"$ica_cn".csr

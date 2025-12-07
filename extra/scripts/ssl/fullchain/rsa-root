@@ -13,12 +13,12 @@ mkdir "$rca_cn"
 openssl genpkey \
         -algorithm RSA \
         -pkeyopt rsa_keygen_bits:4096 \
+        -aes256 \
         -out "$rca_cn"/"$rca_cn".key
 
 openssl req \
         -x509 \
         -new \
-        -nodes \
         -key "$rca_cn"/"$rca_cn".key \
         -sha256 \
         -days $valid_days \
