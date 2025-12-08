@@ -28,7 +28,7 @@ openssl req \
         -out "$server_cn"/"$server_cn".csr
 
 cat > "$server_cn"/"$server_cn".ext <<EOF
-keyUsage = critical, digitalSignature, keyEncipherment
+keyUsage = critical, digitalSignature
 extendedKeyUsage = serverAuth
 basicConstraints = critical, CA:FALSE
 subjectKeyIdentifier = hash
