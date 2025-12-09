@@ -27,22 +27,11 @@ cd "$HOME"
 
 mkdir -m 700 .ssh
 mkdir repos
+mkdir .config
 
 if [ -n "$workstation" ]; then
-    gpg --keyserver hkps://keys.openpgp.org --receive-keys DB9A54FFE9854317497D69BB159C66B3104E3E30
-    printf "trust\n5\ny\nsave\n" | gpg --command-fd 0 --edit-key DB9A54FFE9854317497D69BB159C66B3104E3E30
     curl -LO https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.gz.gpg
     gpg -do archive.tar.gz archive.tar.gz.gpg
-
-    while true; do
-        printf "Continue? [y/n] "
-        read -r yn
-        case $yn in
-            [Yy]*) break ;;
-            [Nn]*) exit 1 ;;
-        esac
-    done
-
     tar xzf archive.tar.gz
     gpg --import archive/gpg/*.*
     cp -f archive/ssh/id_ed25519 .ssh
@@ -51,12 +40,7 @@ if [ -n "$workstation" ]; then
     touch .ssh/known_hosts
     chmod 600 .ssh/known_hosts
     rm -rf archive*
-else
-    curl -L https://github.com/red-magic.keys -o .ssh/authorized_keys
-    chmod 400 .ssh/authorized_keys
-fi
 
-if [ -f .ssh/id_ed25519 ]; then
     curl -L https://github.com/red-magic/dotfiles/raw/master/extra/configs/.ssh/config -o .ssh/config
     chmod 400 .ssh/config
     eval "$(ssh-agent -s)" && ssh-add
@@ -74,17 +58,16 @@ if [ -f .ssh/id_ed25519 ]; then
             done
         fi
     fi
-else
-    git clone https://github.com/red-magic/dotfiles repos/dotfiles
-fi
 
-mkdir .config
-
-if [ -n "$workstation" ]; then
     mkdir .config/emacs
     cp -vf repos/dotfiles/extra/configs/.config/emacs/init.el .config/emacs
     cp -vf repos/dotfiles/extra/configs/.gitconfig .
 fi
+
+[ -z "$workstation" ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
+
+mkdir .config/ranger
+cp -vf repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
 
 if uname -s | grep -q Linux; then
     cp -vf repos/dotfiles/linux/configs/.bash_profile .
@@ -103,6 +86,3 @@ elif uname -s | grep -q BSD; then
         cp -vrf repos/dotfiles/extra/configs/.fonts/Go .fonts
     fi
 fi
-
-mkdir .config/ranger
-cp -vf repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
