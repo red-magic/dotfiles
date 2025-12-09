@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+    printf "Usage: %s <enc | dec> <file>\n" "$(basename "$0")"
+    exit 1
+fi
+
+case $1 in
+    enc) gpg -o "$(pwd)"/"$(basename "$2")".gpg --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 -cs "$2" ;;
+    dec) gpg -do "$(pwd)"/"$(basename "$2" .gpg)" "$2" ;;
+    *) exit 1 ;;
+esac
