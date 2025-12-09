@@ -26,7 +26,7 @@ case $1 in
             printf "File %s already exists\n" "$(basename "$2")".gpg
             exit 1
         fi
-        gpg -o "$(basename "$2")".gpg --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 -cs "$2"
+        gpg -o "$(basename "$2")".gpg --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --no-compress -cs "$2"
         ;;
     dec)
         if [ -f "$(basename "$2" .gpg)" ]; then
