@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -ne 2 ]; then
+    printf "Usage: %s <enc | dec> <file>\n" "$(basename "$0")"
+    exit 1
+fi
+
+case $1 in
+    enc | dec)
+        if [ ! -f "$2" ]; then
+            printf "File %s doesn't exist\n" "$2"
+            exit 1
+        fi
+        ;;
+    *)
+        printf "Invalid option: %s\n" "$1"
+        exit 1
+        ;;
+esac
+
+case $1 in
+    enc)
+        if [ -f "$(basename "$2")".enc ]; then
+            printf "File %s already exists\n" "$(basename "$2")".enc
+            exit 1
+        fi
+        openssl enc -e -aes-256-ctr -salt -pbkdf2 -iter 1000000 -md sha512 -in "$2" -out "$(basename "$2")".enc
+        ;;
+    dec)
+        if [ -f "$(basename "$2" .enc)" ]; then
+            printf "File %s already exists\n" "$(basename "$2" .enc)"
+            exit 1
+        fi
+        openssl enc -d -aes-256-ctr -salt -pbkdf2 -iter 1000000 -md sha512 -in "$2" -out "$(basename "$2" .enc)"
+        ;;
+esac
