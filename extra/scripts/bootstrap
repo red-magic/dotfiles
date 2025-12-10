@@ -34,6 +34,7 @@ if [ -n "$workstation" ]; then
     gpg -do archive.tar.gz archive.tar.gz.gpg
     tar xzf archive.tar.gz
     gpg --import archive/gpg/*.*
+    printf "trust\n5\ny\nsave\n" | gpg --command-fd 0 --edit-key DB9A54FFE9854317497D69BB159C66B3104E3E30
     cp -f archive/ssh/id_ed25519 .ssh
     cp -f archive/ssh/id_ed25519.pub .ssh
     cp -f archive/ssh/id_ed25519.pub .ssh/authorized_keys
