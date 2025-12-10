@@ -2,7 +2,8 @@
 
 set -e
 
-qemu_args="qemu-system-x86_64 -cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
+qemu_cmd="qemu-system-x86_64"
+qemu_args="-cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
 cd_args=""
 drive_args=""
 
@@ -22,5 +23,5 @@ if [ -z "$drive_args" ] && [ -z "$cd_args" ]; then
     exit 1
 fi
 
-printf "%s %s %s\n" "$qemu_args" "$drive_args" "$cd_args"
-exec $qemu_args "$drive_args" "$cd_args"
+printf "%s %s %s %s\n" "$qemu_cmd" "$qemu_args" "$drive_args" "$cd_args"
+eval "$qemu_cmd $qemu_args $drive_args $cd_args"
