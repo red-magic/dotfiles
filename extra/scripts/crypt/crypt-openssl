@@ -26,13 +26,29 @@ case $1 in
             printf "File %s already exists\n" "$(basename "$2")".enc
             exit 1
         fi
-        openssl enc -e -aes-256-cbc -salt -pbkdf2 -iter 1000000 -md sha512 -in "$2" -out "$(basename "$2")".enc
+        openssl enc \
+                -e \
+                -aes-256-cbc \
+                -md sha512 \
+                -pbkdf2 \
+                -iter 1000000 \
+                -salt \
+                -in "$2" \
+                -out "$(basename "$2")".enc
         ;;
     dec)
         if [ -f "$(basename "$2" .enc)" ]; then
             printf "File %s already exists\n" "$(basename "$2" .enc)"
             exit 1
         fi
-        openssl enc -d -aes-256-cbc -salt -pbkdf2 -iter 1000000 -md sha512 -in "$2" -out "$(basename "$2" .enc)"
+        openssl enc \
+                -d \
+                -aes-256-cbc \
+                -md sha512 \
+                -pbkdf2 \
+                -iter 1000000 \
+                -salt \
+                -in "$2" \
+                -out "$(basename "$2" .enc)"
         ;;
 esac
