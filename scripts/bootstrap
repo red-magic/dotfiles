@@ -30,7 +30,7 @@ mkdir repos
 mkdir .config
 
 if [ -n "$workstation" ]; then
-    curl -LO https://github.com/red-magic/dotfiles/raw/master/extra/archive.tar.gz.gpg
+    curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.tar.gz.gpg
     gpg -do archive.tar.gz archive.tar.gz.gpg
     tar xzf archive.tar.gz
     gpg --import archive/gpg/*.*
@@ -42,7 +42,7 @@ if [ -n "$workstation" ]; then
     chmod 600 .ssh/known_hosts
     rm -rf archive*
 
-    curl -L https://github.com/red-magic/dotfiles/raw/master/extra/configs/.ssh/config -o .ssh/config
+    curl -L https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
     chmod 400 .ssh/config
     eval "$(ssh-agent -s)"
     ssh-add
@@ -62,29 +62,29 @@ if [ -n "$workstation" ]; then
     fi
 
     mkdir .config/emacs
-    cp -f repos/dotfiles/extra/configs/.config/emacs/init.el .config/emacs
-    cp -f repos/dotfiles/extra/configs/.gitconfig .
+    cp -f repos/dotfiles/.config/emacs/init.el .config/emacs
+    cp -f repos/dotfiles/.gitconfig .
 fi
 
 [ -z "$workstation" ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
 
 mkdir .config/ranger
-cp -f repos/dotfiles/extra/configs/.config/ranger/rc.conf .config/ranger
+cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
 
 if uname -s | grep -q Linux; then
-    cp -f repos/dotfiles/linux/configs/.bash_profile .
+    cp -f repos/dotfiles/.bash_profile .
     ln -sf .bash_profile .bashrc
 elif uname -s | grep -q BSD; then
-    cp -f repos/dotfiles/openbsd/configs/.profile .
-    cp -f repos/dotfiles/openbsd/configs/.mailrc .
+    cp -f repos/dotfiles/.profile .
+    cp -f repos/dotfiles/.mailrc .
     chmod 700 "$HOME"
     if [ -n "$workstation" ]; then
-        cp -f repos/dotfiles/extra/configs/xorg/.cwmrc .
-        cp -f repos/dotfiles/extra/configs/xorg/.xsession .
-        cp -f repos/dotfiles/extra/configs/xorg/.Xdefaults .
+        cp -f repos/dotfiles/.cwmrc .
+        cp -f repos/dotfiles/.xsession .
+        cp -f repos/dotfiles/.Xdefaults .
         echo >> .Xdefaults
-        cat repos/dotfiles/extra/themes/xorg/.Xdefaults-mono-brown >> .Xdefaults
+        cat repos/dotfiles/configs/xorg/themes/.Xdefaults-mono-brown >> .Xdefaults
         mkdir .fonts
-        cp -rf repos/dotfiles/extra/configs/.fonts/Go .fonts
+        cp -rf repos/dotfiles/.fonts/Go .fonts
     fi
 fi
