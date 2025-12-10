@@ -26,14 +26,24 @@ case $1 in
             printf "File %s already exists\n" "$(basename "$2")".gpg
             exit 1
         fi
-        gpg -o "$(basename "$2")".gpg --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --no-compress -c "$2"
+        gpg -o "$(basename "$2")".gpg \
+            --s2k-cipher-algo AES256 \
+            --s2k-digest-algo SHA512 \
+            --force-aead \
+            --no-compress \
+            -c "$2"
         ;;
     enc-asym)
         if [ -f "$(basename "$2")".gpg ]; then
             printf "File %s already exists\n" "$(basename "$2")".gpg
             exit 1
         fi
-        gpg -o "$(basename "$2")".gpg --cipher-algo AES256 --digest-algo SHA512 --no-compress -es "$2"
+        gpg -o "$(basename "$2")".gpg \
+            --cipher-algo AES256 \
+            --digest-algo SHA512 \
+            --force-aead \
+            --no-compress \
+            -es "$2"
         ;;
     dec)
         if [ -f "$(basename "$2" .gpg)" ]; then
