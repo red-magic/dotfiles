@@ -44,7 +44,8 @@ if [ -n "$workstation" ]; then
 
     curl -L https://github.com/red-magic/dotfiles/raw/master/extra/configs/.ssh/config -o .ssh/config
     chmod 400 .ssh/config
-    eval "$(ssh-agent -s)" && ssh-add
+    eval "$(ssh-agent -s)"
+    ssh-add
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
     git clone ssh://git@github.com/red-magic/bible repos/bible
     if uname -s | grep -q Linux; then
