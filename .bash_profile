@@ -57,10 +57,10 @@ fn_genmirlist() {
 
 fn_clean_pacman() {
     if [[ -x "$(command -v yay)" ]]; then
-        yes | yay -Scc
+        yay -Scc --noconfirm
         yay -Qttdq | yay -Rns -
     else
-        yes | sudo pacman -Scc
+        sudo pacman -Scc --noconfirm
         pacman -Qttdq | sudo pacman -Rns -
     fi
 }
