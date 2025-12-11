@@ -18,7 +18,7 @@ while getopts :d:c: opt; do
 done
 
 if [ -z "$drive_args" ] && [ -z "$cd_args" ]; then
-    printf "Usage: %s -d <system.img> -c <cd.iso-file>\n" "$(basename "$0")"
+    printf "Usage: %s -d <system.img> -c <cd.iso>\n" "$(basename "$0")"
     exit 1
 fi
 
