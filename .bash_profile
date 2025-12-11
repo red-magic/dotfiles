@@ -25,6 +25,7 @@ alias semacs='fn_semacs'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias short-logs='sudo journalctl --no-hostname -b'
 alias defrag-root-ext4='fn_defrag_root_ext4'
+alias defrag-root-btrfs='fn_defrag_root_btrfs'
 alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux'
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
@@ -45,6 +46,14 @@ fn_defrag_root_ext4() {
     for i in {1..3}; do
         printf "Defrag pass: %s\n" "${i}"
         sudo e4defrag / &> /dev/null
+    done
+}
+
+fn_defrag_root_btrfs() {
+    printf "Starting defragmentation...\n"
+    for i in {1..3}; do
+        printf "Defrag pass: %s\n" "${i}"
+        sudo btrfs filesystem defragment -r / &> /dev/null
     done
 }
 
