@@ -2,6 +2,6 @@
 
 killall -q polybar
 
-while pgrep -u "$(id -u)" -x polybar > /dev/null; do sleep 1; done
+while pgrep -u "$(id -u)" -x polybar > /dev/null 2>&1; do sleep 1; done
 
 polybar example &

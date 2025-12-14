@@ -2,6 +2,6 @@
 
 killall -q gammastep
 
-while pgrep -u "$(id -u)" -x gammastep > /dev/null; do sleep 1; done
+while pgrep -u "$(id -u)" -x gammastep > /dev/null 2>&1; do sleep 1; done
 
 gammastep -l 55.0:73.3 -t 3000:2700 &
