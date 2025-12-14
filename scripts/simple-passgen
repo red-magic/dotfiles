@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # Function to generate a random word
 generate_word() {
     length="${1}"
