@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 case "${1}" in
     "build")
         docker build --progress plain -t cs16-server-lan .
