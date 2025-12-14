@@ -6,34 +6,34 @@ ab-av1 crf-search -i anime.mkv -e libx264 --preset veryslow --pix-format yuv420p
 
 ffmpeg -i film.mkv -vf cropdetect=24:24:0 -vframes 10 dummy.mkv
 
-ffmpeg -i film.mkv -map 0:v -c:v libx264 -profile:v high -level:v 4.0 -preset veryslow -crf 20.7 -tune film -filter:v crop=1920:792:0:144,fps=24000/1001 -x264-params keyint_min=23:keyint=240 veryslow.h264
+ffmpeg -i film.mkv -map 0:v -c:v libx264 -profile:v high -level:v 4.0 -preset veryslow -crf 18 -tune film -filter:v crop=1920:792:0:144,fps=24000/1001 -x264-params keyint_min=23:keyint=240 veryslow.h264
 
-ffmpeg -i anime.mkv -map 0:v -c:v libx264 -profile:v high10 -level:v 4.0 -preset veryslow -crf 20.7 -tune animation -filter:v fps=24000/1001 -x264-params keyint_min=23:keyint=240 -pix_fmt yuv420p10le veryslow.h264
+ffmpeg -i anime.mkv -map 0:v -c:v libx264 -profile:v high10 -level:v 4.0 -preset veryslow -crf 18 -tune animation -filter:v fps=24000/1001 -x264-params keyint_min=23:keyint=240 -pix_fmt yuv420p10le veryslow.h264
 
-x264-r3103-941cae6.exe --crf 15 -I 240 --vf crop:0,140,0,140 --tune film --preset veryslow --fps 24000/1001 --level 40 -o output.mkv input.mkv
+x264-r3103-941cae6.exe --crf 18 -I 240 --vf crop:0,140,0,140 --tune film --preset veryslow --fps 24000/1001 --level 40 -o output.mkv input.mkv
 
 # vp9
 
-ffmpeg -i input.mkv			\
--ss 00:01:00 -to 00:02:00		\
--c:v libvpx-vp9				\
--vf scale=1280:-1			\
--c:a libopus -ac 2			\
--map_metadata -1 -map_chapters -1	\
-#-sn -max_muxing_queue_size 1000	\
+ffmpeg -i input.mkv \
+-ss 00:01:00 -to 00:02:00 \
+-c:v libvpx-vp9 \
+-vf scale=1280:-1 \
+-c:a libopus -ac 2 \
+-map_metadata -1 -map_chapters -1 \
+#-sn -max_muxing_queue_size 1000 \
 output.webm
 
 # x265
 
-ffmpeg -i input.mkv			\
--map 0:v -map 0:a -map 0:s		\
--c:v libx265 -profile main10		\
--preset veryslow			\
--crf 21					\
--pix_fmt yuv420p10			\
--filter:v crop=1920:1080-264		\
--c:a ac3 -c:s copy			\
--x265-params level-idc=4.0:strong-intra-smoothing=0:sao=0:deblock=-3,-3:min-keyint=23:keyint=240	\
+ffmpeg -i input.mkv \
+-map 0:v -map 0:a -map 0:s \
+-c:v libx265 -profile main10 \
+-preset veryslow \
+-crf 21 \
+-pix_fmt yuv420p10 \
+-filter:v crop=1920:1080-264 \
+-c:a ac3 -c:s copy \
+-x265-params level-idc=4.0:strong-intra-smoothing=0:sao=0:deblock=-3,-3:min-keyint=23:keyint=240 \
 output.mkv
 
 # av1
