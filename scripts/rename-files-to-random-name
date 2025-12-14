@@ -9,7 +9,7 @@ fi
 
 target_dir="${1}"
 
-cd "${target_dir}" &> /dev/null || { printf "Error: Cannot cd to %s\n" "${target_dir}" && exit 1; }
+cd "${target_dir}"
 
 for file in *; do
     if [[ -f "${file}" ]]; then
