@@ -1,0 +1,11 @@
+"maim -s ~/pictures/screenshots/$(date +%Y-%m-%d-%T)-screenshot-cropped.png"
+	F11
+
+"tdrop -a -h 344 -y 24 urxvt"
+	F12
+
+"i3lock -i ~/pictures/wallpaper.png"
+	Control+period
+
+"maim ~/pictures/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png"
+	Print
