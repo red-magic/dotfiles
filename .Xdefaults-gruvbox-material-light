@@ -1,3 +1,12 @@
+! Alt+D fix
+*metaSendsEscape: true
+
+*faceName: Go Mono
+*faceSize: 11
+
+*allowBoldFonts: false
+*scrollBar: false
+
 *foreground:  #654735
 *background:  #fbf1c7
 *cursorColor: #654735

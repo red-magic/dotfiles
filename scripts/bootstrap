@@ -83,8 +83,6 @@ elif uname -s | grep -q BSD; then
         cp -f repos/dotfiles/.cwmrc .
         cp -f repos/dotfiles/.xsession .
         cp -f repos/dotfiles/.Xdefaults .
-        echo >> .Xdefaults
-        cat repos/dotfiles/configs/xorg/themes/.Xdefaults-mono-brown >> .Xdefaults
         mkdir .fonts
         cp -rf repos/dotfiles/.fonts/Go .fonts
     fi
