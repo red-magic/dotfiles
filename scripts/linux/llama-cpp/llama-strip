@@ -1,5 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
-set -e
+set -euo pipefail
 
 find build/bin/ -type f -executable -exec strip -vs {} \;
