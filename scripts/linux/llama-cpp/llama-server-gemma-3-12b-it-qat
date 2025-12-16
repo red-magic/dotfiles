@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-./build/bin/llama-server -m LLMs/gemma-3-12b-it-qat-Q6_K.gguf -c 8192

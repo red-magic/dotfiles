@@ -1,9 +1,0 @@
-[Match]
-Name=ens3
-
-[Address]
-Address=123.123.123.123
-Peer=10.0.0.1/32
-
-[Network]
-Gateway=10.0.0.1

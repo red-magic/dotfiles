@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-./build/bin/llama-server -m LLMs/gpt-oss-20b-Q6_K.gguf -c 8192

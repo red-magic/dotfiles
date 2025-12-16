@@ -85,5 +85,6 @@ elif uname -s | grep -q BSD; then
         cp -f repos/dotfiles/.Xdefaults .
         mkdir .fonts
         cp -rf repos/dotfiles/.fonts/Go .fonts
+        cp -rf repos/dotfiles/pics .
     fi
 fi

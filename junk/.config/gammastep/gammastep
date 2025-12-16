@@ -1,5 +1,0 @@
-#!/bin/bash
-
-killall -q gammastep
-
-gammastep -l 55.0:73.3 -t 3000:2700 &> /dev/null &

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+    printf "Usage: %s <directory>\n" "$(basename "$0")"
+    exit 1
+fi
+
+target_dir=$1
+
+cd "$target_dir"
+
+for file in *; do
+    if [ -f "$file" ]; then
+        extension=${file##*.}
+        if [ "$extension" != "$file" ]; then
+            newname=$(dd if=/dev/urandom bs=256 count=1 2> /dev/null | sha256 | cut -c 1-32)
+            mv -vf -- "$file" "$newname"."$extension"
+        fi
+    fi
+done
