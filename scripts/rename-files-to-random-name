@@ -22,9 +22,7 @@ case $os_name in
         ;;
 esac
 
-target_dir=$1
-
-cd "$target_dir"
+cd "$1"
 
 for file in *; do
     if [ -f "$file" ]; then
