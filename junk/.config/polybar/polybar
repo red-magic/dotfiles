@@ -1,7 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
 killall -q polybar
 
-while pgrep -u "$(id -u)" -x polybar > /dev/null 2>&1; do sleep 1; done
-
-polybar mybar &
+polybar mybar &> /dev/null &

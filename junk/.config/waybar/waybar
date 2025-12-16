@@ -1,7 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
 killall -q waybar
 
-while pgrep -u "$(id -u)" -x waybar > /dev/null 2>&1; do sleep 1; done
-
-waybar &
+waybar &> /dev/null &
