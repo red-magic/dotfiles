@@ -6,7 +6,7 @@ rca_c="AQ"
 rca_o="Internal"
 rca_cn="RCA"
 
-valid_days=7300
+valid_days="7300"
 
 mkdir "$rca_cn"
 
@@ -14,22 +14,22 @@ openssl genpkey \
         -algorithm RSA \
         -pkeyopt rsa_keygen_bits:4096 \
         -aes256 \
-        -out "$rca_cn"/"$rca_cn".key
+        -out "$rca_cn/$rca_cn.key"
 
 openssl req \
         -x509 \
         -new \
-        -key "$rca_cn"/"$rca_cn".key \
+        -key "$rca_cn/$rca_cn.key" \
         -sha384 \
-        -days $valid_days \
+        -days "$valid_days" \
         -subj "/C=$rca_c/O=$rca_o/CN=$rca_cn" \
         -addext "keyUsage = critical, keyCertSign, cRLSign" \
         -addext "basicConstraints = critical, CA:TRUE, pathlen:1" \
         -addext "subjectKeyIdentifier = hash" \
-        -set_serial 0x"$(openssl rand -hex 16)" \
-        -out "$rca_cn"/"$rca_cn".crt
+        -set_serial "0x$(openssl rand -hex 16)" \
+        -out "$rca_cn/$rca_cn.crt"
 
-chmod 400 "$rca_cn"/"$rca_cn".key
-chmod 444 "$rca_cn"/"$rca_cn".crt
+chmod 400 "$rca_cn/$rca_cn.key"
+chmod 444 "$rca_cn/$rca_cn.crt"
 
-openssl x509 -in "$rca_cn"/"$rca_cn".crt -text -noout
+openssl x509 -in "$rca_cn/$rca_cn.crt" -text -noout

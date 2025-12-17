@@ -4,7 +4,7 @@ set -e
 
 aur_pkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin ttf-go tty-colorscheme windows-10-cursor"
 
-aur_dir=/home/"$USER"/repos/aur
+aur_dir="/home/$USER/repos/aur"
 
 if [ -d "$aur_dir" ]; then
     printf "Directory %s already exists\n" "$aur_dir"
@@ -14,5 +14,5 @@ fi
 mkdir "$aur_dir"
 
 for aur_pkg in $aur_pkgs; do
-    git clone ssh://aur@aur.archlinux.org/"$aur_pkg" "$aur_dir"/"$aur_pkg"
+    git clone "ssh://aur@aur.archlinux.org/$aur_pkg" "$aur_dir/$aur_pkg"
 done

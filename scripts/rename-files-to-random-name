@@ -7,9 +7,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-os_name=$(uname -s)
+os_name="$(uname -s)"
 
-case $os_name in
+case "$os_name" in
     *BSD)
         sha_cmd=sha256
         ;;
@@ -26,10 +26,10 @@ cd "$1"
 
 for file in *; do
     if [ -f "$file" ]; then
-        extension=${file##*.}
+        extension="${file##*.}"
         if [ "$extension" != "$file" ]; then
             newname=$(dd if=/dev/urandom bs=256 count=1 2> /dev/null | $sha_cmd | cut -c 1-32)
-            mv -vf -- "$file" "$newname"."$extension"
+            mv -vf -- "$file" "$newname.$extension"
         fi
     fi
 done

@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-domain=$1
+domain="$1"
 
 mkdir "$domain"
 
@@ -24,11 +24,11 @@ openssl req \
         -addext "basicConstraints = critical, CA:FALSE" \
         -addext "subjectKeyIdentifier = hash" \
         -addext "subjectAltName = DNS:$domain" \
-        -set_serial 0x"$(openssl rand -hex 16)" \
-        -keyout "$domain"/"$domain".key \
-        -out "$domain"/"$domain".crt
+        -set_serial "0x$(openssl rand -hex 16)" \
+        -keyout "$domain/$domain.key" \
+        -out "$domain/$domain.crt"
 
-chmod 400 "$domain"/"$domain".key
-chmod 444 "$domain"/"$domain".crt
+chmod 400 "$domain/$domain.key"
+chmod 444 "$domain/$domain.crt"
 
-openssl x509 -in "$domain"/"$domain".crt -text -noout
+openssl x509 -in "$domain/$domain.crt" -text -noout

@@ -2,12 +2,12 @@
 
 set -e
 
-if [ $# -ne 2 ]; then
+if [ "$#" -ne 2 ]; then
     printf "Usage: %s <enc | enc-asym | dec> <file>\n" "$(basename "$0")"
     exit 1
 fi
 
-case $1 in
+case "$1" in
     enc | enc-asym | dec)
         if [ ! -f "$2" ]; then
             printf "File %s doesn't exist\n" "$2"
@@ -20,13 +20,13 @@ case $1 in
         ;;
 esac
 
-case $1 in
+case "$1" in
     enc)
-        if [ -f "$(basename "$2")".gpg ]; then
-            printf "File %s already exists\n" "$(basename "$2")".gpg
+        if [ -f "$(basename "$2").gpg" ]; then
+            printf "File %s already exists\n" "$(basename "$2").gpg"
             exit 1
         fi
-        gpg -o "$(basename "$2")".gpg \
+        gpg -o "$(basename "$2").gpg" \
             --s2k-cipher-algo AES256 \
             --s2k-digest-algo SHA512 \
             --force-aead \
@@ -34,11 +34,11 @@ case $1 in
             -c "$2"
         ;;
     enc-asym)
-        if [ -f "$(basename "$2")".gpg ]; then
-            printf "File %s already exists\n" "$(basename "$2")".gpg
+        if [ -f "$(basename "$2").gpg" ]; then
+            printf "File %s already exists\n" "$(basename "$2").gpg"
             exit 1
         fi
-        gpg -o "$(basename "$2")".gpg \
+        gpg -o "$(basename "$2").gpg" \
             --cipher-algo AES256 \
             --digest-algo SHA512 \
             --force-aead \

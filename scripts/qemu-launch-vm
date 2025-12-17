@@ -10,10 +10,11 @@ drive_args=""
 while getopts :d:c: opt; do
     # -enable-kvm Linux
     # -enable-vvm OpenBSD
-    case $opt in
+    case "$opt" in
         c) cd_args="-cdrom '$OPTARG'" ;;
         d) drive_args="-drive 'file=$OPTARG,format=raw'" ;;
         :) printf "Option -%s requires an argument\n" "$OPTARG" && exit 1 ;;
+        *) printf "Invalid option -%s\n" "$OPTARG" && exit 1 ;;
     esac
 done
 

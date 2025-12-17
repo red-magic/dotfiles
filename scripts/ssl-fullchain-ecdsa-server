@@ -7,9 +7,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-server_cn=$1
+server_cn="$1"
 
-valid_days=1825
+valid_days="1825"
 
 rca_cn="RCA"
 ica_cn="ICA1"
@@ -19,15 +19,15 @@ mkdir "$server_cn"
 openssl genpkey \
         -algorithm EC \
         -pkeyopt ec_paramgen_curve:secp384r1 \
-        -out "$server_cn"/"$server_cn".key
+        -out "$server_cn/$server_cn.key"
 
 openssl req \
         -new \
-        -key "$server_cn"/"$server_cn".key \
+        -key "$server_cn/$server_cn.key" \
         -subj "/CN=$server_cn" \
-        -out "$server_cn"/"$server_cn".csr
+        -out "$server_cn/$server_cn.csr"
 
-cat > "$server_cn"/"$server_cn".ext <<EOF
+cat > "$server_cn/$server_cn.ext" <<EOF
 keyUsage = critical, digitalSignature
 extendedKeyUsage = serverAuth
 basicConstraints = critical, CA:FALSE
@@ -38,23 +38,23 @@ EOF
 
 openssl x509 \
         -req \
-        -in "$server_cn"/"$server_cn".csr \
-        -CA "$ica_cn"/"$ica_cn".crt \
-        -CAkey "$ica_cn"/"$ica_cn".key \
+        -in "$server_cn/$server_cn.csr" \
+        -CA "$ica_cn/$ica_cn.crt" \
+        -CAkey "$ica_cn/$ica_cn.key" \
         -sha384 \
-        -days $valid_days \
-        -extfile "$server_cn"/"$server_cn".ext \
-        -set_serial 0x"$(openssl rand -hex 16)" \
-        -out "$server_cn"/"$server_cn".crt
+        -days "$valid_days" \
+        -extfile "$server_cn/$server_cn.ext" \
+        -set_serial "0x$(openssl rand -hex 16)" \
+        -out "$server_cn/$server_cn.crt"
 
-cat "$server_cn"/"$server_cn".crt "$ica_cn"/"$ica_cn".crt > "$server_cn"/"$server_cn".fullchain.pem
-cat "$ica_cn"/"$ica_cn".crt "$rca_cn"/"$rca_cn".crt > "$server_cn"/ca-bundle.pem
+cat "$server_cn/$server_cn.crt" "$ica_cn/$ica_cn.crt" > "$server_cn/$server_cn.fullchain.pem"
+cat "$ica_cn/$ica_cn.crt" "$rca_cn/$rca_cn.crt" > "$server_cn/ca-bundle.pem"
 
-chmod 400 "$server_cn"/"$server_cn".key
-chmod 444 "$server_cn"/"$server_cn".crt
-chmod 444 "$server_cn"/"$server_cn".fullchain.pem
+chmod 400 "$server_cn/$server_cn.key"
+chmod 444 "$server_cn/$server_cn.crt"
+chmod 444 "$server_cn/$server_cn.fullchain.pem"
 
-openssl x509 -in "$server_cn"/"$server_cn".fullchain.pem -text -noout
-openssl verify -CAfile "$server_cn"/ca-bundle.pem "$server_cn"/"$server_cn".fullchain.pem
+openssl x509 -in "$server_cn/$server_cn.fullchain.pem" -text -noout
+openssl verify -CAfile "$server_cn/ca-bundle.pem" "$server_cn/$server_cn.fullchain.pem"
 
-rm -f "$server_cn"/"$server_cn".ext "$server_cn"/"$server_cn".csr "$server_cn"/ca-bundle.pem
+rm -f "$server_cn/$server_cn.ext" "$server_cn/$server_cn.csr" "$server_cn/ca-bundle.pem"

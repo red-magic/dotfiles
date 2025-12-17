@@ -6,7 +6,7 @@ ica_c="AQ"
 ica_o="Internal"
 ica_cn="ICA1"
 
-valid_days=3650
+valid_days="3650"
 
 rca_cn="RCA"
 
@@ -15,15 +15,15 @@ mkdir "$ica_cn"
 openssl genpkey \
         -algorithm RSA \
         -pkeyopt rsa_keygen_bits:4096 \
-        -out "$ica_cn"/"$ica_cn".key
+        -out "$ica_cn/$ica_cn.key"
 
 openssl req \
         -new \
-        -key "$ica_cn"/"$ica_cn".key \
+        -key "$ica_cn/$ica_cn.key" \
         -subj "/C=$ica_c/O=$ica_o/CN=$ica_cn" \
-        -out "$ica_cn"/"$ica_cn".csr
+        -out "$ica_cn/$ica_cn.csr"
 
-cat > "$ica_cn"/"$ica_cn".ext <<EOF
+cat > "$ica_cn/$ica_cn.ext" <<EOF
 keyUsage = critical, keyCertSign, cRLSign
 basicConstraints = critical, CA:TRUE, pathlen:0
 subjectKeyIdentifier = hash
@@ -32,19 +32,19 @@ EOF
 
 openssl x509 \
         -req \
-        -in "$ica_cn"/"$ica_cn".csr \
-        -CA "$rca_cn"/"$rca_cn".crt \
-        -CAkey "$rca_cn"/"$rca_cn".key \
+        -in "$ica_cn/$ica_cn.csr" \
+        -CA "$rca_cn/$rca_cn.crt" \
+        -CAkey "$rca_cn/$rca_cn.key" \
         -sha384 \
-        -days $valid_days \
-        -extfile "$ica_cn"/"$ica_cn".ext \
-        -set_serial 0x"$(openssl rand -hex 16)" \
-        -out "$ica_cn"/"$ica_cn".crt
+        -days "$valid_days" \
+        -extfile "$ica_cn/$ica_cn.ext" \
+        -set_serial "0x$(openssl rand -hex 16)" \
+        -out "$ica_cn/$ica_cn.crt"
 
-chmod 400 "$ica_cn"/"$ica_cn".key
-chmod 444 "$ica_cn"/"$ica_cn".crt
+chmod 400 "$ica_cn/$ica_cn.key"
+chmod 444 "$ica_cn/$ica_cn.crt"
 
-openssl x509 -in "$ica_cn"/"$ica_cn".crt -text -noout
-openssl verify -CAfile "$rca_cn"/"$rca_cn".crt "$ica_cn"/"$ica_cn".crt
+openssl x509 -in "$ica_cn/$ica_cn.crt" -text -noout
+openssl verify -CAfile "$rca_cn/$rca_cn.crt" "$ica_cn/$ica_cn.crt"
 
-rm -f "$ica_cn"/"$ica_cn".ext "$ica_cn"/"$ica_cn".csr
+rm -f "$ica_cn/$ica_cn.ext" "$ica_cn/$ica_cn.csr"

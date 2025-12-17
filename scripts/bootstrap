@@ -2,11 +2,11 @@
 
 set -e
 
-[ $# -ne 1 ] && exit 1
+[ "$#" -ne 1 ] && exit 1
 
-case $1 in
+case "$1" in
     -s) ;;
-    -w) workstation=1 ;;
+    -w) workstation="1" ;;
     *) exit 1 ;;
 esac
 
