@@ -22,5 +22,6 @@ case "${1:-}" in
         ;;
     *)
         printf "Usage: %s <build | deploy | start | restart | stop>\n" "$(basename "${0}")"
+        exit 1
         ;;
 esac
