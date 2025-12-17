@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-case "${1}" in
+cd "$(dirname "${0}")"
+
+case "${1:-}" in
     "build")
         docker build --progress plain -t cs16-server-net .
         ;;
@@ -12,10 +14,13 @@ case "${1}" in
     "start")
         docker start cs16-server-net
         ;;
+    "restart")
+        docker restart cs16-server-net
+        ;;
     "stop")
         docker stop cs16-server-net
         ;;
-    "restart")
-        docker restart cs16-server-net
+    *)
+        printf "Usage: %s <build | deploy | start | restart | stop>\n" "$(basename "${0}")"
         ;;
 esac
