@@ -2,15 +2,15 @@
 
 set -e
 
-qemu_cmd="qemu-system-x86_64"
+qemu_cmd=qemu-system-x86_64
 qemu_args="-cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
-cd_args=""
-drive_args=""
+cd_args=
+drive_args=
 
 while getopts :d:c: opt; do
     # -enable-kvm Linux
     # -enable-vvm OpenBSD
-    case "$opt" in
+    case $opt in
         c) cd_args="-cdrom '$OPTARG'" ;;
         d) drive_args="-drive 'file=$OPTARG,format=raw'" ;;
         :) printf "Option -%s requires an argument\n" "$OPTARG" && exit 1 ;;

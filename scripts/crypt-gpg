@@ -2,12 +2,12 @@
 
 set -e
 
-if [ "$#" -ne 2 ]; then
+if [ $# -ne 2 ]; then
     printf "Usage: %s <enc | enc-asym | dec> <file>\n" "$(basename "$0")"
     exit 1
 fi
 
-case "$1" in
+case $1 in
     enc | enc-asym | dec)
         if [ ! -f "$2" ]; then
             printf "File %s doesn't exist\n" "$2"
@@ -20,7 +20,7 @@ case "$1" in
         ;;
 esac
 
-case "$1" in
+case $1 in
     enc)
         if [ -f "$(basename "$2").gpg" ]; then
             printf "File %s already exists\n" "$(basename "$2").gpg"

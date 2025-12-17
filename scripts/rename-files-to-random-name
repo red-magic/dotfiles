@@ -7,9 +7,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-os_name="$(uname -s)"
+os_name=$(uname -s)
 
-case "$os_name" in
+case $os_name in
     *BSD)
         sha_cmd=sha256
         ;;
@@ -22,7 +22,9 @@ case "$os_name" in
         ;;
 esac
 
-cd "$1"
+target_dir=$1
+
+cd "$target_dir"
 
 for file in *; do
     if [ -f "$file" ]; then

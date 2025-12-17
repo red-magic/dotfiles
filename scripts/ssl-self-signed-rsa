@@ -2,14 +2,9 @@
 
 set -e
 
-if [ -z "$1" ]; then
-    printf "Usage: %s <domain.internal>\n" "$(basename "$0")"
-    exit 1
-fi
+domain=domain.internal
 
-domain="$1"
-
-mkdir "$domain"
+mkdir $domain
 
 openssl req \
         -x509 \
@@ -25,10 +20,10 @@ openssl req \
         -addext "subjectKeyIdentifier = hash" \
         -addext "subjectAltName = DNS:$domain" \
         -set_serial "0x$(openssl rand -hex 16)" \
-        -keyout "$domain/$domain.key" \
-        -out "$domain/$domain.crt"
+        -keyout $domain/$domain.key \
+        -out $domain/$domain.crt
 
-chmod 400 "$domain/$domain.key"
-chmod 444 "$domain/$domain.crt"
+chmod 400 $domain/$domain.key
+chmod 444 $domain/$domain.crt
 
-openssl x509 -in "$domain/$domain.crt" -text -noout
+openssl x509 -in $domain/$domain.crt -text -noout

@@ -2,6 +2,6 @@
 
 set -e
 
-dir="${1:-.}"
+dir=${1:-.}
 
 grep -Irn '[[:space:]]$' "$dir"

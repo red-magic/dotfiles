@@ -2,4 +2,7 @@
 
 set -e
 
-certbot certonly --dry-run --key-type ecdsa --elliptic-curve secp384r1 --webroot -w /var/www/domain.tld -d domain.tld -d www.domain.tld
+domain=domain.tld
+domain_www=www.$domain
+
+certbot certonly --dry-run --key-type ecdsa --elliptic-curve secp384r1 --webroot -w /var/www/$domain -d $domain -d $domain_www
