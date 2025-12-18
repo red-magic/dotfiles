@@ -10,7 +10,7 @@ alias sl='fn_sl'
 alias mg='mg -n'
 alias smg='fn_smg'
 
-if pgrep emacs > /dev/null 2>&1; then
+if command -v emacsclient > /dev/null 2>&1; then
     alias emacs='emacsclient -nw'
 fi
 
