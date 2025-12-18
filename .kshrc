@@ -11,7 +11,7 @@ alias mg='mg -n'
 alias smg='fn_smg'
 
 if command -v emacsclient > /dev/null 2>&1; then
-    alias emacs='emacsclient -nw'
+    alias emacs='emacsclient -nw -a emacs'
 fi
 
 alias semacs='fn_semacs'
