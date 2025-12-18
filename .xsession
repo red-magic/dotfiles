@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export ENV="$HOME/.profile"
 
 setxkbmap -layout "us,ru" -option "grp:caps_toggle"
