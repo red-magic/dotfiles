@@ -9,6 +9,4 @@ HISTFILE=""
 
 export LANG EDITOR PAGER LESSHISTFILE # HISTFILE HISTSIZE HISTCONTROL
 
-if [[ -f "${HOME}/.bashrc" ]]; then
-    . "${HOME}/.bashrc"
-fi
+[[ -f "${HOME}/.bashrc" ]] && . "${HOME}/.bashrc"
