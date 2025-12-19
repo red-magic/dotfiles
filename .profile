@@ -1,11 +1,6 @@
 LANG="C.UTF-8"
-
-if command -v emacsclient > /dev/null 2>&1; then
-    EDITOR="emacsclient -nw -a emacs"
-else
-    EDITOR="mg -n"
-fi
-
+EDITOR="mg -n"
+#EDITOR="emacsclient -nw -a emacs"
 PAGER="less -M"
 ENV="$HOME/.kshrc"
 

@@ -9,11 +9,7 @@ alias l='ls -plha'
 alias sl='fn_sl'
 alias mg='mg -n'
 alias smg='fn_smg'
-
-if command -v emacsclient > /dev/null 2>&1; then
-    alias emacs='emacsclient -nw -a emacs'
-fi
-
+alias emacs='emacsclient -nw -a emacs'
 alias semacs='fn_semacs'
 alias ranger='TERM=xterm ranger'
 alias fastfetch='fastfetch --pipe'

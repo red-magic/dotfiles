@@ -74,9 +74,10 @@ cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
 
 if uname -s | grep -q Linux; then
     cp -f repos/dotfiles/.bash_profile .
-    ln -sf .bash_profile .bashrc
+    cp -f repos/dotfiles/.bashrc .
 elif uname -s | grep -q BSD; then
     cp -f repos/dotfiles/.profile .
+    cp -f repos/dotfiles/.kshrc .
     cp -f repos/dotfiles/.mailrc .
     chmod 700 "$HOME"
     if [ -n "$workstation" ]; then
