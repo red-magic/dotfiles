@@ -1,5 +1,5 @@
-case $- in
-    *i*) ;;
+case "$-" in
+    *"i"*) ;;
     *) return ;;
 esac
 
