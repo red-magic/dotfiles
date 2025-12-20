@@ -10,13 +10,14 @@ bind '\C-p:history-search-backward'
 #shopt -s histappend
 
 PS1="\h$ "
+ALTERNATE_EDITOR="emacs -nw --color=never"
 
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias sl='fn_sl'
 alias mg='mg -n'
 alias smg='fn_smg'
-alias emacs='emacsclient -nw -a emacs'
+alias emacs='emacsclient -nw'
 alias semacs='fn_semacs'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias short-logs='sudo journalctl --no-hostname -b'

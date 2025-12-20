@@ -1,6 +1,6 @@
 LANG="C.UTF-8"
 EDITOR="mg -n"
-#EDITOR="emacsclient -nw -a emacs"
+#EDITOR="emacsclient -nw"
 PAGER="less -M"
 ENV="$HOME/.kshrc"
 

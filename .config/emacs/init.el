@@ -14,7 +14,7 @@
 (size-indication-mode t)
 (menu-bar-mode -1)
 (show-paren-mode -1)
-;;(global-font-lock-mode -1)
+(global-font-lock-mode -1)
 
 (defun my/insert-tab-or-indent ()
   (interactive)
@@ -31,14 +31,14 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(custom-set-faces
- '(isearch ((t (:foreground "black" :background "blue"))))
- '(italic ((t (:foreground "blue" :background "black"))))
- '(lazy-highlight ((t (:foreground "black" :background "blue"))))
- '(region ((t (:foreground "black" :background "blue"))))
- '(show-paren-match ((t (:foreground "black" :background "white"))))
- '(show-paren-match ((t (:inverse-video t))))
- '(shr-h3 ((t (:foreground "blue" :background "black")))))
+;;(custom-set-faces
+;; '(isearch ((t (:foreground "black" :background "blue"))))
+;; '(italic ((t (:foreground "blue" :background "black"))))
+;; '(lazy-highlight ((t (:foreground "black" :background "blue"))))
+;; '(region ((t (:foreground "black" :background "blue"))))
+;; '(show-paren-match ((t (:foreground "black" :background "white"))))
+;; '(show-paren-match ((t (:inverse-video t))))
+;; '(shr-h3 ((t (:foreground "blue" :background "black")))))
 
 (advice-add 'eww--dwim-expand-url :filter-return
             (lambda (url) (replace-regexp-in-string "http://" "https://" url)))

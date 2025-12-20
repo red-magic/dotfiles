@@ -4,12 +4,13 @@ case $- in
 esac
 
 PS1="\h$ "
+ALTERNATE_EDITOR="emacs -nw --color=never"
 
 alias l='ls -plha'
 alias sl='fn_sl'
 alias mg='mg -n'
 alias smg='fn_smg'
-alias emacs='emacsclient -nw -a emacs'
+alias emacs='emacsclient -nw'
 alias semacs='fn_semacs'
 alias ranger='TERM=xterm ranger'
 alias fastfetch='fastfetch --pipe'
