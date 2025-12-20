@@ -3,9 +3,6 @@ case $- in
     *) return ;;
 esac
 
-PS1="\h$ "
-ALTERNATE_EDITOR="emacs -nw --color=never"
-
 alias l='ls -plha'
 alias sl='fn_sl'
 alias mg='mg -n'
@@ -16,7 +13,6 @@ alias ranger='TERM=xterm ranger'
 alias fastfetch='fastfetch --pipe'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias full-clean-git='git clean -dfx && git reset --hard'
-
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'

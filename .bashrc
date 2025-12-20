@@ -9,9 +9,6 @@ bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 #shopt -s histappend
 
-PS1="\h$ "
-ALTERNATE_EDITOR="emacs -nw --color=never"
-
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias sl='fn_sl'
@@ -27,7 +24,6 @@ alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-direct
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
-
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
