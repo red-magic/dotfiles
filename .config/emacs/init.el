@@ -31,14 +31,5 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;;(custom-set-faces
-;; '(isearch ((t (:foreground "black" :background "blue"))))
-;; '(italic ((t (:foreground "blue" :background "black"))))
-;; '(lazy-highlight ((t (:foreground "black" :background "blue"))))
-;; '(region ((t (:foreground "black" :background "blue"))))
-;; '(show-paren-match ((t (:foreground "black" :background "white"))))
-;; '(show-paren-match ((t (:inverse-video t))))
-;; '(shr-h3 ((t (:foreground "blue" :background "black")))))
-
 (advice-add 'eww--dwim-expand-url :filter-return
             (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
