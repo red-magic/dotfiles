@@ -25,10 +25,6 @@
 (global-set-key (kbd "TAB") 'my/insert-tab-or-indent)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
-(add-hook 'sh-mode-hook
-          (lambda ()
-            (setq sh-indentation 4)))
-
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (advice-add 'eww--dwim-expand-url :filter-return
