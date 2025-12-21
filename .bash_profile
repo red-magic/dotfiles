@@ -1,14 +1,14 @@
 PS1="\h$ "
-LANG="C.UTF-8"
-EDITOR="mg -n"
-#EDITOR="emacsclient -nw"
-#ALTERNATE_EDITOR="emacs -nw"
-PAGER="less -M"
-LESSHISTFILE="-"
+
+export LANG="C.UTF-8"
+export EDITOR="mg -n"
+#export EDITOR="emacsclient -nw"
+#export ALTERNATE_EDITOR="emacs -nw"
+export PAGER="less -M"
+export LESSHISTFILE="-"
+
 HISTFILE=""
 #HISTSIZE="10000"
 #HISTCONTROL="ignoreboth"
-
-export PS1 LANG EDITOR #ALTERNATE_EDITOR PAGER LESSHISTFILE HISTFILE #HISTSIZE #HISTCONTROL
 
 [[ -f "${HOME}/.bashrc" ]] && . "${HOME}/.bashrc"

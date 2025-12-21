@@ -1,8 +1,6 @@
-LANG="C.UTF-8"
-EDITOR="mg -n"
-#EDITOR="emacsclient -nw"
-#ALTERNATE_EDITOR="emacs -nw --color=never"
-PAGER="less -M"
-ENV="$HOME/.kshrc"
-
-export LANG EDITOR #ALTERNATE_EDITOR PAGER ENV
+export LANG="C.UTF-8"
+export EDITOR="mg -n"
+#export EDITOR="emacsclient -nw"
+#export ALTERNATE_EDITOR="emacs -nw --color=never"
+export PAGER="less -M"
+export ENV="$HOME/.kshrc"
