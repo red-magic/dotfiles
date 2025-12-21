@@ -2,20 +2,34 @@
 
 set -e
 
-if [ $# -ne 2 ]; then
-    printf "Usage: %s <enc | dec> <file>\n" "$(basename "$0")"
+print_help() {
+    printf "usage: %s enc|dec file\n" "$(basename "$0")"
+}
+
+if [ $# -gt 2 ]; then
+    printf "%s: too many arguments\n" "$(basename "$0")" >&2
+    print_help
     exit 1
 fi
 
 case $1 in
     enc | dec)
-        if [ ! -f "$2" ]; then
-            printf "File %s doesn't exist\n" "$2"
+        if [ -z "$2" ]; then
+            printf "%s: %s: missing file argument\n" "$(basename "$0")" "$1" >&2
+            print_help
+            exit 1
+        elif [ ! -f "$2" ]; then
+            printf "%s: %s: file %s doesn't exist\n" "$(basename "$0")" "$1" "$2" >&2
             exit 1
         fi
         ;;
+    "")
+        print_help
+        exit 0
+        ;;
+
     *)
-        printf "Invalid option: %s\n" "$1"
+        printf "%s: invalid command: %s\n" "$(basename "$0")" "$1" >&2
         exit 1
         ;;
 esac
@@ -23,7 +37,7 @@ esac
 case $1 in
     enc)
         if [ -f "$(basename "$2").enc" ]; then
-            printf "File %s already exists\n" "$(basename "$2").enc"
+            printf "%s: %s: file %s already exists\n" "$(basename "$0")" "$1" "$(basename "$2").enc" >&2
             exit 1
         fi
         openssl enc \
@@ -38,7 +52,7 @@ case $1 in
         ;;
     dec)
         if [ -f "$(basename "$2" .enc)" ]; then
-            printf "File %s already exists\n" "$(basename "$2" .enc)"
+            printf "%s: %s: file %s already exists\n" "$(basename "$0")" "$1" "$(basename "$2" .enc)" >&2
             exit 1
         fi
         openssl enc \
