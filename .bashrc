@@ -29,11 +29,11 @@ alias clean-pacman='fn_clean_pacman'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
 
 fn_sl() {
-    sudo ls -plha --color=always "$@"
+    sudo ls -plha --color=always "${@}"
 }
 
 fn_smg() {
-    sudo mg -n "$@"
+    sudo mg -n "${@}"
 }
 
 fn_semacs() {
