@@ -2,9 +2,11 @@
 
 set -e
 
+progname=$(basename "$0")
+
 if [ -z "$1" ]
 then
-    printf "usage: %s directory\n" "$(basename "$0")"
+    printf "usage: %s directory\n" "$progname"
     exit 1
 fi
 
@@ -18,7 +20,7 @@ case $os_name in
         sha_cmd=sha256sum
         ;;
     *)
-        printf "unable to detect OS for \$sha_cmd\n"
+        printf "%s: unable to detect OS for \$sha_cmd\n" "$progname" >&2
         exit 1
         ;;
 esac

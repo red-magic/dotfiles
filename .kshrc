@@ -17,20 +17,24 @@ alias full-clean-git='git clean -dfx && git reset --hard'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
 
-fn_sl() {
+fn_sl()
+{
     doas ls -plha "$@"
 }
 
-fn_smg() {
+fn_smg()
+{
     doas mg -n "$@"
 }
 
-fn_semacs() {
+fn_semacs()
+{
     file_path=$(realpath -- "$(dirname -- "$1")")/$(basename -- "$1")
     emacs "/doas::$file_path"
 }
 
-#fn_ssh_connect_tor() {
+#fn_ssh_connect_tor()
+#{
 #    tor_domain="verylongtordomain.onion"
 #    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "$tor_domain"
 #}
