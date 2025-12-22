@@ -18,13 +18,11 @@ then
     exit 1
 fi
 
-find "$dir" -type f -exec /bin/sh -c '
-    last=$(tail -c 1 "$1" 2>/dev/null) || exit 0
+find "$dir" -type f -exec sh -c '
+    file=$1
+    last=$(tail -c 1 "$file" 2>/dev/null) || exit 0
     case $last in
-        "" | "$(printf "\n")" | "$(printf "\r")")
-            ;;
-        *)
-            printf "no line terminator at EOF: %s\n" "$1"
-            ;;
+        "" | "$(printf "\n")" | "$(printf "\r")") ;;
+        *) printf "no line terminator at EOF: %s\n" "$file" ;;
     esac
-' /bin/sh {} \;
+' sh {} \;
