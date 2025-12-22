@@ -4,16 +4,19 @@ set -e
 
 mkdir libera
 
-[ ! -f irc.pem ] && openssl req \
-                            -x509 \
-                            -newkey RSA \
-                            -pkeyopt rsa_keygen_bits:4096 \
-                            -sha384 \
-                            -nodes \
-                            -days 1825 \
-                            -subj "/CN=irc.libera.chat" \
-                            -out libera/libera.pem \
-                            -keyout libera/libera.pem
+if [ ! -f irc.pem ]
+then
+    openssl req \
+            -x509 \
+            -newkey RSA \
+            -pkeyopt rsa_keygen_bits:4096 \
+            -sha384 \
+            -nodes \
+            -days 1825 \
+            -subj "/CN=irc.libera.chat" \
+            -out libera/libera.pem \
+            -keyout libera/libera.pem
+fi
 
 chmod 400 libera/libera.pem
 
