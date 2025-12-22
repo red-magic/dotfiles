@@ -24,7 +24,7 @@ fi
 
 case $1 in
     -s)
-        workstation=0
+        server=1
         ;;
     -w)
         workstation=1
@@ -47,7 +47,7 @@ done
 
 if [ -n "$missing_pkgs" ]
 then
-    printf "Install missing packages:%s\n" "$missing_pkgs"
+    printf "install missing packages:%s\n" "$missing_pkgs"
     exit 1
 fi
 
@@ -99,7 +99,7 @@ then
     cp -f repos/dotfiles/.gitconfig .
 fi
 
-[ "$workstation" -eq 1 ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
+[ "$server" -eq 1 ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
 
 mkdir .config/ranger
 cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
