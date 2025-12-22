@@ -18,4 +18,8 @@ then
     exit 1
 fi
 
-grep -Irn '[[:space:]]$' "$dir"
+grep -rIn '[[:space:]]$' "$dir" | \
+    while IFS=: read -r file line text
+    do
+        printf "trailing whitespaces: %s:%s: %s\n" "$file" "$line" "$text"
+    done

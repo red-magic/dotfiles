@@ -18,5 +18,16 @@ then
     exit 1
 fi
 
-find "$dir" -not -type d -exec file "{}" ";" | grep CRLF
-find "$dir" -not -type d -exec file "{}" ";" | grep  LF
+find "$dir" -type f | while IFS= read -r file
+do
+    if grep -Iq . "$file"
+    then
+        if grep -q "$(printf '\r\n')" "$file"
+        then
+            printf "CRLF: %s\n" "$file"
+        elif grep -q "$(printf '\n')" "$file"
+        then
+            printf "LF:   %s\n" "$file"
+        fi
+    fi
+done
