@@ -6,7 +6,7 @@ progname=$(basename "$0")
 
 print_help()
 {
-    printf "usage: %s enc|enc-asym|dec file\n" "$progname"
+    printf "usage: %s -es|-ea|-d file\n" "$progname"
 }
 
 if [ $# -gt 2 ]
@@ -16,42 +16,49 @@ then
     exit 1
 fi
 
-cmd=$1
-file=$2
+mode=
 
-case $cmd in
-    enc | enc-asym | dec) ;;
+case $1 in
+    -es)
+        mode=sym
+        ;;
+    -ea)
+        mode=asym
+        ;;
+    -d)
+        mode=dec
+        ;;
     "")
         print_help
         exit 0
         ;;
     *)
-        printf "%s: invalid command: %s\n" "$progname" "$cmd" >&2
+        printf "%s: invalid option: %s\n" "$progname" "$1" >&2
+        print_help
         exit 1
         ;;
 esac
 
-if [ -z "$file" ]
-then
-    printf "%s: %s: missing file argument\n" "$progname" "$cmd" >&2
+file=$2
+
+if [ -z "$file" ]; then
+    printf "%s: %s: missing file argument\n" "$progname" "$1" >&2
     print_help
     exit 1
 fi
 
-case $cmd in
-    enc | enc-asym)
+case $mode in
+    sym | asym)
         file_dec=$file
         file_enc=$file.gpg
 
-        if [ ! -f "$file_dec" ]
-        then
-            printf "%s: %s: file %s doesn't exist\n" "$progname" "$cmd" "$file_dec" >&2
+        if [ ! -f "$file_dec" ]; then
+            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_dec" >&2
             exit 1
         fi
 
-        if [ -f "$file_enc" ]
-        then
-            printf "%s: %s: file %s already exists\n" "$progname" "$cmd" "$file_enc" >&2
+        if [ -f "$file_enc" ]; then
+            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_enc" >&2
             exit 1
         fi
         ;;
@@ -59,7 +66,7 @@ case $cmd in
         case $file in
             *.gpg) ;;
             *)
-                printf "%s: %s: not a .gpg file: %s\n" "$progname" "$cmd" "$file" >&2
+                printf "%s: %s: not a .gpg file: %s\n" "$progname" "$1" "$file" >&2
                 exit 1
                 ;;
         esac
@@ -67,22 +74,20 @@ case $cmd in
         file_enc=$file
         file_dec=${file%.gpg}
 
-        if [ ! -f "$file_enc" ]
-        then
-            printf "%s: %s: file %s doesn't exist\n" "$progname" "$cmd" "$file_enc" >&2
+        if [ ! -f "$file_enc" ]; then
+            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_enc" >&2
             exit 1
         fi
 
-        if [ -f "$file_dec" ]
-        then
-            printf "%s: %s: file %s already exists\n" "$progname" "$cmd" "$file_dec" >&2
+        if [ -f "$file_dec" ]; then
+            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_dec" >&2
             exit 1
         fi
         ;;
 esac
 
-case $cmd in
-    enc)
+case $mode in
+    sym)
         gpg -o "$file_enc" \
             --s2k-cipher-algo AES256 \
             --s2k-digest-algo SHA512 \
@@ -90,7 +95,7 @@ case $cmd in
             --no-compress \
             -c "$file_dec"
         ;;
-    enc-asym)
+    asym)
         gpg -o "$file_enc" \
             --cipher-algo AES256 \
             --digest-algo SHA512 \

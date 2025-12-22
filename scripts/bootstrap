@@ -9,35 +9,32 @@ print_help()
     printf "usage: %s -s|-w\n" "$progname"
 }
 
+if [ $# -gt 1 ]
+then
+    printf "%s: only one option is accepted\n" "$progname" >&2
+    print_help
+    exit 1
+fi
+
 if [ -z "$1" ]
 then
     print_help
     exit 0
 fi
 
-while getopts :sw opt
-do
-    case $opt in
-        s)
-            workstation=0
-            ;;
-        w)
-            workstation=1
-            ;;
-        *)
-            printf "%s: invalid option -%s\n" "$progname" "$OPTARG" >&2
-            print_help
-            exit 1
-            ;;
-    esac
-done
-
-if [ "$OPTIND" -ne 2 ]
-then
-    printf "%s: only one option is accepted\n" "$progname" >&2
-    print_help
-    exit 1
-fi
+case $1 in
+    -s)
+        workstation=0
+        ;;
+    -w)
+        workstation=1
+        ;;
+    *)
+        printf "%s: invalid option -%s\n" "$progname" "$1" >&2
+        print_help
+        exit 1
+        ;;
+esac
 
 pkgs="curl ssh git tar gzip"
 
