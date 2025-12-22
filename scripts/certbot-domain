@@ -5,4 +5,11 @@ set -e
 domain=domain.tld
 domain_www=www.$domain
 
-certbot certonly --dry-run --key-type ecdsa --elliptic-curve secp384r1 --webroot -w /var/www/$domain -d $domain -d $domain_www
+certbot certonly \
+        --dry-run \
+        --key-type ecdsa \
+        --elliptic-curve secp384r1 \
+        --webroot \
+        -w /var/www/$domain \
+        -d $domain \
+        -d $domain_www
