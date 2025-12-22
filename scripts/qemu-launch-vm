@@ -20,10 +20,10 @@ do
     # -enable-vvm OpenBSD
     case $opt in
         c)
-            cd_args="-cdrom '$OPTARG'"
+            cd_args="-cdrom $OPTARG"
             ;;
         d)
-            drive_args="-drive 'file=$OPTARG,format=raw'"
+            drive_args="-drive file=$OPTARG,format=raw"
             ;;
         :)
             printf "%s: option -%s requires an argument\n" "$progname" "$OPTARG" >&2
