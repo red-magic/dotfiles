@@ -2,10 +2,17 @@
 
 set -e
 
+progname=$(basename "$0")
+
 qemu_cmd=qemu-system-x86_64
 qemu_args="-cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
 cd_args=
 drive_args=
+
+print_help()
+{
+    printf "usage: %s [-d system.img] [-c cd.iso]\n" "$progname"
+}
 
 while getopts :d:c: opt
 do
@@ -19,11 +26,13 @@ do
             drive_args="-drive 'file=$OPTARG,format=raw'"
             ;;
         :)
-            printf "Option -%s requires an argument\n" "$OPTARG" >&2
+            printf "%s: option -%s requires an argument\n" "$progname" "$OPTARG" >&2
+            print_help
             exit 1
             ;;
         *)
-            printf "Invalid option -%s\n" "$OPTARG" >&2
+            printf "%s: invalid option: -%s\n" "$progname" "$OPTARG" >&2
+            print_help
             exit 1
             ;;
     esac
@@ -31,8 +40,8 @@ done
 
 if [ -z "$drive_args" ] && [ -z "$cd_args" ]
 then
-    printf "Usage: %s -d <system.img> -c <cd.iso>\n" "$(basename "$0")"
-    exit 1
+    print_help
+    exit 0
 fi
 
 printf "%s %s %s %s\n" "$qemu_cmd" "$qemu_args" "$drive_args" "$cd_args"
