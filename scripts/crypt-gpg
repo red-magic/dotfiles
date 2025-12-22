@@ -6,7 +6,7 @@ progname=$(basename "$0")
 
 print_help()
 {
-    printf "usage: %s -es|-ea|-d file\n" "$progname"
+    printf "usage: %s -s|-a|-d file\n" "$progname"
 }
 
 if [ $# -gt 2 ]
@@ -19,10 +19,10 @@ fi
 mode=
 
 case $1 in
-    -es)
+    -s)
         mode=sym
         ;;
-    -ea)
+    -a)
         mode=asym
         ;;
     -d)
