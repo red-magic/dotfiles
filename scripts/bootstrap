@@ -2,23 +2,54 @@
 
 set -e
 
-[ $# -ne 1 ] && exit 1
+progname=$(basename "$0")
 
-case $1 in
-    -s) ;;
-    -w) workstation=1 ;;
-    *) exit 1 ;;
-esac
+print_help()
+{
+    printf "usage: %s -s|-w\n" "$progname"
+}
+
+if [ -z "$1" ]
+then
+    print_help
+    exit 0
+fi
+
+while getopts :sw opt
+do
+    case $opt in
+        s)
+            workstation=0
+            ;;
+        w)
+            workstation=1
+            ;;
+        *)
+            printf "%s: invalid option -%s\n" "$progname" "$OPTARG" >&2
+            print_help
+            exit 1
+            ;;
+    esac
+done
+
+if [ "$OPTIND" -ne 2 ]
+then
+    printf "%s: only one option is accepted\n" "$progname" >&2
+    print_help
+    exit 1
+fi
 
 pkgs="curl ssh git tar gzip"
 
-[ -n "$workstation" ] && pkgs="$pkgs gpg"
+[ "$workstation" -eq 1 ] && pkgs="$pkgs gpg"
 
-for pkg in $pkgs; do
+for pkg in $pkgs
+do
     [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
 done
 
-if [ -n "$missing_pkgs" ]; then
+if [ -n "$missing_pkgs" ]
+then
     printf "Install missing packages:%s\n" "$missing_pkgs"
     exit 1
 fi
@@ -29,7 +60,8 @@ mkdir -m 700 .ssh
 mkdir repos
 mkdir .config
 
-if [ -n "$workstation" ]; then
+if [ "$workstation" -eq 1 ]
+then
     curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.tar.gz.gpg
     gpg -do archive.tar.gz archive.tar.gz.gpg
     tar xzf archive.tar.gz
@@ -48,15 +80,18 @@ if [ -n "$workstation" ]; then
     ssh-add
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
     git clone ssh://git@github.com/red-magic/bible repos/bible
-    if uname -s | grep -q Linux; then
+    if uname -s | grep -q Linux
+    then
         cp -rf repos/dotfiles/.docker .
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
-        if [ -f /etc/arch-release ]; then
+        if [ -f /etc/arch-release ]
+        then
             aur_pkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin ttf-go tty-colorscheme windows-10-cursor"
             mkdir repos/aur
-            for aur_pkg in $aur_pkgs; do
+            for aur_pkg in $aur_pkgs
+            do
                 git clone "ssh://aur@aur.archlinux.org/$aur_pkg" "repos/aur/$aur_pkg"
             done
         fi
@@ -67,20 +102,23 @@ if [ -n "$workstation" ]; then
     cp -f repos/dotfiles/.gitconfig .
 fi
 
-[ -z "$workstation" ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
+[ "$workstation" -eq 1 ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
 
 mkdir .config/ranger
 cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
 
-if uname -s | grep -q Linux; then
+if uname -s | grep -q Linux
+then
     cp -f repos/dotfiles/.bash_profile .
     cp -f repos/dotfiles/.bashrc .
-elif uname -s | grep -q BSD; then
+elif uname -s | grep -q BSD
+then
     cp -f repos/dotfiles/.profile .
     cp -f repos/dotfiles/.kshrc .
     cp -f repos/dotfiles/.mailrc .
     chmod 700 "$HOME"
-    if [ -n "$workstation" ]; then
+    if [ "$workstation" -eq 1 ]
+    then
         cp -f repos/dotfiles/.cwmrc .
         cp -f repos/dotfiles/.xsession .
         cp -f repos/dotfiles/.Xdefaults .

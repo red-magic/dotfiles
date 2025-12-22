@@ -7,18 +7,30 @@ qemu_args="-cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -aud
 cd_args=
 drive_args=
 
-while getopts :d:c: opt; do
+while getopts :d:c: opt
+do
     # -enable-kvm Linux
     # -enable-vvm OpenBSD
     case $opt in
-        c) cd_args="-cdrom '$OPTARG'" ;;
-        d) drive_args="-drive 'file=$OPTARG,format=raw'" ;;
-        :) printf "Option -%s requires an argument\n" "$OPTARG" && exit 1 ;;
-        *) printf "Invalid option -%s\n" "$OPTARG" && exit 1 ;;
+        c)
+            cd_args="-cdrom '$OPTARG'"
+            ;;
+        d)
+            drive_args="-drive 'file=$OPTARG,format=raw'"
+            ;;
+        :)
+            printf "Option -%s requires an argument\n" "$OPTARG" >&2
+            exit 1
+            ;;
+        *)
+            printf "Invalid option -%s\n" "$OPTARG" >&2
+            exit 1
+            ;;
     esac
 done
 
-if [ -z "$drive_args" ] && [ -z "$cd_args" ]; then
+if [ -z "$drive_args" ] && [ -z "$cd_args" ]
+then
     printf "Usage: %s -d <system.img> -c <cd.iso>\n" "$(basename "$0")"
     exit 1
 fi
