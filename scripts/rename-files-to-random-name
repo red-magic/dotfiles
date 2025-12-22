@@ -2,8 +2,9 @@
 
 set -e
 
-if [ -z "$1" ]; then
-    printf "Usage: %s <directory>\n" "$(basename "$0")"
+if [ -z "$1" ]
+then
+    printf "usage: %s directory\n" "$(basename "$0")"
     exit 1
 fi
 
@@ -17,7 +18,7 @@ case $os_name in
         sha_cmd=sha256sum
         ;;
     *)
-        printf "Unable to detect OS for \$sha_cmd\n"
+        printf "unable to detect OS for \$sha_cmd\n"
         exit 1
         ;;
 esac
@@ -26,12 +27,15 @@ target_dir=$1
 
 cd "$target_dir"
 
-for file in *; do
-    if [ -f "$file" ]; then
-        extension="${file##*.}"
-        if [ "$extension" != "$file" ]; then
+for file in *
+do
+    if [ -f "$file" ]
+    then
+        ext="${file##*.}"
+        if [ "$ext" != "$file" ]
+        then
             newname=$(dd if=/dev/urandom bs=256 count=1 2> /dev/null | $sha_cmd | cut -c 1-32)
-            mv -vf -- "$file" "$newname.$extension"
+            mv -vf -- "$file" "$newname.$ext"
         fi
     fi
 done
