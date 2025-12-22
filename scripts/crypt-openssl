@@ -25,10 +25,6 @@ case $1 in
     -d)
         mode=dec
         ;;
-    "")
-        print_help
-        exit 0
-        ;;
     *)
         printf "%s: invalid option: %s\n" "$progname" "$1" >&2
         print_help
