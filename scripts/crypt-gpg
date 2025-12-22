@@ -16,6 +16,12 @@ then
     exit 1
 fi
 
+if [ -z "$1" ]
+then
+    print_help
+    exit 0
+fi
+
 mode=
 
 case $1 in
@@ -34,12 +40,6 @@ case $1 in
         exit 1
         ;;
 esac
-
-if [ -z "$mode" ]
-then
-    print_help
-    exit 0
-fi
 
 file=$2
 
