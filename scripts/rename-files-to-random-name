@@ -9,7 +9,7 @@ then
     printf "%s: only 1 argument is accepted\n" "$progname" >&2
     print_help
     exit 1
-elif [ -z "$1" ]
+elif [ $# -eq 0 ]
 then
     printf "usage: %s directory\n" "$progname"
     exit 1

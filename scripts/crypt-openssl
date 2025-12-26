@@ -14,7 +14,7 @@ then
     printf "%s: only 1 option and 1 argument are accepted\n" "$progname" >&2
     print_help
     exit 1
-elif [ -z "$1" ]
+elif [ $# -eq 0 ]
 then
     print_help
     exit 0
