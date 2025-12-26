@@ -45,7 +45,7 @@ done
 
 if [ -n "$missing_pkgs" ]
 then
-    printf "install missing packages:%s\n" "$missing_pkgs"
+    printf "install missing packages:%s\n" "$missing_pkgs" >&2
     exit 1
 fi
 
