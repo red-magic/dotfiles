@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-print_help()
-{
+print_help() {
     printf "Usage: %s <build | deploy | start | restart | stop>\n" "$(basename "${0}")"
 }
 
