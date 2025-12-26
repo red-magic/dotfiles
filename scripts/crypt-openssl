@@ -6,7 +6,7 @@ progname=$(basename "$0")
 
 print_help()
 {
-    printf "usage: %s -e|-d file\n" "$progname"
+    printf "usage: %s -e | -d file\n" "$progname"
 }
 
 if [ $# -gt 2 ]
