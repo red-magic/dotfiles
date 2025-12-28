@@ -1,0 +1,20 @@
+set realname = "Real Name"
+set from     = user@domain.tld
+set folder   = imaps://imap.domain.tld
+
+set imap_user = user@domain.tld
+set imap_pass = <app-password>
+
+set smtp_url  = smtps://user@smtp.domain.tld
+set smtp_pass = <app-password>
+
+set spoolfile     = +INBOX
+set ssl_starttls  = yes
+set ssl_force_tls = yes
+
+set charset = "utf-8"
+set record  = ""
+
+bind index G imap-fetch-mail
+bind pager <up> previous-line
+bind pager <down> next-line
