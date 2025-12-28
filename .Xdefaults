@@ -1,5 +1,5 @@
 ! Alt+D fix
-*metaSendsEscape: true
+*eightBitInput: false
 
 *faceName: Go Mono
 *faceSize: 11
