@@ -5,6 +5,7 @@ esac
 
 alias l='ls -plha'
 alias sl='fn_sl'
+alias man='man -T ascii'
 alias mg='mg -n'
 alias smg='fn_smg'
 alias emacs='emacsclient -nw'
