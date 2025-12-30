@@ -1,0 +1,8 @@
+"maim -m 10 $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png"
+Print
+
+"maim -m 10 -s $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot-cropped.png"
+Print+Shift
+
+"xlock"
+Mod4+period
