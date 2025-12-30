@@ -1,7 +1,7 @@
-"maim -m 10 $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png"
+"scrot -Z 9 $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot.png"
 Print
 
-"maim -m 10 -s $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot-cropped.png"
+"scrot -Z 9 -s $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot-cropped.png"
 Print+Shift
 
 "xlock"
