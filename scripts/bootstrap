@@ -117,8 +117,6 @@ then
         cp -f repos/dotfiles/.cwmrc .
         cp -f repos/dotfiles/.xsession .
         cp -f repos/dotfiles/.Xdefaults .
-        mkdir .fonts
-        cp -rf repos/dotfiles/.fonts/Go .fonts
         cp -rf repos/dotfiles/pics .
     fi
 fi
