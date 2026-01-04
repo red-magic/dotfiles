@@ -2,7 +2,7 @@
 
 set -e
 
-progname=$(basename "$0")
+progname=${0##*/}
 
 if [ $# -gt 1 ]
 then

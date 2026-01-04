@@ -2,7 +2,7 @@
 
 set -e
 
-progname=$(basename "$0")
+progname=${0##*/}
 
 qemu_cmd=qemu-system-x86_64
 qemu_args="-cpu host -smp 16 -m 8G -net nic -net user,hostfwd=tcp::2222-:22 -audio driver=pa,id=pa1,model=hda"
