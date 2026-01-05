@@ -1,13 +1,15 @@
-case "$-" in
-    *"i"*) ;;
-    *) return 0 ;;
-esac
+[[ "$-" != *"i"* ]] && return 0
 
 stty werase undef
 bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
 #shopt -s histappend
+
+PS1="\h$ "
+HISTFILE=""
+#HISTSIZE="10000"
+#HISTCONTROL="ignoreboth"
 
 alias ls='ls --color=always'
 alias l='ls -plha'
