@@ -6,4 +6,4 @@ export PAGER="less -M"
 export MANWIDTH="80"
 export LESSHISTFILE="-"
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ -f "${HOME}/.bashrc" ]] && . "${HOME}/.bashrc"
