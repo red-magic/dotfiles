@@ -34,7 +34,6 @@ fn_semacs()
         /*) file_path=$1 ;;
         *) file_path=$PWD/$1 ;;
     esac
-
     emacs "/doas::$file_path"
 }
 
