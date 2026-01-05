@@ -37,8 +37,7 @@ fn_smg() {
 }
 
 fn_semacs() {
-    file_path="$(realpath -- "$(dirname -- "${1}")")/$(basename -- "${1}")"
-    emacs "/sudo::${file_path}"
+    emacs "/sudo::$(realpath -- "${1}")"
 }
 
 fn_defrag_root_ext4() {

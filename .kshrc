@@ -30,11 +30,7 @@ fn_smg()
 
 fn_semacs()
 {
-    case $1 in
-        /*) file_path=$1 ;;
-        *) file_path=$PWD/$1 ;;
-    esac
-    emacs "/doas::$file_path"
+    emacs "/doas::$(realpath -- "$1")"
 }
 
 #fn_ssh_connect_tor()
