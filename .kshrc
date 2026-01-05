@@ -1,6 +1,6 @@
 case $- in
     *i*) ;;
-    *) return ;;
+    *) return 0 ;;
 esac
 
 alias l='ls -plha'
@@ -30,7 +30,11 @@ fn_smg()
 
 fn_semacs()
 {
-    file_path=$(realpath -- "$(dirname -- "$1")")/$(basename -- "$1")
+    case $1 in
+        /*) file_path=$1 ;;
+        *) file_path=$PWD/$1 ;;
+    esac
+
     emacs "/doas::$file_path"
 }
 

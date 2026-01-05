@@ -12,4 +12,4 @@ HISTFILE=""
 #HISTSIZE="10000"
 #HISTCONTROL="ignoreboth"
 
-[[ -f "${HOME}/.bashrc" ]] && . "${HOME}/.bashrc"
+[ -f "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"

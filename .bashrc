@@ -1,6 +1,6 @@
 case "$-" in
     *"i"*) ;;
-    *) return ;;
+    *) return 0 ;;
 esac
 
 stty werase undef
