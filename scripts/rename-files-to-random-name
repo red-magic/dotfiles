@@ -6,7 +6,7 @@ progname=${0##*/}
 
 if [ $# -gt 1 ]
 then
-    printf "%s: only 1 argument is accepted\n" "$progname" >&2
+    printf "%s: only 1 argument is accepted\n" "$progname" 1>&2
     print_help
     exit 1
 elif [ $# -eq 0 ]
@@ -25,7 +25,7 @@ case $os_name in
         sha_cmd=sha256sum
         ;;
     *)
-        printf "%s: unable to detect OS for \$sha_cmd\n" "$progname" >&2
+        printf "%s: unable to detect OS for \$sha_cmd\n" "$progname" 1>&2
         exit 1
         ;;
 esac

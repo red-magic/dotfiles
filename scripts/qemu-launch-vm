@@ -26,12 +26,12 @@ do
             drive_args="-drive file=$OPTARG,format=raw"
             ;;
         :)
-            printf "%s: option -%s requires an argument\n" "$progname" "$OPTARG" >&2
+            printf "%s: option -%s requires an argument\n" "$progname" "$OPTARG" 1>&2
             print_help
             exit 1
             ;;
         *)
-            printf "%s: invalid option: -%s\n" "$progname" "$OPTARG" >&2
+            printf "%s: invalid option: -%s\n" "$progname" "$OPTARG" 1>&2
             print_help
             exit 1
             ;;

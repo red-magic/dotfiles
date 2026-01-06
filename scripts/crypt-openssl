@@ -12,7 +12,7 @@ print_help()
 
 if [ $# -gt 2 ]
 then
-    printf "%s: only 1 option and 1 argument are accepted\n" "$progname" >&2
+    printf "%s: only 1 option and 1 argument are accepted\n" "$progname" 1>&2
     print_help
     exit 1
 elif [ $# -eq 0 ]
@@ -31,7 +31,7 @@ case $1 in
         mode=dec
         ;;
     *)
-        printf "%s: invalid option: %s\n" "$progname" "$1" >&2
+        printf "%s: invalid option: %s\n" "$progname" "$1" 1>&2
         print_help
         exit 1
         ;;
@@ -41,7 +41,7 @@ file=$2
 
 if [ -z "$file" ]
 then
-    printf "%s: %s: missing file argument\n" "$progname" "$1" >&2
+    printf "%s: %s: missing file argument\n" "$progname" "$1" 1>&2
     print_help
     exit 1
 fi
@@ -53,13 +53,13 @@ case $mode in
 
         if [ ! -f "$file_dec" ]
         then
-            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_dec" >&2
+            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_dec" 1>&2
             exit 1
         fi
 
         if [ -f "$file_enc" ]
         then
-            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_enc" >&2
+            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_enc" 1>&2
             exit 1
         fi
         ;;
@@ -67,7 +67,7 @@ case $mode in
         case $file in
             *.enc) ;;
             *)
-                printf "%s: %s: not a .enc file: %s\n" "$progname" "$1" "$file" >&2
+                printf "%s: %s: not a .enc file: %s\n" "$progname" "$1" "$file" 1>&2
                 exit 1
                 ;;
         esac
@@ -77,13 +77,13 @@ case $mode in
 
         if [ ! -f "$file_enc" ]
         then
-            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_enc" >&2
+            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_enc" 1>&2
             exit 1
         fi
 
         if [ -f "$file_dec" ]
         then
-            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_dec" >&2
+            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_dec" 1>&2
             exit 1
         fi
         ;;

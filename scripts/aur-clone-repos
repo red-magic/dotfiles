@@ -8,7 +8,7 @@ aur_dir="/home/$USER/repos/aur"
 
 if [ -d "$aur_dir" ]
 then
-    printf "directory %s already exists\n" "$aur_dir" >&2
+    printf "directory %s already exists\n" "$aur_dir" 1>&2
     exit 1
 fi
 

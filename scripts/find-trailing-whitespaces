@@ -6,7 +6,7 @@ progname=${0##*/}
 
 if [ $# -gt 1 ]
 then
-    printf "%s: only 1 argument is accepted\n" "$progname" >&2
+    printf "%s: only 1 argument is accepted\n" "$progname" 1>&2
     print_help
     exit 1
 elif [ $# -eq 0 ]
@@ -19,7 +19,7 @@ dir=$1
 
 if [ ! -d "$dir" ]
 then
-    printf "%s: no such directory: %s\n" "$progname" "$dir" >&2
+    printf "%s: no such directory: %s\n" "$progname" "$dir" 1>&2
     exit 1
 fi
 

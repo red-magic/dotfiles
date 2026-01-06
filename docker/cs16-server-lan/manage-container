@@ -3,11 +3,11 @@
 set -euo pipefail
 
 print_help() {
-    printf "Usage: %s <build | deploy | start | restart | stop>\n" "$(basename "${0}")"
+    printf "Usage: %s <build | deploy | start | restart | stop>\n" "${0##*/}"
 }
 
 if [[ "${#}" -gt 1 ]]; then
-    printf "Only 1 command is accepted\n" >&2
+    printf "Only 1 command is accepted\n" 1>&2
     print_help
     exit 1
 elif [[ "${#}" -eq 0 ]]; then
@@ -32,7 +32,7 @@ case "${1:-}" in
         docker stop cs16-server-lan
         ;;
     *)
-        printf "Invalid command: %s\n" "${1}" >&2
+        printf "Invalid command: %s\n" "${1}" 1>&2
         print_help
         exit 1
         ;;

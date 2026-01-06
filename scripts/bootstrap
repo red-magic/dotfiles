@@ -12,7 +12,7 @@ print_help()
 
 if [ $# -gt 1 ]
 then
-    printf "%s: only 1 option is accepted\n" "$progname" >&2
+    printf "%s: only 1 option is accepted\n" "$progname" 1>&2
     print_help
     exit 1
 elif [ $# -eq 0 ]
@@ -29,7 +29,7 @@ case $1 in
         workstation=1
         ;;
     *)
-        printf "%s: invalid option %s\n" "$progname" "$1" >&2
+        printf "%s: invalid option %s\n" "$progname" "$1" 1>&2
         print_help
         exit 1
         ;;
@@ -46,7 +46,7 @@ done
 
 if [ -n "$missing_pkgs" ]
 then
-    printf "install missing packages:%s\n" "$missing_pkgs" >&2
+    printf "install missing packages:%s\n" "$missing_pkgs" 1>&2
     exit 1
 fi
 
