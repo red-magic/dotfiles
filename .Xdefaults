@@ -6,82 +6,82 @@
 *allowBoldFonts: false
 *scrollBar: false
 
-! Dark Theme
-! foreground: hsl(10, 15%, 65%)
-! background: hsl(10, 95%, 5%)
+! Light Theme
+! foreground: hsl(20, 20%, 5%)
+! background: hsl(20, 20%, 95%)
 
-*foreground:  #b39d98
-*background:  #190501
-*cursorColor: #b39d98
+*foreground:  #0f0c0a
+*background:  #f5f1f0
+*cursorColor: #0f0c0a
 
 ! black
-*.color0:  #190501
-*.color8:  #190501
+*.color0:  #f5f1f0
+*.color8:  #f5f1f0
 
 ! red
-*.color1:  #b39d98
-*.color9:  #b39d98
+*.color1:  #1f1814
+*.color9:  #1f1814
 
 ! green
-*.color2:  #b39d98
-*.color10: #b39d98
+*.color2:  #1f1814
+*.color10: #1f1814
 
 ! yellow
-*.color3:  #b39d98
-*.color11: #b39d98
+*.color3:  #1f1814
+*.color11: #1f1814
 
 ! blue
-*.color4:  #b39d98
-*.color12: #b39d98
+*.color4:  #1f1814
+*.color12: #1f1814
 
 ! magenta
-*.color5:  #b39d98
-*.color13: #b39d98
+*.color5:  #1f1814
+*.color13: #1f1814
 
 ! cyan
-*.color6:  #b39d98
-*.color14: #b39d98
+*.color6:  #1f1814
+*.color14: #1f1814
 
 ! white
-*.color7:  #b39d98
-*.color15: #b39d98
+*.color7:  #1f1814
+*.color15: #1f1814
 
-!! Light Theme
-!! foreground: hsl(20, 20%, 5%)
-!! background: hsl(20, 20%, 95%)
+!! Dark Theme
+!! foreground: hsl(10, 15%, 65%)
+!! background: hsl(10, 95%, 5%)
 
-!*foreground:  #0f0c0a
-!*background:  #f5f1f0
-!*cursorColor: #0f0c0a
+!*foreground:  #b39d98
+!*background:  #190501
+!*cursorColor: #b39d98
 
 !! black
-!*.color0:  #f5f1f0
-!*.color8:  #f5f1f0
+!*.color0:  #190501
+!*.color8:  #190501
 
 !! red
-!*.color1:  #1f1814
-!*.color9:  #1f1814
+!*.color1:  #b39d98
+!*.color9:  #b39d98
 
 !! green
-!*.color2:  #1f1814
-!*.color10: #1f1814
+!*.color2:  #b39d98
+!*.color10: #b39d98
 
 !! yellow
-!*.color3:  #1f1814
-!*.color11: #1f1814
+!*.color3:  #b39d98
+!*.color11: #b39d98
 
 !! blue
-!*.color4:  #1f1814
-!*.color12: #1f1814
+!*.color4:  #b39d98
+!*.color12: #b39d98
 
 !! magenta
-!*.color5:  #1f1814
-!*.color13: #1f1814
+!*.color5:  #b39d98
+!*.color13: #b39d98
 
 !! cyan
-!*.color6:  #1f1814
-!*.color14: #1f1814
+!*.color6:  #b39d98
+!*.color14: #b39d98
 
 !! white
-!*.color7:  #1f1814
-!*.color15: #1f1814
+!*.color7:  #b39d98
+!*.color15: #b39d98
