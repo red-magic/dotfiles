@@ -47,12 +47,12 @@
 *.color15: #b39d98
 
 !! Light Theme
-!! foreground: hsl(20, 20%, 10%)
+!! foreground: hsl(20, 20%, 5%)
 !! background: hsl(20, 20%, 95%)
 
-!*foreground:  #1f1814
+!*foreground:  #0f0c0a
 !*background:  #f5f1f0
-!*cursorColor: #1f1814
+!*cursorColor: #0f0c0a
 
 !! black
 !*.color0:  #f5f1f0
