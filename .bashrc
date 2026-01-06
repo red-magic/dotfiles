@@ -24,8 +24,8 @@ alias defrag-root-ext4='fn_defrag_root_ext4'
 alias defrag-root-btrfs='fn_defrag_root_btrfs'
 alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux'
 alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias genmirlist='fn_genmirlist'
 alias clean-pacman='fn_clean_pacman'
+alias genmirlist='fn_genmirlist'
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
@@ -58,13 +58,6 @@ fn_defrag_root_btrfs() {
     done
 }
 
-fn_genmirlist() {
-    printf "Generating mirror list...\n"
-    reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist
-    sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d
-    rm -vf /tmp/mirrorlist
-}
-
 fn_clean_pacman() {
     if [[ -x "$(command -v yay)" ]]; then
         yay -Scc --noconfirm
@@ -73,6 +66,13 @@ fn_clean_pacman() {
         sudo pacman -Scc --noconfirm
         pacman -Qttdq | sudo pacman -Rns -
     fi
+}
+
+fn_genmirlist() {
+    printf "Generating mirror list...\n"
+    reflector --verbose --latest 20 --proto https --ipv4 --sort rate --save /tmp/mirrorlist
+    sudo install -m 644 /tmp/mirrorlist -t /etc/pacman.d
+    rm -vf /tmp/mirrorlist
 }
 
 #fn_ssh_connect_tor() {
