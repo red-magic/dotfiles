@@ -6,6 +6,7 @@
 *allowBoldFonts: false
 *scrollBar: false
 
+! Dark Theme
 ! foreground: hsl(10, 15%, 65%)
 ! background: hsl(10, 95%, 5%)
 
@@ -44,3 +45,43 @@
 ! white
 *.color7:  #b39d98
 *.color15: #b39d98
+
+!! Light Theme
+!! foreground: hsl(20, 20%, 10%)
+!! background: hsl(20, 20%, 95%)
+
+!*foreground:  #1f1814
+!*background:  #f5f1f0
+!*cursorColor: #1f1814
+
+!! black
+!*.color0:  #f5f1f0
+!*.color8:  #f5f1f0
+
+!! red
+!*.color1:  #1f1814
+!*.color9:  #1f1814
+
+!! green
+!*.color2:  #1f1814
+!*.color10: #1f1814
+
+!! yellow
+!*.color3:  #1f1814
+!*.color11: #1f1814
+
+!! blue
+!*.color4:  #1f1814
+!*.color12: #1f1814
+
+!! magenta
+!*.color5:  #1f1814
+!*.color13: #1f1814
+
+!! cyan
+!*.color6:  #1f1814
+!*.color14: #1f1814
+
+!! white
+!*.color7:  #1f1814
+!*.color15: #1f1814
