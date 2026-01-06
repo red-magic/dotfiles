@@ -4,34 +4,23 @@ case $- in
 esac
 
 alias l='ls -plha'
-alias sl='fn_sl'
+alias sl=fn_sl
 alias man='man -T ascii -O width=80'
 alias mg='mg -n'
-alias smg='fn_smg'
+alias smg=fn_smg
 alias emacs='emacsclient -nw'
-alias semacs='fn_semacs'
+alias semacs=fn_semacs
 alias ranger='TERM=xterm ranger'
 alias fastfetch='fastfetch --pipe'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
 alias full-clean-git='git clean -dfx && git reset --hard'
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
-#alias ssh-connect-tor='fn_ssh_connect_tor'
+#alias ssh-connect-tor=fn_ssh_connect_tor
 
-fn_sl()
-{
-    doas ls -plha "$@"
-}
-
-fn_smg()
-{
-    doas mg -n "$@"
-}
-
-fn_semacs()
-{
-    emacs "/doas::$(realpath -- "$1")"
-}
+fn_sl() { doas ls -plha "$@"; }
+fn_smg() { doas mg -n "$@"; }
+fn_semacs() { emacs "/doas::$(realpath -- "$1")"; }
 
 #fn_ssh_connect_tor()
 #{
