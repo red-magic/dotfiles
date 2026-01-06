@@ -3,4 +3,5 @@ export EDITOR="mg -n"
 #export EDITOR="emacsclient -nw"
 #export ALTERNATE_EDITOR="emacs -nw --color=never"
 export PAGER="less -M"
+export POSIXLY_CORRECT=1
 export ENV=$HOME/.kshrc
