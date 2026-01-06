@@ -6,8 +6,7 @@ progname=${0##*/}
 
 print_help()
 {
-    printf "usage: %s -s\n" "$progname"
-    printf "       %s -w\n" "$progname"
+    printf "usage: %s -s|-w\n" "$progname"
 }
 
 if [ $# -gt 1 ]
