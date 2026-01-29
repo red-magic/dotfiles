@@ -14,6 +14,7 @@ HISTFILE=""
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias sl='fn_sl'
+alias longlines='grep -n ".\{81,\}"'
 alias mg='mg -n'
 alias smg='fn_smg'
 alias emacs='emacsclient -nw'

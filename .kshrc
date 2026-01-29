@@ -5,6 +5,7 @@ esac
 
 alias l='ls -plha'
 alias sl=fn_sl
+alias longlines='grep -n ".\{81,\}"'
 alias man='man -T ascii -O width=80'
 alias mg='mg -n'
 alias smg=fn_smg
