@@ -27,6 +27,7 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+(c-set-offset 'case-label '+)
 (c-set-offset 'statement-cont 'c-lineup-math)
 
 (advice-add 'eww--dwim-expand-url :filter-return
