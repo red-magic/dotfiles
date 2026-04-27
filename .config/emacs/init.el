@@ -30,5 +30,7 @@
 (c-set-offset 'case-label '+)
 (c-set-offset 'statement-cont 'c-lineup-math)
 
+;;(add-to-list 'term-file-aliases '("xterm"))
+
 (advice-add 'eww--dwim-expand-url :filter-return
             (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
