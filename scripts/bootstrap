@@ -21,12 +21,14 @@ then
     exit 0
 fi
 
+mode=
+
 case $1 in
     -s)
-        server=1
+        mode=server
         ;;
     -w)
-        workstation=1
+        mode=workstation
         ;;
     *)
         printf "%s: invalid option %s\n" "$progname" "$1" 1>&2
@@ -37,7 +39,7 @@ esac
 
 pkgs="curl ssh git tar gzip"
 
-[ "$workstation" -eq 1 ] && pkgs="$pkgs gpg"
+[ $mode = workstation ] && pkgs="$pkgs gpg"
 
 for pkg in $pkgs
 do
@@ -56,7 +58,7 @@ mkdir -m 700 .ssh
 mkdir repos
 mkdir .config
 
-if [ "$workstation" -eq 1 ]
+if [ $mode = workstation ]
 then
     curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.tar.gz.gpg
     gpg -do archive.tar.gz archive.tar.gz.gpg
@@ -76,6 +78,7 @@ then
     ssh-add
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
     git clone ssh://git@github.com/red-magic/bible repos/bible
+
     if uname -s | grep -q Linux
     then
         cp -rf repos/dotfiles/.docker .
@@ -98,7 +101,7 @@ then
     cp -f repos/dotfiles/.gitconfig .
 fi
 
-[ "$server" -eq 1 ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
+[ $mode = server ] && git clone https://github.com/red-magic/dotfiles repos/dotfiles
 
 mkdir .config/ranger
 cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
@@ -113,7 +116,7 @@ then
     cp -f repos/dotfiles/.kshrc .
     cp -f repos/dotfiles/.mailrc .
     chmod 700 "$HOME"
-    if [ "$workstation" -eq 1 ]
+    if [ $mode = workstation ]
     then
         cp -f repos/dotfiles/.cwmrc .
         cp -f repos/dotfiles/.xsession .
