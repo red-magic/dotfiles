@@ -61,10 +61,10 @@ fn_defrag_root_btrfs() {
 
 fn_clean_pacman() {
     if [[ -x "$(command -v yay)" ]]; then
-        yay -Scc --noconfirm
+        yes | yay -Scc
         yay -Qttdq | yay -Rns -
     else
-        sudo pacman -Scc --noconfirm
+        yes | sudo pacman -Scc
         pacman -Qttdq | sudo pacman -Rns -
     fi
 }
