@@ -1,3 +1,5 @@
+ARG YB_PASSWORD="qwerty123456"
+
 FROM debian:trixie-slim
 
 RUN apt-get update -y && \
@@ -19,6 +21,8 @@ RUN mkdir -v /var/hlds && \
 
 USER hlds
 
+ARG YB_PASSWORD
+
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
     ln -sfv . steam && \
@@ -32,11 +36,12 @@ RUN cd /var/hlds/.steam && \
     ln -sfv linux32 sdk32
 
 RUN cd /var/hlds && \
-    sed -i 's|yb_radio_mode "2"|yb_radio_mode "0"|' cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i 's|yb_difficulty "3"|yb_difficulty "0"|' cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i 's|yb_quota "0"|yb_quota "16"|' cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i 's|yb_quota_mode "normal"|yb_quota_mode "fill"|' cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i 's|mp_timelimit 20|mp_timelimit 0|' cs16/cstrike/server.cfg && \
+    sed -i "s|yb_quota \"9\"|yb_quota \"16\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_quota_mode \"normal\"|yb_quota_mode \"fill\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_difficulty \"3\"|yb_difficulty \"0\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_radio_mode \"2\"|yb_radio_mode \"0\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_password \"\"|yb_password \"$YB_PASSWORD\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|mp_timelimit 20|mp_timelimit 0|" cs16/cstrike/server.cfg && \
     echo "rcon_password qwerty123456" >> cs16/cstrike/server.cfg
 
 WORKDIR /var/hlds/cs16
