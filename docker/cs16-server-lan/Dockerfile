@@ -1,4 +1,10 @@
+ARG RCON_PASSWORD="qwerty123456"
 ARG YB_PASSWORD="qwerty123456"
+ARG YB_QUOTA="16"
+ARG YB_QUOTA_MODE="fill"
+ARG YB_DIFFICULTY="0"
+ARG YB_RADIO_MODE="0"
+ARG MP_TIMELIMIT="0"
 
 FROM debian:trixie-slim
 
@@ -21,7 +27,13 @@ RUN mkdir -v /var/hlds && \
 
 USER hlds
 
+ARG RCON_PASSWORD
 ARG YB_PASSWORD
+ARG YB_QUOTA
+ARG YB_QUOTA_MODE
+ARG YB_DIFFICULTY
+ARG YB_RADIO_MODE
+ARG MP_TIMELIMIT
 
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
@@ -33,16 +45,18 @@ RUN mkdir -v /var/hlds/.steam && \
 RUN cd /var/hlds/.steam && \
     chmod -v 755 addons/yapb/data/* && \
     mv -vf addons ../cs16/cstrike && \
-    ln -sfv linux32 sdk32
+    ln -sfv linux32 sdk32 && \
+    touch ../cs16/cstrike/listip.cfg && \
+    touch ../cs16/cstrike/banned.cfg
 
 RUN cd /var/hlds && \
-    sed -i "s|yb_quota \"9\"|yb_quota \"16\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i "s|yb_quota_mode \"normal\"|yb_quota_mode \"fill\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i "s|yb_difficulty \"3\"|yb_difficulty \"0\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i "s|yb_radio_mode \"2\"|yb_radio_mode \"0\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    echo "rcon_password $RCON_PASSWORD" >> cs16/cstrike/server.cfg && \
     sed -i "s|yb_password \"\"|yb_password \"$YB_PASSWORD\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
-    sed -i "s|mp_timelimit 20|mp_timelimit 0|" cs16/cstrike/server.cfg && \
-    echo "rcon_password qwerty123456" >> cs16/cstrike/server.cfg
+    sed -i "s|yb_quota \"9\"|yb_quota \"$YB_QUOTA\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_quota_mode \"normal\"|yb_quota_mode \"$YB_QUOTA_MODE\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_difficulty \"3\"|yb_difficulty \"$YB_DIFFICULTY\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|yb_radio_mode \"2\"|yb_radio_mode \"$YB_RADIO_MODE\"|" cs16/cstrike/addons/yapb/conf/yapb.cfg && \
+    sed -i "s|mp_timelimit 20|mp_timelimit $MP_TIMELIMIT|" cs16/cstrike/server.cfg
 
 WORKDIR /var/hlds/cs16
 

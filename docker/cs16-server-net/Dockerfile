@@ -36,7 +36,9 @@ RUN cd /var/hlds/.steam && \
 RUN cd /var/hlds/.steam && \
     echo "\"$ADMIN_STEAMID\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     mv -vf addons ../cs16/cstrike && \
-    ln -sfv linux32 sdk32
+    ln -sfv linux32 sdk32 && \
+    touch ../cs16/cstrike/listip.cfg && \
+    touch ../cs16/cstrike/banned.cfg
 
 USER hlds
 
