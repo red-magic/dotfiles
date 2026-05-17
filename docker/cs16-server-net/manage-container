@@ -20,7 +20,7 @@ case "${1}" in
         docker build --progress plain -t cs16-server-net .
         ;;
     "deploy")
-        docker run --init -d -p 27015:27015/udp -p 27015:27015 --name cs16-server-net cs16-server-net
+        docker run --init -d -p 27015:27015/udp -p 27015:27015/tcp --name cs16-server-net cs16-server-net
         ;;
     "start")
         docker start cs16-server-net
