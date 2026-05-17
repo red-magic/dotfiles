@@ -1,3 +1,5 @@
+ARG ADMIN_STEAMID="STEAM_0:0:123456"
+
 FROM debian:trixie-slim
 
 RUN apt-get update -y && \
@@ -19,6 +21,8 @@ RUN mkdir -v /var/hlds && \
 
 USER hlds
 
+ARG ADMIN_STEAMID
+
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
     ln -sfv . steam && \
@@ -30,7 +34,7 @@ RUN cd /var/hlds/.steam && \
     curl -L https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-cstrike-linux.tar.gz | tar zxvf - -C .
 
 RUN cd /var/hlds/.steam && \
-    echo '"STEAM_0:0:123456" "" "abcdefghijklmnopqrstuv" "ce"' >> addons/amxmodx/configs/users.ini && \
+    echo "\"$ADMIN_STEAMID\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     mv -vf addons ../cs16/cstrike && \
     ln -sfv linux32 sdk32
 
