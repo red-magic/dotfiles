@@ -46,8 +46,6 @@ RUN cd /var/hlds/.steam && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 
-USER hlds
-
 WORKDIR /var/hlds/cs16
 
 CMD ["./hlds_run", "-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "+map", "de_dust2", "-dll", "cstrike/addons/amxmodx/dlls/amxmodx_mm_i386.so"]
