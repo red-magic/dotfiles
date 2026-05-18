@@ -1,5 +1,8 @@
 ARG ADMIN_STEAMID="STEAM_0:0:123456"
 
+ARG AMXMODX_BASE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-base-linux.tar.gz"
+ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-cstrike-linux.tar.gz"
+
 FROM debian:trixie-slim
 
 RUN apt-get update -y && \
@@ -23,6 +26,9 @@ USER hlds
 
 ARG ADMIN_STEAMID
 
+ARG AMXMODX_BASE_LINK
+ARG AMXMODX_CSTRIKE_LINK
+
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
     ln -sfv . steam && \
@@ -30,11 +36,11 @@ RUN mkdir -v /var/hlds/.steam && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN cd /var/hlds/.steam && \
-    curl -L https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-base-linux.tar.gz | tar zxvf - -C . && \
-    curl -L https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-cstrike-linux.tar.gz | tar zxvf - -C .
+    curl -L "${AMXMODX_BASE_LINK}" | tar zxvf - -C . && \
+    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C .
 
 RUN cd /var/hlds/.steam && \
-    echo "\"$ADMIN_STEAMID\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
+    echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     mv -vf addons ../cs16/cstrike && \
     ln -sfv linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
