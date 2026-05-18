@@ -70,10 +70,11 @@ then
     cp -f archive/ssh/id_ed25519.pub .ssh/authorized_keys
     touch .ssh/known_hosts
     chmod 600 .ssh/known_hosts
+    chmod 600 .ssh/authorized_keys
     rm -rf archive*
 
     curl -L https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
-    chmod 400 .ssh/config
+    chmod 600 .ssh/config
     eval "$(ssh-agent -s)"
     ssh-add
     git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
