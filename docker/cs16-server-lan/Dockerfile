@@ -6,7 +6,7 @@ ARG YB_DIFFICULTY="0"
 ARG YB_RADIO_MODE="0"
 ARG MP_TIMELIMIT="0"
 
-ARG STEAM_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
+ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
 ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
 
 FROM debian:trixie-slim
@@ -38,13 +38,13 @@ ARG YB_DIFFICULTY
 ARG YB_RADIO_MODE
 ARG MP_TIMELIMIT
 
-ARG STEAM_LINK
+ARG STEAMCMD_LINK
 ARG YAPB_LINK
 
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
     ln -sfv . steam && \
-    curl -L "${STEAM_LINK}" | tar zxvf - -C . && \
+    curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done && \
     curl -L "${YAPB_LINK}" | tar Jxvf - -C .
 
