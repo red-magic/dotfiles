@@ -37,7 +37,7 @@ RUN curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
     curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C .
 
 RUN ln -vsf . steam && \
-    for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
+    for i in 1 2 3; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
