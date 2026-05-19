@@ -32,18 +32,18 @@ ARG AMXMODX_CSTRIKE_LINK
 
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
-    ln -sfv . steam && \
+    ln -vsf . steam && \
     curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN cd /var/hlds/.steam && \
     curl -L "${AMXMODX_BASE_LINK}" | tar zxvf - -C . && \
-    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C .
+    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C . && \
+    echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini
 
 RUN cd /var/hlds/.steam && \
-    echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     mv -vf addons ../cs16/cstrike && \
-    ln -sfv linux32 sdk32 && \
+    ln -vsf linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 

@@ -42,15 +42,17 @@ ARG YAPB_LINK
 
 RUN mkdir -v /var/hlds/.steam && \
     cd /var/hlds/.steam && \
-    ln -sfv . steam && \
+    ln -vsf . steam && \
     curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
-    for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done && \
-    curl -L "${YAPB_LINK}" | tar Jxvf - -C .
+    for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN cd /var/hlds/.steam && \
-    chmod -v 755 addons/yapb/data/* && \
+    curl -L "${YAPB_LINK}" | tar Jxvf - -C . && \
+    chmod -v 755 addons/yapb/data/*
+
+RUN cd /var/hlds/.steam && \
     mv -vf addons ../cs16/cstrike && \
-    ln -sfv linux32 sdk32 && \
+    ln -vsf linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 
