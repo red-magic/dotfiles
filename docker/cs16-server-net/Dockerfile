@@ -47,6 +47,6 @@ RUN cd /var/hlds/.steam && \
 WORKDIR /var/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
-CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "-maxplayes", "32", "+map", "de_dust2", "-dll", "cstrike/addons/amxmodx/dlls/amxmodx_mm_i386.so", "-norestart"]
+CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "-maxplayers", "32", "+map", "de_dust2", "-dll", "cstrike/addons/amxmodx/dlls/amxmodx_mm_i386.so", "-norestart"]
 
 STOPSIGNAL SIGINT
