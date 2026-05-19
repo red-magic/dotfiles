@@ -1,6 +1,7 @@
 ARG ADMIN_STEAMID="STEAM_0:0:123456"
 
 ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
+ARG METAMODP_LINK="https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
 ARG AMXMODX_BASE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-base-linux.tar.gz"
 ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5476/amxmodx-1.10.0-git5476-cstrike-linux.tar.gz"
 
@@ -24,6 +25,7 @@ USER hlds
 ARG ADMIN_STEAMID
 
 ARG STEAMCMD_LINK
+ARG METAMODP_LINK
 ARG AMXMODX_BASE_LINK
 ARG AMXMODX_CSTRIKE_LINK
 
@@ -32,6 +34,10 @@ RUN mkdir -v /var/hlds/.steam && \
     ln -vsf . steam && \
     curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
+
+RUN cd /var/hlds/.steam && \
+    curl -L "${METAMODP_LINK}" | tar Jxvf - -C . && \
+    echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini
 
 RUN cd /var/hlds/.steam && \
     curl -L "${AMXMODX_BASE_LINK}" | tar zxvf - -C . && \
@@ -47,6 +53,6 @@ RUN cd /var/hlds/.steam && \
 WORKDIR /var/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
-CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "-maxplayers", "32", "+map", "de_dust2", "-dll", "cstrike/addons/amxmodx/dlls/amxmodx_mm_i386.so", "-norestart"]
+CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "-maxplayers", "32", "+map", "de_dust2", "-dll", "cstrike/addons/metamod/dlls/metamod.so", "-norestart"]
 
 STOPSIGNAL SIGINT
