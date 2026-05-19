@@ -17,19 +17,24 @@ fi
 
 case "${1}" in
     "build")
-        docker build --progress plain -t cs16-server-net .
+        docker compose build cs16-server-net
+        #docker build --progress plain -t cs16-server-net .
         ;;
     "deploy")
-        docker run --init -d -p 27015:27015/udp -p 27015:27015/tcp --name cs16-server-net cs16-server-net
+        docker compose up -d cs16-server-net
+        #docker run --init -d -p 27015:27015/udp -p 27015:27015/tcp --name cs16-server-net cs16-server-net
         ;;
     "start")
-        docker start cs16-server-net
+        docker compose start cs16-server-net
+        #docker start cs16-server-net
         ;;
     "restart")
-        docker restart cs16-server-net
+        docker compose restart cs16-server-net
+        #docker restart cs16-server-net
         ;;
     "stop")
-        docker stop cs16-server-net
+        docker compose stop cs16-server-net
+        #docker stop cs16-server-net
         ;;
     *)
         printf "Invalid command: %s\n" "${1}" 1>&2
