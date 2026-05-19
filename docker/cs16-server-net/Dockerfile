@@ -15,10 +15,11 @@ RUN apt-get update -y && \
 
 ENV LANG="en_US.UTF-8"
 
-RUN mkdir -v /var/hlds && \
-    chmod -v 700 /var/hlds && \
+RUN mkdir -vm 700 /var/hlds && \
     useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    chown -v hlds:hlds /var/hlds
+    mkdir -v /var/hlds/.steam && \
+    mkdir -v /var/hlds/cs16 && \
+    chown -vR hlds:hlds /var/hlds
 
 USER hlds
 
@@ -29,23 +30,21 @@ ARG METAMODP_LINK
 ARG AMXMODX_BASE_LINK
 ARG AMXMODX_CSTRIKE_LINK
 
-RUN mkdir -v /var/hlds/.steam && \
-    cd /var/hlds/.steam && \
-    ln -vsf . steam && \
-    curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
+WORKDIR /var/hlds/.steam
+
+RUN curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
+    curl -L "${METAMODP_LINK}" | tar Jxvf - -C . && \
+    curl -L "${AMXMODX_BASE_LINK}" | tar zxvf - -C . && \
+    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C .
+
+RUN ln -vsf . steam && \
     for i in {1..3}; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
-RUN cd /var/hlds/.steam && \
-    curl -L "${METAMODP_LINK}" | tar Jxvf - -C . && \
-    echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini
+RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
+    echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
+    sed -i "s|gamedll_linux \"dlls/cs.so\"|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
 
-RUN cd /var/hlds/.steam && \
-    curl -L "${AMXMODX_BASE_LINK}" | tar zxvf - -C . && \
-    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C . && \
-    echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini
-
-RUN cd /var/hlds/.steam && \
-    mv -vf addons ../cs16/cstrike && \
+RUN mv -vf addons ../cs16/cstrike && \
     ln -vsf linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
@@ -53,6 +52,6 @@ RUN cd /var/hlds/.steam && \
 WORKDIR /var/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
-CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "-maxplayers", "32", "+map", "de_dust2", "-dll", "cstrike/addons/metamod/dlls/metamod.so", "-norestart"]
+CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "+sv_lan", "0", "-maxplayers", "32", "+map", "de_dust2", "-norestart"]
 
 STOPSIGNAL SIGINT
