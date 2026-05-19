@@ -4,6 +4,7 @@ services:
     image: cs16-server-net
     container_name: cs16-server-net
     init: true
+    restart: unless-stopped
     ports:
       - "27015:27015/udp"
       - "27015:27015/tcp"
