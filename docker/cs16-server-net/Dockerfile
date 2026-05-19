@@ -7,7 +7,6 @@ ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/down
 FROM debian:trixie-slim
 
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
     apt-get install -y lib32stdc++6 curl xz-utils && \
     apt-get install -y locales && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \

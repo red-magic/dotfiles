@@ -12,7 +12,6 @@ ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.9
 FROM debian:trixie-slim
 
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
     apt-get install -y lib32stdc++6 curl xz-utils && \
     apt-get install -y locales && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
