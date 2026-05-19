@@ -12,15 +12,12 @@ ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.9
 FROM debian:trixie-slim
 
 RUN apt-get update -y && \
-    apt-get install -y lib32stdc++6 curl xz-utils && \
-    apt-get install -y locales && \
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
-    locale-gen
-
-RUN apt-get clean -y && \
-    apt-get autoremove -y && \
-    apt-get autopurge -y && \
+    apt-get install -y locales lib32stdc++6 curl xz-utils && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    apt-get clean -y && \
     rm -vrf /var/lib/apt/lists/*
+
+ENV LANG="en_US.UTF-8"
 
 RUN mkdir -v /var/hlds && \
     chmod -v 700 /var/hlds && \
