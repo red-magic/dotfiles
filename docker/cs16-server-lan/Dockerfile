@@ -55,7 +55,8 @@ RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
     sed -i "s|mp_timelimit 20|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
     sed -i "s|gamedll_linux \"dlls/cs.so\"|gamedll_linux \"addons/yapb/bin/yapb.so\"|" ../cs16/cstrike/liblist.gam
 
-RUN chmod 755 addons/yapb/data/* && \
+RUN find addons/yapb/data/graph -name "*_cz.graph" -delete && \
+    chmod 755 addons/yapb/data/* && \
     mv -f addons ../cs16/cstrike && \
     ln -sf linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
