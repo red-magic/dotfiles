@@ -6,7 +6,3 @@ services:
     network_mode: host
     init: true
     restart: unless-stopped
-    # Not needed with network_mode: host
-    #ports:
-    #  - "27015:27015/udp"
-    #  - "27015:27015/tcp"
