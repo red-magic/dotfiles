@@ -65,6 +65,6 @@ RUN find addons/yapb/data/graph -name "*_cz.graph" -delete && \
 WORKDIR /var/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
-CMD ["-game", "cstrike", "-pingboost", "3", "+sv_lan", "1", "-maxplayers", "16", "+map", "de_dust2", "-norestart"]
+CMD ["-game", "cstrike", "-pingboost", "3", "-norestart", "+sv_lan", "1", "-maxplayers", "16", "+map", "de_dust2"]
 
 STOPSIGNAL SIGINT
