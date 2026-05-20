@@ -3,8 +3,10 @@ services:
     build: .
     image: cs16-server-net
     container_name: cs16-server-net
+    network_mode: host
     init: true
     restart: unless-stopped
-    ports:
-      - "27015:27015/udp"
-      - "27015:27015/tcp"
+    # Not needed with network_mode: host
+    #ports:
+    #  - "27015:27015/udp"
+    #  - "27015:27015/tcp"
