@@ -16,15 +16,15 @@ RUN apt-get update -y && \
     apt-get install -y locales lib32stdc++6 curl xz-utils && \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
     apt-get clean -y && \
-    rm -vrf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 ENV LANG="en_US.UTF-8"
 
-RUN mkdir -vm 700 /var/hlds && \
+RUN mkdir -m 700 /var/hlds && \
     useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    mkdir -v /var/hlds/.steam && \
-    mkdir -v /var/hlds/cs16 && \
-    chown -vR hlds:hlds /var/hlds
+    mkdir /var/hlds/.steam && \
+    mkdir /var/hlds/cs16 && \
+    chown -R hlds:hlds /var/hlds
 
 USER hlds
 
@@ -40,10 +40,10 @@ ARG YAPB_LINK
 
 WORKDIR /var/hlds/.steam
 
-RUN curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
-    curl -L "${YAPB_LINK}" | tar Jxvf - -C .
+RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
+    curl -L "${YAPB_LINK}" | tar Jxf - -C .
 
-RUN ln -vsf . steam && \
+RUN ln -sf . steam && \
     for i in 1 2 3; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
@@ -55,9 +55,9 @@ RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
     sed -i "s|mp_timelimit 20|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
     sed -i "s|gamedll_linux \"dlls/cs.so\"|gamedll_linux \"addons/yapb/bin/yapb.so\"|" ../cs16/cstrike/liblist.gam
 
-RUN chmod -v 755 addons/yapb/data/* && \
-    mv -vf addons ../cs16/cstrike && \
-    ln -vsf linux32 sdk32 && \
+RUN chmod 755 addons/yapb/data/* && \
+    mv -f addons ../cs16/cstrike && \
+    ln -sf linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 

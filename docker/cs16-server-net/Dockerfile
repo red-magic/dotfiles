@@ -11,15 +11,15 @@ RUN apt-get update -y && \
     apt-get install -y locales lib32stdc++6 curl xz-utils && \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
     apt-get clean -y && \
-    rm -vrf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 ENV LANG="en_US.UTF-8"
 
-RUN mkdir -vm 700 /var/hlds && \
+RUN mkdir -m 700 /var/hlds && \
     useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    mkdir -v /var/hlds/.steam && \
-    mkdir -v /var/hlds/cs16 && \
-    chown -vR hlds:hlds /var/hlds
+    mkdir /var/hlds/.steam && \
+    mkdir /var/hlds/cs16 && \
+    chown -R hlds:hlds /var/hlds
 
 USER hlds
 
@@ -31,20 +31,20 @@ ARG AMXMODX_CSTRIKE_LINK
 
 WORKDIR /var/hlds/.steam
 
-RUN curl -L "${STEAMCMD_LINK}" | tar zxvf - -C . && \
-    curl -L "${METAMODP_LINK}" | tar Jxvf - -C . && \
-    curl -L "${AMXMODX_BASE_LINK}" | tar zxvf - -C . && \
-    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxvf - -C .
+RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
+    curl -L "${METAMODP_LINK}" | tar Jxf - -C . && \
+    curl -L "${AMXMODX_BASE_LINK}" | tar zxf - -C . && \
+    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxf - -C .
 
-RUN ln -vsf . steam && \
+RUN ln -sf . steam && \
     for i in 1 2 3; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
     sed -i "s|gamedll_linux \"dlls/cs.so\"|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
 
-RUN mv -vf addons ../cs16/cstrike && \
-    ln -vsf linux32 sdk32 && \
+RUN mv -f addons ../cs16/cstrike && \
+    ln -sf linux32 sdk32 && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 
