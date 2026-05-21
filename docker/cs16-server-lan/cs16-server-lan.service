@@ -1,0 +1,13 @@
+[Unit]
+Description=Counter-Strike 1.6 Dedicated Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/bin/podman create --init --network host --name cs16-server-lan cs16-server-lan
+ExecStart=/usr/bin/podman start -a cs16-server-lan
+ExecStop=/usr/bin/podman stop -t 10 cs16-server-lan
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
