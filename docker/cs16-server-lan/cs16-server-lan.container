@@ -1,0 +1,15 @@
+[Unit]
+Description=Counter-Strike 1.6 Dedicated Server
+After=network.target
+
+[Container]
+Image=localhost/cs16-server-lan:latest
+ContainerName=cs16-server-lan
+Network=host
+RunInit=true
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
