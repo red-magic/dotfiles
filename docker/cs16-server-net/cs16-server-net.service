@@ -6,9 +6,11 @@ After=network.target
 Type=simple
 ExecStartPre=-/usr/bin/podman create --init --network host --name cs16-server-net cs16-server-net
 ExecStart=/usr/bin/podman start -a cs16-server-net
-ExecStop=/usr/bin/podman stop -t 10 cs16-server-net
+ExecStop=/usr/bin/podman stop cs16-server-net
 Restart=on-failure
 SuccessExitStatus=130
+RestartSec=10
+TimeoutStopSec=10
 
 [Install]
 WantedBy=multi-user.target
