@@ -10,7 +10,7 @@ ExecStop=/usr/bin/podman stop cs16-server-net
 Restart=on-failure
 SuccessExitStatus=130
 RestartSec=10
-TimeoutStopSec=10
+TimeoutStopSec=60
 
 [Install]
 WantedBy=multi-user.target
