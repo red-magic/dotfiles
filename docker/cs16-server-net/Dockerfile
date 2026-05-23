@@ -51,6 +51,6 @@ RUN mv -f addons ../cs16/cstrike && \
 WORKDIR /var/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
-CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-norestart", "-maxplayers", "32", "+sv_lan", "0", "+map", "de_dust2"]
+CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-norestart", "-maxplayers", "32", "+sys_ticrate", "1000", "+sv_lan", "0", "+map", "de_dust2"]
 
 STOPSIGNAL SIGINT
