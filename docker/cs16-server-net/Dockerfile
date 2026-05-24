@@ -1,4 +1,4 @@
-ARG ADMIN_STEAMID="STEAM_0:0:123456"
+ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID"
 
 ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
 ARG METAMODP_LINK="https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
