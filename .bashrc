@@ -4,12 +4,10 @@ stty werase undef
 bind '\C-w:backward-kill-word'
 bind '\C-n:history-search-forward'
 bind '\C-p:history-search-backward'
-#shopt -s histappend
 
 PS1="\h$ "
 HISTFILE=""
 #HISTSIZE="10000"
-#HISTCONTROL="ignoreboth:erasedups"
 
 alias ls='ls --color=always'
 alias l='ls -plha'
