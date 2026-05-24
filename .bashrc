@@ -9,7 +9,7 @@ bind '\C-p:history-search-backward'
 PS1="\h$ "
 HISTFILE=""
 #HISTSIZE="10000"
-#HISTCONTROL="ignoreboth"
+#HISTCONTROL="ignoreboth:erasedups"
 
 alias ls='ls --color=always'
 alias l='ls -plha'
