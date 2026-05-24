@@ -5,5 +5,6 @@ export EDITOR="mg -n"
 export PAGER="less -M"
 export MANWIDTH="80"
 export LESSHISTFILE="-"
+#export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 
 [[ -f "${HOME}/.bashrc" ]] && . "${HOME}/.bashrc"
