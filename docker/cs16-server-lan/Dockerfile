@@ -20,11 +20,11 @@ RUN apt-get update -y && \
 
 ENV LANG="en_US.UTF-8"
 
-RUN mkdir -m 700 /var/hlds && \
-    useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    mkdir /var/hlds/.steam && \
-    mkdir /var/hlds/cs16 && \
-    chown -R hlds:hlds /var/hlds
+RUN mkdir -m 700 /opt/hlds && \
+    useradd -r -M -s "$(command -v nologin)" -d /opt/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
+    mkdir /opt/hlds/.steam && \
+    mkdir /opt/hlds/cs16 && \
+    chown -R hlds:hlds /opt/hlds
 
 USER hlds
 
@@ -38,13 +38,13 @@ ARG MP_TIMELIMIT
 ARG STEAMCMD_LINK
 ARG YAPB_LINK
 
-WORKDIR /var/hlds/.steam
+WORKDIR /opt/hlds/.steam
 
 RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
     curl -L "${YAPB_LINK}" | tar Jxf - -C .
 
 RUN ln -sf . steam && \
-    for i in 1 2 3; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
+    for i in 1 2 3; do ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
     sed -i "s|yb_password \"\"|yb_password \"${YB_PASSWORD}\"|" addons/yapb/conf/yapb.cfg && \
@@ -62,7 +62,7 @@ RUN find addons/yapb/data/graph -name "*_cz.graph" -delete && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 
-WORKDIR /var/hlds/cs16
+WORKDIR /opt/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
 CMD ["-game", "cstrike", "-insecure", "-pingboost", "3", "-norestart", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "1", "+map", "de_dust2"]

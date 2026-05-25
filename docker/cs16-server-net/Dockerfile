@@ -15,11 +15,11 @@ RUN apt-get update -y && \
 
 ENV LANG="en_US.UTF-8"
 
-RUN mkdir -m 700 /var/hlds && \
-    useradd -r -M -s "$(command -v nologin)" -d /var/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    mkdir /var/hlds/.steam && \
-    mkdir /var/hlds/cs16 && \
-    chown -R hlds:hlds /var/hlds
+RUN mkdir -m 700 /opt/hlds && \
+    useradd -r -M -s "$(command -v nologin)" -d /opt/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
+    mkdir /opt/hlds/.steam && \
+    mkdir /opt/hlds/cs16 && \
+    chown -R hlds:hlds /opt/hlds
 
 USER hlds
 
@@ -29,7 +29,7 @@ ARG METAMODP_LINK
 ARG AMXMODX_BASE_LINK
 ARG AMXMODX_CSTRIKE_LINK
 
-WORKDIR /var/hlds/.steam
+WORKDIR /opt/hlds/.steam
 
 RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
     curl -L "${METAMODP_LINK}" | tar Jxf - -C . && \
@@ -37,7 +37,7 @@ RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
     curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxf - -C .
 
 RUN ln -sf . steam && \
-    for i in 1 2 3; do ./steamcmd.sh +force_install_dir /var/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
+    for i in 1 2 3; do ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
 
 RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
@@ -48,7 +48,7 @@ RUN mv -f addons ../cs16/cstrike && \
     touch ../cs16/cstrike/listip.cfg && \
     touch ../cs16/cstrike/banned.cfg
 
-WORKDIR /var/hlds/cs16
+WORKDIR /opt/hlds/cs16
 
 ENTRYPOINT ["./hlds_run"]
 CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-norestart", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "0", "+map", "de_dust2"]
