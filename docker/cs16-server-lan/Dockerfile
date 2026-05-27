@@ -44,7 +44,7 @@ RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
     curl -L "${YAPB_LINK}" | tar Jxf - -C .
 
 RUN ln -sf . steam && \
-    for i in 1 2 3; do ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit; done
+    ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit
 
 RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
     sed -i "s|yb_password \"\"|yb_password \"${YB_PASSWORD}\"|" addons/yapb/conf/yapb.cfg && \
