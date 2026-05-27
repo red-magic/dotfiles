@@ -60,7 +60,7 @@ mkdir .config
 
 if [ $mode = workstation ]
 then
-    curl -LO https://github.com/red-magic/dotfiles/raw/master/archive.tar.gz.gpg
+    curl -fLO https://github.com/red-magic/dotfiles/raw/master/archive.tar.gz.gpg
     gpg -do archive.tar.gz archive.tar.gz.gpg
     tar xzf archive.tar.gz
     gpg --import archive/gpg/*.*
@@ -73,7 +73,7 @@ then
     chmod 600 .ssh/authorized_keys
     rm -rf archive*
 
-    curl -L https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
+    curl -fL https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
     chmod 600 .ssh/config
     eval "$(ssh-agent -s)"
     ssh-add
