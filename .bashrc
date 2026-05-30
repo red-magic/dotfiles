@@ -12,19 +12,24 @@ HISTFILE=""
 alias ls='ls --color=always'
 alias l='ls -plha'
 alias sl='fn_sl'
-alias longlines='grep -n ".\{81,\}"'
 alias mg='mg -n'
 alias smg='fn_smg'
 alias emacs='emacsclient -nw'
 alias semacs='fn_semacs'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias short-logs='sudo journalctl --no-hostname -b'
-alias defrag-root-ext4='fn_defrag_root_ext4'
-alias defrag-root-btrfs='fn_defrag_root_btrfs'
-alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux'
-alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias clean-pacman='fn_clean_pacman'
-alias genmirlist='fn_genmirlist'
+#alias longlines='grep -n ".\{81,\}"'
+
+#alias defrag-root-ext4='fn_defrag_root_ext4'
+#alias defrag-root-btrfs='fn_defrag_root_btrfs'
+
+#alias grub-update-install='sudo grub-install --boot-directory=/boot --efi-directory=/boot/efi --target=x86_64-efi --bootloader-id=Linux'
+#alias grub-update-config='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+#alias bootctl-update='sudo bootctl update --variables no --graceful'
+
+#alias clean-pacman='fn_clean_pacman'
+#alias genmirlist='fn_genmirlist'
+
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
 #alias ssh-connect-tor='fn_ssh_connect_tor'
@@ -74,7 +79,7 @@ fn_genmirlist() {
     rm -vf /tmp/mirrorlist
 }
 
-#fn_ssh_connect_tor() {
-#    tor_domain="verylongtordomain.onion"
-#    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "${tor_domain}"
-#}
+fn_ssh_connect_tor() {
+    tor_domain="verylongtordomain.onion"
+    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "${tor_domain}"
+}
