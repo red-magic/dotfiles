@@ -5,8 +5,10 @@ After=network.target
 [Container]
 Image=localhost/cs16-server-net:latest
 ContainerName=cs16-server-net
-Network=host
 RunInit=true
+Network=host
+NoNewPrivileges=true
+DropCapability=ALL
 
 [Service]
 Restart=on-failure
