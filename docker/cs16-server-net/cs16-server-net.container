@@ -7,8 +7,8 @@ Image=localhost/cs16-server-net:latest
 ContainerName=cs16-server-net
 RunInit=true
 Network=host
-NoNewPrivileges=true
 DropCapability=ALL
+NoNewPrivileges=true
 
 [Service]
 Restart=on-failure
