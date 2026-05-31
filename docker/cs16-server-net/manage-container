@@ -20,22 +20,35 @@ case "${1}" in
         docker build -t cs16-server-net .
         #docker compose build cs16-server-net
         ;;
+
     "deploy")
-        docker run -d --init --network host --name cs16-server-net --restart unless-stopped cs16-server-net
+        docker run \
+               -d \
+               --name cs16-server-net \
+               --init \
+               --network host \
+               --cap-drop ALL \
+               --security-opt no-new-privileges \
+               --restart unless-stopped \
+               cs16-server-net
         #docker compose up -d cs16-server-net
         ;;
+
     "start")
         docker start cs16-server-net
         #docker compose start cs16-server-net
         ;;
+
     "restart")
         docker restart cs16-server-net
         #docker compose restart cs16-server-net
         ;;
+
     "stop")
         docker stop cs16-server-net
         #docker compose stop cs16-server-net
         ;;
+
     *)
         printf "Invalid command: %s\n" "${1}" 1>&2
         print_help

@@ -3,6 +3,10 @@ services:
     build: .
     image: cs16-server-net
     container_name: cs16-server-net
-    network_mode: host
     init: true
+    network_mode: host
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
     restart: unless-stopped
