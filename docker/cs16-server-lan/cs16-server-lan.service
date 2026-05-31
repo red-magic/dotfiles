@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStartPre=-/usr/bin/podman create --init --network host --name cs16-server-lan cs16-server-lan
+ExecStartPre=-/usr/bin/podman create --name cs16-server-lan --init --network host --cap-drop ALL --security-opt no-new-privileges cs16-server-lan
 ExecStart=/usr/bin/podman start -a cs16-server-lan
 ExecStop=/usr/bin/podman stop cs16-server-lan
 Restart=on-failure
