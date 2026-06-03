@@ -1,4 +1,4 @@
-[[ "$-" != *"i"* ]] && return 0
+[[ "${-}" != *"i"* ]] && return 0
 
 stty werase undef
 bind '\C-w:backward-kill-word'
