@@ -1,6 +1,6 @@
 [user]
-email = egorgushcha@proton.me
 name = Egor Gushcha
+email = egorgushcha@proton.me
 signingkey = ~/.ssh/id_ed25519.pub
 
 [commit]
