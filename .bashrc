@@ -32,7 +32,7 @@ alias short-logs='sudo journalctl --no-hostname -b'
 
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
-#alias ssh-connect-tor='fn_ssh_connect_tor'
+#alias ssh-connect-onion='fn_ssh_connect_onion'
 
 fn_sl() {
     sudo ls -plha --color=always "${@}"
@@ -79,7 +79,7 @@ fn_genmirlist() {
     rm -vf /tmp/mirrorlist
 }
 
-fn_ssh_connect_tor() {
-    tor_domain="verylongtordomain.onion"
-    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "${tor_domain}"
+fn_ssh_connect_onion() {
+    onion_address="verylongonionaddress.onion"
+    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "${onion_address}"
 }

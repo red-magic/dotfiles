@@ -18,14 +18,14 @@ alias longlines='grep -n ".\{81,\}"'
 
 #alias ssh-connect='ssh -v domain.tld'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
-#alias ssh-connect-tor=fn_ssh_connect_tor
+#alias ssh-connect-onion=fn_ssh_connect_onion
 
 fn_sl() { doas ls -plha "$@"; }
 fn_smg() { doas mg -n "$@"; }
 fn_semacs() { emacs "/doas::$(realpath -- "$1")"; }
 
-fn_ssh_connect_tor()
+fn_ssh_connect_onion()
 {
-    tor_domain="verylongtordomain.onion"
-    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "$tor_domain"
+    onion_address="verylongonionaddress.onion"
+    ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "$onion_address"
 }
