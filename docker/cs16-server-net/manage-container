@@ -18,7 +18,6 @@ fi
 case "${1}" in
     "build")
         docker build -t cs16-server-net .
-        #docker compose build cs16-server-net
         ;;
 
     "deploy")
@@ -31,22 +30,18 @@ case "${1}" in
                --security-opt no-new-privileges \
                --restart unless-stopped \
                cs16-server-net
-        #docker compose up -d cs16-server-net
         ;;
 
     "start")
         docker start cs16-server-net
-        #docker compose start cs16-server-net
         ;;
 
     "restart")
         docker restart cs16-server-net
-        #docker compose restart cs16-server-net
         ;;
 
     "stop")
         docker stop cs16-server-net
-        #docker compose stop cs16-server-net
         ;;
 
     *)

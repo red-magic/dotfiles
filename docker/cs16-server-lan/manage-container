@@ -18,7 +18,6 @@ fi
 case "${1}" in
     "build")
         docker build -t cs16-server-lan .
-        #docker compose build cs16-server-lan
         ;;
 
     "deploy")
@@ -31,22 +30,18 @@ case "${1}" in
                --security-opt no-new-privileges \
                --restart unless-stopped \
                cs16-server-lan
-        #docker compose up -d cs16-server-lan
         ;;
 
     "start")
         docker start cs16-server-lan
-        #docker compose start cs16-server-lan
         ;;
 
     "restart")
         docker restart cs16-server-lan
-        #docker compose restart cs16-server-lan
         ;;
 
     "stop")
         docker stop cs16-server-lan
-        #docker compose stop cs16-server-lan
         ;;
 
     *)
