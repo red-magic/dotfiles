@@ -7,7 +7,7 @@ bind '\C-p:history-search-backward'
 
 PS1="\h$ "
 HISTFILE=""
-#HISTSIZE="10000"
+#HISTSIZE="262144"
 
 alias ls='ls --color=always'
 alias l='ls -plha'
