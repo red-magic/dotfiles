@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (setq auto-save-default nil
       auto-save-list-file-prefix nil
       make-backup-files nil
