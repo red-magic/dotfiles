@@ -8,7 +8,6 @@ domain_www=www.$domain
 certbot certonly \
         --dry-run \
         --key-type ecdsa \
-        --elliptic-curve secp384r1 \
         --webroot \
         -w /var/www/$domain \
         -d $domain \
