@@ -86,6 +86,7 @@ then
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
+        git clone ssh://git@github.com/red-magic/tor-bin repos/tor-bin
         if [ -f /etc/arch-release ]
         then
             aur_pkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin ttf-go tty-colorscheme windows-10-cursor"
