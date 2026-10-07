@@ -82,7 +82,6 @@ then
 
     if uname -s | grep -q Linux
     then
-        cp -rf repos/dotfiles/.docker .
         git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
         git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
         git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
