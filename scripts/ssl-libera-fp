@@ -2,21 +2,19 @@
 
 set -e
 
+username=username
+
 mkdir libera
 
-if [ ! -f irc.pem ]
-then
-    openssl req \
-            -x509 \
-            -newkey RSA \
-            -pkeyopt rsa_keygen_bits:4096 \
-            -sha384 \
-            -nodes \
-            -days 1825 \
-            -subj "/CN=irc.libera.chat" \
-            -out libera/libera.pem \
-            -keyout libera/libera.pem
-fi
+openssl req \
+        -x509 \
+        -newkey ed25519 \
+        -sha256 \
+        -nodes \
+        -days 1825 \
+        -subj "/CN=$username" \
+        -out libera/libera.pem \
+        -keyout libera/libera.pem
 
 chmod 400 libera/libera.pem
 
