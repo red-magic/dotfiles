@@ -2,7 +2,9 @@
 
 set -e
 
-username=username
+c_name=AQ
+o_name="Libera Chat"
+cn_name=nickname
 
 mkdir libera
 
@@ -10,11 +12,12 @@ openssl req \
         -x509 \
         -newkey ed25519 \
         -sha256 \
+        -days 7300 \
         -nodes \
-        -days 1825 \
-        -subj "/CN=$username" \
-        -out libera/libera.pem \
-        -keyout libera/libera.pem
+        -subj "/C=$c_name/O=$o_name/CN=$cn_name" \
+        -set_serial "0x$(openssl rand -hex 16)" \
+        -keyout libera/libera.pem \
+        -out libera/libera.pem
 
 chmod 400 libera/libera.pem
 
@@ -27,8 +30,8 @@ openssl x509 \
         -in libera/libera.pem \
         -noout \
         -fingerprint -sha512 \
-    | awk -F= '{gsub(":",""); print tolower ($2)}' > libera/libera.fp
+    | awk -F= '{gsub(":",""); print tolower ($2)}' > libera/libera.sha512
 
-chmod 444 libera/libera.fp
+chmod 444 libera/libera.sha512
 
-cat libera/libera.fp
+cat libera/libera.sha512
