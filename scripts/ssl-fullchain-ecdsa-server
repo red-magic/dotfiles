@@ -2,12 +2,11 @@
 
 set -e
 
+rca_cn=RCA
+ica_cn=ICA1
 server_cn=domain.internal
 
 valid_days=1825
-
-rca_cn=RCA
-ica_cn=ICA1
 
 mkdir $server_cn
 

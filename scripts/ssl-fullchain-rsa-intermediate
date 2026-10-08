@@ -2,13 +2,12 @@
 
 set -e
 
+rca_cn=RCA
 ica_c=AQ
 ica_o=Internal
 ica_cn=ICA1
 
 valid_days=3650
-
-rca_cn=RCA
 
 mkdir $ica_cn
 

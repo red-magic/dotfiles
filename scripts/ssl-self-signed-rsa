@@ -2,9 +2,13 @@
 
 set -e
 
-domain=domain.internal
+c_name=AQ
+o_name=Internal
+cn_name=domain.internal
 
-mkdir $domain
+valid_days=7300
+
+mkdir $cn_name
 
 openssl req \
         -x509 \
@@ -12,18 +16,18 @@ openssl req \
         -pkeyopt rsa_keygen_bits:4096 \
         -sha384 \
         -nodes \
-        -days 1825 \
-        -subj "/CN=$domain" \
+        -days $valid_days \
+        -subj "/C=$c_name/O=$o_name/CN=$cn_name" \
         -addext "keyUsage = critical, digitalSignature" \
         -addext "extendedKeyUsage = serverAuth" \
         -addext "basicConstraints = critical, CA:FALSE" \
         -addext "subjectKeyIdentifier = hash" \
-        -addext "subjectAltName = DNS:$domain" \
+        -addext "subjectAltName = DNS:$cn_name" \
         -set_serial "0x$(openssl rand -hex 16)" \
-        -keyout $domain/$domain.key \
-        -out $domain/$domain.crt
+        -keyout $cn_name/$cn_name.key \
+        -out $cn_name/$cn_name.crt
 
-chmod 400 $domain/$domain.key
-chmod 444 $domain/$domain.crt
+chmod 400 $cn_name/$cn_name.key
+chmod 444 $cn_name/$cn_name.crt
 
-openssl x509 -in $domain/$domain.crt -text -noout
+openssl x509 -in $cn_name/$cn_name.crt -text -noout
