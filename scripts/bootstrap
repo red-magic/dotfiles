@@ -60,13 +60,17 @@ install_configs() {
             cp -f repos/dotfiles/.bashrc .
             ;;
         *BSD)
+
             cp -f repos/dotfiles/.profile .
             cp -f repos/dotfiles/.kshrc .
-            cp -f repos/dotfiles/.mailrc .
-            cp -f repos/dotfiles/.cwmrc .
-            cp -f repos/dotfiles/.xsession .
-            cp -f repos/dotfiles/.Xdefaults .
-            cp -rf repos/dotfiles/pics .
+            if [ $os_name = OpenBSD ]
+            then
+                cp -f repos/dotfiles/.mailrc .
+                cp -f repos/dotfiles/.cwmrc .
+                cp -f repos/dotfiles/.xsession .
+                cp -f repos/dotfiles/.Xdefaults .
+                cp -rf repos/dotfiles/pics .
+            fi
             ;;
     esac
 }
