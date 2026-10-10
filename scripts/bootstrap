@@ -63,7 +63,7 @@ install_configs() {
 
             cp -f repos/dotfiles/.profile .
             cp -f repos/dotfiles/.kshrc .
-            if [ $os_name = OpenBSD ]
+            if [ "$os_name" = OpenBSD ]
             then
                 cp -f repos/dotfiles/.mailrc .
                 cp -f repos/dotfiles/.cwmrc .
