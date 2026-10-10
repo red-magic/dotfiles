@@ -2,88 +2,108 @@
 
 set -e
 
-if [ ! -f "$HOME/github/id_ed25519" ]
-then
-    printf "missing ssh private key\n" 1>&2
-    exit 1
-fi
+pre_install_check() {
+    if [ ! -f "$HOME/github/id_ed25519" ]
+    then
+        printf "missing ssh private key\n" 1>&2
+        exit 1
+    fi
 
-pkgs="git ssh"
+    pkgs="git ssh"
 
-for pkg in $pkgs
-do
-    [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
-done
+    for pkg in $pkgs
+    do
+        [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
+    done
 
-if [ -n "$missing_pkgs" ]
-then
-    printf "install missing packages:%s\n" "$missing_pkgs" 1>&2
-    exit 1
-fi
+    if [ -n "$missing_pkgs" ]
+    then
+        printf "install missing packages:%s\n" "$missing_pkgs" 1>&2
+        exit 1
+    fi
+}
 
-cd "$HOME"
+install_ssh() {
+    mkdir -m 700 .ssh
 
-mkdir -m 700 .ssh
-mkdir repos
+    curl -fL https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
 
-curl -fL https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
-cp -f github/id_ed25519 .ssh
-cp -f github/id_ed25519.pub .ssh
-touch .ssh/authorized_keys
-touch .ssh/known_hosts
-chmod 400 .ssh/id_ed25519
-chmod 400 .ssh/id_ed25519.pub
-chmod 600 .ssh/authorized_keys
-chmod 600 .ssh/known_hosts
-chmod 600 .ssh/config
+    cp -f github/id_ed25519 .ssh
+    cp -f github/id_ed25519.pub .ssh
 
-eval "$(ssh-agent -s)"
-ssh-add
-git clone ssh://git@github.com/red-magic/dotfiles repos/dotfiles
-git clone ssh://git@github.com/red-magic/bible repos/bible
+    touch .ssh/authorized_keys
+    touch .ssh/known_hosts
 
-if uname -s | grep -q Linux
-then
-    git clone ssh://git@github.com/red-magic/tty-colorscheme repos/tty-colorscheme
-    git clone ssh://git@github.com/red-magic/cs16-server repos/cs16-server
-    git clone ssh://git@github.com/red-magic/arti-bin repos/arti-bin
-    git clone ssh://git@github.com/red-magic/tor-bin repos/tor-bin
+    chmod 400 .ssh/id_ed25519
+    chmod 400 .ssh/id_ed25519.pub
+    chmod 600 .ssh/authorized_keys
+    chmod 600 .ssh/known_hosts
+    chmod 600 .ssh/config
+
+    eval "$(ssh-agent -s)"
+    ssh-add
+}
+
+install_repos() {
+    mkdir repos
+
+    git_repos="dotfiles tty-colorscheme cs16-server arti-bin tor-bin bible"
+
+    for git_repo in $git_repos
+    do
+        git clone "ssh://git@github.com/red-magic/$git_repo" "repos/$git_repo"
+    done
+
     if [ -f /etc/arch-release ]
     then
-        aur_pkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin ttf-go tty-colorscheme windows-10-cursor"
         mkdir repos/aur
+
+        aur_pkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin ttf-go tty-colorscheme windows-10-cursor"
+
         for aur_pkg in $aur_pkgs
         do
             git clone "ssh://aur@aur.archlinux.org/$aur_pkg" "repos/aur/$aur_pkg"
         done
     fi
-fi
+}
 
-ssh-add -D
-ssh-agent -k
-rm -rf .ssh/agent
+install_configs() {
+    mkdir .config
+    mkdir .config/ranger
+    mkdir .config/emacs
 
-mkdir .config
-mkdir .config/ranger
-mkdir .config/emacs
+    cp -f repos/dotfiles/.gitconfig .
+    cp -f repos/dotfiles/.tmux.conf .
+    cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
+    cp -f repos/dotfiles/.config/emacs/init.el .config/emacs
 
-cp -f repos/dotfiles/.gitconfig .
-cp -f repos/dotfiles/.tmux.conf .
-cp -f repos/dotfiles/.config/ranger/rc.conf .config/ranger
-cp -f repos/dotfiles/.config/emacs/init.el .config/emacs
+    if uname -s | grep -q Linux
+    then
+        cp -f repos/dotfiles/.bash_profile .
+        cp -f repos/dotfiles/.bashrc .
+    elif uname -s | grep -q BSD
+    then
+        chmod 700 "$HOME"
 
-if uname -s | grep -q Linux
-then
-    cp -f repos/dotfiles/.bash_profile .
-    cp -f repos/dotfiles/.bashrc .
-elif uname -s | grep -q BSD
-then
-    chmod 700 "$HOME"
-    cp -f repos/dotfiles/.profile .
-    cp -f repos/dotfiles/.kshrc .
-    cp -f repos/dotfiles/.mailrc .
-    cp -f repos/dotfiles/.cwmrc .
-    cp -f repos/dotfiles/.xsession .
-    cp -f repos/dotfiles/.Xdefaults .
-    cp -rf repos/dotfiles/pics .
-fi
+        cp -f repos/dotfiles/.profile .
+        cp -f repos/dotfiles/.kshrc .
+        cp -f repos/dotfiles/.mailrc .
+        cp -f repos/dotfiles/.cwmrc .
+        cp -f repos/dotfiles/.xsession .
+        cp -f repos/dotfiles/.Xdefaults .
+        cp -rf repos/dotfiles/pics .
+    fi
+}
+
+remove_ssh_agent() {
+    ssh-add -D
+    ssh-agent -k
+    rm -rf .ssh/agent
+}
+
+pre_install_check
+cd "$HOME"
+install_ssh
+install_repos
+install_configs
+remove_ssh_agent
