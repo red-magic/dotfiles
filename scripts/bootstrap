@@ -9,10 +9,7 @@ pre_install_check() {
         exit 1
     fi
     pkgs="git ssh"
-    for pkg in $pkgs
-    do
-        [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"
-    done
+    for pkg in $pkgs; do [ -x "$(command -v "$pkg")" ] || missing_pkgs="$missing_pkgs $pkg"; done
     if [ -n "$missing_pkgs" ]
     then
         printf "install missing packages:%s\n" "$missing_pkgs" 1>&2
@@ -39,18 +36,12 @@ install_ssh() {
 install_repos() {
     mkdir repos
     git_repos="dotfiles tty-colorscheme cs16-server arti-bin tor-bin bible"
-    for git_repo in $git_repos
-    do
-        git clone "ssh://git@github.com/red-magic/$git_repo" "repos/$git_repo"
-    done
+    for git_repo in $git_repos; do git clone "ssh://git@github.com/red-magic/$git_repo" "repos/$git_repo"; done
     if [ -f /etc/arch-release ]
     then
         mkdir repos/aur
         aur_pkgs="pacproxy-bin simple-and-soft-cursor snowflake-pt-client-bin tor-relay-scanner-bin ttf-go tty-colorscheme windows-10-cursor"
-        for aur_pkg in $aur_pkgs
-        do
-            git clone "ssh://aur@aur.archlinux.org/$aur_pkg" "repos/aur/$aur_pkg"
-        done
+        for aur_pkg in $aur_pkgs; do git clone "ssh://aur@aur.archlinux.org/$aur_pkg" "repos/aur/$aur_pkg"; done
     fi
 }
 
