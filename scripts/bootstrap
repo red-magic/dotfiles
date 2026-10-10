@@ -2,7 +2,7 @@
 
 set -e
 
-if [ ! -f $HOME/github/id_ed25519 ]
+if [ ! -f "$HOME/github/id_ed25519" ]
 then
     printf "missing ssh private key\n" 1>&2
     exit 1
@@ -78,15 +78,12 @@ then
     cp -f repos/dotfiles/.bashrc .
 elif uname -s | grep -q BSD
 then
+    chmod 700 "$HOME"
     cp -f repos/dotfiles/.profile .
     cp -f repos/dotfiles/.kshrc .
     cp -f repos/dotfiles/.mailrc .
-    chmod 700 "$HOME"
-    if [ $mode = workstation ]
-    then
-        cp -f repos/dotfiles/.cwmrc .
-        cp -f repos/dotfiles/.xsession .
-        cp -f repos/dotfiles/.Xdefaults .
-        cp -rf repos/dotfiles/pics .
-    fi
+    cp -f repos/dotfiles/.cwmrc .
+    cp -f repos/dotfiles/.xsession .
+    cp -f repos/dotfiles/.Xdefaults .
+    cp -rf repos/dotfiles/pics .
 fi
