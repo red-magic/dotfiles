@@ -60,7 +60,6 @@ install_configs() {
             cp -f repos/dotfiles/.bashrc .
             ;;
         *BSD)
-
             cp -f repos/dotfiles/.profile .
             cp -f repos/dotfiles/.kshrc .
             if [ "$os_name" = OpenBSD ]
