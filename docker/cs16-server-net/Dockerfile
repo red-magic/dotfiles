@@ -16,7 +16,7 @@ RUN apt-get update -y && \
 ENV LANG="en_US.UTF-8"
 
 RUN mkdir -m 700 /opt/hlds && \
-    useradd -r -M -s "$(command -v nologin)" -d /opt/hlds -c "Counter-Strike 1.6 Dedicated Server" hlds && \
+    useradd -r -M -d /opt/hlds -s "$(command -v nologin)" -c "Counter-Strike 1.6 Dedicated Server" hlds && \
     mkdir /opt/hlds/.steam && \
     mkdir /opt/hlds/cs16 && \
     chown -R hlds:hlds /opt/hlds
