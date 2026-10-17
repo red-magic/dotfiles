@@ -22,7 +22,7 @@ install_ssh() {
     curl -fL https://github.com/red-magic/dotfiles/raw/master/.ssh/config -o .ssh/config
     cp -f github/id_ed25519 .ssh
     cp -f github/id_ed25519.pub .ssh
-    touch .ssh/authorized_keys
+    cp -f vm/id_ed25519.pub .ssh/authorized_keys
     touch .ssh/known_hosts
     chmod 400 .ssh/id_ed25519
     chmod 400 .ssh/id_ed25519.pub
