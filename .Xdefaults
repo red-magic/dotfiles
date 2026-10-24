@@ -1,3 +1,4 @@
+! For Emacs
 *eightBitInput: false
 
 *faceName: Go Mono
@@ -85,3 +86,13 @@
 !! white
 !*color7:  #b39d98
 !*color15: #b39d98
+
+! Use Ctrl+Shift+C for pasting.
+! Use Ctrl+Shift+V for pasting.
+! Disable automatic copying when selecting text.
+! Disable pasting with Middle Mouse Button.
+XTerm*VT100.Translations: #override \n\
+    Shift Ctrl <Key>C: copy-selection(CLIPBOARD) \n\
+    Shift Ctrl <Key>V: insert-selection(CLIPBOARD) \n\
+    <Btn1Up>: select-end(SECONDARY) \n\
+    ~Ctrl ~Meta <Btn2Up>: ignore()
