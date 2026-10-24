@@ -18,7 +18,7 @@ alias emacs='emacsclient -nw'
 alias semacs='fn_semacs'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias short-logs='sudo journalctl --no-hostname -b'
-#alias longlines='grep -n ".\{81,\}"'
+alias longlines='grep -n ".\{81,\}"'
 
 #alias defrag-root-ext4='fn_defrag_root_ext4'
 #alias defrag-root-btrfs='fn_defrag_root_btrfs'

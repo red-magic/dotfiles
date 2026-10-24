@@ -10,7 +10,6 @@ alias mg='mg -n'
 alias smg=fn_smg
 alias emacs='emacsclient -nw'
 alias semacs=fn_semacs
-#alias ranger='TERM=xterm ranger'
 alias fastfetch='fastfetch --pipe'
 alias full-clean-git='git clean -dfx && git reset --hard'
 alias update-pkgs='doas pkg_add -vUu && doas pkg_delete -ac'
