@@ -41,7 +41,8 @@ do
         ext=${file##*.}
         if [ "$ext" != "$file" ]
         then
-            newname=$(dd if=/dev/urandom bs=256 count=1 2> /dev/null | $sha_cmd | cut -c 1-32)
+            # bs=64 for sha512
+            newname=$(dd if=/dev/urandom bs=32 count=1 2> /dev/null | $sha_cmd | cut -c 1-32)
             mv -vf -- "$file" "$newname.$ext"
         fi
     fi
