@@ -95,7 +95,18 @@ case $mode in
                 -in "$file_dec" -out "$file_enc"
         ;;
     dec)
-        openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 210000 -salt \
-                -in "$file_enc" -out "$file_dec"
+        tmp_dec=$(mktemp -t tmp.dec.XXXXXX)
+
+        trap 'rm -f "$tmp_dec"' EXIT INT TERM
+
+        if openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 210000 -salt \
+                   -in "$file_enc" -out "$tmp_dec" 2>/dev/null
+        then
+            mv "$tmp_dec" "$file_dec"
+        else
+            printf "%s: decryption failed, invalid password or corrupted payload\n" "$progname" 1>&2
+            exit 1
+
+        fi
         ;;
 esac
