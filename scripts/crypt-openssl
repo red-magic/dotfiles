@@ -89,24 +89,31 @@ case $mode in
         ;;
 esac
 
+cipher_algo=aes-256-cbc
+digest_algo=sha512
+iter_count=210000
+
 case $mode in
     enc)
-        openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 210000 -salt \
-                -in "$file_dec" -out "$file_enc"
+        if ! openssl enc -e -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
+             -in "$file_dec" -out "$file_enc" 2>/dev/null
+        then
+            printf "%s: encryption failed: passwords do not match\n" "$progname" 1>&2
+            exit 1
+        fi
         ;;
     dec)
         tmp_dec=$(mktemp -t tmp.dec.XXXXXX)
 
         trap 'rm -f "$tmp_dec"' EXIT INT TERM
 
-        if openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 210000 -salt \
+        if openssl enc -d -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
                    -in "$file_enc" -out "$tmp_dec" 2>/dev/null
         then
             mv "$tmp_dec" "$file_dec"
         else
-            printf "%s: decryption failed, invalid password or corrupted payload\n" "$progname" 1>&2
+            printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
             exit 1
-
         fi
         ;;
 esac
