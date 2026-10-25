@@ -1,10 +1,10 @@
-# During OpenBSD install
+# Before OpenBSD install in shell
 ifconfig vio0 -inet 123.123.123.123 netmask 255.255.255.255
 route add -inet 10.0.0.1 -link -iface vio0
 route add -inet default 10.0.0.1
 
-# /etc/hostname.vio0
-# After install before reboot with echo
+# After OpenBSD install before reboot in shell with echo
+# /mnt/etc/hostname.vio0
 inet 123.123.123.123 255.255.255.255
 !sleep 3
 !route add -inet 10.0.0.1 -link -iface vio0
