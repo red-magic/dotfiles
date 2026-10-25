@@ -4,46 +4,25 @@ set -e
 
 progname=${0##*/}
 
-if [ $# -gt 1 ]
+if [ $# -ne 1 ]
 then
-    printf "%s: only 1 argument is accepted\n" "$progname" 1>&2
-    print_help
-    exit 1
-elif [ $# -eq 0 ]
-then
-    printf "usage: %s directory\n" "$progname"
+    printf "usage: %s directory\n" "$progname" 1>&2
     exit 1
 fi
 
-os_name=$(uname -s)
+cd "$1"
 
-case $os_name in
-    *BSD)
-        sha_cmd=sha512
-        ;;
-    Linux)
-        sha_cmd=sha512sum
-        ;;
-    *)
-        printf "%s: unable to detect OS for \$sha_cmd\n" "$progname" 1>&2
-        exit 1
-        ;;
-esac
-
-target_dir=$1
-
-cd "$target_dir"
-
-for file in *
+for file in .* *
 do
-    if [ -f "$file" ]
-    then
-        ext=${file##*.}
-        if [ "$ext" != "$file" ]
-        then
-            # bs=32 for sha256
-            newname=$(dd if=/dev/urandom bs=64 count=1 2>/dev/null | $sha_cmd | cut -c 1-32)
-            mv -vf -- "$file" "$newname.$ext"
-        fi
-    fi
+    [ "$file" = "." ] && continue
+    [ "$file" = ".." ] && continue
+    [ -f "$file" ] || continue
+
+    newname=$(openssl rand -hex 16)
+
+    case ${file#.} in
+        *.*) newname="$newname.${file##*.}" ;;
+    esac
+
+    mv -vf -- "$file" "$newname"
 done
