@@ -91,11 +91,11 @@ esac
 
 case $mode in
     enc)
-        openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 1000000 -salt \
+        openssl enc -e -aes-256-cbc -md sha512 -pbkdf2 -iter 210000 -salt \
                 -in "$file_dec" -out "$file_enc"
         ;;
     dec)
-        openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 1000000 -salt \
+        openssl enc -d -aes-256-cbc -md sha512 -pbkdf2 -iter 210000 -salt \
                 -in "$file_enc" -out "$file_dec"
         ;;
 esac

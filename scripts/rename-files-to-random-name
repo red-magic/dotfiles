@@ -19,10 +19,10 @@ os_name=$(uname -s)
 
 case $os_name in
     *BSD)
-        sha_cmd=sha256
+        sha_cmd=sha512
         ;;
     Linux)
-        sha_cmd=sha256sum
+        sha_cmd=sha512sum
         ;;
     *)
         printf "%s: unable to detect OS for \$sha_cmd\n" "$progname" 1>&2
@@ -41,8 +41,8 @@ do
         ext=${file##*.}
         if [ "$ext" != "$file" ]
         then
-            # bs=64 for sha512
-            newname=$(dd if=/dev/urandom bs=32 count=1 2> /dev/null | $sha_cmd | cut -c 1-32)
+            # bs=32 for sha256
+            newname=$(dd if=/dev/urandom bs=64 count=1 2>/dev/null | $sha_cmd | cut -c 1-32)
             mv -vf -- "$file" "$newname.$ext"
         fi
     fi
