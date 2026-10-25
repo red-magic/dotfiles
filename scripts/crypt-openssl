@@ -103,16 +103,28 @@ case $mode in
         fi
         ;;
     dec)
-        tmp_dec=$(mktemp -t tmp.dec.XXXXXX)
+        tmp_pipe=$(mktemp -u -t tmp.pipe.XXXXXX)
+        mkfifo "$tmp_pipe"
 
-        trap 'rm -f "$tmp_dec"' EXIT INT TERM
+        trap 'rm -f "$tmp_pipe"' EXIT INT TERM
 
-        if openssl enc -d -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
-                   -in "$file_enc" -out "$tmp_dec" 2>/dev/null
+        openssl enc -d -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
+                -in "$file_enc" -out "$tmp_pipe" 2>/dev/null &
+        openssl_pid=$!
+
+        if cat "$tmp_pipe" > "$file_dec"
         then
-            mv "$tmp_dec" "$file_dec"
+            if wait "$openssl_pid"
+            then
+                :
+            else
+                rm -f "$file_dec"
+                printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
+                exit 1
+            fi
         else
-            printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
+            rm -f "$file_dec"
+            printf "%s: inbound data stream interrupted\n" "$progname" 1>&2
             exit 1
         fi
         ;;
