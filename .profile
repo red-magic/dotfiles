@@ -7,6 +7,6 @@ export EDITOR="mg -n"
 export PAGER="less -M"
 #export MANWIDTH=80
 #export HISTFILE=
-#export LESSHISTFILE=-
+#export LESSSECURE=1
 export POSIXLY_CORRECT=1
 export ENV=$HOME/.kshrc

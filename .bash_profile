@@ -4,7 +4,7 @@ export EDITOR="mg -n"
 #export ALTERNATE_EDITOR="emacs -nw"
 export PAGER="less -M"
 export MANWIDTH="80"
-export LESSHISTFILE="-"
+export LESSSECURE="1"
 #export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 
 [[ -f "${HOME}/.bashrc" ]] && . "${HOME}/.bashrc"
