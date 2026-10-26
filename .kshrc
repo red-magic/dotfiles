@@ -28,3 +28,8 @@ fn_ssh_connect_onion()
     onion_address="verylongonionaddress.onion"
     ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "$onion_address"
 }
+
+if [ -z "$TMUX" ] && [ -n "$PS1" ]
+then
+    tmux
+fi
