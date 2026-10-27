@@ -35,8 +35,12 @@ fn_semacs()
         emacs "/doas::$(realpath -- "$1")"
     else
         case $1 in
-            /*) p=$1 ;;
-            *) p=$PWD/$1 ;;
+            /*)
+                p=$1
+                ;;
+            *)
+                p=$PWD/$1
+                ;;
         esac
         dir=$(dirname -- "$p")
         file=$(basename -- "$p")
@@ -52,5 +56,10 @@ fn_ssh_connect_onion()
 
 if [ -z "$TMUX" ] && [ -n "$PS1" ]
 then
-    tmux
+    case $(tty) in
+        /dev/ttyC* | /dev/ttyv*)
+            tmux
+            exit 0
+            ;;
+    esac
 fi
