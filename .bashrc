@@ -43,7 +43,17 @@ fn_smg() {
 }
 
 fn_semacs() {
-    emacs "/sudo::$(realpath -- "${1}")"
+    if [[ -e "${1}" ]]; then
+        emacs "/doas::$(realpath -- "${1}")"
+    else
+        case "${1}" in
+            /*) p="${1}" ;;
+            *) p="${PWD}/${1}" ;;
+        esac
+        dir="$(dirname -- "${p}")"
+        file="$(basename -- "${p}")"
+        emacs "/doas::$(realpath -- "${dir}")/${file}"
+    fi
 }
 
 fn_defrag_root_ext4() {
