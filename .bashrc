@@ -94,4 +94,11 @@ fn_ssh_connect_onion() {
     ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "${onion_address}"
 }
 
-[[ -z "${TMUX}" ]] && [[ -n "${PS1}" ]] && tmux
+if [[ -z "${TMUX}" ]] && [[ -n "${PS1}" ]]; then
+    case "$(tty)" in
+        "/dev/tty"*)
+            tmux
+            exit 0
+            ;;
+    esac
+fi
