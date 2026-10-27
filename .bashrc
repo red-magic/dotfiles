@@ -98,6 +98,7 @@ if [[ -z "${TMUX}" ]] && [[ -n "${PS1}" ]]; then
     case "$(tty)" in
         "/dev/tty"*)
             tmux
+            clear
             exit 0
             ;;
     esac

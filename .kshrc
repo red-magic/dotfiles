@@ -59,6 +59,7 @@ then
     case $(tty) in
         /dev/ttyC* | /dev/ttyv*)
             tmux
+            clear
             exit 0
             ;;
     esac
