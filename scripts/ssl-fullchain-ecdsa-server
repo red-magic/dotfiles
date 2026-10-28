@@ -27,7 +27,7 @@ extendedKeyUsage = serverAuth
 basicConstraints = critical, CA:FALSE
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-subjectAltName = DNS:$server_cn
+subjectAltName = DNS:$server_cn, DNS:*.$server_cn
 EOF
 
 openssl x509 \
