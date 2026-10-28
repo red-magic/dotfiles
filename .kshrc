@@ -24,7 +24,8 @@ fn_sl()
     doas ls -plha "$@"
 }
 
-fn_smg() {
+fn_smg()
+{
     doas mg -n "$@"
 }
 
