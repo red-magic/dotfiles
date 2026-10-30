@@ -44,7 +44,7 @@ fn_smg() {
 
 fn_semacs() {
     if [[ -e "${1}" ]]; then
-        emacs "/doas::$(realpath -- "${1}")"
+        emacs "/sudo::$(realpath -- "${1}")"
     else
         case "${1}" in
             /*) p="${1}" ;;
@@ -52,7 +52,7 @@ fn_semacs() {
         esac
         dir="$(dirname -- "${p}")"
         file="$(basename -- "${p}")"
-        emacs "/doas::$(realpath -- "${dir}")/${file}"
+        emacs "/sudo::$(realpath -- "${dir}")/${file}"
     fi
 }
 
