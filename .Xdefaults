@@ -1,6 +1,3 @@
-! For Emacs
-*eightBitInput: false
-
 *faceName: Go Mono
 *faceSize: 11
 
@@ -86,6 +83,9 @@
 !! white
 !*color7:  #b39d98
 !*color15: #b39d98
+
+! For Emacs
+!*eightBitInput: false
 
 ! Use Ctrl+Shift+C for copying.
 ! Use Ctrl+Shift+V for pasting.
