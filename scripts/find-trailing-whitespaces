@@ -11,11 +11,45 @@ usage()
     exit 1
 }
 
+report()
+{
+    rc=0
+    files=$(grep -IHrn '[[:space:]]\{1,\}$' "$target") || rc=$?
+    [ "$rc" -le 1 ] || exit "$rc"
+    [ -n "$files" ] || return 0
+
+    while IFS=: read -r file line text
+    do
+        printf "%s:%s: %s\n" "$file" "$line" "$text"
+    done <<__LINES__
+$files
+__LINES__
+}
+
+strip_files()
+{
+    rc=0
+    files=$(grep -Irl '[[:space:]]\{1,\}$' "$target") || rc=$?
+    [ "$rc" -le 1 ] || exit "$rc"
+    [ -n "$files" ] || return 0
+
+    while IFS= read -r file
+    do
+        printf "%s\n" "$file" 1>&2
+        ed -s "$file" <<'ED_EOF'
+g/[[:space:]]\{1,\}$/s/[[:space:]]\{1,\}$//
+w
+q
+ED_EOF
+    done <<__FILES__
+$files
+__FILES__
+}
+
 while getopts :s opt
 do
     case $opt in
         s) strip=1 ;;
-        :) usage ;;
         *) usage ;;
     esac
 done
@@ -32,33 +66,7 @@ fi
 
 if [ "$strip" -eq 0 ]
 then
-    rc=0
-    files=$(grep -IHrn '[[:space:]]\{1,\}$' "$target") || rc=$?
-    [ "$rc" -le 1 ] || exit "$rc"
-
-    while IFS=: read -r file line text
-    do
-        [ -n "$file" ] || continue
-        printf "%s:%s: %s\n" "$file" "$line" "$text"
-    done <<__FILES__
-$files
-__FILES__
-    exit 0
+    report
+else
+    strip_files
 fi
-
-rc=0
-files=$(grep -Irl '[[:space:]]\{1,\}$' "$target") || rc=$?
-[ "$rc" -le 1 ] || exit "$rc"
-
-while IFS= read -r file
-do
-    [ -n "$file" ] || continue
-    printf "%s\n" "$file" 1>&2
-    ed -s "$file" <<'ED_EOF'
-g/[[:space:]]\{1,\}$/s/[[:space:]]\{1,\}$//
-w
-q
-ED_EOF
-done <<__FILES__
-$files
-__FILES__
