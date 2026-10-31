@@ -1,4 +1,5 @@
 bind-key CM-j "xterm -fullscreen"
 bind-key MS-f window-fullscreen
 bind-key MS-q window-close
+bind-key 4-period lock
 unbind-key C-slash

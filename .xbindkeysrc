@@ -3,6 +3,3 @@ Print
 
 "scrot -Z 9 -s $HOME/pics/screenshots/$(date +%Y-%m-%d-%T)-screenshot-cropped.png"
 Print+Shift
-
-"xlock"
-Mod4+period
