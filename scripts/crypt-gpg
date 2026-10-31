@@ -4,7 +4,7 @@ set -e
 
 progname=${0##*/}
 
-print_help()
+usage()
 {
     printf "usage: %s -s file\n" "$progname"
     printf "       %s -a file\n" "$progname"
@@ -14,11 +14,11 @@ print_help()
 if [ $# -gt 2 ]
 then
     printf "%s: only 1 option and 1 argument are accepted\n" "$progname" 1>&2
-    print_help
+    usage
     exit 1
 elif [ $# -eq 0 ]
 then
-    print_help
+    usage
     exit 0
 fi
 
@@ -36,7 +36,7 @@ case $1 in
         ;;
     *)
         printf "%s: invalid option: %s\n" "$progname" "$1" 1>&2
-        print_help
+        usage
         exit 1
         ;;
 esac
@@ -46,7 +46,7 @@ file=$2
 if [ -z "$file" ]
 then
     printf "%s: %s: missing file argument\n" "$progname" "$1" 1>&2
-    print_help
+    usage
     exit 1
 fi
 

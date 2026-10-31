@@ -7,7 +7,6 @@ progname=${0##*/}
 if [ $# -gt 1 ]
 then
     printf "%s: only 1 argument is accepted\n" "$progname" 1>&2
-    print_help
     exit 1
 elif [ $# -eq 0 ]
 then
