@@ -11,10 +11,11 @@ usage()
     exit 1
 }
 
-while getopts s opt
+while getopts :s opt
 do
     case $opt in
         s) strip=1 ;;
+        :) usage ;;
         *) usage ;;
     esac
 done
@@ -31,19 +32,33 @@ fi
 
 if [ "$strip" -eq 0 ]
 then
-    grep -Irn '[[:space:]]\{1,\}$' "$target" | while IFS=: read -r file line text
-    do
-        printf "%s:%s: %s\n" "$file" "$line" "$text"
-    done
+    rc=0
+    files=$(grep -IHrn '[[:space:]]\{1,\}$' "$target") || rc=$?
+    [ "$rc" -le 1 ] || exit "$rc"
+
+    if [ -n "$files" ]
+    then
+        printf "%s\n" "$files" | while IFS=: read -r file line text
+        do
+            printf "%s:%s: %s\n" "$file" "$line" "$text"
+        done
+    fi
     exit 0
 fi
 
-grep -Irl '[[:space:]]\{1,\}$' "$target" | while IFS= read -r file
-do
-    printf "%s\n" "$file" >&2
-    ed -s "$file" <<'ED_EOF'
+rc=0
+files=$(grep -Irl '[[:space:]]\{1,\}$' "$target") || rc=$?
+[ "$rc" -le 1 ] || exit "$rc"
+
+if [ -n "$files" ]
+then
+    printf "%s\n" "$files" | while IFS= read -r file
+    do
+        printf "%s\n" "$file" 1>&2
+        ed -s "$file" <<'ED_EOF'
 g/[[:space:]]\{1,\}$/s/[[:space:]]\{1,\}$//
 w
 q
 ED_EOF
-done
+    done
+fi
