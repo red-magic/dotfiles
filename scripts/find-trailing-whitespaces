@@ -3,27 +3,47 @@
 set -e
 
 progname=${0##*/}
+strip=0
 
-if [ $# -gt 1 ]
-then
-    printf "%s: only 1 argument is accepted\n" "$progname" 1>&2
-    print_help
+usage()
+{
+    printf "usage: %s [-s] file|directory\n" "$progname" 1>&2
     exit 1
-elif [ $# -eq 0 ]
+}
+
+while getopts s opt
+do
+    case $opt in
+        s) strip=1 ;;
+        *) usage ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+[ "$#" -eq 1 ] || usage
+target=$1
+
+if [ ! -e "$target" ]
 then
-    printf "usage: %s directory\n" "$progname"
+    printf "%s: no such file or directory: %s\n" "$progname" "$target" 1>&2
+    exit 1
+fi
+
+if [ "$strip" -eq 0 ]
+then
+    grep -Irn '[[:space:]]\{1,\}$' "$target" | while IFS=: read -r file line text
+    do
+        printf "%s:%s: %s\n" "$file" "$line" "$text"
+    done
     exit 0
 fi
 
-dir=$1
-
-if [ ! -d "$dir" ]
-then
-    printf "%s: no such directory: %s\n" "$progname" "$dir" 1>&2
-    exit 1
-fi
-
-grep -rIn '[[:space:]]$' "$dir" | while IFS=: read -r file line text
+grep -Irl '[[:space:]]\{1,\}$' "$target" | while IFS= read -r file
 do
-    printf "trailing whitespaces: %s:%s: %s\n" "$file" "$line" "$text"
+    printf "%s\n" "$file" >&2
+    ed -s "$file" <<'ED_EOF'
+g/[[:space:]]\{1,\}$/s/[[:space:]]\{1,\}$//
+w
+q
+ED_EOF
 done
