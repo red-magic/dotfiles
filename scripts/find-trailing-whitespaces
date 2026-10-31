@@ -36,13 +36,13 @@ then
     files=$(grep -IHrn '[[:space:]]\{1,\}$' "$target") || rc=$?
     [ "$rc" -le 1 ] || exit "$rc"
 
-    if [ -n "$files" ]
-    then
-        printf "%s\n" "$files" | while IFS=: read -r file line text
-        do
-            printf "%s:%s: %s\n" "$file" "$line" "$text"
-        done
-    fi
+    while IFS=: read -r file line text
+    do
+        [ -n "$file" ] || continue
+        printf "%s:%s: %s\n" "$file" "$line" "$text"
+    done <<__FILES__
+$files
+__FILES__
     exit 0
 fi
 
@@ -50,15 +50,15 @@ rc=0
 files=$(grep -Irl '[[:space:]]\{1,\}$' "$target") || rc=$?
 [ "$rc" -le 1 ] || exit "$rc"
 
-if [ -n "$files" ]
-then
-    printf "%s\n" "$files" | while IFS= read -r file
-    do
-        printf "%s\n" "$file" 1>&2
-        ed -s "$file" <<'ED_EOF'
+while IFS= read -r file
+do
+    [ -n "$file" ] || continue
+    printf "%s\n" "$file" 1>&2
+    ed -s "$file" <<'ED_EOF'
 g/[[:space:]]\{1,\}$/s/[[:space:]]\{1,\}$//
 w
 q
 ED_EOF
-    done
-fi
+done <<__FILES__
+$files
+__FILES__
