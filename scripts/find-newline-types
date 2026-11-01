@@ -18,7 +18,7 @@ report()
     while IFS= read -r file
     do
         grep -Iq . "$file" || continue
-        if grep -q "$(printf '\r')" "$file"
+        if grep -q "$(printf "\r")" "$file"
         then
             printf "CRLF  %s\n" "$file"
         else
