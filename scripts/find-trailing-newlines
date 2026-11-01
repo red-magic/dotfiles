@@ -1,0 +1,71 @@
+#!/bin/sh
+
+set -e
+
+progname=${0##*/}
+strip=0
+
+usage()
+{
+    printf "usage: %s [-s] file|directory\n" "$progname" 1>&2
+    exit 1
+}
+
+has_trailing_newlines()
+{
+    [ "$(tail -c 2 "$1" | wc -l)" -eq 2 ]
+}
+
+report()
+{
+    files=$(find -H "$target" -type f)
+    [ -n "$files" ] || return 0
+
+    while IFS= read -r file
+    do
+        has_trailing_newlines "$file" || continue
+        printf "%s\n" "$file"
+    done <<__FILES__
+$files
+__FILES__
+}
+
+strip_files()
+{
+    files=$(find -H "$target" -type f)
+    [ -n "$files" ] || return 0
+
+    while IFS= read -r file
+    do
+        has_trailing_newlines "$file" || continue
+        printf "%s\n" "$file" 1>&2
+        printf '%s\n' "$(cat "$file")" > "$file"
+    done <<__FILES__
+$files
+__FILES__
+}
+
+while getopts :s opt
+do
+    case $opt in
+        s) strip=1 ;;
+        *) usage ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+[ "$#" -eq 1 ] || usage
+target=$1
+
+if [ ! -e "$target" ]
+then
+    printf "%s: no such file or directory: %s\n" "$progname" "$target" 1>&2
+    exit 1
+fi
+
+if [ "$strip" -eq 0 ]
+then
+    report
+else
+    strip_files
+fi
