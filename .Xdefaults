@@ -86,6 +86,7 @@
 
 ! For Emacs
 !*eightBitInput: false
+!*metaSendsEscape: true
 
 ! Use Ctrl+Shift+C for copying.
 ! Use Ctrl+Shift+V for pasting.
