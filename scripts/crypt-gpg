@@ -13,7 +13,7 @@ usage()
 
 if [ $# -gt 2 ]
 then
-    printf "%s: only 1 option and 1 argument are accepted\n" "$progname" 1>&2
+    printf "%s: too many arguments\n" "$progname" 1>&2
     usage
     exit 1
 elif [ $# -eq 0 ]
