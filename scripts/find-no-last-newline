@@ -27,6 +27,6 @@ find "$dir" -type f -exec sh -c '
     last=$(tail -c 1 "$file" 2>/dev/null) || exit 0
     case $last in
         "" | "$(printf "\n")" | "$(printf "\r")") ;;
-        *) printf "no line terminator at EOF: %s\n" "$file" ;;
+        *) printf "%s\n" "$file" ;;
     esac
 ' sh {} \;

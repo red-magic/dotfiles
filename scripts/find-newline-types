@@ -28,10 +28,10 @@ do
     then
         if grep -q "$(printf '\r\n')" "$file"
         then
-            printf "CRLF: %s\n" "$file"
+            printf "CRLF  %s\n" "$file"
         elif grep -q "$(printf '\n')" "$file"
         then
-            printf "LF:   %s\n" "$file"
+            printf "  LF  %s\n" "$file"
         fi
     fi
 done
