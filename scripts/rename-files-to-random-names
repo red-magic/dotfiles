@@ -4,11 +4,13 @@ set -e
 
 progname=${0##*/}
 
-if [ $# -ne 1 ]
-then
+usage()
+{
     printf "usage: %s directory\n" "$progname" 1>&2
     exit 1
-fi
+}
+
+[ $# -eq 1 ] || usage
 
 cd "$1"
 
