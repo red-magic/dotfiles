@@ -2,20 +2,20 @@
 
 set -euo pipefail
 
-print_help() {
+usage() {
     printf "Usage: %s <build | deploy | start | restart | stop>\n" "${0##*/}"
 }
 
-if [[ "${#}" -gt 1 ]]; then
+if [[ "$#" -gt 1 ]]; then
     printf "Too many arguments\n" 1>&2
-    print_help
+    usage
     exit 1
-elif [[ "${#}" -eq 0 ]]; then
-    print_help
+elif [[ "$#" -eq 0 ]]; then
+    usage
     exit 0
 fi
 
-case "${1}" in
+case "$1" in
     "build")
         docker build -t cs16-server-lan .
         ;;
@@ -45,8 +45,8 @@ case "${1}" in
         ;;
 
     *)
-        printf "Invalid command: %s\n" "${1}" 1>&2
-        print_help
+        printf "Invalid command: %s\n" "$1" 1>&2
+        usage
         exit 1
         ;;
 esac
