@@ -12,9 +12,8 @@ umask 077
 
 usage()
 {
-    printf "usage: %s -e file\n" "$progname" 1>&2
-    printf "       %s -d file.enc\n" "$progname" 1>&2
-    exit 1
+    printf "usage: %s -e file\n" "$progname"
+    printf "       %s -d file.enc\n" "$progname"
 }
 
 cleanup()
@@ -73,11 +72,11 @@ if [ "$#" -gt 2 ]
 then
     printf "%s: too many arguments\n" "$progname" 1>&2
     usage
-fi
-
-if [ "$#" -eq 0 ]
+    exit 1
+elif [ "$#" -eq 0 ]
 then
     usage
+    exit 0
 fi
 
 mode=
@@ -92,6 +91,7 @@ case $1 in
     *)
         printf "%s: invalid option: %s\n" "$progname" "$1" 1>&2
         usage
+        exit 1
         ;;
 esac
 
@@ -101,6 +101,7 @@ if [ -z "$file" ]
 then
     printf "%s: %s: missing file argument\n" "$progname" "$1" 1>&2
     usage
+    exit 1
 fi
 
 case $mode in
