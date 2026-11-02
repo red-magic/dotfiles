@@ -6,11 +6,19 @@ progname=${0##*/}
 
 usage()
 {
-    printf "usage: %s directory\n" "$progname" 1>&2
-    exit 1
+    printf "usage: %s directory\n" "$progname"
 }
 
-[ $# -eq 1 ] || usage
+if [ $# -gt 1 ]
+then
+    printf "%s: too many arguments\n" "$progname" 1>&2
+    usage
+    exit 1
+elif [ $# -eq 0 ]
+then
+    usage
+    exit 0
+fi
 
 cd "$1"
 
