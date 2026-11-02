@@ -6,8 +6,7 @@ progname=${0##*/}
 
 usage()
 {
-    printf "usage: %s file|directory\n" "$progname" 1>&2
-    exit 1
+    printf "usage: %s file|directory\n" "$progname"
 }
 
 report()
@@ -29,7 +28,17 @@ $files
 __FILES__
 }
 
-[ "$#" -eq 1 ] || usage
+if [ $# -gt 1 ]
+then
+    printf "%s: too many arguments\n" "$progname" 1>&2
+    usage
+    exit 1
+elif [ $# -eq 0 ]
+then
+    usage
+    exit 0
+fi
+
 target=$1
 
 if [ ! -e "$target" ]
