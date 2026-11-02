@@ -4,21 +4,80 @@ set -e
 
 progname=${0##*/}
 
+cipher_algo=aes-256-cbc
+digest_algo=sha512
+iter_count=210000
+
+umask 077
+
 usage()
 {
-    printf "usage: %s -e file\n" "$progname"
-    printf "       %s -d file.enc\n" "$progname"
+    printf "usage: %s -e file\n" "$progname" 1>&2
+    printf "       %s -d file.enc\n" "$progname" 1>&2
+    exit 1
 }
 
-if [ $# -gt 2 ]
+cleanup()
+{
+    if [ -n "$openssl_pid" ]
+    then
+        kill "$openssl_pid" 2>/dev/null || :
+    fi
+    rm -rf "$tmp_dir"
+}
+
+encrypt()
+{
+    if ! openssl enc -e -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" -salt \
+         -in "$file_dec" -out "$file_enc" 2>/dev/null
+    then
+        rm -f "$file_enc"
+        printf "%s: encryption failed: passwords do not match\n" "$progname" 1>&2
+        exit 1
+    fi
+}
+
+decrypt()
+{
+    tmp_dir=${TMPDIR:-/tmp}/crypt.$$
+    mkdir "$tmp_dir" || exit 1
+    tmp_pipe=$tmp_dir/pipe
+    mkfifo "$tmp_pipe" || exit 1
+
+    openssl_pid=
+    trap cleanup EXIT
+    trap 'exit 1' HUP INT TERM
+
+    openssl enc -d -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" -salt \
+            -in "$file_enc" -out "$tmp_pipe" 2>/dev/null &
+    openssl_pid=$!
+
+    if cat "$tmp_pipe" > "$file_dec"
+    then
+        if wait "$openssl_pid"
+        then
+            openssl_pid=
+        else
+            rm -f "$file_dec"
+            printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
+            exit 1
+        fi
+    else
+        rm -f "$file_dec"
+        printf "%s: inbound data stream interrupted\n" "$progname" 1>&2
+        exit 1
+    fi
+}
+
+if [ "$#" -gt 2 ]
 then
     printf "%s: too many arguments\n" "$progname" 1>&2
     usage
-    exit 1
-elif [ $# -eq 0 ]
+fi
+
+if [ "$#" -eq 0 ]
 then
     usage
-    exit 0
 fi
 
 mode=
@@ -33,7 +92,6 @@ case $1 in
     *)
         printf "%s: invalid option: %s\n" "$progname" "$1" 1>&2
         usage
-        exit 1
         ;;
 esac
 
@@ -43,7 +101,6 @@ if [ -z "$file" ]
 then
     printf "%s: %s: missing file argument\n" "$progname" "$1" 1>&2
     usage
-    exit 1
 fi
 
 case $mode in
@@ -62,6 +119,8 @@ case $mode in
             printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_enc" 1>&2
             exit 1
         fi
+
+        encrypt
         ;;
     dec)
         case $file in
@@ -86,46 +145,7 @@ case $mode in
             printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_dec" 1>&2
             exit 1
         fi
-        ;;
-esac
 
-cipher_algo=aes-256-cbc
-digest_algo=sha512
-iter_count=210000
-
-case $mode in
-    enc)
-        if ! openssl enc -e -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
-             -in "$file_dec" -out "$file_enc" 2>/dev/null
-        then
-            printf "%s: encryption failed: passwords do not match\n" "$progname" 1>&2
-            exit 1
-        fi
-        ;;
-    dec)
-        tmp_pipe=$(mktemp -u -t tmp.pipe.XXXXXX)
-        mkfifo "$tmp_pipe"
-
-        trap 'rm -f "$tmp_pipe"' EXIT INT TERM
-
-        openssl enc -d -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
-                -in "$file_enc" -out "$tmp_pipe" 2>/dev/null &
-        openssl_pid=$!
-
-        if cat "$tmp_pipe" > "$file_dec"
-        then
-            if wait "$openssl_pid"
-            then
-                :
-            else
-                rm -f "$file_dec"
-                printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
-                exit 1
-            fi
-        else
-            rm -f "$file_dec"
-            printf "%s: inbound data stream interrupted\n" "$progname" 1>&2
-            exit 1
-        fi
+        decrypt
         ;;
 esac
