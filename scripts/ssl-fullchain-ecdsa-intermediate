@@ -9,6 +9,8 @@ ica_cn=ICA1
 
 valid_days=3650
 
+umask 077
+
 mkdir $ica_cn
 
 openssl genpkey \

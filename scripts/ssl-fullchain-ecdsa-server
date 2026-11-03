@@ -8,6 +8,8 @@ server_cn=domain.internal
 
 valid_days=1825
 
+umask 077
+
 mkdir $server_cn
 
 openssl genpkey \

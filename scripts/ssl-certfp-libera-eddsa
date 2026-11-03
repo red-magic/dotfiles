@@ -8,6 +8,8 @@ cn_name=nickname
 
 valid_days=7300
 
+umask 077
+
 mkdir libera
 
 openssl req \
@@ -31,7 +33,7 @@ openssl x509 \
         -in libera/libera.pem \
         -noout \
         -fingerprint -sha512 \
-    | awk -F= '{gsub(":",""); print tolower ($2)}' > libera/libera.sha512
+    | awk -F= '{gsub(":",""); print tolower($2)}' > libera/libera.sha512
 
 chmod 444 libera/libera.sha512
 

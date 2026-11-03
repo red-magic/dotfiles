@@ -24,7 +24,7 @@ report()
     do
         is_binary "$file" && continue
         last=$(tail -c 1 "$file" 2>/dev/null) || continue
-        case "$last" in
+        case $last in
             "" | "$cr") ;;
             *) printf "%s\n" "$file" ;;
         esac

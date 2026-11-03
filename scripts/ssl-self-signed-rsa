@@ -8,6 +8,8 @@ cn_name=domain.internal
 
 valid_days=7300
 
+umask 077
+
 mkdir $cn_name
 
 openssl req \
@@ -22,6 +24,7 @@ openssl req \
         -addext "extendedKeyUsage = serverAuth" \
         -addext "basicConstraints = critical, CA:FALSE" \
         -addext "subjectKeyIdentifier = hash" \
+        -addext "authorityKeyIdentifier = keyid:always" \
         -addext "subjectAltName = DNS:$cn_name" \
         -set_serial "0x$(openssl rand -hex 16)" \
         -keyout $cn_name/$cn_name.key \

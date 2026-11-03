@@ -19,8 +19,8 @@ report_file()
 {
     rc=0
     lines=$(grep -n -- '[[:space:]]\{1,\}$' "$1") || rc=$?
-    [ "$rc" -le 1 ] || exit "$rc"
-    [ "$rc" -eq 0 ] || return 0
+    [ $rc -le 1 ] || exit $rc
+    [ $rc -eq 0 ] || return 0
 
     while IFS=: read -r line text
     do
@@ -63,8 +63,8 @@ strip_files()
 
         rc=0
         grep -q -- '[[:space:]]\{1,\}$' "$file" || rc=$?
-        [ "$rc" -le 1 ] || exit "$rc"
-        [ "$rc" -eq 0 ] || continue
+        [ $rc -le 1 ] || exit $rc
+        [ $rc -eq 0 ] || continue
 
         printf "%s\n" "$file" 1>&2
         strip_file "$file"
@@ -108,7 +108,7 @@ then
     exit 1
 fi
 
-if [ "$strip" -eq 0 ]
+if [ $strip -eq 0 ]
 then
     report
 else

@@ -19,8 +19,8 @@ has_content()
 {
     rc=0
     grep -q . "$1" || rc=$?
-    [ "$rc" -le 1 ] || exit "$rc"
-    return "$rc"
+    [ $rc -le 1 ] || exit $rc
+    return $rc
 }
 
 report()
@@ -35,9 +35,9 @@ report()
 
         rc=0
         grep -q "$cr" "$file" || rc=$?
-        [ "$rc" -le 1 ] || exit "$rc"
+        [ $rc -le 1 ] || exit $rc
 
-        if [ "$rc" -eq 0 ]
+        if [ $rc -eq 0 ]
         then
             printf "CRLF  %s\n" "$file"
         else

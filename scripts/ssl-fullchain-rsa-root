@@ -8,6 +8,8 @@ rca_cn=RCA
 
 valid_days=7300
 
+umask 077
+
 mkdir $rca_cn
 
 openssl genpkey \
@@ -26,6 +28,7 @@ openssl req \
         -addext "keyUsage = critical, keyCertSign, cRLSign" \
         -addext "basicConstraints = critical, CA:TRUE, pathlen:1" \
         -addext "subjectKeyIdentifier = hash" \
+        -addext "authorityKeyIdentifier = keyid:always" \
         -set_serial "0x$(openssl rand -hex 16)" \
         -out $rca_cn/$rca_cn.crt
 
