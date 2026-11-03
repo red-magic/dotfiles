@@ -56,12 +56,12 @@ decrypt()
     fi
 }
 
-if [ "$#" -gt 2 ]
+if [ $# -gt 2 ]
 then
     printf "%s: too many arguments\n" "$progname" 1>&2
     usage
     exit 1
-elif [ "$#" -eq 0 ]
+elif [ $# -eq 0 ]
 then
     usage
     exit 0
