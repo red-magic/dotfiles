@@ -35,6 +35,15 @@ $files
 __FILES__
 }
 
+strip_file()
+{
+    tmp="$1.tmp.$$"
+    cp -p "$1" "$tmp"
+    content=$(cat "$1")
+    printf '%s\n' "$content" > "$tmp"
+    mv "$tmp" "$1"
+}
+
 strip_files()
 {
     files=$(find -H "$target" -type f)
@@ -45,24 +54,7 @@ strip_files()
         is_binary "$file" && continue
         has_trailing_newlines "$file" || continue
         printf "%s\n" "$file" 1>&2
-        rc=0
-        grep -q '^.' "$file" || rc=$?
-        [ "$rc" -le 1 ] || exit "$rc"
-        if [ "$rc" -eq 0 ]
-        then
-            ed -s "$file" <<'ED_EOF'
-$
-?^..*?+1,$d
-w
-q
-ED_EOF
-        else
-            ed -s "$file" <<'ED_EOF'
-2,$d
-w
-q
-ED_EOF
-        fi
+        strip_file "$file"
     done <<__FILES__
 $files
 __FILES__
