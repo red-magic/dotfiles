@@ -3,10 +3,16 @@
 set -e
 
 progname=${0##*/}
+cr=$(printf '\r')
 
 usage()
 {
     printf "usage: %s file|directory\n" "$progname"
+}
+
+is_binary()
+{
+    od -t c "$1" | grep -q '\\0'
 }
 
 report()
@@ -16,9 +22,10 @@ report()
 
     while IFS= read -r file
     do
+        is_binary "$file" && continue
         last=$(tail -c 1 "$file" 2>/dev/null) || continue
-        case $last in
-            "" | "$(printf "\n")" | "$(printf "\r")") ;;
+        case "$last" in
+            "" | "$cr") ;;
             *) printf "%s\n" "$file" ;;
         esac
     done <<__FILES__

@@ -68,6 +68,12 @@ decrypt()
     fi
 }
 
+if ! command -v openssl >/dev/null 2>&1
+then
+    printf "%s: openssl not found in PATH\n" "$progname" 1>&2
+    exit 1
+fi
+
 if [ $# -gt 2 ]
 then
     printf "%s: too many arguments\n" "$progname" 1>&2
@@ -115,7 +121,7 @@ case $mode in
             exit 1
         fi
 
-        if [ -f "$file_enc" ]
+        if [ -e "$file_enc" ]
         then
             printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_enc" 1>&2
             exit 1
@@ -141,7 +147,7 @@ case $mode in
             exit 1
         fi
 
-        if [ -f "$file_dec" ]
+        if [ -e "$file_dec" ]
         then
             printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_dec" 1>&2
             exit 1

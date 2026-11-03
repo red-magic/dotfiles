@@ -9,6 +9,12 @@ usage()
     printf "usage: %s directory\n" "$progname"
 }
 
+if ! command -v openssl >/dev/null 2>&1
+then
+    printf "%s: openssl not found in PATH\n" "$progname" 1>&2
+    exit 1
+fi
+
 if [ $# -gt 1 ]
 then
     printf "%s: too many arguments\n" "$progname" 1>&2
@@ -20,12 +26,16 @@ then
     exit 0
 fi
 
+if [ ! -d "$1" ]
+then
+    printf "%s: not a directory: %s\n" "$progname" "$1" 1>&2
+    exit 1
+fi
+
 cd "$1"
 
 for file in .* *
 do
-    [ "$file" = "." ] && continue
-    [ "$file" = ".." ] && continue
     [ -f "$file" ] || continue
 
     newname=$(openssl rand -hex 16)
@@ -34,5 +44,6 @@ do
         *.*) newname="$newname.${file##*.}" ;;
     esac
 
-    mv -vf -- "$file" "$newname"
+    printf "%s -> %s\n" "$file" "$newname" 1>&2
+    mv -f "./$file" "./$newname"
 done

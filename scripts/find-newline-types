@@ -3,10 +3,24 @@
 set -e
 
 progname=${0##*/}
+cr=$(printf '\r')
 
 usage()
 {
     printf "usage: %s file|directory\n" "$progname"
+}
+
+is_binary()
+{
+    od -t c "$1" | grep -q '\\0'
+}
+
+has_content()
+{
+    rc=0
+    grep -q . "$1" || rc=$?
+    [ "$rc" -le 1 ] || exit "$rc"
+    return "$rc"
 }
 
 report()
@@ -16,8 +30,14 @@ report()
 
     while IFS= read -r file
     do
-        grep -Iq . "$file" || continue
-        if grep -q "$(printf "\r")" "$file"
+        is_binary "$file" && continue
+        has_content "$file" || continue
+
+        rc=0
+        grep -q "$cr" "$file" || rc=$?
+        [ "$rc" -le 1 ] || exit "$rc"
+
+        if [ "$rc" -eq 0 ]
         then
             printf "CRLF  %s\n" "$file"
         else

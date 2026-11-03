@@ -23,7 +23,7 @@ encrypt_sym()
          --s2k-digest-algo "$digest_algo" \
          --force-aead \
          --no-compress \
-         -c "$file_dec"
+         -c -- "$file_dec"
     then
         rm -f "$file_enc"
         printf "%s: %s: symmetric encryption failed\n" "$progname" "$mode_flag" 1>&2
@@ -38,7 +38,7 @@ encrypt_asym()
          --digest-algo "$digest_algo" \
          --force-aead \
          --no-compress \
-         -e -s "$file_dec"
+         -e -s -- "$file_dec"
     then
         rm -f "$file_enc"
         printf "%s: %s: asymmetric encryption failed\n" "$progname" "$mode_flag" 1>&2
@@ -48,13 +48,19 @@ encrypt_asym()
 
 decrypt()
 {
-    if ! gpg -d -o "$file_dec" "$file_enc"
+    if ! gpg -d -o "$file_dec" -- "$file_enc"
     then
         rm -f "$file_dec"
         printf "%s: %s: decryption failed\n" "$progname" "$mode_flag" 1>&2
         exit 1
     fi
 }
+
+if ! command -v gpg >/dev/null 2>&1
+then
+    printf "%s: gpg not found in PATH\n" "$progname" 1>&2
+    exit 1
+fi
 
 if [ $# -gt 2 ]
 then
@@ -107,7 +113,7 @@ case $mode in
             exit 1
         fi
 
-        if [ -f "$file_enc" ]
+        if [ -e "$file_enc" ]
         then
             printf "%s: %s: file %s already exists\n" "$progname" "$mode_flag" "$file_enc" 1>&2
             exit 1
@@ -131,7 +137,7 @@ case $mode in
             exit 1
         fi
 
-        if [ -f "$file_dec" ]
+        if [ -e "$file_dec" ]
         then
             printf "%s: %s: file %s already exists\n" "$progname" "$mode_flag" "$file_dec" 1>&2
             exit 1
