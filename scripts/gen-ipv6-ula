@@ -1,0 +1,11 @@
+#!/bin/sh
+
+ula_prefix=$(echo fd"$(openssl rand -hex 5)" | sed -E 's/(.{4})(.{4})(.{4})/\1:\2:\3/')
+
+printf "prefix:       %s::/48\n" "$ula_prefix"
+printf "first subnet: %s:0::/64\n" "$ula_prefix"
+printf "last subnet:  %s:ffff::/64\n\n" "$ula_prefix"
+
+printf "router:       %s:0::1\n" "$ula_prefix"
+printf "first host:   %s:0::100\n" "$ula_prefix"
+printf "last host:    %s:0::ffff\n" "$ula_prefix"
