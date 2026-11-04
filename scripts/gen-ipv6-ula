@@ -1,6 +1,9 @@
 #!/bin/sh
 
-ula_prefix=$(echo fd"$(openssl rand -hex 5)" | sed -E 's/(.{4})(.{4})(.{4})/\1:\2:\3/')
+set -e
+
+rand_hex=$(dd if=/dev/urandom bs=5 count=1 2>/dev/null | od -An -tx1 | tr -d ' \n')
+ula_prefix=$(printf "fd%s" "$rand_hex" | sed 's/\(....\)\(....\)\(....\)/\1:\2:\3/')
 
 printf "prefix:       %s::/48\n" "$ula_prefix"
 printf "first subnet: %s:0::/64\n" "$ula_prefix"
