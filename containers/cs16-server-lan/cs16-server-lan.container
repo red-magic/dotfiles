@@ -3,8 +3,8 @@ Description=Counter-Strike 1.6 Dedicated Server
 After=network.target
 
 [Container]
-Image=localhost/cs16-server-net:latest
-ContainerName=cs16-server-net
+Image=localhost/cs16-server-lan:latest
+ContainerName=cs16-server-lan
 RunInit=true
 Network=host
 
@@ -18,4 +18,4 @@ RestartSec=10
 TimeoutStopSec=60
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

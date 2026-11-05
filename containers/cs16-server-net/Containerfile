@@ -50,7 +50,9 @@ RUN mv -f addons ../cs16/cstrike && \
 
 WORKDIR /opt/hlds/cs16
 
-ENTRYPOINT ["./hlds_run"]
-CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-norestart", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "0", "+map", "de_dust2"]
+ENV LD_LIBRARY_PATH=/opt/hlds/cs16
+
+ENTRYPOINT ["/opt/hlds/cs16/hlds_linux"]
+CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "0", "+map", "de_dust2"]
 
 STOPSIGNAL SIGINT
