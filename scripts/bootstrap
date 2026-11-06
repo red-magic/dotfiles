@@ -69,7 +69,7 @@ install_configs() {
                 cp -f repos/dotfiles/.cwmrc .
                 cp -f repos/dotfiles/.xsession .
                 cp -f repos/dotfiles/.Xdefaults .
-                cp -rf repos/dotfiles/pics .
+                cp -f repos/dotfiles/.wallpaper.jpg .
             fi
             ;;
     esac
