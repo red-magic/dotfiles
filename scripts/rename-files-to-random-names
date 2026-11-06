@@ -28,11 +28,11 @@ fi
 
 cd "$1"
 
-for file in .* *
+for file in .[!.]* *
 do
-    [ -f "$file" ] || continue
+    [ ! -f "$file" ] && continue
 
-    newname=$(od -A d -N 16 -t x1 /dev/urandom | sed -n '1s/^ *[0-9]* //p' | tr -d ' ')
+    newname=$(od -A n -N 16 -t x1 /dev/urandom | tr -d ' \n')
 
     case ${file#.} in
         *.*) newname="$newname.${file##*.}" ;;
