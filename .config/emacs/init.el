@@ -11,9 +11,9 @@
               indent-tabs-mode nil
               truncate-lines t)
 
-(column-number-mode t)
-(global-display-line-numbers-mode t)
-(size-indication-mode t)
+(column-number-mode 1)
+(global-display-line-numbers-mode 1)
+(size-indication-mode 1)
 (menu-bar-mode -1)
 (show-paren-mode -1)
 (global-font-lock-mode -1)
@@ -24,13 +24,15 @@
       (indent-region (region-beginning) (region-end))
     (insert "\t")))
 
-(global-set-key (kbd "TAB") 'my/insert-tab-or-indent)
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
-
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(c-set-offset 'case-label '+)
-(c-set-offset 'statement-cont 'c-lineup-math)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (c-set-offset 'case-label '+)
+            (c-set-offset 'statement-cont 'c-lineup-math)))
 
 (advice-add 'eww--dwim-expand-url :filter-return
-            (lambda (url) (replace-regexp-in-string "http://" "https://" url)))
+            (lambda (url) (replace-regexp-in-string "^http://" "https://" url)))
+
+(global-set-key (kbd "TAB") 'my/insert-tab-or-indent)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
