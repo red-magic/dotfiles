@@ -41,7 +41,7 @@ RUN ln -sf . steam && \
 
 RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
-    sed -i "s|gamedll_linux \"dlls/cs.so\"|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
+    sed -i "s|^gamedll_linux \"dlls/cs.so\"|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
 
 RUN mv -f addons ../cs16/cstrike && \
     ln -sf linux32 sdk32 && \
