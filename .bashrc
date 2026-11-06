@@ -1,4 +1,4 @@
-[[ "${-}" != *"i"* ]] && return 0
+[[ "$-" != *"i"* ]] && return 0
 
 stty werase undef
 bind '\C-w:backward-kill-word'
@@ -35,23 +35,23 @@ alias longlines='grep -n ".\{81,\}"'
 #alias ssh-connect-onion='fn_ssh_connect_onion'
 
 fn_sl() {
-    sudo ls -plha --color=always "${@}"
+    sudo ls -plha --color=always "$@"
 }
 
 fn_smg() {
-    sudo mg -n "${@}"
+    sudo mg -n "$@"
 }
 
 fn_semacs() {
-    if [[ -e "${1}" ]]; then
-        emacs "/sudo::$(realpath -- "${1}")"
+    if [[ -e "$1" ]]; then
+        emacs "/sudo::$(realpath -- "$1")"
     else
-        case "${1}" in
-            /*) p="${1}" ;;
-            *) p="${PWD}/${1}" ;;
+        case "$1" in
+            /*) path="$1" ;;
+            *) path="${PWD}/$1" ;;
         esac
-        dir="$(dirname -- "${p}")"
-        file="$(basename -- "${p}")"
+        dir="$(dirname -- "${path}")"
+        file="$(basename -- "${path}")"
         emacs "/sudo::$(realpath -- "${dir}")/${file}"
     fi
 }
@@ -97,6 +97,7 @@ fn_ssh_connect_onion() {
 if [[ -z "${TMUX}" ]] && [[ -n "${PS1}" ]]; then
     case "$(tty)" in
         "/dev/tty"*)
+            ssh-add
             tmux
             clear
             exit 0
