@@ -5,13 +5,10 @@ After=network.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStartPre=-/usr/bin/podman create --name cs16-server-net --init --network host --cap-drop ALL --security-opt no-new-privileges cs16-server-net
+ExecStartPre=-/usr/bin/podman create --name cs16-server-net --init --network host --cap-drop ALL --security-opt no-new-privileges --restart unless-stopped localhost/cs16-server-net:latest
 ExecStart=/usr/bin/podman start cs16-server-net
 ExecStop=/usr/bin/podman stop cs16-server-net
-Restart=on-failure
 SuccessExitStatus=130
-RestartSec=10
-TimeoutStopSec=60
 
 [Install]
 WantedBy=default.target
