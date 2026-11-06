@@ -3,6 +3,12 @@
 set -e
 
 rand_hex=$(dd if=/dev/urandom bs=5 count=1 2>/dev/null | od -An -tx1 | tr -d ' \n')
+
+case $rand_hex in
+    [0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]) ;;
+    *) exit 1 ;;
+esac
+
 ula_prefix=$(printf "fd%s" "$rand_hex" | sed 's/\(....\)\(....\)\(....\)/\1:\2:\3/')
 
 printf "prefix:       %s::/48\n" "$ula_prefix"
