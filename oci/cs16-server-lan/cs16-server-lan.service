@@ -3,9 +3,10 @@ Description=Counter-Strike 1.6 Dedicated Server
 After=network.target
 
 [Service]
-Type=simple
+Type=oneshot
+RemainAfterExit=yes
 ExecStartPre=-/usr/bin/podman create --name cs16-server-lan --init --network host --cap-drop ALL --security-opt no-new-privileges cs16-server-lan
-ExecStart=/usr/bin/podman start -a cs16-server-lan
+ExecStart=/usr/bin/podman start cs16-server-lan
 ExecStop=/usr/bin/podman stop cs16-server-lan
 Restart=on-failure
 SuccessExitStatus=130
