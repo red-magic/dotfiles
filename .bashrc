@@ -47,8 +47,12 @@ fn_semacs() {
         emacs "/sudo::$(realpath -- "$1")"
     else
         case "$1" in
-            /*) path="$1" ;;
-            *) path="${PWD}/$1" ;;
+            /*)
+                path="$1"
+                ;;
+            *)
+                path="${PWD}/$1"
+                ;;
         esac
         dir="$(dirname -- "${path}")"
         file="$(basename -- "${path}")"

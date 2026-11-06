@@ -37,14 +37,14 @@ fn_semacs()
     else
         case $1 in
             /*)
-                p=$1
+                path=$1
                 ;;
             *)
-                p=$PWD/$1
+                path=$PWD/$1
                 ;;
         esac
-        dir=$(dirname -- "$p")
-        file=$(basename -- "$p")
+        dir=$(dirname -- "$path")
+        file=$(basename -- "$path")
         emacs "/doas::$(realpath -- "$dir")/$file"
     fi
 }
