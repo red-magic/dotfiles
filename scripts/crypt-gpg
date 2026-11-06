@@ -18,6 +18,9 @@ usage()
 
 encrypt_sym()
 {
+    trap 'rm -f -- "$file_enc" || :' EXIT
+    trap 'exit 1' HUP INT TERM
+
     if ! gpg -o "$file_enc" \
          --s2k-cipher-algo "$cipher_algo" \
          --s2k-digest-algo "$digest_algo" \
@@ -25,14 +28,18 @@ encrypt_sym()
          --no-compress \
          -c -- "$file_dec"
     then
-        rm -f "$file_enc"
         printf "%s: %s: symmetric encryption failed\n" "$progname" "$mode_flag" 1>&2
         exit 1
     fi
+
+    trap - EXIT HUP INT TERM
 }
 
 encrypt_asym()
 {
+    trap 'rm -f -- "$file_enc" || :' EXIT
+    trap 'exit 1' HUP INT TERM
+
     if ! gpg -o "$file_enc" \
          --cipher-algo "$cipher_algo" \
          --digest-algo "$digest_algo" \
@@ -40,20 +47,25 @@ encrypt_asym()
          --no-compress \
          -e -s -- "$file_dec"
     then
-        rm -f "$file_enc"
         printf "%s: %s: asymmetric encryption failed\n" "$progname" "$mode_flag" 1>&2
         exit 1
     fi
+
+    trap - EXIT HUP INT TERM
 }
 
 decrypt()
 {
+    trap 'rm -f -- "$file_dec" || :' EXIT
+    trap 'exit 1' HUP INT TERM
+
     if ! gpg -d -o "$file_dec" -- "$file_enc"
     then
-        rm -f "$file_dec"
         printf "%s: %s: decryption failed\n" "$progname" "$mode_flag" 1>&2
         exit 1
     fi
+
+    trap - EXIT HUP INT TERM
 }
 
 if ! command -v gpg >/dev/null 2>&1
@@ -130,6 +142,12 @@ case $mode in
 
         file_enc=$file
         file_dec=${file%.gpg}
+
+        if [ -z "$file_dec" ]
+        then
+            printf "%s: %s: invalid file name: %s\n" "$progname" "$mode_flag" "$file" 1>&2
+            exit 1
+        fi
 
         if [ ! -f "$file_enc" ]
         then
