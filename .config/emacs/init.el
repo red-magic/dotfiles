@@ -35,4 +35,5 @@
             (lambda (url) (replace-regexp-in-string "^http://" "https://" url)))
 
 (global-set-key (kbd "TAB") 'my/insert-tab-or-indent)
+(global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
