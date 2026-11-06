@@ -23,13 +23,12 @@ has_trailing_newlines()
 report()
 {
     files=$(find -H "$target" -type f)
-    [ -n "$files" ] || return 0
+    [ -z "$files" ] && return 0
 
     while IFS= read -r file
     do
         is_binary "$file" && continue
-        has_trailing_newlines "$file" || continue
-        printf "%s\n" "$file"
+        has_trailing_newlines "$file" && printf "%s\n" "$file"
     done <<__FILES__
 $files
 __FILES__
@@ -39,22 +38,24 @@ strip_file()
 {
     tmp="$1.tmp.$$"
     cp -p "$1" "$tmp"
-    content=$(cat "$1")
-    printf '%s\n' "$content" > "$tmp"
+    sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$1" > "$tmp"
+    printf '\n' >> "$tmp"
     mv "$tmp" "$1"
 }
 
 strip_files()
 {
     files=$(find -H "$target" -type f)
-    [ -n "$files" ] || return 0
+    [ -z "$files" ] && return 0
 
     while IFS= read -r file
     do
         is_binary "$file" && continue
-        has_trailing_newlines "$file" || continue
-        printf "%s\n" "$file" 1>&2
-        strip_file "$file"
+        if has_trailing_newlines "$file"
+        then
+            printf "%s\n" "$file" 1>&2
+            strip_file "$file"
+        fi
     done <<__FILES__
 $files
 __FILES__
@@ -95,7 +96,7 @@ then
     exit 1
 fi
 
-if [ "$strip" -eq 0 ]
+if [ $strip -eq 0 ]
 then
     report
 else

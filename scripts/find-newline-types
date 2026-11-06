@@ -18,24 +18,24 @@ is_binary()
 has_content()
 {
     rc=0
-    grep -q . "$1" || rc=$?
-    [ $rc -le 1 ] || exit $rc
+    grep -q . "$1" 2>/dev/null || rc=$?
+    [ $rc -gt 1 ] && exit $rc
     return $rc
 }
 
 report()
 {
     files=$(find -H "$target" -type f)
-    [ -n "$files" ] || return 0
+    [ -z "$files" ] && return 0
 
     while IFS= read -r file
     do
         is_binary "$file" && continue
-        has_content "$file" || continue
+        ! has_content "$file" && continue
 
         rc=0
-        grep -q "$cr" "$file" || rc=$?
-        [ $rc -le 1 ] || exit $rc
+        grep -q "$cr" "$file" 2>/dev/null || rc=$?
+        [ $rc -gt 1 ] && exit $rc
 
         if [ $rc -eq 0 ]
         then
