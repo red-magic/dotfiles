@@ -3,7 +3,7 @@ export EDITOR="mg -n"
 #export EDITOR=vi
 #export VISUAL=vi
 #export EDITOR="emacsclient -nw"
-#export ALTERNATE_EDITOR="emacs -nw --color=never"
+#export ALTERNATE_EDITOR="emacs -nw"
 export PAGER=less
 export LESS="-M -R"
 #export MANWIDTH=80
