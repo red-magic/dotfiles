@@ -11,6 +11,8 @@
               indent-tabs-mode nil
               truncate-lines t)
 
+(push '(tty-color-mode . no) default-frame-alist)
+
 (column-number-mode 1)
 (global-display-line-numbers-mode 1)
 (size-indication-mode 1)
