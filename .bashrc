@@ -101,7 +101,11 @@ fn_ssh_connect_onion() {
 if [[ -z "${TMUX}" ]] && [[ -n "${PS1}" ]]; then
     case "$(tty)" in
         "/dev/tty"*)
-            ssh-add
+            if ! ssh-add -l &> /dev/null; then
+                trap '' INT
+                ssh-add
+                trap - INT
+            fi
             tmux
             clear
             exit 0
