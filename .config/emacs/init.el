@@ -7,7 +7,7 @@
       tramp-histfile-override "/dev/null"
       use-short-answers t)
 
-(setq-default fill-column 60
+(setq-default fill-column 70
               indent-tabs-mode nil
               truncate-lines t)
 
