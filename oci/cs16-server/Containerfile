@@ -1,5 +1,5 @@
-ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID"
-ARG ADMIN_IP="192.168.0.10" # LAN admin access, may leave it as it is.
+ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID" # Only works with -secure and +sv_lan 0.
+ARG ADMIN_IP="192.168.0.10" # LAN admin access; may leave it as it is if playing with +sv_lan 0.
 ARG YB_PASSWORD="qwerty123456"
 
 ARG YB_BOTS="1"          # YaPB Bots: 1 - On; 0 - Off;
