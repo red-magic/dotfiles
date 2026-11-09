@@ -16,12 +16,33 @@ usage()
     printf "       %s -d file.gpg\n" "$progname"
 }
 
+create_tmp()
+{
+    n=0
+    while [ $n -lt 100 ]
+    do
+        tmp_file=$1.$$.$n
+        if ( set -C; : > "$tmp_file" ) 2>/dev/null
+        then
+            return 0
+        fi
+        n=$((n + 1))
+    done
+    return 1
+}
+
 encrypt_sym()
 {
-    trap 'rm -f -- "$file_enc" || :' EXIT
+    if ! create_tmp "$file_enc"
+    then
+        printf "%s: %s: cannot create temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! gpg -o "$file_enc" \
+    if ! gpg -o "$tmp_file" \
          --s2k-cipher-algo "$cipher_algo" \
          --s2k-digest-algo "$digest_algo" \
          --force-aead \
@@ -32,15 +53,27 @@ encrypt_sym()
         exit 1
     fi
 
-    trap - EXIT HUP INT TERM
+    if ! mv "$tmp_file" "$file_enc"
+    then
+        printf "%s: %s: cannot rename temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap - 0 HUP INT TERM
 }
 
 encrypt_asym()
 {
-    trap 'rm -f -- "$file_enc" || :' EXIT
+    if ! create_tmp "$file_enc"
+    then
+        printf "%s: %s: cannot create temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! gpg -o "$file_enc" \
+    if ! gpg -o "$tmp_file" \
          --cipher-algo "$cipher_algo" \
          --digest-algo "$digest_algo" \
          --force-aead \
@@ -51,21 +84,39 @@ encrypt_asym()
         exit 1
     fi
 
-    trap - EXIT HUP INT TERM
+    if ! mv "$tmp_file" "$file_enc"
+    then
+        printf "%s: %s: cannot rename temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap - 0 HUP INT TERM
 }
 
 decrypt()
 {
-    trap 'rm -f -- "$file_dec" || :' EXIT
+    if ! create_tmp "$file_dec"
+    then
+        printf "%s: %s: cannot create temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! gpg -d -o "$file_dec" -- "$file_enc"
+    if ! gpg -d -o "$tmp_file" -- "$file_enc"
     then
         printf "%s: %s: decryption failed\n" "$progname" "$mode_flag" 1>&2
         exit 1
     fi
 
-    trap - EXIT HUP INT TERM
+    if ! mv "$tmp_file" "$file_dec"
+    then
+        printf "%s: %s: cannot rename temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap - 0 HUP INT TERM
 }
 
 if ! command -v gpg >/dev/null 2>&1
@@ -113,6 +164,10 @@ then
     usage
     exit 1
 fi
+
+case $file in
+    -*) file=./$file ;;
+esac
 
 case $mode in
     sym | asym)

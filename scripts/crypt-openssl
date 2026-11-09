@@ -16,62 +16,73 @@ usage()
     printf "       %s -d file.enc\n" "$progname"
 }
 
-cleanup()
+create_tmp()
 {
-    if [ -n "$openssl_pid" ]
-    then
-        kill "$openssl_pid" 2>/dev/null || :
-        rm -f -- "$file_dec" || :
-    fi
-    rm -rf -- "$tmp_dir" || :
+    n=0
+    while [ $n -lt 100 ]
+    do
+        tmp_file=$1.$$.$n
+        if ( set -C; : > "$tmp_file" ) 2>/dev/null
+        then
+            return 0
+        fi
+        n=$((n + 1))
+    done
+    return 1
 }
 
 encrypt()
 {
-    trap 'rm -f -- "$file_enc" || :' EXIT
+    if ! create_tmp "$file_enc"
+    then
+        printf "%s: %s: cannot create temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
     if ! openssl enc -e -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" -salt \
-         -in "$file_dec" -out "$file_enc" 2>/dev/null
+         -in "$file_dec" -out "$tmp_file"
     then
         printf "%s: encryption failed\n" "$progname" 1>&2
         exit 1
     fi
 
-    trap - EXIT HUP INT TERM
+    if ! mv "$tmp_file" "$file_enc"
+    then
+        printf "%s: %s: cannot rename temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap - 0 HUP INT TERM
 }
 
 decrypt()
 {
-    tmp_dir=${TMPDIR:-/tmp}/crypt.$$
-    tmp_pipe=$tmp_dir/pipe
-    openssl_pid=
-
-    trap cleanup EXIT
-    trap 'exit 1' HUP INT TERM
-
-    mkdir -- "$tmp_dir" || exit 1
-    mkfifo -- "$tmp_pipe" || exit 1
-
-    openssl enc -d -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" -salt \
-            -in "$file_enc" -out "$tmp_pipe" 2>/dev/null &
-    openssl_pid=$!
-
-    if cat -- "$tmp_pipe" > "$file_dec"
+    if ! create_tmp "$file_dec"
     then
-        if wait "$openssl_pid"
-        then
-            openssl_pid=
-        else
-            rm -f -- "$file_dec" || :
-            printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
-            exit 1
-        fi
-    else
-        rm -f -- "$file_dec" || :
-        printf "%s: inbound data stream interrupted\n" "$progname" 1>&2
+        printf "%s: %s: cannot create temporary file\n" "$progname" "$mode_flag" 1>&2
         exit 1
     fi
+
+    trap 'rm -f "$tmp_file" || :' 0
+    trap 'exit 1' HUP INT TERM
+
+    if ! openssl enc -d -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" \
+         -in "$file_enc" -out "$tmp_file"
+    then
+        printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
+        exit 1
+    fi
+
+    if ! mv "$tmp_file" "$file_dec"
+    then
+        printf "%s: %s: cannot rename temporary file\n" "$progname" "$mode_flag" 1>&2
+        exit 1
+    fi
+
+    trap - 0 HUP INT TERM
 }
 
 if ! command -v openssl >/dev/null 2>&1
@@ -105,14 +116,19 @@ case $1 in
         ;;
 esac
 
+mode_flag=$1
 file=$2
 
 if [ -z "$file" ]
 then
-    printf "%s: %s: missing file argument\n" "$progname" "$1" 1>&2
+    printf "%s: %s: missing file argument\n" "$progname" "$mode_flag" 1>&2
     usage
     exit 1
 fi
+
+case $file in
+    -*) file=./$file ;;
+esac
 
 case $mode in
     enc)
@@ -121,13 +137,13 @@ case $mode in
 
         if [ ! -f "$file_dec" ]
         then
-            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_dec" 1>&2
+            printf "%s: %s: file %s doesn't exist\n" "$progname" "$mode_flag" "$file_dec" 1>&2
             exit 1
         fi
 
         if [ -e "$file_enc" ]
         then
-            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_enc" 1>&2
+            printf "%s: %s: file %s already exists\n" "$progname" "$mode_flag" "$file_enc" 1>&2
             exit 1
         fi
 
@@ -137,7 +153,7 @@ case $mode in
         case $file in
             *.enc) ;;
             *)
-                printf "%s: %s: not a .enc file: %s\n" "$progname" "$1" "$file" 1>&2
+                printf "%s: %s: not a .enc file: %s\n" "$progname" "$mode_flag" "$file" 1>&2
                 exit 1
                 ;;
         esac
@@ -147,19 +163,19 @@ case $mode in
 
         if [ -z "$file_dec" ]
         then
-            printf "%s: %s: invalid file name: %s\n" "$progname" "$1" "$file" 1>&2
+            printf "%s: %s: invalid file name: %s\n" "$progname" "$mode_flag" "$file" 1>&2
             exit 1
         fi
 
         if [ ! -f "$file_enc" ]
         then
-            printf "%s: %s: file %s doesn't exist\n" "$progname" "$1" "$file_enc" 1>&2
+            printf "%s: %s: file %s doesn't exist\n" "$progname" "$mode_flag" "$file_enc" 1>&2
             exit 1
         fi
 
         if [ -e "$file_dec" ]
         then
-            printf "%s: %s: file %s already exists\n" "$progname" "$1" "$file_dec" 1>&2
+            printf "%s: %s: file %s already exists\n" "$progname" "$mode_flag" "$file_dec" 1>&2
             exit 1
         fi
 
