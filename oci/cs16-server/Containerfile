@@ -2,12 +2,12 @@ ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID"
 ARG RCON_PASSWORD="qwerty123456"
 ARG YB_PASSWORD="qwerty123456"
 
-ARG YB_BOTS="1"
-ARG YB_QUOTA="16"
-ARG YB_QUOTA_MODE="fill"
-ARG YB_DIFFICULTY="0"
-ARG YB_RADIO_MODE="0"
-ARG MP_TIMELIMIT="0"
+ARG YB_BOTS="1"          # YaPB Bots: 1 - On; 0 - Off;
+ARG YB_QUOTA="16"        # Default: 9;
+ARG YB_QUOTA_MODE="fill" # Default: normal; Options: normal, fill, match;
+ARG YB_DIFFICULTY="0"    # Default: 3;      Options: 0-4;
+ARG YB_RADIO_MODE="0"    # Default: 2;      Options: 0-2;
+ARG MP_TIMELIMIT="0"     # Default: 20;
 
 ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
 ARG METAMODP_LINK="https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
