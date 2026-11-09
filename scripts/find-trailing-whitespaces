@@ -2,6 +2,8 @@
 
 set -e
 
+export LC_ALL=C
+
 progname=${0##*/}
 
 self=$0
@@ -16,7 +18,7 @@ usage()
 
 is_binary()
 {
-    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | LC_ALL=C grep -q '^00$'
+    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | grep -q '^00$'
 }
 
 report_file()
@@ -27,7 +29,7 @@ report_file()
     fi
 
     rc=0
-    lines=$(LC_ALL=C grep -n -e "$pattern" "$1" 2>/dev/null) || rc=$?
+    lines=$(grep -n -e "$pattern" "$1" 2>/dev/null) || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
@@ -50,7 +52,7 @@ strip_file()
 {
     tmp=$1.tmp.$$
     cp -p "$1" "$tmp"
-    LC_ALL=C sed -e 's/[[:blank:]]\{1,\}$//' -e "s/[[:blank:]]\{1,\}\(${cr}\)$/\1/" "$1" > "$tmp"
+    sed -e 's/[[:blank:]]\{1,\}$//' -e "s/[[:blank:]]\{1,\}\(${cr}\)$/\1/" "$1" > "$tmp"
     mv "$tmp" "$1"
 }
 
@@ -62,7 +64,7 @@ strip_file_if_needed()
     fi
 
     rc=0
-    LC_ALL=C grep -q -e "$pattern" "$1" 2>/dev/null || rc=$?
+    grep -q -e "$pattern" "$1" 2>/dev/null || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc

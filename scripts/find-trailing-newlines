@@ -2,6 +2,8 @@
 
 set -e
 
+export LC_ALL=C
+
 progname=${0##*/}
 
 self=$0
@@ -14,7 +16,7 @@ usage()
 
 is_binary()
 {
-    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | LC_ALL=C grep -q '^00$'
+    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | grep -q '^00$'
 }
 
 has_trailing_newlines()

@@ -2,6 +2,8 @@
 
 set -e
 
+export LC_ALL=C
+
 progname=${0##*/}
 
 self=$0
@@ -14,13 +16,13 @@ usage()
 
 is_binary()
 {
-    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | LC_ALL=C grep -q '^00$'
+    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | grep -q '^00$'
 }
 
 has_content()
 {
     rc=0
-    LC_ALL=C grep -q . "$1" 2>/dev/null || rc=$?
+    grep -q . "$1" 2>/dev/null || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
@@ -40,7 +42,7 @@ report_file()
     fi
 
     rc=0
-    LC_ALL=C grep -q "$cr" "$1" 2>/dev/null || rc=$?
+    grep -q "$cr" "$1" 2>/dev/null || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
