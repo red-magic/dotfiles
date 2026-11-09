@@ -15,6 +15,7 @@ elif [[ "$#" -eq 0 ]]; then
     exit 0
 fi
 
+img_name="cs16-server"
 oci_cmd=""
 
 if command -v podman &> /dev/null; then
@@ -28,31 +29,31 @@ fi
 
 case "$1" in
     "build")
-        "${oci_cmd}" build -t cs16-server .
+        "${oci_cmd}" build -t "${img_name}" .
         ;;
 
     "deploy")
         "${oci_cmd}" run \
                      -d \
-                     --name cs16-server \
+                     --name "${img_name}" \
                      --init \
                      --network host \
                      --cap-drop ALL \
                      --security-opt no-new-privileges \
                      --restart unless-stopped \
-                     cs16-server
+                     "${img_name}"
         ;;
 
     "start")
-        "${oci_cmd}" start cs16-server
+        "${oci_cmd}" start "${img_name}"
         ;;
 
     "restart")
-        "${oci_cmd}" restart cs16-server
+        "${oci_cmd}" restart "${img_name}"
         ;;
 
     "stop")
-        "${oci_cmd}" stop cs16-server
+        "${oci_cmd}" stop "${img_name}"
         ;;
 
     *)

@@ -1,0 +1,39 @@
+FROM debian:trixie-slim AS builder
+
+ARG ARTI_VER="2.8.0"
+ARG LYREBIRD_VER="0.10.0"
+ARG ARTI_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/arti-${ARTI_VER}-linux-x86_64.tar.gz"
+
+RUN apt-get update -y && \
+    apt-get install -y curl
+
+WORKDIR /tmp/arti
+
+RUN curl -fL "${ARTI_LINK}" | tar zxf - -C /tmp && \
+    curl -fL "https://raw.githubusercontent.com/red-magic/arti-bin/refs/tags/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/resources/arti.toml" \
+         -o /tmp/arti/arti.toml
+
+RUN sed -i 's/^#snowflake/snowflake/' /tmp/arti/arti.toml && \
+    sed -i 's/^enabled = "auto"/enabled = true/' /tmp/arti/arti.toml && \
+    sed -i 's/^run_on_startup = false/run_on_startup = true/' /tmp/arti/arti.toml
+
+FROM debian:trixie-slim
+
+RUN useradd -r -M -d /var/lib/arti -s /sbin/nologin -c "Arti Daemon" arti && \
+    install -vdm 700 -o arti -g arti /var/lib/arti
+
+COPY --from=builder /tmp/arti/arti      /usr/bin/arti
+COPY --from=builder /tmp/arti/lyrebird  /usr/bin/lyrebird
+COPY --from=builder /tmp/arti/arti.toml /etc/arti/arti.toml
+
+RUN chmod 755 /usr/bin/arti /usr/bin/lyrebird && \
+    chmod 644 /etc/arti/arti.toml
+
+USER arti
+
+WORKDIR /var/lib/arti
+
+ENTRYPOINT ["/usr/bin/arti"]
+CMD ["proxy", "-c", "/etc/arti/arti.toml"]
+
+STOPSIGNAL SIGINT
