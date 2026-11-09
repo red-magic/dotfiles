@@ -3,6 +3,8 @@
 set -e
 
 progname=${0##*/}
+
+self=$0
 cr=$(printf '\r')
 
 usage()
@@ -12,41 +14,64 @@ usage()
 
 is_binary()
 {
-    od -t c "$1" | grep -q '\\0'
+    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 has_content()
 {
     rc=0
-    grep -q . "$1" 2>/dev/null || rc=$?
-    [ $rc -gt 1 ] && exit $rc
+    LC_ALL=C grep -q . $1 2>/dev/null || rc=$?
+    if [ $rc -gt 1 ]
+    then
+        exit $rc
+    fi
     return $rc
+}
+
+report_file()
+{
+    if is_binary $1
+    then
+        return 0
+    fi
+    if ! has_content $1
+    then
+        return 0
+    fi
+
+    rc=0
+    LC_ALL=C grep -q "$cr" $1 2>/dev/null || rc=$?
+    if [ $rc -gt 1 ]
+    then
+        exit $rc
+    fi
+
+    if [ $rc -eq 0 ]
+    then
+        printf "CRLF  %s\n" $1
+    else
+        printf "  LF  %s\n" $1
+    fi
 }
 
 report()
 {
-    files=$(find -H "$target" -type f)
-    [ -z "$files" ] && return 0
-
-    while IFS= read -r file
-    do
-        is_binary "$file" && continue
-        ! has_content "$file" && continue
-
-        rc=0
-        grep -q "$cr" "$file" 2>/dev/null || rc=$?
-        [ $rc -gt 1 ] && exit $rc
-
-        if [ $rc -eq 0 ]
-        then
-            printf "CRLF  %s\n" "$file"
-        else
-            printf "  LF  %s\n" "$file"
-        fi
-    done <<__FILES__
-$files
-__FILES__
+    find -H "$target" -type f -exec "$self" __report_file__ {} +
 }
+
+if [ $# -ge 2 ]
+then
+    case $1 in
+        __report_file__)
+            shift
+            for file
+            do
+                report_file "$file"
+            done
+            exit 0
+            ;;
+    esac
+fi
 
 if [ $# -gt 1 ]
 then

@@ -3,7 +3,11 @@
 set -e
 
 progname=${0##*/}
+
+self=$0
 strip=0
+cr=$(printf '\r')
+pattern="[[:blank:]]\{1,\}${cr}\{0,1\}$"
 
 usage()
 {
@@ -12,19 +16,31 @@ usage()
 
 is_binary()
 {
-    od -t c "$1" | grep -q '\\0'
+    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 report_file()
 {
+    if is_binary $1
+    then
+        return 0
+    fi
+
     rc=0
-    lines=$(LC_ALL=C grep -n -e '[[:space:]]\{1,\}$' -- "$1") || rc=$?
-    [ $rc -gt 1 ] && exit $rc
-    [ $rc -eq 1 ] && return 0
+    lines=$(LC_ALL=C grep -n -e "$pattern" $1 2>/dev/null) || rc=$?
+    if [ $rc -gt 1 ]
+    then
+        exit $rc
+    fi
+    if [ $rc -eq 1 ]
+    then
+        return 0
+    fi
 
     while IFS=: read -r line text
     do
-        printf "%s:%s: %s\n" "$1" "$line" "$text"
+        text=${text%"$cr"}
+        printf "%s:%s: %s\n" $1 $line "$text"
     done <<__LINES__
 $lines
 __LINES__
@@ -32,50 +48,65 @@ __LINES__
 
 strip_file()
 {
-    tmp="$1.tmp.$$"
-    cp -p "$1" "$tmp"
-    sed 's/[[:space:]]\{1,\}$//' "$1" > "$tmp"
-    mv "$tmp" "$1"
+    tmp=$1.tmp.$$
+    cp -p $1 "$tmp"
+    LC_ALL=C sed -e 's/[[:blank:]]\{1,\}$//' -e "s/[[:blank:]]\{1,\}\(${cr}\)$/\1/" $1 > "$tmp"
+    mv "$tmp" $1
 }
 
 strip_file_if_needed()
 {
-    rc=0
-    LC_ALL=C grep -q -e '[[:space:]]\{1,\}$' -- "$1" || rc=$?
-    [ $rc -gt 1 ] && exit $rc
-    [ $rc -ne 0 ] && return 0
+    if is_binary $1
+    then
+        return 0
+    fi
 
-    printf "%s\n" "$1" 1>&2
-    strip_file "$1"
+    rc=0
+    LC_ALL=C grep -q -e "$pattern" $1 2>/dev/null || rc=$?
+    if [ $rc -gt 1 ]
+    then
+        exit $rc
+    fi
+    if [ $rc -ne 0 ]
+    then
+        return 0
+    fi
+
+    printf "%s\n" $1 1>&2
+    strip_file $1
 }
 
 report()
 {
-    files=$(find -H "$target" -type f)
-    [ -z "$files" ] && return 0
-
-    while IFS= read -r file
-    do
-        is_binary "$file" && continue
-        report_file "$file"
-    done <<__FILES__
-$files
-__FILES__
+    find -H "$target" -type f -exec "$self" __report_file__ {} +
 }
 
 strip_files()
 {
-    files=$(find -H "$target" -type f)
-    [ -z "$files" ] && return 0
-
-    while IFS= read -r file
-    do
-        is_binary "$file" && continue
-        strip_file_if_needed "$file"
-    done <<__FILES__
-$files
-__FILES__
+    find -H "$target" -type f -exec "$self" __strip_file__ {} +
 }
+
+if [ $# -ge 2 ]
+then
+    case $1 in
+        __report_file__)
+            shift
+            for file
+            do
+                report_file "$file"
+            done
+            exit 0
+            ;;
+        __strip_file__)
+            shift
+            for file
+            do
+                strip_file_if_needed "$file"
+            done
+            exit 0
+            ;;
+    esac
+fi
 
 while getopts :s opt
 do

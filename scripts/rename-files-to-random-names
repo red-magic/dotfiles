@@ -20,13 +20,15 @@ then
     exit 0
 fi
 
-if [ ! -d "$1" ]
+target=$1
+
+if [ ! -d "$target" ]
 then
-    printf "%s: not a directory: %s\n" "$progname" "$1" 1>&2
+    printf "%s: not a directory: %s\n" "$progname" "$target" 1>&2
     exit 1
 fi
 
-cd "$1"
+cd "$target"
 
 for file in .[!.]* *
 do

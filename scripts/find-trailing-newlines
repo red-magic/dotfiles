@@ -3,6 +3,8 @@
 set -e
 
 progname=${0##*/}
+
+self=$0
 strip=0
 
 usage()
@@ -12,54 +14,79 @@ usage()
 
 is_binary()
 {
-    od -t c "$1" | grep -q '\\0'
+    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 has_trailing_newlines()
 {
-    [ "$(tail -c 2 "$1" | wc -l)" -eq 2 ]
+    [ "$(tail -c 2 $1 2>/dev/null | wc -l)" -eq 2 ]
 }
 
-report()
+report_file()
 {
-    files=$(find -H "$target" -type f)
-    [ -z "$files" ] && return 0
-
-    while IFS= read -r file
-    do
-        is_binary "$file" && continue
-        has_trailing_newlines "$file" && printf "%s\n" "$file"
-    done <<__FILES__
-$files
-__FILES__
+    if is_binary $1
+    then
+        return 0
+    fi
+    if has_trailing_newlines $1
+    then
+        printf "%s\n" $1
+    fi
 }
 
 strip_file()
 {
-    tmp="$1.tmp.$$"
-    cp -p "$1" "$tmp"
-    sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$1" > "$tmp"
-    printf '\n' >> "$tmp"
-    mv "$tmp" "$1"
+    tmp=$1.tmp.$$
+    content=$(cat $1)
+    cp -p $1 "$tmp"
+    printf '%s\n' "$content" > "$tmp"
+    mv "$tmp" $1
+}
+
+strip_file_if_needed()
+{
+    if is_binary $1
+    then
+        return 0
+    fi
+    if has_trailing_newlines $1
+    then
+        printf "%s\n" $1 1>&2
+        strip_file $1
+    fi
+}
+
+report()
+{
+    find -H "$target" -type f -exec "$self" __report_file__ {} +
 }
 
 strip_files()
 {
-    files=$(find -H "$target" -type f)
-    [ -z "$files" ] && return 0
-
-    while IFS= read -r file
-    do
-        is_binary "$file" && continue
-        if has_trailing_newlines "$file"
-        then
-            printf "%s\n" "$file" 1>&2
-            strip_file "$file"
-        fi
-    done <<__FILES__
-$files
-__FILES__
+    find -H "$target" -type f -exec "$self" __strip_file__ {} +
 }
+
+if [ $# -ge 2 ]
+then
+    case $1 in
+        __report_file__)
+            shift
+            for file
+            do
+                report_file "$file"
+            done
+            exit 0
+            ;;
+        __strip_file__)
+            shift
+            for file
+            do
+                strip_file_if_needed "$file"
+            done
+            exit 0
+            ;;
+    esac
+fi
 
 while getopts :s opt
 do

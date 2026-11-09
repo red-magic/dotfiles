@@ -1,8 +1,9 @@
 #!/bin/sh
-
 set -e
 
 progname=${0##*/}
+
+self=$0
 cr=$(printf '\r')
 
 usage()
@@ -12,30 +13,47 @@ usage()
 
 is_binary()
 {
-    od -t c "$1" | grep -q '\\0'
+    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
+}
+
+report_file()
+{
+    if is_binary $1
+    then
+        return 0
+    fi
+
+    rc=0
+    last=$(tail -c 1 $1 2>/dev/null) || rc=$?
+    if [ $rc -ne 0 ]
+    then
+        return 0
+    fi
+
+    case $last in
+        "" | "$cr") ;;
+        *) printf "%s\n" $1 ;;
+    esac
 }
 
 report()
 {
-    files=$(find -H "$target" -type f)
-    [ -z "$files" ] && return 0
-
-    while IFS= read -r file
-    do
-        is_binary "$file" && continue
-
-        rc=0
-        last=$(tail -c 1 "$file" 2>/dev/null) || rc=$?
-        [ $rc -ne 0 ] && continue
-
-        case $last in
-            "" | "$cr") ;;
-            *) printf "%s\n" "$file" ;;
-        esac
-    done <<__FILES__
-$files
-__FILES__
+    find -H "$target" -type f -exec "$self" __report_file__ {} +
 }
+
+if [ $# -ge 2 ]
+then
+    case $1 in
+        __report_file__)
+            shift
+            for file
+            do
+                report_file "$file"
+            done
+            exit 0
+            ;;
+    esac
+fi
 
 if [ $# -gt 1 ]
 then

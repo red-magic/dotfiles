@@ -2,14 +2,21 @@
 
 set -e
 
-rand_hex=$(dd if=/dev/urandom bs=5 count=1 2>/dev/null | od -An -tx1 | tr -d ' \n')
+progname=${0##*/}
+
+export LC_ALL=C
+
+rand_hex=$(od -A n -N 5 -t x1 /dev/urandom | tr -d ' \n')
 
 case $rand_hex in
     [0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]) ;;
-    *) exit 1 ;;
+    *)
+        printf "%s: failed to generate random bytes\n" "$progname" 1>&2
+        exit 1
+        ;;
 esac
 
-ula_prefix=$(printf "fd%s" "$rand_hex" | sed 's/\(....\)\(....\)\(....\)/\1:\2:\3/')
+ula_prefix=$(printf "fd%s\n" "$rand_hex" | sed 's/\(....\)\(....\)\(....\)/\1:\2:\3/')
 
 printf "prefix:       %s::/48\n" "$ula_prefix"
 printf "first subnet: %s:0::/64\n" "$ula_prefix"
@@ -17,4 +24,4 @@ printf "last subnet:  %s:ffff::/64\n\n" "$ula_prefix"
 
 printf "router:       %s:0::1\n" "$ula_prefix"
 printf "first host:   %s:0::100\n" "$ula_prefix"
-printf "last host:    %s:0::ffff\n" "$ula_prefix"
+printf "last host:    %s:0:ffff:ffff:ffff:ffff\n" "$ula_prefix"
