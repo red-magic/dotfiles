@@ -14,13 +14,13 @@ usage()
 
 is_binary()
 {
-    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
+    od -t c "$1" 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 has_content()
 {
     rc=0
-    LC_ALL=C grep -q . $1 2>/dev/null || rc=$?
+    LC_ALL=C grep -q . "$1" 2>/dev/null || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
@@ -30,17 +30,17 @@ has_content()
 
 report_file()
 {
-    if is_binary $1
+    if is_binary "$1"
     then
         return 0
     fi
-    if ! has_content $1
+    if ! has_content "$1"
     then
         return 0
     fi
 
     rc=0
-    LC_ALL=C grep -q "$cr" $1 2>/dev/null || rc=$?
+    LC_ALL=C grep -q "$cr" "$1" 2>/dev/null || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
@@ -48,9 +48,9 @@ report_file()
 
     if [ $rc -eq 0 ]
     then
-        printf "CRLF  %s\n" $1
+        printf "CRLF  %s\n" "$1"
     else
-        printf "  LF  %s\n" $1
+        printf "  LF  %s\n" "$1"
     fi
 }
 

@@ -14,45 +14,45 @@ usage()
 
 is_binary()
 {
-    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
+    od -t c "$1" 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 has_trailing_newlines()
 {
-    [ "$(tail -c 2 $1 2>/dev/null | wc -l)" -eq 2 ]
+    [ "$(tail -c 2 "$1" 2>/dev/null | wc -l)" -eq 2 ]
 }
 
 report_file()
 {
-    if is_binary $1
+    if is_binary "$1"
     then
         return 0
     fi
-    if has_trailing_newlines $1
+    if has_trailing_newlines "$1"
     then
-        printf "%s\n" $1
+        printf "%s\n" "$1"
     fi
 }
 
 strip_file()
 {
     tmp=$1.tmp.$$
-    content=$(cat $1)
-    cp -p $1 "$tmp"
+    content=$(cat "$1")
+    cp -p "$1" "$tmp"
     printf '%s\n' "$content" > "$tmp"
-    mv "$tmp" $1
+    mv "$tmp" "$1"
 }
 
 strip_file_if_needed()
 {
-    if is_binary $1
+    if is_binary "$1"
     then
         return 0
     fi
-    if has_trailing_newlines $1
+    if has_trailing_newlines "$1"
     then
-        printf "%s\n" $1 1>&2
-        strip_file $1
+        printf "%s\n" "$1" 1>&2
+        strip_file "$1"
     fi
 }
 

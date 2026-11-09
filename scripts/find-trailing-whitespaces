@@ -16,18 +16,18 @@ usage()
 
 is_binary()
 {
-    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
+    od -t c "$1" 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 report_file()
 {
-    if is_binary $1
+    if is_binary "$1"
     then
         return 0
     fi
 
     rc=0
-    lines=$(LC_ALL=C grep -n -e "$pattern" $1 2>/dev/null) || rc=$?
+    lines=$(LC_ALL=C grep -n -e "$pattern" "$1" 2>/dev/null) || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
@@ -40,7 +40,7 @@ report_file()
     while IFS=: read -r line text
     do
         text=${text%"$cr"}
-        printf "%s:%s: %s\n" $1 $line "$text"
+        printf "%s:%s: %s\n" "$1" "$line" "$text"
     done <<__LINES__
 $lines
 __LINES__
@@ -49,20 +49,20 @@ __LINES__
 strip_file()
 {
     tmp=$1.tmp.$$
-    cp -p $1 "$tmp"
-    LC_ALL=C sed -e 's/[[:blank:]]\{1,\}$//' -e "s/[[:blank:]]\{1,\}\(${cr}\)$/\1/" $1 > "$tmp"
-    mv "$tmp" $1
+    cp -p "$1" "$tmp"
+    LC_ALL=C sed -e 's/[[:blank:]]\{1,\}$//' -e "s/[[:blank:]]\{1,\}\(${cr}\)$/\1/" "$1" > "$tmp"
+    mv "$tmp" "$1"
 }
 
 strip_file_if_needed()
 {
-    if is_binary $1
+    if is_binary "$1"
     then
         return 0
     fi
 
     rc=0
-    LC_ALL=C grep -q -e "$pattern" $1 2>/dev/null || rc=$?
+    LC_ALL=C grep -q -e "$pattern" "$1" 2>/dev/null || rc=$?
     if [ $rc -gt 1 ]
     then
         exit $rc
@@ -72,8 +72,8 @@ strip_file_if_needed()
         return 0
     fi
 
-    printf "%s\n" $1 1>&2
-    strip_file $1
+    printf "%s\n" "$1" 1>&2
+    strip_file "$1"
 }
 
 report()

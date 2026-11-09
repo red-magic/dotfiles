@@ -1,4 +1,5 @@
 #!/bin/sh
+
 set -e
 
 progname=${0##*/}
@@ -13,18 +14,18 @@ usage()
 
 is_binary()
 {
-    od -t c $1 2>/dev/null | LC_ALL=C grep -q '\\0'
+    od -t c "$1" 2>/dev/null | LC_ALL=C grep -q '\\0'
 }
 
 report_file()
 {
-    if is_binary $1
+    if is_binary "$1"
     then
         return 0
     fi
 
     rc=0
-    last=$(tail -c 1 $1 2>/dev/null) || rc=$?
+    last=$(tail -c 1 "$1" 2>/dev/null) || rc=$?
     if [ $rc -ne 0 ]
     then
         return 0
@@ -32,7 +33,7 @@ report_file()
 
     case $last in
         "" | "$cr") ;;
-        *) printf "%s\n" $1 ;;
+        *) printf "%s\n" "$1" ;;
     esac
 }
 

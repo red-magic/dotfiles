@@ -42,7 +42,7 @@ encrypt_sym()
     trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! gpg -o "$tmp_file" \
+    if ! gpg --yes -o "$tmp_file" \
          --s2k-cipher-algo "$cipher_algo" \
          --s2k-digest-algo "$digest_algo" \
          --force-aead \
@@ -73,7 +73,7 @@ encrypt_asym()
     trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! gpg -o "$tmp_file" \
+    if ! gpg --yes -o "$tmp_file" \
          --cipher-algo "$cipher_algo" \
          --digest-algo "$digest_algo" \
          --force-aead \
@@ -104,7 +104,7 @@ decrypt()
     trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! gpg -d -o "$tmp_file" -- "$file_enc"
+    if ! gpg --yes -d -o "$tmp_file" -- "$file_enc"
     then
         printf "%s: %s: decryption failed\n" "$progname" "$mode_flag" 1>&2
         exit 1
