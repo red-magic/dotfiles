@@ -1,0 +1,12 @@
+services:
+  arti:
+    build: .
+    image: arti
+    container_name: arti
+    ports:
+      - "127.0.0.1:9150:9150/tcp"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped

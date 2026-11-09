@@ -34,6 +34,7 @@ RUN apt-get update -y && \
     sed -i 's/^#snowflake/snowflake/' arti.toml && \
     sed -i 's/^enabled = "auto"/enabled = true/' arti.toml && \
     sed -i 's/^run_on_startup = false/run_on_startup = true/' arti.toml && \
+    printf "\n[proxy]\nsocks_listen = \"0.0.0.0:9150\"\n" >> arti.toml && \
     mkdir /out && \
     cp arti.toml /out
 

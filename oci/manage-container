@@ -15,7 +15,7 @@ elif [[ "$#" -eq 0 ]]; then
     exit 0
 fi
 
-img_name="cs16-server"
+img_name="imgage-name"
 oci_cmd=""
 
 if command -v podman &> /dev/null; then

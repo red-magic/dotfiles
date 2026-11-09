@@ -4,7 +4,10 @@ services:
     image: cs16-server
     container_name: cs16-server
     init: true
-    network_mode: host
+    ports:
+      - "27015:27015/tcp"
+      - "27015:27015/udp"
+      - "26900:26900/udp"
     cap_drop:
       - ALL
     security_opt:
