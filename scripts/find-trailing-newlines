@@ -14,7 +14,7 @@ usage()
 
 is_binary()
 {
-    od -t c "$1" 2>/dev/null | LC_ALL=C grep -q '\\0'
+    od -A n -t x1 -v -N 512 "$1" 2>/dev/null | tr -s ' ' '\n' | LC_ALL=C grep -q '^00$'
 }
 
 has_trailing_newlines()
