@@ -43,8 +43,8 @@ encrypt_sym()
     trap 'exit 1' HUP INT TERM
 
     if ! gpg --yes -o "$tmp_file" \
-         --s2k-cipher-algo "$cipher_algo" \
-         --s2k-digest-algo "$digest_algo" \
+         --s2k-cipher-algo $cipher_algo \
+         --s2k-digest-algo $digest_algo \
          --force-aead \
          --no-compress \
          -c -- "$file_dec"
@@ -74,8 +74,8 @@ encrypt_asym()
     trap 'exit 1' HUP INT TERM
 
     if ! gpg --yes -o "$tmp_file" \
-         --cipher-algo "$cipher_algo" \
-         --digest-algo "$digest_algo" \
+         --cipher-algo $cipher_algo \
+         --digest-algo $digest_algo \
          --force-aead \
          --no-compress \
          -e -s -- "$file_dec"

@@ -42,7 +42,7 @@ encrypt()
     trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! openssl enc -e -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" -salt \
+    if ! openssl enc -e -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count -salt \
          -in "$file_dec" -out "$tmp_file"
     then
         printf "%s: encryption failed\n" "$progname" 1>&2
@@ -69,7 +69,7 @@ decrypt()
     trap 'rm -f "$tmp_file" || :' 0
     trap 'exit 1' HUP INT TERM
 
-    if ! openssl enc -d -"$cipher_algo" -md "$digest_algo" -pbkdf2 -iter "$iter_count" \
+    if ! openssl enc -d -$cipher_algo -md $digest_algo -pbkdf2 -iter $iter_count \
          -in "$file_enc" -out "$tmp_file"
     then
         printf "%s: decryption failed: invalid password or corrupted payload\n" "$progname" 1>&2
