@@ -1,5 +1,5 @@
 ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID"
-ARG RCON_PASSWORD="qwerty123456"
+ARG ADMIN_IP="192.168.0.10" # LAN admin access, may leave it as it is.
 ARG YB_PASSWORD="qwerty123456"
 
 ARG YB_BOTS="1"          # YaPB Bots: 1 - On; 0 - Off;
@@ -34,7 +34,7 @@ RUN mkdir -m 700 /opt/hlds && \
 USER hlds
 
 ARG ADMIN_STEAMID
-ARG RCON_PASSWORD
+ARG ADMIN_IP
 ARG YB_PASSWORD
 ARG YB_BOTS
 ARG YB_QUOTA
@@ -62,8 +62,8 @@ RUN if [ "${YB_BOTS}" = "1" ]; then \
 RUN ln -sf . steam && \
     ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit
 
-RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
-    echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
+RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
+    echo "\"${ADMIN_IP}\" \"\" \"abcdefghijklmnopqrstuv\" \"de\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
     sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
     sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
