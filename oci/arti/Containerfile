@@ -24,27 +24,13 @@ RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
     mkdir /out && \
     cp lyrebird /out
 
-FROM debian:trixie-slim AS config-builder
-ARG ARTI_VER
-ARG LYREBIRD_VER
-WORKDIR /tmp
-RUN apt-get update -y && \
-    apt-get install -y curl && \
-    curl -fLO "https://raw.githubusercontent.com/red-magic/arti-bin/refs/tags/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/resources/arti.toml" && \
-    sed -i 's/^#snowflake/snowflake/' arti.toml && \
-    sed -i 's/^enabled = "auto"/enabled = true/' arti.toml && \
-    sed -i 's/^run_on_startup = false/run_on_startup = true/' arti.toml && \
-    printf "\n[proxy]\nsocks_listen = \"0.0.0.0:9150\"\n" >> arti.toml && \
-    mkdir /out && \
-    cp arti.toml /out
-
 FROM debian:trixie-slim
 RUN useradd -r -M -d /var/lib/arti -s /sbin/nologin -c "Arti Daemon" arti && \
     install -vdm 700 -o arti -g arti /var/lib/arti
 
-COPY --from=arti-builder     /out/arti      /usr/bin/arti
-COPY --from=lyrebird-builder /out/lyrebird  /usr/bin/lyrebird
-COPY --from=config-builder   /out/arti.toml /etc/arti/arti.toml
+COPY --from=arti-builder /out/arti /usr/bin/arti
+COPY --from=lyrebird-builder /out/lyrebird /usr/bin/lyrebird
+COPY arti.toml /etc/arti/arti.toml
 
 RUN chmod 755 /usr/bin/arti /usr/bin/lyrebird && \
     chmod 644 /etc/arti/arti.toml
