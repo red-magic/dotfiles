@@ -28,31 +28,31 @@ fi
 
 case "$1" in
     "build")
-        "${oci_cmd}" build -t cs16-server-net .
+        "${oci_cmd}" build -t cs16-server .
         ;;
 
     "deploy")
         "${oci_cmd}" run \
                      -d \
-                     --name cs16-server-net \
+                     --name cs16-server \
                      --init \
                      --network host \
                      --cap-drop ALL \
                      --security-opt no-new-privileges \
                      --restart unless-stopped \
-                     cs16-server-net
+                     cs16-server
         ;;
 
     "start")
-        "${oci_cmd}" start cs16-server-net
+        "${oci_cmd}" start cs16-server
         ;;
 
     "restart")
-        "${oci_cmd}" restart cs16-server-net
+        "${oci_cmd}" restart cs16-server
         ;;
 
     "stop")
-        "${oci_cmd}" stop cs16-server-net
+        "${oci_cmd}" stop cs16-server
         ;;
 
     *)

@@ -1,9 +1,19 @@
 ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID"
+ARG RCON_PASSWORD="qwerty123456"
+ARG YB_PASSWORD="qwerty123456"
+
+ARG YB_BOTS="1"
+ARG YB_QUOTA="16"
+ARG YB_QUOTA_MODE="fill"
+ARG YB_DIFFICULTY="0"
+ARG YB_RADIO_MODE="0"
+ARG MP_TIMELIMIT="0"
 
 ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
 ARG METAMODP_LINK="https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
 ARG AMXMODX_BASE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-base-linux.tar.gz"
 ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-cstrike-linux.tar.gz"
+ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
 
 FROM debian:trixie-slim
 
@@ -24,10 +34,19 @@ RUN mkdir -m 700 /opt/hlds && \
 USER hlds
 
 ARG ADMIN_STEAMID
+ARG RCON_PASSWORD
+ARG YB_PASSWORD
+ARG YB_BOTS
+ARG YB_QUOTA
+ARG YB_QUOTA_MODE
+ARG YB_DIFFICULTY
+ARG YB_RADIO_MODE
+ARG MP_TIMELIMIT
 ARG STEAMCMD_LINK
 ARG METAMODP_LINK
 ARG AMXMODX_BASE_LINK
 ARG AMXMODX_CSTRIKE_LINK
+ARG YAPB_LINK
 
 WORKDIR /opt/hlds/.steam
 
@@ -36,12 +55,29 @@ RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
     curl -L "${AMXMODX_BASE_LINK}" | tar zxf - -C . && \
     curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxf - -C .
 
+RUN if [ "${YB_BOTS}" = "1" ]; then \
+        curl -L "${YAPB_LINK}" | tar Jxf - -C . ; \
+    fi
+
 RUN ln -sf . steam && \
     ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit
 
-RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
+RUN echo "rcon_password ${RCON_PASSWORD}" >> ../cs16/cstrike/server.cfg && \
+    echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
+    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
     sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
+
+RUN if [ "${YB_BOTS}" = "1" ]; then \
+        echo "linux addons/yapb/bin/yapb.so" >> addons/metamod/plugins.ini && \
+        sed -i "s|yb_password \".*\"|yb_password \"${YB_PASSWORD}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_quota \".*\"|yb_quota \"${YB_QUOTA}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_quota_mode \".*\"|yb_quota_mode \"${YB_QUOTA_MODE}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_difficulty \".*\"|yb_difficulty \"${YB_DIFFICULTY}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_radio_mode \".*\"|yb_radio_mode \"${YB_RADIO_MODE}\"|" addons/yapb/conf/yapb.cfg && \
+        find addons/yapb/data/graph -name "*_cz.graph" -delete && \
+        chmod 755 addons/yapb/data/* ; \
+    fi
 
 RUN mv -f addons ../cs16/cstrike && \
     ln -sf linux32 sdk32 && \

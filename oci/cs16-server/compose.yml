@@ -1,8 +1,8 @@
 services:
-  cs16-server-net:
+  cs16-server:
     build: .
-    image: cs16-server-net
-    container_name: cs16-server-net
+    image: cs16-server
+    container_name: cs16-server
     init: true
     network_mode: host
     cap_drop:
