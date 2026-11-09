@@ -1,0 +1,48 @@
+ARG ARTI_VER="2.8.0"
+ARG LYREBIRD_VER="0.10.0"
+ARG ARTI_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/arti-arti-v${ARTI_VER}.tar.gz"
+ARG LYREBIRD_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/lyrebird-${LYREBIRD_VER}.tar.gz"
+
+FROM rust:alpine AS arti-builder
+ARG ARTI_VER
+ARG ARTI_LINK
+RUN apk add --no-cache curl perl make
+WORKDIR /build
+RUN curl -fL "${ARTI_LINK}" | tar zxf - -C . && \
+    cd "arti-arti-v${ARTI_VER}" && \
+    cargo build -p arti --locked --release --features static && \
+    strip -s target/release/arti && \
+    mkdir /out && \
+    cp target/release/arti /out
+
+FROM golang:alpine AS lyrebird-builder
+ARG LYREBIRD_VER
+ARG LYREBIRD_LINK
+RUN apk add --no-cache curl
+WORKDIR /build
+RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
+    cd "lyrebird-${LYREBIRD_VER}" && \
+    CGO_ENABLED=0 go build -ldflags="-X main.lyrebirdVersion=${LYREBIRD_VER} -w -s" -v -o lyrebird ./cmd/lyrebird && \
+    mkdir /out && \
+    cp lyrebird /out
+
+FROM alpine:3.24 AS etc-builder
+RUN echo "arti:x:1000:1000:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd
+RUN echo "arti:x:1000:" > /group
+
+FROM scratch
+#COPY --from=arti-builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
+COPY --from=arti-builder /out/arti /usr/bin/arti
+COPY --from=lyrebird-builder /out/lyrebird /usr/bin/lyrebird
+COPY arti.toml /etc/arti/arti.toml
+
+COPY --from=etc-builder /passwd /etc/passwd
+COPY --from=etc-builder /group /etc/group
+
+USER 1000:1000
+WORKDIR /var/lib/arti
+
+ENTRYPOINT ["/usr/bin/arti"]
+CMD ["proxy", "-c", "/etc/arti/arti.toml"]
+STOPSIGNAL SIGINT
