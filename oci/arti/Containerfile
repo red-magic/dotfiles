@@ -1,39 +1,55 @@
-FROM debian:trixie-slim AS builder
-
 ARG ARTI_VER="2.8.0"
 ARG LYREBIRD_VER="0.10.0"
-ARG ARTI_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/arti-${ARTI_VER}-linux-x86_64.tar.gz"
+ARG ARTI_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/arti-arti-v${ARTI_VER}.tar.gz"
+ARG LYREBIRD_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/lyrebird-${LYREBIRD_VER}.tar.gz"
 
+FROM rust:trixie AS arti-builder
+ARG ARTI_VER
+ARG ARTI_LINK
+WORKDIR /build
+RUN curl -fL "${ARTI_LINK}" | tar zxf - -C . && \
+    cd "arti-arti-v${ARTI_VER}" && \
+    cargo build -p arti --locked --release && \
+    strip -s target/release/arti && \
+    mkdir /out && \
+    cp target/release/arti /out
+
+FROM golang:trixie AS lyrebird-builder
+ARG LYREBIRD_VER
+ARG LYREBIRD_LINK
+WORKDIR /build
+RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
+    cd "lyrebird-${LYREBIRD_VER}" && \
+    go build -ldflags="-X main.lyrebirdVersion=${LYREBIRD_VER} -w -s" -v -o lyrebird ./cmd/lyrebird && \
+    mkdir /out && \
+    cp lyrebird /out
+
+FROM debian:trixie-slim AS config-builder
+ARG ARTI_VER
+ARG LYREBIRD_VER
+WORKDIR /tmp
 RUN apt-get update -y && \
-    apt-get install -y curl
-
-WORKDIR /tmp/arti
-
-RUN curl -fL "${ARTI_LINK}" | tar zxf - -C /tmp && \
-    curl -fL "https://raw.githubusercontent.com/red-magic/arti-bin/refs/tags/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/resources/arti.toml" \
-         -o /tmp/arti/arti.toml
-
-RUN sed -i 's/^#snowflake/snowflake/' /tmp/arti/arti.toml && \
-    sed -i 's/^enabled = "auto"/enabled = true/' /tmp/arti/arti.toml && \
-    sed -i 's/^run_on_startup = false/run_on_startup = true/' /tmp/arti/arti.toml
+    apt-get install -y curl && \
+    curl -fLO "https://raw.githubusercontent.com/red-magic/arti-bin/refs/tags/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/resources/arti.toml" && \
+    sed -i 's/^#snowflake/snowflake/' arti.toml && \
+    sed -i 's/^enabled = "auto"/enabled = true/' arti.toml && \
+    sed -i 's/^run_on_startup = false/run_on_startup = true/' arti.toml && \
+    mkdir /out && \
+    cp arti.toml /out
 
 FROM debian:trixie-slim
-
 RUN useradd -r -M -d /var/lib/arti -s /sbin/nologin -c "Arti Daemon" arti && \
     install -vdm 700 -o arti -g arti /var/lib/arti
 
-COPY --from=builder /tmp/arti/arti      /usr/bin/arti
-COPY --from=builder /tmp/arti/lyrebird  /usr/bin/lyrebird
-COPY --from=builder /tmp/arti/arti.toml /etc/arti/arti.toml
+COPY --from=arti-builder     /out/arti      /usr/bin/arti
+COPY --from=lyrebird-builder /out/lyrebird  /usr/bin/lyrebird
+COPY --from=config-builder   /out/arti.toml /etc/arti/arti.toml
 
 RUN chmod 755 /usr/bin/arti /usr/bin/lyrebird && \
     chmod 644 /etc/arti/arti.toml
 
 USER arti
-
 WORKDIR /var/lib/arti
-
 ENTRYPOINT ["/usr/bin/arti"]
 CMD ["proxy", "-c", "/etc/arti/arti.toml"]
-
 STOPSIGNAL SIGINT
