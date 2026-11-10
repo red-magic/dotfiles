@@ -1,7 +1,7 @@
 ARG ARTI_VER="2.8.0"
 ARG LYREBIRD_VER="0.10.0"
-ARG ARTI_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/arti-arti-v${ARTI_VER}.tar.gz"
-ARG LYREBIRD_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/lyrebird-${LYREBIRD_VER}.tar.gz"
+ARG ARTI_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/arti-${ARTI_VER}-src.tar.gz"
+ARG LYREBIRD_LINK="https://github.com/red-magic/arti-bin/releases/download/arti-${ARTI_VER}-lyrebird-${LYREBIRD_VER}/lyrebird-${LYREBIRD_VER}-src.tar.gz"
 
 FROM rust:trixie AS arti-builder
 ARG ARTI_VER
