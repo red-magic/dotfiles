@@ -1,0 +1,21 @@
+services:
+  minecraft-server:
+    build: .
+    image: minecraft-server
+    container_name: minecraft-server
+    # podman attach minecraft-server
+    # Ctrl+P Ctrl+Q to detach from console
+    stdin_open: true
+    tty: true
+    ports:
+      - "25565:25565/tcp"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
+    volumes:
+      - data:/opt/minecraft
+    restart: unless-stopped
+
+volumes:
+  data:

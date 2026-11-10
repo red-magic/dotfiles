@@ -1,0 +1,57 @@
+ARG EULA="true"
+ARG ONLINE_MODE="false"
+ARG SERVER_IP="0.0.0.0"
+ARG WHITE_LIST="false"
+# If using btrfs+zstd
+ARG REGION_FILE_COMPRESSION="none"
+ARG DIFFICULTY="easy"
+
+# Server version: 26.3
+ARG SERVER_LINK="https://piston-data.mojang.com/v1/objects/33680f5f2ac32864d6d7cf5e56a705fdb3e05f4c/server.jar"
+
+FROM debian:trixie-slim AS downloader
+
+ARG SERVER_LINK
+
+WORKDIR /download
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests curl ca-certificates
+
+RUN curl -fLO "${SERVER_LINK}"
+
+FROM debian:trixie-slim
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests openjdk-25-jre && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd -r -M -d /opt/minecraft -s /sbin/nologin -c "Minecraft Server" minecraft && \
+    install -v -d -m 700 -o minecraft -g minecraft /opt/minecraft
+
+COPY --from=downloader --chown=minecraft:minecraft /download/server.jar /opt/minecraft/server.jar
+
+USER minecraft
+
+ARG EULA
+ARG ONLINE_MODE
+ARG SERVER_IP
+ARG WHITE_LIST
+ARG REGION_FILE_COMPRESSION
+ARG DIFFICULTY
+
+WORKDIR /opt/minecraft
+
+RUN echo "eula=${EULA}" > eula.txt && \
+    echo "online-mode=${ONLINE_MODE}" > server.properties && \
+    echo "server-ip=${SERVER_IP}" >> server.properties && \
+    echo "white-list=${WHITE_LIST}" >> server.properties && \
+    echo "region-file-compression=${REGION_FILE_COMPRESSION}" >> server.properties && \
+    echo "difficulty=${DIFFICULTY}" >> server.properties
+
+ENTRYPOINT ["java"]
+
+CMD ["-Xmx2G", "-Xms2G", "-jar", "server.jar", "nogui"]
+
+STOPSIGNAL SIGINT
