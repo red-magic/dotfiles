@@ -27,8 +27,8 @@ RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
     cp lyrebird /out
 
 FROM alpine:3 AS etc-builder
-RUN echo "arti:x:1000:1000:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd
-RUN echo "arti:x:1000:" > /group
+RUN echo "arti:x:999:999:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd
+RUN echo "arti:x:999:" > /group
 
 FROM scratch
 #COPY --from=arti-builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
@@ -40,7 +40,7 @@ COPY arti.toml /etc/arti/arti.toml
 COPY --from=etc-builder /passwd /etc/passwd
 COPY --from=etc-builder /group /etc/group
 
-USER 1000:1000
+USER 999:999
 WORKDIR /var/lib/arti
 
 ENTRYPOINT ["/usr/bin/arti"]
