@@ -1,13 +1,37 @@
-ARG ADMIN_STEAMID="STEAM_0:0:YOUR_STEAMID" # Only works with -secure and +sv_lan 0. Access with "amxmodmenu" command.
-ARG ADMIN_IP="192.168.0.10"                # LAN admin access; may leave it as it is if playing with +sv_lan 0.
-ARG YB_PASSWORD="bots_password"            # Access YaPB bots with: setinfo _ybpw "bots_password" and "yb menu" commands.
+# STEAM_0:0:YOUR_STEAMID
+# Only works with -secure and +sv_lan 0.
+# Access with "amxmodmenu" command. Won't be set if empty.
+ARG ADMIN_STEAMID=""
 
-ARG YB_BOTS="1"          # YaPB Bots: 1 - On; 0 - Off;
-ARG YB_QUOTA="16"        # Default: 9;
-ARG YB_QUOTA_MODE="fill" # Default: normal; Options: normal, fill, match;
-ARG YB_DIFFICULTY="0"    # Default: 3;      Options: 0-4;
-ARG YB_RADIO_MODE="0"    # Default: 2;      Options: 0-2;
-ARG MP_TIMELIMIT="0"     # Default: 20;
+# Admin access with Nickname for LAN games.
+# Access with "amxmodmenu" command. Won't be set if empty.
+ARG ADMIN_NICKNAME=""
+
+# YaPB Bots: 1 - On, 0 - Off.
+# Won't be downloaded if set to 0.
+ARG YB_BOTS="1"
+
+# Access YaPB bots with: setinfo _ybpw "bots_password" and "yb menu" commands.
+# Won't be set if empty.
+ARG YB_PASSWORD=""
+
+# Default: 9
+ARG YB_QUOTA="16"
+
+# Default: normal
+# Options: normal, fill, match
+ARG YB_QUOTA_MODE="fill"
+
+# Default: 3
+# Options: 0-4
+ARG YB_DIFFICULTY="0"
+
+# Default: 2
+# Options: 0-2
+ARG YB_RADIO_MODE="0"
+
+# Default: 20
+ARG MP_TIMELIMIT="0"
 
 ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
 ARG METAMODP_LINK="https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
@@ -17,20 +41,12 @@ ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.9
 
 FROM debian:trixie-slim AS builder
 
-ARG ADMIN_STEAMID
-ARG ADMIN_IP
-ARG YB_PASSWORD
-ARG YB_BOTS
-ARG YB_QUOTA
-ARG YB_QUOTA_MODE
-ARG YB_DIFFICULTY
-ARG YB_RADIO_MODE
-ARG MP_TIMELIMIT
 ARG STEAMCMD_LINK
 ARG METAMODP_LINK
 ARG AMXMODX_BASE_LINK
 ARG AMXMODX_CSTRIKE_LINK
 ARG YAPB_LINK
+ARG YB_BOTS
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends --no-install-suggests locales curl lib32stdc++6 xz-utils ca-certificates && \
@@ -43,36 +59,13 @@ WORKDIR /opt/hlds/.steam
 RUN curl -L "${STEAMCMD_LINK}" | tar zxf - -C . && \
     curl -L "${METAMODP_LINK}" | tar Jxf - -C . && \
     curl -L "${AMXMODX_BASE_LINK}" | tar zxf - -C . && \
-    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxf - -C .
-
-RUN if [ "${YB_BOTS}" = "1" ]; then \
-        curl -L "${YAPB_LINK}" | tar Jxf - -C . ; \
-    fi
+    curl -L "${AMXMODX_CSTRIKE_LINK}" | tar zxf - -C . && \
+    if [ "${YB_BOTS}" = "1" ]; then curl -L "${YAPB_LINK}" | tar Jxf - -C .; fi
 
 RUN ln -sf . steam && \
-    ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit
-
-RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
-    echo "\"${ADMIN_IP}\" \"\" \"abcdefghijklmnopqrstuv\" \"de\"" >> addons/amxmodx/configs/users.ini && \
-    echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
-    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
-    sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
-
-RUN if [ "${YB_BOTS}" = "1" ]; then \
-        echo "linux addons/yapb/bin/yapb.so" >> addons/metamod/plugins.ini && \
-        sed -i "s|yb_password \".*\"|yb_password \"${YB_PASSWORD}\"|" addons/yapb/conf/yapb.cfg && \
-        sed -i "s|yb_quota \".*\"|yb_quota \"${YB_QUOTA}\"|" addons/yapb/conf/yapb.cfg && \
-        sed -i "s|yb_quota_mode \".*\"|yb_quota_mode \"${YB_QUOTA_MODE}\"|" addons/yapb/conf/yapb.cfg && \
-        sed -i "s|yb_difficulty \".*\"|yb_difficulty \"${YB_DIFFICULTY}\"|" addons/yapb/conf/yapb.cfg && \
-        sed -i "s|yb_radio_mode \".*\"|yb_radio_mode \"${YB_RADIO_MODE}\"|" addons/yapb/conf/yapb.cfg && \
-        find addons/yapb/data/graph -name "*_cz.graph" -delete && \
-        chmod 755 addons/yapb/data/* ; \
-    fi
-
-RUN mv -f addons ../cs16/cstrike && \
-    ln -sf linux32 sdk32 && \
-    touch ../cs16/cstrike/listip.cfg && \
-    touch ../cs16/cstrike/banned.cfg
+    ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit && \
+    mv -f addons ../cs16/cstrike && \
+    ln -sf linux32 sdk32
 
 FROM debian:trixie-slim
 
@@ -90,6 +83,41 @@ RUN useradd -r -M -d /opt/hlds -s /sbin/nologin -c "Counter-Strike 1.6 Dedicated
 COPY --from=builder --chown=hlds:hlds /opt/hlds /opt/hlds
 
 USER hlds
+WORKDIR /opt/hlds/cs16/cstrike
+
+ARG ADMIN_STEAMID
+ARG ADMIN_NICKNAME
+ARG YB_BOTS
+ARG YB_PASSWORD
+ARG YB_QUOTA
+ARG YB_QUOTA_MODE
+ARG YB_DIFFICULTY
+ARG YB_RADIO_MODE
+ARG MP_TIMELIMIT
+
+RUN echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
+    if [ -n "${ADMIN_STEAMID}" ]; then echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini; fi && \
+    if [ -n "${ADMIN_NICKNAME}" ]; then echo "\"${ADMIN_NICKNAME}\" \"\" \"abcdefghijklmnopqrstuv\" \"e\"" >> addons/amxmodx/configs/users.ini; fi && \
+    # Disable AMX Mod X message
+    sed -i "s|^scrollmsg\.amxx|;scrollmsg.amxx|" addons/amxmodx/configs/plugins.ini && \
+    # Disable AMX Mod X message
+    sed -i "s|^imessage\.amxx|;imessage.amxx|" addons/amxmodx/configs/plugins.ini && \
+    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" server.cfg && \
+    sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" liblist.gam && \
+    touch listip.cfg banned.cfg
+
+RUN if [ "${YB_BOTS}" = "1" ]; then \
+        echo "linux addons/yapb/bin/yapb.so" >> addons/metamod/plugins.ini && \
+        if [ -n "${YB_PASSWORD}" ]; then sed -i "s|yb_password \".*\"|yb_password \"${YB_PASSWORD}\"|" addons/yapb/conf/yapb.cfg; fi && \
+        sed -i "s|yb_quota \".*\"|yb_quota \"${YB_QUOTA}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_quota_mode \".*\"|yb_quota_mode \"${YB_QUOTA_MODE}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_difficulty \".*\"|yb_difficulty \"${YB_DIFFICULTY}\"|" addons/yapb/conf/yapb.cfg && \
+        sed -i "s|yb_radio_mode \".*\"|yb_radio_mode \"${YB_RADIO_MODE}\"|" addons/yapb/conf/yapb.cfg && \
+        # Remove graph files for Counter-Strike: Condition Zero
+        find addons/yapb/data/graph -name "*_cz.graph" -delete && \
+        # Temporary fix for 4.4.957
+        chmod 755 addons/yapb/data/* ; \
+    fi
 
 WORKDIR /opt/hlds/cs16
 ENV LD_LIBRARY_PATH=/opt/hlds/cs16

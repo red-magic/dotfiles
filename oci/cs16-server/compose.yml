@@ -4,11 +4,10 @@ services:
     image: cs16-server
     container_name: cs16-server
     init: true
-    network_mode: host # For LAN admin access with IP
-    #ports:
-      #- "27015:27015/udp"
-      ##- "27015:27015/tcp"
-      ##- "26900:26900/udp"
+    ports:
+      - "27015:27015/udp"
+      #- "27015:27015/tcp"
+      #- "26900:26900/udp"
     cap_drop:
       - ALL
     security_opt:
