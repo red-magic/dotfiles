@@ -26,7 +26,7 @@ RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
     mkdir /out && \
     cp lyrebird /out
 
-FROM alpine:3.24 AS etc-builder
+FROM alpine:3 AS etc-builder
 RUN echo "arti:x:1000:1000:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd
 RUN echo "arti:x:1000:" > /group
 
