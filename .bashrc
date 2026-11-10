@@ -34,6 +34,8 @@ alias longlines='grep -n ".\{81,\}"'
 #alias ssh-connect-tunnel='ssh -f -T -N -D 1080 domain.tld'
 #alias ssh-connect-onion='fn_ssh_connect_onion'
 
+#alias vm-prep-compact='fn_vm_prep_compact'
+
 fn_sl() {
     sudo ls -plha --color=always "$@"
 }
@@ -96,6 +98,14 @@ fn_genmirlist() {
 fn_ssh_connect_onion() {
     onion_address="verylongonionaddress.onion"
     ssh -v -C -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" "${onion_address}"
+}
+
+fn_vm_prep_compact() {
+    local reserve="1024"
+    local avail count
+    avail="$(df --output=avail -m / | tail -n 1)"
+    count="$((avail - reserve))"
+    sudo fallocate -l "${count}M" /zero.fill && sudo rm -vf /zero.fill
 }
 
 if [[ -z "${TMUX}" ]] && [[ -n "${PS1}" ]]; then
