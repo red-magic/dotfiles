@@ -15,38 +15,20 @@ ARG AMXMODX_BASE_LINK="https://github.com/alliedmodders/amxmodx/releases/downloa
 ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-cstrike-linux.tar.gz"
 ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
 
-FROM debian:trixie-slim
+FROM debian:trixie-slim AS builder
 
-RUN apt-get update -y && \
-    apt-get install -y locales lib32stdc++6 curl xz-utils && \
-    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
-    apt-get clean -y && \
-    rm -rf /var/lib/apt/lists/*
-
-ENV LANG="en_US.UTF-8"
-
-RUN mkdir -m 700 /opt/hlds && \
-    useradd -r -M -d /opt/hlds -s /sbin/nologin -c "Counter-Strike 1.6 Dedicated Server" hlds && \
-    mkdir /opt/hlds/.steam && \
-    mkdir /opt/hlds/cs16 && \
-    chown -R hlds:hlds /opt/hlds
-
-USER hlds
-
-ARG ADMIN_STEAMID
-ARG ADMIN_IP
-ARG YB_PASSWORD
-ARG YB_BOTS
-ARG YB_QUOTA
-ARG YB_QUOTA_MODE
-ARG YB_DIFFICULTY
-ARG YB_RADIO_MODE
-ARG MP_TIMELIMIT
 ARG STEAMCMD_LINK
 ARG METAMODP_LINK
 ARG AMXMODX_BASE_LINK
 ARG AMXMODX_CSTRIKE_LINK
 ARG YAPB_LINK
+ARG YB_BOTS
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests locales curl lib32stdc++6 xz-utils ca-certificates && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/hlds/.steam
 
@@ -62,11 +44,41 @@ RUN if [ "${YB_BOTS}" = "1" ]; then \
 RUN ln -sf . steam && \
     ./steamcmd.sh +force_install_dir /opt/hlds/cs16 +login anonymous +app_update 90 validate +quit
 
+FROM debian:trixie-slim
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests locales lib32stdc++6 ca-certificates && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG="en_US.UTF-8"
+
+RUN useradd -r -M -d /opt/hlds -s /sbin/nologin -c "Counter-Strike 1.6 Dedicated Server" hlds && \
+    install -v -d -m 700 -o hlds -g hlds /opt/hlds
+
+COPY --from=builder --chown=hlds:hlds /opt/hlds/cs16 /opt/hlds/cs16
+COPY --from=builder --chown=hlds:hlds /opt/hlds/.steam/addons /opt/hlds/cs16/addons
+
+USER hlds
+
+ARG ADMIN_STEAMID
+ARG ADMIN_IP
+ARG YB_PASSWORD
+ARG YB_BOTS
+ARG YB_QUOTA
+ARG YB_QUOTA_MODE
+ARG YB_DIFFICULTY
+ARG YB_RADIO_MODE
+ARG MP_TIMELIMIT
+
+WORKDIR /opt/hlds/cs16
+
 RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "\"${ADMIN_IP}\" \"\" \"abcdefghijklmnopqrstuv\" \"de\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
-    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
-    sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
+    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" cstrike/server.cfg && \
+    sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" cstrike/liblist.gam
 
 RUN if [ "${YB_BOTS}" = "1" ]; then \
         echo "linux addons/yapb/bin/yapb.so" >> addons/metamod/plugins.ini && \
@@ -79,12 +91,10 @@ RUN if [ "${YB_BOTS}" = "1" ]; then \
         chmod 755 addons/yapb/data/* ; \
     fi
 
-RUN mv -f addons ../cs16/cstrike && \
-    ln -sf linux32 sdk32 && \
-    touch ../cs16/cstrike/listip.cfg && \
-    touch ../cs16/cstrike/banned.cfg
+RUN mv -f addons cstrike && \
+    touch cstrike/listip.cfg && \
+    touch cstrike/banned.cfg
 
-WORKDIR /opt/hlds/cs16
 ENV LD_LIBRARY_PATH=/opt/hlds/cs16
 ENTRYPOINT ["/opt/hlds/cs16/hlds_linux"]
 CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "0", "+ip", "0.0.0.0", "+map", "de_dust2"]
