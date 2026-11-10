@@ -26,7 +26,7 @@ RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
 
 FROM debian:trixie-slim
 RUN useradd -r -M -d /var/lib/arti -s /sbin/nologin -c "Arti Daemon" arti && \
-    install -vdm 700 -o arti -g arti /var/lib/arti
+    install -v -d -m 700 -o arti -g arti /var/lib/arti
 
 COPY --from=arti-builder /out/arti /usr/bin/arti
 COPY --from=lyrebird-builder /out/lyrebird /usr/bin/lyrebird
