@@ -57,8 +57,7 @@ ENV LANG="en_US.UTF-8"
 RUN useradd -r -M -d /opt/hlds -s /sbin/nologin -c "Counter-Strike 1.6 Dedicated Server" hlds && \
     install -v -d -m 700 -o hlds -g hlds /opt/hlds
 
-COPY --from=builder --chown=hlds:hlds /opt/hlds/cs16 /opt/hlds/cs16
-COPY --from=builder --chown=hlds:hlds /opt/hlds/.steam/addons /opt/hlds/cs16/addons
+COPY --from=builder --chown=hlds:hlds /opt/hlds /opt/hlds
 
 USER hlds
 
@@ -72,13 +71,13 @@ ARG YB_DIFFICULTY
 ARG YB_RADIO_MODE
 ARG MP_TIMELIMIT
 
-WORKDIR /opt/hlds/cs16
+WORKDIR /opt/hlds/.steam
 
 RUN echo "\"${ADMIN_STEAMID}\" \"\" \"abcdefghijklmnopqrstuv\" \"ce\"" >> addons/amxmodx/configs/users.ini && \
     echo "\"${ADMIN_IP}\" \"\" \"abcdefghijklmnopqrstuv\" \"de\"" >> addons/amxmodx/configs/users.ini && \
     echo "linux addons/amxmodx/dlls/amxmodx_mm_i386.so" > addons/metamod/plugins.ini && \
-    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" cstrike/server.cfg && \
-    sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" cstrike/liblist.gam
+    sed -i "s|mp_timelimit .*|mp_timelimit ${MP_TIMELIMIT}|" ../cs16/cstrike/server.cfg && \
+    sed -i "s|^gamedll_linux.*|gamedll_linux \"addons/metamod/dlls/metamod.so\"|" ../cs16/cstrike/liblist.gam
 
 RUN if [ "${YB_BOTS}" = "1" ]; then \
         echo "linux addons/yapb/bin/yapb.so" >> addons/metamod/plugins.ini && \
@@ -91,11 +90,13 @@ RUN if [ "${YB_BOTS}" = "1" ]; then \
         chmod 755 addons/yapb/data/* ; \
     fi
 
-RUN mv -f addons cstrike && \
-    touch cstrike/listip.cfg && \
-    touch cstrike/banned.cfg
+RUN mv -f addons ../cs16/cstrike && \
+    ln -sf linux32 sdk32 && \
+    touch ../cs16/cstrike/listip.cfg && \
+    touch ../cs16/cstrike/banned.cfg
 
+WORKDIR /opt/hlds/cs16
 ENV LD_LIBRARY_PATH=/opt/hlds/cs16
 ENTRYPOINT ["/opt/hlds/cs16/hlds_linux"]
-CMD ["-game", "cstrike", "-secure", "-pingboost", "3", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "0", "+ip", "0.0.0.0", "+map", "de_dust2"]
+CMD ["-game", "cstrike", "-insecure", "-pingboost", "3", "-maxplayers", "32", "+sys_ticrate", "1024", "+sv_lan", "1", "+ip", "0.0.0.0", "+map", "de_dust2"]
 STOPSIGNAL SIGINT
