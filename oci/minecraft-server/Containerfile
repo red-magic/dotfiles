@@ -41,7 +41,7 @@ ARG WHITE_LIST
 ARG REGION_FILE_COMPRESSION
 ARG DIFFICULTY
 
-WORKDIR /opt/minecraft
+WORKDIR /opt/minecraft/data
 
 RUN echo "eula=${EULA}" > eula.txt && \
     echo "online-mode=${ONLINE_MODE}" > server.properties && \
@@ -50,8 +50,8 @@ RUN echo "eula=${EULA}" > eula.txt && \
     echo "region-file-compression=${REGION_FILE_COMPRESSION}" >> server.properties && \
     echo "difficulty=${DIFFICULTY}" >> server.properties
 
-ENTRYPOINT ["java"]
+ENTRYPOINT ["/usr/bin/java"]
 
-CMD ["-Xmx2G", "-Xms2G", "-jar", "server.jar", "nogui"]
+CMD ["-Xmx2G", "-Xms2G", "-jar", "/opt/minecraft/server.jar", "nogui"]
 
 STOPSIGNAL SIGINT

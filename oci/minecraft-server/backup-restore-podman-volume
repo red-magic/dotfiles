@@ -1,0 +1,111 @@
+#!/bin/bash
+
+set -euo pipefail
+
+volume="minecraft-server_data"
+container="minecraft-server"
+backups_dir="${HOME}/minecraft-backups"
+
+usage() {
+    printf "usage: %s <backup | restore [archive_name]>\n" "$0"
+}
+
+backup() {
+    if [ "$#" -ne 1 ]; then
+        usage
+        exit 1
+    fi
+
+    local file tmp
+    file="${backups_dir}/minecraft-backup-$(date +%F_%H-%M-%S).tar.gz"
+    tmp="${file}.tmp"
+
+    mkdir -p "${backups_dir}"
+
+    printf "Stopping container...\n"
+    podman stop "${container}"
+
+    printf "Creating backup...\n"
+    if ! podman volume export "${volume}" | gzip > "${tmp}"; then
+        rm -f "${tmp}"
+        podman start "${container}"
+        exit 1
+    fi
+
+    if ! mv "${tmp}" "${file}"; then
+        rm -f "${tmp}"
+        podman start "${container}"
+        exit 1
+    fi
+
+    printf "Starting container...\n"
+    podman start "${container}"
+    printf "Backup created: %s\n" "${file}"
+}
+
+restore() {
+    if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+        usage
+        exit 1
+    fi
+
+    local file f
+    if [ "$#" -eq 2 ]; then
+        file="$2"
+        if [ ! -f "${file}" ]; then
+            printf "Error: Archive %s not found\n" "${file}" >&2
+            exit 1
+        fi
+    else
+        file=""
+        for f in "${backups_dir}"/minecraft-backup-*.tar.gz; do
+            [ -e "${f}" ] || continue
+            if [ -z "${file}" ] || [ "${f}" -nt "${file}" ]; then
+                file="${f}"
+            fi
+        done
+        if [ -z "${file}" ]; then
+            printf "Error: No backup file found\n" >&2
+            exit 1
+        fi
+    fi
+
+    tar -tzf "${file}" >/dev/null
+
+    printf "Stopping container...\n"
+    podman stop "${container}" || true
+
+    printf "Removing container...\n"
+    podman rm "${container}" || true
+
+    printf "Removing volume...\n"
+    podman volume rm -f "${volume}" || true
+
+    printf "Creating volume...\n"
+    podman volume create "${volume}"
+
+    printf "Restoring backup...\n"
+    gunzip -c "${file}" | podman volume import "${volume}" -
+
+    printf "Starting container...\n"
+    podman-compose up -d
+    printf "Restored from: %s\n" "${file}"
+}
+
+if [ "$#" -eq 0 ]; then
+    usage
+    exit 1
+fi
+
+case "$1" in
+    "backup")
+        backup "$@"
+        ;;
+    "restore")
+        restore "$@"
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
