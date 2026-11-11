@@ -4,7 +4,7 @@ set -euo pipefail
 
 volume="minecraft-server_data"
 container="minecraft-server"
-backups_dir="${HOME}/minecraft-backups"
+backups_dir="${HOME}/minecraft-server-backups"
 
 usage() {
     printf "usage: %s <backup | restore [archive_name]>\n" "$0"
@@ -17,7 +17,7 @@ backup() {
     fi
 
     local file tmp
-    file="${backups_dir}/minecraft-backup-$(date +%F_%H-%M-%S).tar.gz"
+    file="${backups_dir}/$(date +%F_%H-%M-%S).tar.gz"
     tmp="${file}.tmp"
 
     mkdir -p "${backups_dir}"
@@ -58,7 +58,7 @@ restore() {
         fi
     else
         file=""
-        for f in "${backups_dir}"/minecraft-backup-*.tar.gz; do
+        for f in "${backups_dir}"/*.tar.gz; do
             [ -e "${f}" ] || continue
             if [ -z "${file}" ] || [ "${f}" -nt "${file}" ]; then
                 file="${f}"
