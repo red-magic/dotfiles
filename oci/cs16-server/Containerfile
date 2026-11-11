@@ -35,8 +35,8 @@ ARG MP_TIMELIMIT="0"
 
 ARG STEAMCMD_LINK="https://steamcdn-a.akamaihd.net/client/steamcmd_linux.tar.gz"
 ARG METAMODP_LINK="https://github.com/Bots-United/metamod-p/releases/download/v1.21p109/metamod-p-v1.21p109-linux_ubuntu2404.tar.xz"
-ARG AMXMODX_BASE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-base-linux.tar.gz"
-ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5487/amxmodx-1.10.0-git5487-cstrike-linux.tar.gz"
+ARG AMXMODX_BASE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5488/amxmodx-1.10.0-git5488-base-linux.tar.gz"
+ARG AMXMODX_CSTRIKE_LINK="https://github.com/alliedmodders/amxmodx/releases/download/1.10.0.5488/amxmodx-1.10.0-git5488-cstrike-linux.tar.gz"
 ARG YAPB_LINK="https://github.com/yapb/yapb/releases/download/4.4.957/yapb-4.4.957-linux.tar.xz"
 
 FROM debian:trixie-slim AS builder
