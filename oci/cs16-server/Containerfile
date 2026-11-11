@@ -49,7 +49,7 @@ ARG YAPB_LINK
 ARG YB_BOTS
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends --no-install-suggests locales curl lib32stdc++6 xz-utils ca-certificates && \
+    apt-get install -y --no-install-recommends --no-install-suggests locales lib32stdc++6 ca-certificates curl xz-utils && \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
