@@ -31,7 +31,6 @@ RUN echo "arti:x:999:999:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd
 RUN echo "arti:x:999:" > /group
 
 FROM scratch
-#COPY --from=arti-builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 COPY --from=arti-builder /out/arti /usr/bin/arti
 COPY --from=lyrebird-builder /out/lyrebird /usr/bin/lyrebird
