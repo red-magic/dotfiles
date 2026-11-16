@@ -27,8 +27,10 @@ RUN curl -fL "${LYREBIRD_LINK}" | tar zxf - -C . && \
     cp lyrebird /out
 
 FROM alpine:3 AS etc-builder
-RUN echo "arti:x:999:999:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd
-RUN echo "arti:x:999:" > /group
+RUN echo "arti:x:999:999:Arti Daemon:/var/lib/arti:/sbin/nologin" > /passwd && \
+    echo "arti:x:999:" > /group && \
+    echo "nameserver 1.1.1.1" > /etc/resolv.conf && \
+    echo "nameserver 1.0.0.1" >> /etc/resolv.conf
 
 FROM scratch
 

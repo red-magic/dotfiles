@@ -33,7 +33,9 @@ COPY --from=lyrebird-builder /out/lyrebird /usr/bin/lyrebird
 COPY arti.toml /etc/arti/arti.toml
 
 RUN chmod 755 /usr/bin/arti /usr/bin/lyrebird && \
-    chmod 644 /etc/arti/arti.toml
+    chmod 644 /etc/arti/arti.toml && \
+    echo "nameserver 1.1.1.1" > /etc/resolv.conf && \
+    echo "nameserver 1.0.0.1" >> /etc/resolv.conf
 
 USER arti
 WORKDIR /var/lib/arti
