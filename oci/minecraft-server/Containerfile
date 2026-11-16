@@ -52,6 +52,6 @@ RUN echo "eula=${EULA}" > eula.txt && \
 
 ENTRYPOINT ["/usr/bin/java"]
 
-CMD ["-Xmx2G", "-Xms2G", "-jar", "/opt/minecraft/server.jar", "nogui"]
+CMD ["-Xms2G", "-Xmx2G", "-jar", "/opt/minecraft/server.jar", "nogui"]
 
 STOPSIGNAL SIGINT
