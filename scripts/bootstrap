@@ -35,7 +35,7 @@ install_ssh() {
 
 install_repos() {
     mkdir repos
-    git_repos="dotfiles tty-colorscheme cs16-server arti-bin tor-bin bible"
+    git_repos="dotfiles tty-colorscheme cs16-server arti-bin tor-bin bible arti-lyrebird-src cursor-themes"
     for git_repo in $git_repos; do git clone "ssh://git@github.com/red-magic/$git_repo" "repos/$git_repo"; done
     if [ -f /etc/arch-release ]
     then
